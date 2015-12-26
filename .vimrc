@@ -1,4 +1,4 @@
-" Tell vim to check 1 line for file-specific settings for marker folding (see below)
+" Tell vim to check 1 line for file-specific settings (see last line)
 set modelines=1
 
 " General {{{
