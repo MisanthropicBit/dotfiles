@@ -29,6 +29,9 @@ endif
 " No sounds on errors
 set noerrorbells
 
+" Display current line and column in the bottom-right corner
+set ruler
+
 " }}}
 
 " Colors {{{
@@ -51,6 +54,9 @@ set hlsearch
 
 " Use incremental search
 set incsearch
+
+" Do not jump forward to the next match when searching for the current word
+nnoremap * *N
 
 " }}}
 
