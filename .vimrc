@@ -81,7 +81,7 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-" Also open vsplits on the right side
+" Open vsplits on the right side
 set splitright
 
 " }}}
@@ -153,7 +153,7 @@ let mapleader=","
 " Display the syntax group(s) of the current word
 nmap <leader>sg :call <SID>SynStack()<CR>
 
-" Disable highlighting when leader is pressed
+" Shortcut for disabling highlighting
 map <silent> <leader><space> :nohl<cr>
 
 " Quickly toggle paste mode
