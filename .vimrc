@@ -32,6 +32,14 @@ set noerrorbells
 " Display current line and column in the bottom-right corner
 set ruler
 
+" Remember last editing position
+if has("autocmd")
+    autocmd BufReadPost *
+        \ if line("'\"") > 1 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
+endif
+
 " }}}
 
 " Colors {{{
@@ -183,22 +191,14 @@ function! <SID>SynStack()
     endif
 
     echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-
-" Remember last editing position
-if has("autocmd")
-    autocmd BufReadPost *
-        \ if line("'\"") > 1 && line("'\"") <= line("$") |
-        \   exe "normal! g`\"" |
-        \ endif
-endif
+endfunction
 
 " Function that deletes trailing whitespace
-func! DeleteTrailingWhitespace()
+function! DeleteTrailingWhitespace()
     exe "normal mz"
     %s/\s\+$//ge
     exe "normal `z"
-endfunc
+endfunction
 
 " }}}
 
