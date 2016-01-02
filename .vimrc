@@ -106,9 +106,6 @@ set splitright
 nnoremap j gj
 nnoremap k gk
 
-" Redraw the screen and remove any highlighting
-nnoremap <silent> <C-l> :nohl<CR><C-l>
-
 " Auto-close curly brackets after pressing [Enter]
 inoremap {<CR> {<CR>}<C-o>O
 
