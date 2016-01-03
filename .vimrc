@@ -199,4 +199,18 @@ endfunction
 
 " }}}
 
+" Pathogen {{{
+
+" Update runtimepath with plugins from ~/.vim/bundle/
+execute pathogen#infect()
+
+" }}}
+
+" NERDTree {{{
+
+" Shortcut to toggle NERDTree
+map <C-n> :NERDTreeToggle<CR>
+
+" }}}
+
 " vim:foldenable:foldmethod=marker:foldlevel=0
