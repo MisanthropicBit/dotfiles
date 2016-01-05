@@ -55,6 +55,25 @@ endtry
 
 " }}}
 
+" Leader shortcuts {{{
+
+" Set leader character
+let mapleader=","
+
+" Set the local leader character
+let maplocalleader=","
+
+" Display the syntax group(s) of the current word
+nnoremap <leader>sg :call <SID>SynStack()<CR>
+
+" Shortcut for disabling highlighting
+noremap <silent> <leader><space> :nohl<cr>
+
+" Quickly toggle paste mode
+noremap <leader>pp :setlocal paste!<cr>
+
+" }}}
+
 " Searching {{{
 
 " Highlight searches
@@ -83,7 +102,7 @@ set autoindent
 
 " Tabs (the buffer ones) {{{
 
-nmap <C-t> :tabnew<cr>
+nnoremap <C-t> :tabnew<cr>
 
 " }}}
 
@@ -108,6 +127,9 @@ nnoremap k gk
 
 " Auto-close curly brackets after pressing [Enter]
 inoremap {<CR> {<CR>}<C-o>O
+
+" Shortcut for editing the vimrc file
+nnoremap <leader>ev :vsp $MYVIMRC<cr>
 
 " }}}
 
@@ -156,22 +178,6 @@ autocmd BufWrite *.py :call DeleteTrailingWhitespace()
 
 " }}}
 
-" Leader shortcuts {{{
-
-" Set leader character
-let mapleader=","
-
-" Display the syntax group(s) of the current word
-nmap <leader>sg :call <SID>SynStack()<CR>
-
-" Shortcut for disabling highlighting
-map <silent> <leader><space> :nohl<cr>
-
-" Quickly toggle paste mode
-map <leader>pp :setlocal paste!<cr>
-
-" }}}
-
 " Explorer {{{
 
 " Show stats in :Explorer mode
@@ -209,7 +215,7 @@ execute pathogen#infect()
 " NERDTree {{{
 
 " Shortcut to toggle NERDTree
-map <C-n> :NERDTreeToggle<CR>
+noremap <C-n> :NERDTreeToggle<CR>
 
 " }}}
 
