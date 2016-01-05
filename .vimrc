@@ -129,7 +129,15 @@ nnoremap k gk
 inoremap {<CR> {<CR>}<C-o>O
 
 " Shortcut for editing the vimrc file
-nnoremap <leader>ev :vsp $MYVIMRC<cr>
+nnoremap <leader>ev :sp $MYVIMRC<cr>
+nnoremap <leader>evv :vsp $MYVIMRC<cr>
+
+" Shortcut to reload the vimrc file
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" Easily swap the current line up and down
+nnoremap J :m .+1<cr>==
+nnoremap K :m .-2<cr>==
 
 " }}}
 
