@@ -33,12 +33,12 @@ set noerrorbells
 set ruler
 
 augroup bufreadpost
-   " Remember last editing position
-   autocmd BufReadPost *
-       \ if line("'\"") > 1 && line("'\"") <= line("$") |
-       \   exe "normal! g`\"" |
-       \ endif
-augroup
+  " Remember last editing position
+  autocmd BufReadPost *
+      \ if line("'\"") > 1 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
+augroup END
 
 " }}}
 
@@ -167,13 +167,13 @@ augroup clike
     autocmd FileType c setlocal cindent
     autocmd FileType cpp setlocal cindent
     autocmd FileType cuda setlocal cindent
-augroup
+augroup END
 
 augroup scons
     " Use Python syntax for SCons files
     au BufReadPost SCons* set syntax=python
     autocmd BufRead,BufNewFile *.scons set filetype=python
-augroup
+augroup END
 
 augroup python
     " Highlight text if it goes over 80 columns in Python
@@ -182,22 +182,22 @@ augroup python
 
     " Automatically delete trailing whitespace when saving Python files
     autocmd BufWrite *.py :call DeleteTrailingWhitespace()
-augroup
+augroup END
 
 augroup json
     " Using javascript highlighting for json files
     autocmd BufRead,BufNewFile *.json set filetype=javascript
-augroup
+augroup END
 
 augroup handlebars
     " Using html highlighting for handlebars files
     autocmd BufRead,BufNewFile *.hbs set filetype=html
-augroup
+augroup END
 
 augroup latex
     " Enable spell-checking for Latex files
     autocmd FileType tex set spell spelllang=en_gb
-augroup
+augroup END
 
 " }}}
 
