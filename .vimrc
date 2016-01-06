@@ -32,13 +32,13 @@ set noerrorbells
 " Display current line and column in the bottom-right corner
 set ruler
 
-" Remember last editing position
-if has("autocmd")
-    autocmd BufReadPost *
-        \ if line("'\"") > 1 && line("'\"") <= line("$") |
-        \   exe "normal! g`\"" |
-        \ endif
-endif
+augroup bufreadpost
+   " Remember last editing position
+   autocmd BufReadPost *
+       \ if line("'\"") > 1 && line("'\"") <= line("$") |
+       \   exe "normal! g`\"" |
+       \ endif
+augroup
 
 " }}}
 
@@ -139,6 +139,9 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap J :m .+1<cr>==
 nnoremap K :m .-2<cr>==
 
+" Quicker way to exit insert mode
+inoremap jk <esc>
+
 " }}}
 
 " Folding {{{
@@ -159,30 +162,42 @@ set foldnestmax=3
 " Use the filetype plugin
 filetype plugin on
 
-" Use C-style indentation rules for C/C++/CUDA
-autocmd FileType c setlocal cindent
-autocmd FileType cpp setlocal cindent
-autocmd FileType cuda setlocal cindent
+augroup clike
+    " Use C-style indentation rules for C/C++/CUDA
+    autocmd FileType c setlocal cindent
+    autocmd FileType cpp setlocal cindent
+    autocmd FileType cuda setlocal cindent
+augroup
 
-" Use Python syntax for SCons files
-au BufReadPost SCons* set syntax=python
-autocmd BufRead,BufNewFile *.scons set filetype=python
+augroup scons
+    " Use Python syntax for SCons files
+    au BufReadPost SCons* set syntax=python
+    autocmd BufRead,BufNewFile *.scons set filetype=python
+augroup
 
-" Highlight text if it goes over 80 columns in Python
-autocmd FileType python set colorcolumn=80
-autocmd FileType python highlight ColorColumn ctermbg=235 guibg=#2c2d27
+augroup python
+    " Highlight text if it goes over 80 columns in Python
+    autocmd FileType python set colorcolumn=80
+    autocmd FileType python highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
-" Using javascript highlighting for json files
-autocmd BufRead,BufNewFile *.json set filetype=javascript
+    " Automatically delete trailing whitespace when saving Python files
+    autocmd BufWrite *.py :call DeleteTrailingWhitespace()
+augroup
 
-" Using html highlighting for handlebars files
-autocmd BufRead,BufNewFile *.hbs set filetype=html
+augroup json
+    " Using javascript highlighting for json files
+    autocmd BufRead,BufNewFile *.json set filetype=javascript
+augroup
 
-" Enable spell-checking for Latex files
-autocmd FileType tex set spell spelllang=en_gb
+augroup handlebars
+    " Using html highlighting for handlebars files
+    autocmd BufRead,BufNewFile *.hbs set filetype=html
+augroup
 
-" Automatically delete trailing whitespace when saving Python files
-autocmd BufWrite *.py :call DeleteTrailingWhitespace()
+augroup latex
+    " Enable spell-checking for Latex files
+    autocmd FileType tex set spell spelllang=en_gb
+augroup
 
 " }}}
 
