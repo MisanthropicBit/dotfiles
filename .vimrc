@@ -32,7 +32,7 @@ set noerrorbells
 " Display current line and column in the bottom-right corner
 set ruler
 
-augroup bufreadpost
+augroup save_edit_position
   " Remember last editing position
   autocmd BufReadPost *
       \ if line("'\"") > 1 && line("'\"") <= line("$") |
