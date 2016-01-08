@@ -240,6 +240,9 @@ execute pathogen#infect()
 " Shortcut to toggle NERDTree
 noremap <C-n> :NERDTreeToggle<CR>
 
+" Show hidden files in NERDTree by default
+let g:NERDTreeShowHidden=1
+
 " }}}
 
 " vim:foldenable:foldmethod=marker:foldlevel=0
