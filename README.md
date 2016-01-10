@@ -4,3 +4,4 @@ Plugins I use:
  * NERDTree
  * Pathogen
  * surround
+ * delimitMate
