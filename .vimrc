@@ -32,6 +32,9 @@ set noerrorbells
 " Display current line and column in the bottom-right corner
 set ruler
 
+" Always show vim-airline
+set laststatus=2
+
 augroup save_edit_position
   " Remember last editing position
   autocmd BufReadPost *
@@ -52,6 +55,13 @@ try
     colorscheme jellybeans
 catch
 endtry
+
+" }}}
+
+" Pathogen {{{
+
+" Update runtimepath with plugins from ~/.vim/bundle/
+execute pathogen#infect()
 
 " }}}
 
@@ -171,7 +181,7 @@ augroup END
 
 augroup scons
     " Use Python syntax for SCons files
-    au BufReadPost SCons* set syntax=python
+    autocmd BufReadPost SCons* set filetype=python
     autocmd BufRead,BufNewFile *.scons set filetype=python
 augroup END
 
@@ -197,6 +207,11 @@ augroup END
 augroup latex
     " Enable spell-checking for Latex files
     autocmd FileType tex set spell spelllang=en_gb
+augroup END
+
+augroup makefile
+    " Switch indentation to use tabs instead of spaces for makefiles
+    autocmd BufRead,BufNewFile Makefile set noexpandtab
 augroup END
 
 " }}}
@@ -228,20 +243,17 @@ endfunction
 
 " }}}
 
-" Pathogen {{{
-
-" Update runtimepath with plugins from ~/.vim/bundle/
-execute pathogen#infect()
-
-" }}}
-
 " NERDTree {{{
 
 " Shortcut to toggle NERDTree
 noremap <C-n> :NERDTreeToggle<CR>
 
-" Show hidden files in NERDTree by default
-let g:NERDTreeShowHidden=1
+" }}}
+
+" vim-airline {{{
+
+" Fancy tabs!
+let g:airline#extensions#tabline#enabled=1
 
 " }}}
 
