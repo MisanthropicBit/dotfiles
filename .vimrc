@@ -77,10 +77,14 @@ let maplocalleader=","
 nnoremap <leader>sg :call <SID>SynStack()<CR>
 
 " Shortcut for disabling highlighting
-noremap <silent> <leader><space> :nohl<cr>
+nnoremap <silent> <leader><space> :nohl<cr>
 
 " Quickly toggle paste mode
-noremap <leader>pp :setlocal paste!<cr>
+nnoremap <leader>pp :setlocal paste!<cr>
+
+" Tab navigation shortcuts
+nnoremap <leader>h gT
+nnoremap <leader>l gt
 
 " }}}
 
@@ -206,7 +210,7 @@ augroup END
 
 augroup latex
     " Enable spell-checking for Latex files
-    autocmd FileType tex set spell spelllang=en_gb
+    autocmd FileType *.tex set spell spelllang=en_gb
 augroup END
 
 augroup makefile
@@ -254,6 +258,13 @@ noremap <C-n> :NERDTreeToggle<CR>
 
 " Fancy tabs!
 let g:airline#extensions#tabline#enabled=1
+
+" Show tab numbers
+let g:airline#extensions#tabline#show_tab_nr=1
+let g:airline#extensions#tabline#tab_nr_type=1
+
+" Do not show buffers when only a single tab is open
+let g:airline#extensions#tabline#show_buffers=0
 
 " }}}
 
