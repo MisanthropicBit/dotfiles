@@ -210,7 +210,7 @@ augroup END
 
 augroup latex
     " Enable spell-checking for Latex files
-    autocmd FileType plaintex set spell spelllang=en_gb
+    autocmd FileType tex,plaintex set spell spelllang=en_gb
 augroup END
 
 augroup makefile
