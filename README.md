@@ -8,3 +8,4 @@ Plugins I use:
  * repeat: Enable repeating of plugins through '.'
  * delimitMate: Autocompletion of quotes, parentheses and brackets
  * vim-airline: Extra fancy statusline and tabs
+ * vim-fugitive: Use git from within vim, also integretes with vim-airline
