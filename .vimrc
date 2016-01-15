@@ -48,7 +48,9 @@ augroup END
 " Colors {{{
 
 " Enable 256 color mode
-set t_Co=256
+if !has('gui_running')
+    set t_Co=256
+endif
 
 " Set the default colorscheme
 try
