@@ -158,6 +158,9 @@ nnoremap K :m .-2<cr>==
 " Quicker way to exit insert mode
 inoremap jk <esc>
 
+" Also open the 'goto file' in a new tab
+nnoremap gf <c-w>gf
+
 " }}}
 
 " Folding {{{
