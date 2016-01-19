@@ -274,6 +274,9 @@ let g:airline#extensions#tabline#tab_nr_type=1
 " Do not show buffers when only a single tab is open
 let g:airline#extensions#tabline#show_buffers=0
 
+" Use the sweet powerline fonts
+let g:airline_powerline_fonts=1
+
 " }}}
 
 " vim:foldenable:foldmethod=marker:foldlevel=0
