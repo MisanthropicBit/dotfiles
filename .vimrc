@@ -35,13 +35,11 @@ set ruler
 " Always show vim-airline
 set laststatus=2
 
-augroup save_edit_position
-  " Remember last editing position
-  autocmd BufReadPost *
-      \ if line("'\"") > 1 && line("'\"") <= line("$") |
-      \   exe "normal! g`\"" |
-      \ endif
-augroup END
+" Unrestricted use of the backspace key in insert mode
+set backspace=indent,eol,start
+
+" Use the filetype plugin
+filetype plugin on
 
 " }}}
 
@@ -176,10 +174,7 @@ set foldnestmax=3
 
 " }}}
 
-" File-specific settings {{{
-
-" Use the filetype plugin
-filetype plugin on
+" Autocommands {{{
 
 augroup clike
     " Use C-style indentation rules for C/C++/CUDA
@@ -221,6 +216,14 @@ augroup END
 augroup makefile
     " Switch indentation to use tabs instead of spaces for makefiles
     autocmd BufRead,BufNewFile Makefile set noexpandtab
+augroup END
+
+augroup save_edit_position
+  " Remember last editing position
+  autocmd BufReadPost *
+      \ if line("'\"") > 1 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
 augroup END
 
 " }}}
