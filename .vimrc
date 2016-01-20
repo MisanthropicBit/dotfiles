@@ -279,4 +279,26 @@ let g:airline_powerline_fonts=1
 
 " }}}
 
+" vim-surround {{{
+
+" Quickly surround text with LaTeX (e)nvironments
+"
+" For example, typing 'ySwe' followed by 'center' when prompted on the text '|hello'
+" where '|' is the cursor yields:
+"
+" \begin{center}
+"     hello
+" \end{center}
+let g:surround_{char2nr('e')}="\\begin{\1environment: \1}\r\\end{\1\1}"
+
+" Quickly surround text with LaTeX markup
+"
+" For example, typing 'ySwl' followed by 'textbf' when prompted on the text '|vim'
+" where '|' is the cursor yields:
+"
+" \textbf{vim}
+let g:surround_{char2nr('l')}="\\\1markup: \1{\r}"
+
+" }}}
+
 " vim:foldenable:foldmethod=marker:foldlevel=0
