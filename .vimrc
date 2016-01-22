@@ -68,10 +68,10 @@ execute pathogen#infect()
 " Leader shortcuts {{{
 
 " Set leader character
-let mapleader=","
+let mapleader="\<space>"
 
 " Set the local leader character
-let maplocalleader=","
+let maplocalleader="\<space>"
 
 " Display the syntax group(s) of the current word
 nnoremap <leader>sg :call <SID>SynStack()<CR>
@@ -85,6 +85,9 @@ nnoremap <leader>pp :setlocal paste!<cr>
 " Tab navigation shortcuts
 nnoremap <leader>h gT
 nnoremap <leader>l gt
+
+" Quickly save the current buffer
+nnoremap <leader>w :w<cr>
 
 " }}}
 
