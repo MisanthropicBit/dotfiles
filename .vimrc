@@ -89,6 +89,9 @@ nnoremap <leader>l gt
 " Quickly save the current buffer
 nnoremap <leader>w :w<cr>
 
+" Quickly close the current buffer
+nnoremap <leader>q :q<cr>
+
 " }}}
 
 " Searching {{{
