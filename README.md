@@ -10,3 +10,4 @@ Plugins I use:
  * **vim-airline**: Extra fancy statusline and tabs
  * **vim-fugitive**: Use git from within vim, also integretes with vim-airline
  * **UtilSnips**: Plugin for code snippets
+ * **Syntastic**: Plugin for syntax checking

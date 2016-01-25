@@ -52,7 +52,7 @@ endif
 
 " Set the default colorscheme
 try
-    colorscheme jellybeans
+    colorscheme onedark
 catch
 endtry
 
@@ -62,6 +62,9 @@ endtry
 
 " Update runtimepath with plugins from ~/.vim/bundle/
 execute pathogen#infect()
+
+" Generate help tags
+execute pathogen#helptags()
 
 " }}}
 
@@ -282,6 +285,9 @@ let g:airline#extensions#tabline#show_buffers=0
 
 " Use the sweet powerline fonts
 let g:airline_powerline_fonts=1
+
+" Enable the Syntastic plugin for vim-airline
+let g:airline#extensions#syntastic#enabled=1
 
 " }}}
 
