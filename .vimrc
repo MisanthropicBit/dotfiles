@@ -346,7 +346,11 @@ let g:syntastic_style_error_symbol='⛔'
 
 " UltiSnips {{{
 
+" Set the private UltiSnips directory
 let g:UltiSnipsSnippetsDir='~/.vim/bundle/ultisnips/UltiSnips'
+
+" Split the :UltiSnipsEdit window horizontally or vertically depending on context
+let g:UltiSnipsEditSplit='context'
 
 " }}}
 
