@@ -329,7 +329,7 @@ let g:syntastic_cpp_compiler_options='-std=c++11 -stdlib=libc++'
 " Enable C# support using Mono
 let g:syntastic_cs_checkers=['mcs']
 
-" Enable Syntastic for plaintex files (or set g:tex_flavor to 'tex')
+" Enable Syntastic for plaintex files
 let g:tex_flavor='tex'
 let g:syntastic_plaintex_checkers=['lacheck']
 
