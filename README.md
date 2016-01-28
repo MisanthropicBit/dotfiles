@@ -11,3 +11,4 @@ Plugins I use:
  * **vim-fugitive**: Use git from within vim, also integretes with vim-airline
  * **UtilSnips**: Plugin for code snippets
  * **Syntastic**: Plugin for syntax checking
+ * **CtrlP**: Fuzzy file lookup
