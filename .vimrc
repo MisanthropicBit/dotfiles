@@ -357,4 +357,11 @@ let g:UltiSnipsEditSplit='context'
 
 " }}}
 
+" neocomplete {{{
+
+" Enable neocomplete at startup
+let g:neocomplete#enable_at_startup=1
+
+" }}}
+
 " vim:foldenable:foldmethod=marker:foldlevel=0

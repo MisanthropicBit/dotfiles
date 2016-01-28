@@ -13,3 +13,4 @@ Plugins I use:
  * **Syntastic**: Plugin for syntax checking
  * **CtrlP**: Fuzzy file lookup
  * **vim-scala**: Minimal tools for Scala + syntax highlighting
+ * **neocomplete**: Fuzzy autocompletion
