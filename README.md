@@ -12,3 +12,4 @@ Plugins I use:
  * **UtilSnips**: Plugin for code snippets
  * **Syntastic**: Plugin for syntax checking
  * **CtrlP**: Fuzzy file lookup
+ * **vim-scala**: Minimal tools for Scala + syntax highlighting

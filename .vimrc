@@ -333,6 +333,9 @@ let g:syntastic_cs_checkers=['mcs']
 let g:tex_flavor='tex'
 let g:syntastic_plaintex_checkers=['lacheck']
 
+" Enable Syntastic for Scala
+let g:syntastic_scala_checkers=['scalac']
+
 " Check syntax when opening files
 let g:syntastic_check_on_open=1
 
