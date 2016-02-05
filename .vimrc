@@ -41,6 +41,10 @@ set backspace=indent,eol,start
 " Use the filetype plugin
 filetype plugin on
 
+" Allow yank and put between vim sessions without specifying
+" the clipboard ("*) register
+set clipboard+=unnamed
+
 " }}}
 
 " Colors {{{
@@ -183,6 +187,14 @@ set foldnestmax=3
 
 " }}}
 
+" Commands {{{
+
+if has('mac') || has('macunix')
+	command! -nargs=1 Dict call OpenDictionary(<q-args>)
+endif
+
+" }}}
+
 " Autocommands {{{
 
 augroup clike
@@ -260,6 +272,22 @@ function! DeleteTrailingWhitespace()
     exe "normal mz"
     %s/\s\+$//ge
     exe "normal `z"
+endfunction
+
+" Open Dictionary.app on mac systems
+function! OpenDictionary(...)
+	let word = ''
+
+    if a:0 > 0
+        let word = a:1
+    else
+		let word = shellescape(expand('<cword>'))
+	endif
+
+    echom word
+
+	silent execute '!open dict://' . word
+	redraw!
 endfunction
 
 " }}}
@@ -354,6 +382,9 @@ let g:UltiSnipsSnippetsDir='~/.vim/bundle/ultisnips/UltiSnips'
 
 " Split the :UltiSnipsEdit window horizontally or vertically depending on context
 let g:UltiSnipsEditSplit='context'
+
+" Open the snippets file for the current file type
+nnoremap <leader>us :UltiSnipsEdit<cr>
 
 " }}}
 
