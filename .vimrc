@@ -144,6 +144,14 @@ nnoremap <c-l> <c-w>l
 " Open vsplits on the right side
 set splitright
 
+" Change two vertically split windows to a horizontal layout
+" Mnenomic: Swap Windows to Horizontal
+nnoremap <leader>swh <c-w>t <c-w>K
+
+" Change two horizontally split windows to a vertical layout
+" Mnenomic: Swap Windows to Vertical
+nnoremap <leader>swv <c-w>t <c-w>H
+
 " }}}
 
 " Mappings {{{
@@ -190,62 +198,71 @@ set foldnestmax=3
 " Commands {{{
 
 if has('mac') || has('macunix')
-	command! -nargs=1 Dict call OpenDictionary(<q-args>)
+	command! -nargs=? Dict call OpenDictionary(<q-args>)
 endif
 
 " }}}
 
 " Autocommands {{{
 
-augroup clike
-    " Use C-style indentation rules for C/C++/CUDA
-    autocmd FileType c setlocal cindent
-    autocmd FileType cpp setlocal cindent
-    autocmd FileType cuda setlocal cindent
-augroup END
+if has("autocmd")
+    augroup clike
+        " Use C-style indentation rules for C/C++/CUDA
+        autocmd FileType c setlocal cindent
+        autocmd FileType cpp setlocal cindent
+        autocmd FileType cuda setlocal cindent
+    augroup END
 
-augroup scons
-    " Use Python syntax for SCons files
-    autocmd BufReadPost SCons* set filetype=python
-    autocmd BufRead,BufNewFile *.scons set filetype=python
-augroup END
+    augroup scons
+        " Use Python syntax for SCons files
+        autocmd BufReadPost SCons* set filetype=python
+        autocmd BufRead,BufNewFile *.scons set filetype=python
+    augroup END
 
-augroup python
-    " Highlight text if it goes over 80 columns in Python
-    autocmd FileType python set colorcolumn=80
-    autocmd FileType python highlight ColorColumn ctermbg=235 guibg=#2c2d27
+    augroup python
+        " Highlight text if it goes over 80 columns in Python
+        autocmd FileType python set colorcolumn=80
+        "autocmd FileType python highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
-    " Automatically delete trailing whitespace when saving Python files
-    autocmd BufWrite *.py :call DeleteTrailingWhitespace()
-augroup END
+        " Automatically delete trailing whitespace when saving Python files
+        autocmd BufWrite *.py :call DeleteTrailingWhitespace()
+    augroup END
 
-augroup json
-    " Using javascript highlighting for json files
-    autocmd BufRead,BufNewFile *.json set filetype=javascript
-augroup END
+    augroup json
+        " Using javascript highlighting for json files
+        autocmd BufRead,BufNewFile *.json set filetype=javascript
+    augroup END
 
-augroup handlebars
-    " Using html highlighting for handlebars files
-    autocmd BufRead,BufNewFile *.hbs set filetype=html
-augroup END
+    augroup handlebars
+        " Using html highlighting for handlebars files
+        autocmd BufRead,BufNewFile *.hbs set filetype=html
+    augroup END
 
-augroup latex
-    " Enable spell-checking for Latex files
-    autocmd FileType tex,plaintex set spell spelllang=en_gb
-augroup END
+    augroup latex
+        " Enable spell-checking for Latex files
+        autocmd FileType tex,plaintex set spell spelllang=en_gb
+    augroup END
 
-augroup makefile
-    " Switch indentation to use tabs instead of spaces for makefiles
-    autocmd BufRead,BufNewFile Makefile set noexpandtab
-augroup END
+    augroup makefile
+        " Switch indentation to use tabs instead of spaces for makefiles
+        autocmd BufRead,BufNewFile Makefile set noexpandtab
+    augroup END
 
-augroup save_edit_position
-  " Remember last editing position
-  autocmd BufReadPost *
-      \ if line("'\"") > 1 && line("'\"") <= line("$") |
-      \   exe "normal! g`\"" |
-      \ endif
-augroup END
+    augroup save_edit_position
+      " Remember last editing position (see ':h last-position-jump')
+      autocmd BufReadPost *
+          \ if line("'\"") > 1 && line("'\"") <= line("$") |
+          \   execute "normal! g`\"" |
+          \ endif
+    augroup END
+endif
+
+" }}}
+
+" Shell {{{
+
+" Allow external bash commands inside vim to use aliases etc.
+"set shell=bash\ --rcfile\ ~/.bash_profile
 
 " }}}
 
@@ -269,24 +286,30 @@ endfunction
 
 " Function that deletes trailing whitespace
 function! DeleteTrailingWhitespace()
-    exe "normal mz"
-    %s/\s\+$//ge
-    exe "normal `z"
+    " Save current search history and position
+    let s = @/
+    let line = line('.')
+    let col = col('.')
+
+    " '%' specifies the entire file, 'e' supresses error messages
+    %s/\s\+$//e
+
+    " Restore previous search history and position
+    let @/=s
+    call cursor(line, col)
 endfunction
 
 " Open Dictionary.app on mac systems
 function! OpenDictionary(...)
 	let word = ''
 
-    if a:0 > 0
+    if a:1 !=# ''
         let word = a:1
     else
-		let word = shellescape(expand('<cword>'))
-	endif
+        let word = shellescape(expand('<cword>'))
+    endif
 
-    echom word
-
-	silent execute '!open dict://' . word
+    silent execute '!open dict://' . word
 	redraw!
 endfunction
 
@@ -362,7 +385,7 @@ let g:tex_flavor='tex'
 let g:syntastic_plaintex_checkers=['lacheck']
 
 " Enable Syntastic for Scala
-let g:syntastic_scala_checkers=['scalac']
+let g:syntastic_scala_checkers=['fsc']
 
 " Check syntax when opening files
 let g:syntastic_check_on_open=1
