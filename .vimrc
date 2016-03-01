@@ -171,14 +171,17 @@ nnoremap <leader>evv :vsp $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Easily swap the current line up and down
-nnoremap J :m .+1<cr>==
-nnoremap K :m .-2<cr>==
+nnoremap J :m .+1<cr>
+nnoremap K :m .-2<cr>
 
 " Quicker way to exit insert mode
 inoremap jk <esc>
 
 " Also open the 'goto file' in a new tab
 nnoremap gf <c-w>gf
+
+" Yank from cursor to the end of line instead of the entire line
+nnoremap Y y$
 
 " }}}
 
