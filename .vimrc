@@ -56,7 +56,7 @@ endif
 
 " Set the default colorscheme
 try
-    colorscheme onedark
+    colorscheme hybrid
 catch
 endtry
 
