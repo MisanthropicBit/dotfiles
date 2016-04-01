@@ -177,11 +177,14 @@ nnoremap K :m .-2<cr>
 " Quicker way to exit insert mode
 inoremap jk <esc>
 
-" Also open the 'goto file' in a new tab
+" Open the 'goto file' in a new tab
 nnoremap gf <c-w>gf
 
 " Yank from cursor to the end of line instead of the entire line
 nnoremap Y y$
+
+" Shortcut for calling '!make'
+nnoremap <leader>m :!make<cr>
 
 " }}}
 
