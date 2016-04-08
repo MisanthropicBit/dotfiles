@@ -45,6 +45,11 @@ filetype plugin on
 " the clipboard ("*) register
 set clipboard+=unnamed
 
+" Make sure gvim and mvim use a powerline font
+if has('gui_running')
+    set guifont=Monaco\ For\ Powerline
+endif
+
 " }}}
 
 " Colors {{{
@@ -186,6 +191,11 @@ nnoremap Y y$
 " Shortcut for calling '!make'
 nnoremap <leader>m :!make<cr>
 
+" Quicker way to increment and decrement numbers
+" Mnemonics: [u]p and [d]own
+nnoremap <leader>u <c-a>
+nnoremap <leader>d <c-x>
+
 " }}}
 
 " Folding {{{
@@ -227,8 +237,9 @@ if has("autocmd")
 
     augroup python
         " Highlight text if it goes over 80 columns in Python
+        " Alternative: http://stackoverflow.com/questions/235439/vim-80-column-layout-concerns
         autocmd FileType python set colorcolumn=80
-        "autocmd FileType python highlight ColorColumn ctermbg=235 guibg=#2c2d27
+        autocmd FileType python highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
         " Automatically delete trailing whitespace when saving Python files
         autocmd BufWrite *.py :call DeleteTrailingWhitespace()
@@ -319,12 +330,32 @@ function! OpenDictionary(...)
 	redraw!
 endfunction
 
+" Automatically close the NERDTree file explorer window
+" if it is the only window left
+" Credit: https://github.com/scrooloose/nerdtree/issues/21
+function! s:CloseNerdTreeIfOnlyWindow()
+    if exists("t:NERDTreeBufName")
+        if bufwinnr(t:NERDTreeBufName) != -1
+            if winnr("$") == 1
+                q
+            endif
+        endif
+    endif
+endfunction
+
 " }}}
 
 " NERDTree {{{
 
 " Shortcut to toggle NERDTree
 noremap <C-n> :NERDTreeToggle<CR>
+
+" Always show hidden files
+let NERDTreeShowHidden = 1
+
+augroup NERDTree
+    autocmd WinEnter * call s:CloseNerdTreeIfOnlyWindow()
+augroup END
 
 " }}}
 
@@ -413,7 +444,7 @@ let g:UltiSnipsSnippetsDir='~/.vim/bundle/ultisnips/UltiSnips'
 let g:UltiSnipsEditSplit='context'
 
 " Open the snippets file for the current file type
-nnoremap <leader>us :UltiSnipsEdit<cr>
+nnoremap <leader>sf :UltiSnipsEdit<cr>
 
 " }}}
 
