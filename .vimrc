@@ -1,5 +1,15 @@
 " Tell vim to check 1 line for file-specific settings (see last line)
-set modelines=1
+"set modelines=1
+
+" Pathogen {{{
+
+" Update runtimepath with plugins from ~/.vim/bundle/
+execute pathogen#infect()
+
+" Generate help tags
+execute pathogen#helptags()
+
+" }}}
 
 " General {{{
 
@@ -64,16 +74,6 @@ try
     colorscheme hybrid
 catch
 endtry
-
-" }}}
-
-" Pathogen {{{
-
-" Update runtimepath with plugins from ~/.vim/bundle/
-execute pathogen#infect()
-
-" Generate help tags
-execute pathogen#helptags()
 
 " }}}
 
@@ -169,8 +169,8 @@ nnoremap k gk
 inoremap {<CR> {<CR>}<C-o>O
 
 " Shortcut for editing the vimrc file
-nnoremap <leader>ev :sp $MYVIMRC<cr>
-nnoremap <leader>evv :vsp $MYVIMRC<cr>
+nnoremap <leader>vh :sp $MYVIMRC<cr>
+nnoremap <leader>vv :vsp $MYVIMRC<cr>
 
 " Shortcut to reload the vimrc file
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -195,6 +195,9 @@ nnoremap <leader>m :!make<cr>
 " Mnemonics: [u]p and [d]own
 nnoremap <leader>u <c-a>
 nnoremap <leader>d <c-x>
+
+" Quickly toggle folds
+nnoremap <leader>z za
 
 " }}}
 
