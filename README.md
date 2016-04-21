@@ -14,3 +14,4 @@ Plugins I use:
  * **CtrlP**: Fuzzy file lookup
  * **vim-scala**: Minimal tools for Scala + syntax highlighting
  * **neocomplete**: Fuzzy autocompletion
+ * **colorizer**: Highlights rgb and hex codes in their corresponding colors
