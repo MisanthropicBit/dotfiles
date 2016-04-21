@@ -1,5 +1,4 @@
 " Tell vim to check 1 line for file-specific settings (see last line)
-"set modelines=1
 
 " Pathogen {{{
 
@@ -59,6 +58,9 @@ set clipboard+=unnamed
 if has('gui_running')
     set guifont=Monaco\ For\ Powerline
 endif
+
+" Prefer wildmenu
+set wildmenu
 
 " }}}
 
@@ -268,6 +270,11 @@ if has("autocmd")
         autocmd BufRead,BufNewFile Makefile set noexpandtab
     augroup END
 
+    augroup markdown
+        " Set text width to 80 and spell-checking on for markdown files
+        autocmd FileType markdown setlocal tw=80 spell
+    augroup END
+
     augroup save_edit_position
       " Remember last editing position (see ':h last-position-jump')
       autocmd BufReadPost *
@@ -355,6 +362,11 @@ noremap <C-n> :NERDTreeToggle<CR>
 
 " Always show hidden files
 let NERDTreeShowHidden = 1
+
+" Remap keys for opening files in splits to resemble
+" ':split' and ':vsplit'
+let g:NERDTreeMapOpenVSplit = 'v'
+let g:NERDTreeMapOpenSplit = 's'
 
 augroup NERDTree
     autocmd WinEnter * call s:CloseNerdTreeIfOnlyWindow()
@@ -458,4 +470,28 @@ let g:neocomplete#enable_at_startup=1
 
 " }}}
 
-" vim:foldenable:foldmethod=marker:foldlevel=0
+" CtrlP {{{
+
+" Ignore shared libraries, class files and version control directories
+let g:ctrlp_custom_ignore = {
+    \ 'file': '\v\.(so|dll|class)$',
+    \ 'dir' : '\v[\/]\.(git|hg|svn|idea)$'
+\ }
+
+" }}}
+
+" colorizer {{{
+
+" colorizer is inefficient for large files (like 'eval.txt')
+" so limit it to files with lines < 100
+let g:colorizer_maxlines = 100
+
+" Disable the default colorizer mapping
+let g:colorizer_nomap = 1
+
+" Custom mapping for toggling colorization
+nnoremap <leader>tc <Plug>Colorizer
+
+" }}}
+
+" vim: foldenable foldmethod=marker foldlevel=0
