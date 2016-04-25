@@ -272,7 +272,7 @@ if has("autocmd")
 
     augroup markdown
         " Set text width to 80 and spell-checking on for markdown files
-        autocmd FileType markdown setlocal tw=80 spell
+        autocmd FileType markdown setlocal tw=80
     augroup END
 
     augroup save_edit_position
@@ -474,9 +474,12 @@ let g:neocomplete#enable_at_startup=1
 
 " Ignore shared libraries, class files and version control directories
 let g:ctrlp_custom_ignore = {
-    \ 'file': '\v\.(so|dll|class)$',
+    \ 'file': '\v\.(swp|so|dll|class)$',
     \ 'dir' : '\v[\/]\.(git|hg|svn|idea)$'
 \ }
+
+" Always show hidden files
+let g:ctrlp_show_hidden = 1
 
 " }}}
 
