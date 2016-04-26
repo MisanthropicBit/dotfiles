@@ -199,7 +199,7 @@ nnoremap <leader>u <c-a>
 nnoremap <leader>d <c-x>
 
 " Quickly toggle folds
-nnoremap <leader>z za
+nnoremap <leader>f za
 
 " }}}
 
