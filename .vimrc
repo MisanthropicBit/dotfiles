@@ -236,14 +236,14 @@ if has("autocmd")
 
     augroup scons
         " Use Python syntax for SCons files
-        autocmd BufReadPost SCons* set filetype=python
-        autocmd BufRead,BufNewFile *.scons set filetype=python
+        autocmd BufReadPost SCons* setlocal filetype=python
+        autocmd BufRead,BufNewFile *.scons setlocal filetype=python
     augroup END
 
     augroup python
         " Highlight text if it goes over 80 columns in Python
         " Alternative: http://stackoverflow.com/questions/235439/vim-80-column-layout-concerns
-        autocmd FileType python set colorcolumn=80
+        autocmd FileType python setlocal colorcolumn=80
         autocmd FileType python highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
         " Automatically delete trailing whitespace when saving Python files
@@ -252,22 +252,22 @@ if has("autocmd")
 
     augroup json
         " Using javascript highlighting for json files
-        autocmd BufRead,BufNewFile *.json set filetype=javascript
+        autocmd BufRead,BufNewFile *.json setlocal filetype=javascript
     augroup END
 
     augroup handlebars
         " Using html highlighting for handlebars files
-        autocmd BufRead,BufNewFile *.hbs set filetype=html
+        autocmd BufRead,BufNewFile *.hbs setlocal filetype=html
     augroup END
 
     augroup latex
         " Enable spell-checking for Latex files
-        autocmd FileType tex,plaintex set spell spelllang=en_gb
+        autocmd FileType tex,plaintex setlocal spell spelllang=en_gb
     augroup END
 
     augroup makefile
         " Switch indentation to use tabs instead of spaces for makefiles
-        autocmd BufRead,BufNewFile Makefile set noexpandtab
+        autocmd BufRead,BufNewFile Makefile setlocal noexpandtab
     augroup END
 
     augroup markdown
