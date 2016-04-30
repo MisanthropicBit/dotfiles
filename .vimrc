@@ -178,8 +178,11 @@ nnoremap <leader>vv :vsp $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Easily swap the current line up and down
-nnoremap J :m .+1<cr>
-nnoremap K :m .-2<cr>
+" Credit: https://github.com/vim/vim/issues/536
+nnoremap J :set fdm=manual<cr>:m .+1<CR>==:set fdm=marker<cr>
+nnoremap K :set fdm=manual<cr>:m .-2<CR>==:set fdm=marker<cr>
+vnoremap J <esc>:set fdm=manual<cr>'<V'>:m '>+1<CR>gv=:set fdm=marker<cr>gv
+vnoremap K <esc>:set fdm=manual<cr>'<V'>:m '<-2<CR>gv=:set fdm=marker<cr>gv
 
 " Quicker way to exit insert mode
 inoremap jk <esc>
