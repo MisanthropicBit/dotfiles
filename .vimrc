@@ -88,7 +88,7 @@ let mapleader="\<space>"
 let maplocalleader="\<space>"
 
 " Display the syntax group(s) of the current word
-nnoremap <leader>sg :call <SID>SynStack()<CR>
+nnoremap <leader>sg :call <SID>SynStack()<cr>
 
 " Shortcut for disabling highlighting
 nnoremap <silent> <leader><space> :nohl<cr>
@@ -168,7 +168,7 @@ nnoremap j gj
 nnoremap k gk
 
 " Auto-close curly brackets after pressing [Enter]
-inoremap {<CR> {<CR>}<C-o>O
+inoremap {<cr> {<cr>}<C-o>O
 
 " Shortcut for editing the vimrc file
 nnoremap <leader>vh :sp $MYVIMRC<cr>
@@ -361,7 +361,7 @@ endfunction
 " NERDTree {{{
 
 " Shortcut to toggle NERDTree
-noremap <C-n> :NERDTreeToggle<CR>
+noremap <C-n> :NERDTreeToggle<cr>
 
 " Always show hidden files
 let NERDTreeShowHidden = 1
