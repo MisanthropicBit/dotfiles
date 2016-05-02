@@ -178,11 +178,11 @@ nnoremap <leader>vv :vsp $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Easily swap the current line up and down
-" Credit: https://github.com/vim/vim/issues/536
-nnoremap J :set fdm=manual<cr>:m .+1<CR>==:set fdm=marker<cr>
-nnoremap K :set fdm=manual<cr>:m .-2<CR>==:set fdm=marker<cr>
-vnoremap J <esc>:set fdm=manual<cr>'<V'>:m '>+1<CR>gv=:set fdm=marker<cr>gv
-vnoremap K <esc>:set fdm=manual<cr>'<V'>:m '<-2<CR>gv=:set fdm=marker<cr>gv
+" Based on: https://github.com/vim/vim/issues/536
+nnoremap <silent> J :call <SID>FoldSafeMove(-1)<cr>
+nnoremap <silent> K :call <SID>FoldSafeMove(1)<cr>
+vnoremap <silent> J :call <SID>FoldSafeVisualMove(-1)<cr>gv
+vnoremap <silent> K :call <SID>FoldSafeVisualMove(1)<cr>gv
 
 " Quicker way to exit insert mode
 inoremap jk <esc>
@@ -354,6 +354,38 @@ function! s:CloseNerdTreeIfOnlyWindow()
             endif
         endif
     endif
+endfunction
+
+function! s:FoldSafeMove(dir) range
+    let dist = (a:dir < 0 ? 1 + v:count - (v:count > 0) : -2 - (v:count - (v:count > 0)))
+
+    if line('.') + dist > line('$') || line('.') + dist < 0
+        return
+    endif
+
+    setlocal foldmethod=manual
+    let oldfoldmethod = &l:foldmethod
+    let oldcol = col('.')
+
+    execute "silent m ." . string(dist) . "<cr>"
+
+    let &l:foldmethod = oldfoldmethod
+    call cursor('.', oldcol)
+endfunction
+
+function! s:FoldSafeVisualMove(dir) range
+    let dist = (a:dir < 0 ? 2 + v:count - (v:count > 0) : -2 - (v:count - (v:count > 0)))
+
+    if line('.') + dist > line('$') || line('.') + dist < 0
+        return
+    endif
+
+    setlocal foldmethod=manual
+    let oldfoldmethod = &l:foldmethod
+
+    execute printf("silent %s,%s:m .%s<cr>", a:firstline, a:lastline, dist)
+
+    let &l:foldmethod = oldfoldmethod
 endfunction
 
 " }}}
