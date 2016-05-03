@@ -179,8 +179,8 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Easily swap the current line up and down
 " Based on: https://github.com/vim/vim/issues/536
-nnoremap <silent> J :<c-u>call <SID>FoldSafeMove(1)<cr>
-nnoremap <silent> K :<c-u>call <SID>FoldSafeMove(-1)<cr>
+nnoremap <silent> J :call <SID>FoldSafeMove(1)<cr>
+nnoremap <silent> K :call <SID>FoldSafeMove(-1)<cr>
 vnoremap <silent> J :call <SID>FoldSafeVisualMove(1)<cr>
 vnoremap <silent> K :call <SID>FoldSafeVisualMove(-1)<cr>
 
