@@ -1,5 +1,3 @@
-" Tell vim to check 1 line for file-specific settings (see last line)
-
 " Pathogen {{{
 
 " Update runtimepath with plugins from ~/.vim/bundle/
