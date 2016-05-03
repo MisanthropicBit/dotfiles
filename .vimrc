@@ -106,6 +106,11 @@ nnoremap <leader>w :w<cr>
 " Quickly close the current buffer
 nnoremap <leader>q :q<cr>
 
+" Start out in combined number and relativenumber mode if possible
+if v:version >= 703
+    set relativenumber
+endif
+
 " }}}
 
 " Searching {{{
@@ -203,6 +208,9 @@ nnoremap <leader>d <c-x>
 
 " Quickly toggle folds
 nnoremap <leader>f za
+
+" Quickly toggle relative line numbering
+nnoremap <leader>n :set rnu!<cr>
 
 " }}}
 
