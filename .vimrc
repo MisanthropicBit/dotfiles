@@ -179,10 +179,10 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " Easily swap the current line up and down
 " Based on: https://github.com/vim/vim/issues/536
-nnoremap <silent> J :call <SID>FoldSafeMove(-1)<cr>
-nnoremap <silent> K :call <SID>FoldSafeMove(1)<cr>
-vnoremap <silent> J :call <SID>FoldSafeVisualMove(-1)<cr>gv
-vnoremap <silent> K :call <SID>FoldSafeVisualMove(1)<cr>gv
+nnoremap <silent> J :<c-u>call <SID>FoldSafeMove(1)<cr>
+nnoremap <silent> K :<c-u>call <SID>FoldSafeMove(-1)<cr>
+vnoremap <silent> J :call <SID>FoldSafeVisualMove(1)<cr>
+vnoremap <silent> K :call <SID>FoldSafeVisualMove(-1)<cr>
 
 " Quicker way to exit insert mode
 inoremap jk <esc>
@@ -357,7 +357,7 @@ function! s:CloseNerdTreeIfOnlyWindow()
 endfunction
 
 function! s:FoldSafeMove(dir) range
-    let dist = (a:dir < 0 ? 1 + v:count - (v:count > 0) : -2 - (v:count - (v:count > 0)))
+    let dist = (a:dir > 0 ? v:count1 : -1 - v:count1)
 
     if line('.') + dist > line('$') || line('.') + dist < 0
         return
@@ -374,18 +374,24 @@ function! s:FoldSafeMove(dir) range
 endfunction
 
 function! s:FoldSafeVisualMove(dir) range
-    let dist = (a:dir < 0 ? 2 + v:count - (v:count > 0) : -2 - (v:count - (v:count > 0)))
+    if a:dir > 0
+        let target = a:lastline + v:count1
+    else
+        let target = a:firstline - v:count1 - 1
+    endif
 
-    if line('.') + dist > line('$') || line('.') + dist < 0
+    if target > line('$') || target < 0
+        normal! gv
         return
     endif
 
     setlocal foldmethod=manual
     let oldfoldmethod = &l:foldmethod
 
-    execute printf("silent %s,%s:m .%s<cr>", a:firstline, a:lastline, dist)
+    execute printf("silent %s,%sm %s<cr>", a:firstline, a:lastline, target)
 
     let &l:foldmethod = oldfoldmethod
+    normal! gv
 endfunction
 
 " }}}
