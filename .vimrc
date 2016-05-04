@@ -19,6 +19,11 @@ set showmode
 " Show line numbers
 set number
 
+" Start out in combined number and relativenumber mode if possible
+if v:version >= 703
+    set relativenumber
+endif
+
 " Prefer utf-8
 set encoding=utf8
 
@@ -104,10 +109,8 @@ nnoremap <leader>w :w<cr>
 " Quickly close the current buffer
 nnoremap <leader>q :q<cr>
 
-" Start out in combined number and relativenumber mode if possible
-if v:version >= 703
-    set relativenumber
-endif
+" Shortcut for correcting a misspelled word with its first suggestion
+nnoremap <leader>s :1z=
 
 " }}}
 
