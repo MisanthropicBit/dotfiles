@@ -16,7 +16,7 @@ script_dir="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "Symlinking files from $script_dir..."
 
-for e in ".vim"; do
+for e in ".vimrc" ".vim"; do
     __symlink_install $e $script_dir $HOME
 done
 
