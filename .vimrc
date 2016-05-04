@@ -110,7 +110,7 @@ nnoremap <leader>w :w<cr>
 nnoremap <leader>q :q<cr>
 
 " Shortcut for correcting a misspelled word with its first suggestion
-nnoremap <leader>s :1z=
+nnoremap <leader>1 1z=
 
 " }}}
 
