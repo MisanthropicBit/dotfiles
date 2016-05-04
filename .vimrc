@@ -97,7 +97,7 @@ nnoremap <leader>sg :call <SID>SynStack()<cr>
 nnoremap <silent> <leader><space> :nohl<cr>
 
 " Quickly toggle paste mode
-nnoremap <leader>pp :setlocal paste!<cr>
+nnoremap <silent> <leader>pp :setlocal paste!<cr>
 
 " Tab navigation shortcuts
 nnoremap <leader>h gT
@@ -211,7 +211,7 @@ nnoremap <leader>d <c-x>
 nnoremap <leader>f za
 
 " Quickly toggle relative line numbering
-nnoremap <leader>n :set rnu!<cr>
+nnoremap <silent> <leader>n :set relativenumber!<cr>
 
 " }}}
 
@@ -408,7 +408,7 @@ endfunction
 " NERDTree {{{
 
 " Shortcut to toggle NERDTree
-noremap <C-n> :NERDTreeToggle<cr>
+noremap <silent> <C-n> :NERDTreeToggle<cr>
 
 " Always show hidden files
 let NERDTreeShowHidden = 1
