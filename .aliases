@@ -1,0 +1,41 @@
+# Aliases that can be shared between bash and zsh
+
+if [ -e ~/.private_aliases ]; then
+    source ~/.private_aliases
+fi
+
+# Use coreutils for sorting by file extension if available through homebrew
+if [[ -x $(which brew) && -d $(brew --prefix coreutils) ]]; then
+    alias lx="$(brew --prefix coreutils)/bin/gls -lahX --color=auto"
+fi
+
+alias aliases="$EDITOR ~/.aliases"
+alias l="ls -laGh"
+alias ll="clear; l"
+alias up="cd .."
+alias upl="cd .. && l"
+alias dbox="cd ~/Dropbox"
+alias projects="cd ~/Dropbox/projects"
+alias pdfs="cd ~/Dropbox/PDFs"
+alias fucking="sudo"
+alias c="pbcopy"
+alias v="pbpaste" 
+alias path="echo $PATH | tr ':' '\n' | sort -u"
+alias todo="grep --color=always --exclude-dir=tmp -HIni ' todo:'"
+alias updatedb="sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist"
+alias ..="cd .."
+alias cgrep="grep --color=always"
+alias vimrc="$EDITOR ~/.vimrc"
+alias nvimrc="$EDITOR ~/.config/nvim/init.vim"
+alias sbp="source ~/.bash_profile"
+alias gitconfig="$EDITOR ~/.gitconfig"
+
+vimhelp() {
+    vim -c "help $1 | only"
+}
+
+alias vh=vimhelp
+
+man() {
+    /usr/bin/man $@ | col -b | vim -R -c "set ft=man nomod nolist" -
+}
