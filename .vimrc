@@ -123,7 +123,7 @@ set hlsearch
 set incsearch
 
 " Do not jump forward to the next match when searching for the current word
-nnoremap * *N
+nnoremap <silent> * *N
 
 " }}}
 
