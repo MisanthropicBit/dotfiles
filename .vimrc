@@ -82,7 +82,7 @@ endtry
 
 " }}}
 
-" Leader shortcuts {{{
+" Mappings {{{
 
 " Set leader character
 let mapleader="\<space>"
@@ -111,6 +111,55 @@ nnoremap <leader>q :q<cr>
 
 " Shortcut for correcting a misspelled word with its first suggestion
 nnoremap <leader>1 1z=
+
+" Count and display the occurrences of <cword>
+nnoremap <silent> <leader>o :%s/<c-r><c-w>//gn<cr>
+
+" Move vertically while ignoring true lines
+nnoremap j gj
+nnoremap k gk
+
+" Auto-close curly brackets after pressing [Enter]
+inoremap {<cr> {<cr>}<C-o>O
+
+" Shortcut for editing the vimrc file
+nnoremap <leader>vh :sp $MYVIMRC<cr>
+nnoremap <leader>vv :vsp $MYVIMRC<cr>
+
+" Shortcut to reload the vimrc file
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" Easily swap the current line up and down
+" Based on: https://github.com/vim/vim/issues/536
+nnoremap <silent> J :call <SID>FoldSafeMove(1)<cr>
+nnoremap <silent> K :call <SID>FoldSafeMove(-1)<cr>
+vnoremap <silent> J :call <SID>FoldSafeVisualMove(1)<cr>
+vnoremap <silent> K :call <SID>FoldSafeVisualMove(-1)<cr>
+
+" Open the 'goto file' in a new tab
+nnoremap gf <c-w>gf
+
+" Yank from cursor to the end of line instead of the entire line
+nnoremap Y y$
+
+" Shortcut for calling '!make'
+nnoremap <leader>m :!make<cr>
+
+" Quicker way to increment and decrement numbers
+" Mnemonics: [u]p and [d]own
+nnoremap <leader>u <c-a>
+nnoremap <leader>d <c-x>
+
+" Quickly toggle folds
+nnoremap <leader>f za
+
+" Quickly toggle relative line numbering
+if v:version >= 703
+    nnoremap <silent> <leader>n :set relativenumber!<cr>
+endif
+
+" Quicker way to exit insert mode
+inoremap jk <esc>
 
 " }}}
 
@@ -164,54 +213,6 @@ nnoremap <leader>swh <c-w>t <c-w>K
 " Change two horizontally split windows to a vertical layout
 " Mnenomic: Swap Windows to Vertical
 nnoremap <leader>swv <c-w>t <c-w>H
-
-" }}}
-
-" Mappings {{{
-
-" Move vertically while ignoring true lines
-nnoremap j gj
-nnoremap k gk
-
-" Auto-close curly brackets after pressing [Enter]
-inoremap {<cr> {<cr>}<C-o>O
-
-" Shortcut for editing the vimrc file
-nnoremap <leader>vh :sp $MYVIMRC<cr>
-nnoremap <leader>vv :vsp $MYVIMRC<cr>
-
-" Shortcut to reload the vimrc file
-nnoremap <leader>sv :source $MYVIMRC<cr>
-
-" Easily swap the current line up and down
-" Based on: https://github.com/vim/vim/issues/536
-nnoremap <silent> J :call <SID>FoldSafeMove(1)<cr>
-nnoremap <silent> K :call <SID>FoldSafeMove(-1)<cr>
-vnoremap <silent> J :call <SID>FoldSafeVisualMove(1)<cr>
-vnoremap <silent> K :call <SID>FoldSafeVisualMove(-1)<cr>
-
-" Quicker way to exit insert mode
-inoremap jk <esc>
-
-" Open the 'goto file' in a new tab
-nnoremap gf <c-w>gf
-
-" Yank from cursor to the end of line instead of the entire line
-nnoremap Y y$
-
-" Shortcut for calling '!make'
-nnoremap <leader>m :!make<cr>
-
-" Quicker way to increment and decrement numbers
-" Mnemonics: [u]p and [d]own
-nnoremap <leader>u <c-a>
-nnoremap <leader>d <c-x>
-
-" Quickly toggle folds
-nnoremap <leader>f za
-
-" Quickly toggle relative line numbering
-nnoremap <silent> <leader>n :set relativenumber!<cr>
 
 " }}}
 
