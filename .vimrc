@@ -532,6 +532,9 @@ let g:ctrlp_custom_ignore = {
 " Always show hidden files
 let g:ctrlp_show_hidden = 1
 
+" Custom root marker for manually setting the CtrlP root
+let g:ctrlp_root_markers = ['.ctrlproot']
+
 " }}}
 
 " colorizer {{{
