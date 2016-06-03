@@ -275,7 +275,7 @@ if has("autocmd")
 
     augroup latex
         " Enable spell-checking for Latex files
-        autocmd FileType tex,plaintex setlocal spell spelllang=en_gb
+        autocmd FileType tex,plaintex setlocal spell spelllang=en_gb tw=90
     augroup END
 
     augroup makefile
