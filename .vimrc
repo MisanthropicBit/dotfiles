@@ -85,10 +85,10 @@ endtry
 " Mappings {{{
 
 " Set leader character
-let mapleader="\<space>"
+let mapleader = "\<space>"
 
 " Set the local leader character
-let maplocalleader="\<space>"
+let maplocalleader = "\<space>"
 
 " Display the syntax group(s) of the current word
 nnoremap <leader>sg :call <SID>SynStack()<cr>
@@ -309,7 +309,7 @@ endif
 " Explorer {{{
 
 " Show stats in :Explorer mode
-let g:netrw_liststyle=3
+let g:netrw_liststyle = 3
 
 " }}}
 
@@ -335,7 +335,7 @@ function! DeleteTrailingWhitespace()
     %s/\s\+$//e
 
     " Restore previous search history and position
-    let @/=s
+    let @/ = s
     call cursor(line, col)
 endfunction
 
@@ -428,20 +428,20 @@ augroup END
 " vim-airline {{{
 
 " Fancy tabs!
-let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#enabled = 1
 
 " Show tab numbers
-let g:airline#extensions#tabline#show_tab_nr=1
-let g:airline#extensions#tabline#tab_nr_type=1
+let g:airline#extensions#tabline#show_tab_nr = 1
+let g:airline#extensions#tabline#tab_nr_type = 1
 
 " Do not show buffers when only a single tab is open
-let g:airline#extensions#tabline#show_buffers=0
+let g:airline#extensions#tabline#show_buffers = 0
 
 " Use the sweet powerline fonts
 let g:airline_powerline_fonts=1
 
 " Enable the Syntastic plugin for vim-airline
-let g:airline#extensions#syntastic#enabled=1
+let g:airline#extensions#syntastic#enabled = 1
 
 " }}}
 
@@ -477,37 +477,37 @@ let g:syntastic_c_checkers=['clang']
 let g:syntastic_cpp_checkers=['clang++']
 
 " Enable C++11 support in clang++
-let g:syntastic_cpp_compiler='clang++'
+let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options='-std=c++11 -stdlib=libc++'
 
 " Enable C# support using Mono
 let g:syntastic_cs_checkers=['mcs']
 
 " Enable Syntastic for plaintex files
-let g:tex_flavor='tex'
+let g:tex_flavor = 'tex'
 let g:syntastic_plaintex_checkers=['lacheck']
 
 " Enable Syntastic for Scala
 let g:syntastic_scala_checkers=['fsc']
 
 " Check syntax when opening files
-let g:syntastic_check_on_open=1
+let g:syntastic_check_on_open = 1
 
 " Set unicode symbols
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_style_warning_symbol='⚡'
-let g:syntastic_style_error_symbol='⛔'
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_style_warning_symbol = '⚡'
+let g:syntastic_style_error_symbol = '⛔'
 
 " }}}
 
 " UltiSnips {{{
 
 " Set the private UltiSnips directory
-let g:UltiSnipsSnippetsDir='~/.vim/bundle/ultisnips/UltiSnips'
+let g:UltiSnipsSnippetsDir = '~/.vim/bundle/ultisnips/UltiSnips'
 
 " Split the :UltiSnipsEdit window horizontally or vertically depending on context
-let g:UltiSnipsEditSplit='context'
+let g:UltiSnipsEditSplit = 'context'
 
 " Open the snippets file for the current file type
 nnoremap <leader>sf :UltiSnipsEdit<cr>
@@ -517,7 +517,7 @@ nnoremap <leader>sf :UltiSnipsEdit<cr>
 " neocomplete {{{
 
 " Enable neocomplete at startup
-let g:neocomplete#enable_at_startup=1
+let g:neocomplete#enable_at_startup = 1
 
 " }}}
 
