@@ -406,6 +406,7 @@ endfunction
 
 " }}}
 
+" Plugins {{{
 " NERDTree {{{
 
 " Shortcut to toggle NERDTree
@@ -549,6 +550,15 @@ let g:colorizer_nomap = 1
 " Custom mapping for toggling colorization
 nnoremap <leader>tc <Plug>Colorizer
 
+" }}}
+
+" vim-task {{{
+
+let g:vimtask#fancy_arrows = 1
+
+let g:vimtask#note_foldtext = ' (notes)'
+
+" }}}
 " }}}
 
 " vim: foldenable foldmethod=marker foldlevel=0
