@@ -218,8 +218,8 @@ nnoremap <leader>swv <c-w>t <c-w>H
 
 " Folding {{{
 
-" Disable folding by default
-set nofoldenable
+" Only close folds that are at level 3 or higher
+set foldlevel=2
 
 " Using indentation to determine folding
 set foldmethod=indent
