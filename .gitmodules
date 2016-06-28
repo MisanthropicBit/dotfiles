@@ -40,3 +40,6 @@
 [submodule ".vim/bundle/a.vim"]
 	path = .vim/bundle/a.vim
 	url = https://github.com/vim-scripts/a.vim.git
+[submodule ".vim/bundle/haskell-vim"]
+	path = .vim/bundle/haskell-vim
+	url = https://github.com/neovimhaskell/haskell-vim.git
