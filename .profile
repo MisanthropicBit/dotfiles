@@ -45,7 +45,7 @@ export LSCOLORS='ExfxxxxxBx'
 
 if [ -e ~/.bash_powerline.sh ]; then
     source ~/.bash_powerline.sh
-    export BASH_POWERLINE_THEME=hybrid
+    export BASH_POWERLINE_THEME=simplistic
     export PROMPT_COMMAND=__bash_powerline_prompt
 fi
 
