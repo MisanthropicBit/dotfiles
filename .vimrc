@@ -161,6 +161,9 @@ endif
 " Quicker way to exit insert mode
 inoremap jk <esc>
 
+" Display everyting in &runtimepath on separate lines
+nnoremap <silent> <leader>rtp :echo join(sort(split(&runtimepath, ",")), "\n")<cr>
+
 " }}}
 
 " Searching {{{
