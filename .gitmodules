@@ -43,3 +43,6 @@
 [submodule ".vim/bundle/haskell-vim"]
 	path = .vim/bundle/haskell-vim
 	url = https://github.com/neovimhaskell/haskell-vim.git
+[submodule ".vim/bundle/vim-easy-align"]
+	path = .vim/bundle/vim-easy-align
+	url = https://github.com/junegunn/vim-easy-align
