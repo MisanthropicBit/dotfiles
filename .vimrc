@@ -467,32 +467,14 @@ let g:surround_{char2nr('e')}="\\begin{\1environment: \1}\r\\end{\1\1}"
 " where '|' is the cursor yields:
 "
 " \textbf{vim}
-let g:surround_{char2nr('l')}="\\\1markup: \1{\r}"
+"let g:surround_{char2nr('l')}="\\\1markup: \1{\r}"
+
+" Surround text with a LaTeX command using 'c'
+let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 
 " }}}
 
 " Syntastic {{{
-
-" Use flake8 for Python files
-let g:syntastic_python_checkers=['flake8']
-
-" Use clang/clang++ for C/C++
-let g:syntastic_c_checkers=['clang']
-let g:syntastic_cpp_checkers=['clang++']
-
-" Enable C++11 support in clang++
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options='-std=c++11 -stdlib=libc++'
-
-" Enable C# support using Mono
-let g:syntastic_cs_checkers=['mcs']
-
-" Enable Syntastic for plaintex files
-let g:tex_flavor = 'tex'
-let g:syntastic_plaintex_checkers=['lacheck']
-
-" Enable Syntastic for Scala
-let g:syntastic_scala_checkers=['fsc']
 
 " Check syntax when opening files
 let g:syntastic_check_on_open = 1
@@ -502,6 +484,23 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_style_warning_symbol = '⚡'
 let g:syntastic_style_error_symbol = '⛔'
+
+" Enable checkers for Syntastic using various linters and compilers
+let g:syntastic_python_checkers = ['flake8']
+
+let g:syntastic_c_checkers = ['clang']
+let g:syntastic_cpp_checkers = ['clang++']
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options='-std=c++11 -stdlib=libc++'
+
+let g:syntastic_cs_checkers = ['mcs']
+
+let g:tex_flavor = 'tex'
+let g:syntastic_plaintex_checkers = ['lacheck']
+
+let g:syntastic_scala_checkers = ['fsc']
+
+let g:syntastic_haskell_checkers = ['hlint']
 
 " }}}
 
