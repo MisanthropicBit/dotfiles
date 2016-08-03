@@ -481,6 +481,12 @@ let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 " Check syntax when opening files
 let g:syntastic_check_on_open = 1
 
+" Do not run checks on scala files because 'fsc' and 'scala' are too slow
+"let g:syntastic_mode_map = {
+"    \'mode': 'active',
+"    \'passive_filetypes': ['scala']
+"\}
+
 " Set unicode symbols
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
@@ -500,6 +506,7 @@ let g:syntastic_cs_checkers = ['mcs']
 let g:tex_flavor = 'tex'
 let g:syntastic_plaintex_checkers = ['lacheck']
 
+let g:syntastic_scala_fsc_options = '-Ystop-after:parser'
 let g:syntastic_scala_checkers = ['fsc']
 
 let g:syntastic_haskell_checkers = ['hlint']
