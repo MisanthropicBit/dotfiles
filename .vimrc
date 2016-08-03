@@ -476,6 +476,16 @@ let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 
 " }}}
 
+" vim-fugitive {{{
+" Useful git mappings based on the spf13-vim distribution
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gc :Gcommit<cr>
+nnoremap <leader>gb :Gblame<cr>
+nnoremap <leader>gl :Glog<cr>
+nnoremap <leader>gp :Git push<cr>
+" }}}
+
 " Syntastic {{{
 
 " Check syntax when opening files
@@ -580,7 +590,6 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
-
 " }}}
 
 " vim: foldenable foldmethod=marker foldlevel=0
