@@ -352,8 +352,8 @@ function! OpenDictionary(...)
         let word = shellescape(expand('<cword>'))
     endif
 
-    silent execute '!open dict://' . word
-	redraw!
+    " Handle missing file and "know application can open ..." errors
+    call system("open dict://" . word)
 endfunction
 
 " Automatically close the NERDTree file explorer window
