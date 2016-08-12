@@ -28,15 +28,15 @@ export GIT_EDITOR="vim"
 # Use uppercase letters for bold colors
 #
 # Ordering:
-# 1. Directories
-# 2. Symbolic links
-# 3. Sockets
-# 4. Pipes
-# 5. Executables
-# 6. Block special
-# 7. Character special
-# 8. Executables with setuid bit set
-# 9. Executables with setgid bit set
+# 1.  Directories
+# 2.  Symbolic links
+# 3.  Sockets
+# 4.  Pipes
+# 5.  Executables
+# 6.  Block special
+# 7.  Character special
+# 8.  Executables with setuid bit set
+# 9.  Executables with setgid bit set
 # 10. Directories writable to others, with sticky bit set
 # 11. Directories writable to others, without sticky bit set
 #
