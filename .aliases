@@ -30,6 +30,12 @@ alias nvimrc="$EDITOR ~/.config/nvim/init.vim"
 alias sbp="source ~/.bash_profile"
 alias gitconfig="$EDITOR ~/.gitconfig"
 
+if type pygmentize > /dev/null; then
+    highlight() {
+        pygmentize -O style=lovelace -f terminal16m "$1" | less -r
+    }
+fi
+
 vimhelp() {
     vim -c "help $1 | only"
 }
