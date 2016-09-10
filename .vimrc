@@ -504,7 +504,7 @@ let g:syntastic_style_warning_symbol = '⚡'
 let g:syntastic_style_error_symbol = '⛔'
 
 " Enable checkers for Syntastic using various linters and compilers
-let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_checkers = ['flake8', 'pep257']
 
 let g:syntastic_c_checkers = ['clang']
 let g:syntastic_cpp_checkers = ['clang++']
