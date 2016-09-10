@@ -36,6 +36,17 @@ if type pygmentize > /dev/null; then
     }
 fi
 
+if [[ $(type pip) > /dev/null && $(type python) > /dev/null ]]; then
+    if pip list | grep -iw "markdown"; then
+        render() {
+            for filename in "$@"; do
+                local stripped="${filename%.*}"
+                python -m markdown "$filename" > "${stripped}.html"
+            done
+        }
+    fi
+fi
+
 vimhelp() {
     vim -c "help $1 | only"
 }
