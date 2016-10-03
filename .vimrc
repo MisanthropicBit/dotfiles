@@ -221,7 +221,7 @@ nnoremap <leader>swv <c-w>t <c-w>H
 
 " Folding {{{
 
-" Only close folds that are at level 4 or higher
+" Only close folds that are at level 3 or higher
 set foldlevel=3
 
 " Using indentation to determine folding
