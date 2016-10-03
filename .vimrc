@@ -162,7 +162,8 @@ endif
 inoremap jk <esc>
 
 " Display everyting in &runtimepath on separate lines
-nnoremap <silent> <leader>rtp :echo join(sort(split(&runtimepath, ",")), "\n")<cr>
+nnoremap <silent> <leader>rtp :echo "Plugins:\n" . join(<SID>GetPluginNames(), "\n")<cr>
+
 
 " }}}
 
@@ -409,6 +410,14 @@ function! s:FoldSafeVisualMove(dir) range
 
     let &l:foldmethod = oldfoldmethod
     normal! gv
+endfunction
+
+function! s:GetPluginNames()
+    " Remove stuff not in .vim/bundle/, get the tail of the paths and sort them
+    let plugins = sort(map(filter(split(&runtimepath, ","), 'v:val =~# "bundle"'), 'fnamemodify(v:val, ":t")'))
+
+    " Remove after directories
+    return filter(plugins, 'v:val !~# "after"')
 endfunction
 
 " }}}
