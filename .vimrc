@@ -196,6 +196,10 @@ set autoindent
 
 nnoremap <C-t> :tabnew<cr>
 
+" Faster tab switching using a meta-key
+nnoremap <s-l> gt
+nnoremap <s-h> gT
+
 " }}}
 
 " Windows {{{
