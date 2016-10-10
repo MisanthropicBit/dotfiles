@@ -24,7 +24,7 @@ extract() {
         echo "Usage: extract <path>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
     else
         if [ -f "$1" ]; then
-            local target_path="../$1"
+            local target_path="$1"
 
             case "$1" in
                 *.tar.bz2) tar xvjf "$target_path"    ;;
