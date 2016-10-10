@@ -5,8 +5,10 @@ if [ -e ~/.private_aliases ]; then
 fi
 
 # Use coreutils for sorting by file extension if available through homebrew
-if [[ -x $(which brew) && -d $(brew --prefix coreutils) ]]; then
-    alias lx="$(brew --prefix coreutils)/bin/gls -lahX --color=auto"
+if !(alias lx) > /dev/null; then
+    if [[ -x $(which brew) && -d $(brew --prefix coreutils) ]]; then
+        alias lx="$(brew --prefix coreutils)/bin/gls -lahX --color=auto"
+    fi
 fi
 
 alias aliases="$EDITOR ~/.aliases"
@@ -25,6 +27,7 @@ alias todo="grep --color=always --exclude-dir=tmp -HIni ' todo:'"
 alias updatedb="sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist"
 alias ..="cd .."
 alias cgrep="grep --color=always"
+alias vbundle="cd ~/.vim/bundle"
 alias vimrc="$EDITOR ~/.vimrc"
 alias nvimrc="$EDITOR ~/.config/nvim/init.vim"
 alias sbp="source ~/.bash_profile"
