@@ -38,7 +38,7 @@ alias gitconfig="$EDITOR ~/.gitconfig"
 
 if type pygmentize > /dev/null; then
     highlight() {
-        pygmentize -O style=lovelace -f terminal16m "$1" | less -r
+        pygmentize -O style=fruity -f terminal16m "$1" | less -r
     }
 fi
 
