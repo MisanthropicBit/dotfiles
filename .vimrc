@@ -262,10 +262,7 @@ if has("autocmd")
     augroup END
 
     augroup python
-        " Highlight text if it goes over 80 columns in Python
-        " Alternative: http://stackoverflow.com/questions/235439/vim-80-column-layout-concerns
-        autocmd FileType python setlocal colorcolumn=80
-        autocmd FileType python highlight ColorColumn ctermbg=235 guibg=#2c2d27
+        autocmd FileType python setlocal colorcolumn=80 textwidth=80
 
         " Automatically delete trailing whitespace when saving Python files
         autocmd BufWrite *.py :call DeleteTrailingWhitespace()
