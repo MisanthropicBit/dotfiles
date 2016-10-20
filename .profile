@@ -18,6 +18,9 @@ export EDITOR="vim"
 export HOMEBREW_EDITOR="vim"
 export GIT_EDITOR="vim"
 
+# Erase duplicates in history
+export HISTCONTROL=erasedups
+
 # Change directory color to cyan
 # a = black
 # b = red
