@@ -76,7 +76,7 @@ endif
 
 " Set the default colorscheme
 try
-    colorscheme hybrid
+    colorscheme bubblegum-256-dark
 catch
 endtry
 
