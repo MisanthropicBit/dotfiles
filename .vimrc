@@ -164,6 +164,8 @@ inoremap jk <esc>
 " Display everyting in &runtimepath on separate lines
 nnoremap <silent> <leader>rtp :echo "Plugins:\n" . join(<SID>GetPluginNames(), "\n")<cr>
 
+" Delete trailing whitespace (should this be an autocommand on saving/exiting?)
+nnoremap <silent> <leader>rw :call <SID>DeleteTrailingWhitespace()<cr>
 
 " }}}
 
@@ -330,7 +332,7 @@ function! <SID>SynStack()
 endfunction
 
 " Function that deletes trailing whitespace
-function! DeleteTrailingWhitespace()
+function! <SID>DeleteTrailingWhitespace()
     " Save current search history and position
     let s = @/
     let line = line('.')
