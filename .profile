@@ -61,3 +61,6 @@ export PATH=$PATH:/Library/TeX/Distributions/.DefaultTeX/Contents/Programs/texbi
 
 # Make sure /usr/local/sbin is in the path for Homebrew installs
 export PATH="$PATH:/usr/local/sbin"
+
+# Add cabal install path to PATH
+export PATH="$PATH:$HOME/.cabal/bin"
