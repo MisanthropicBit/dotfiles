@@ -266,7 +266,7 @@ set foldnestmax=3
 " Commands {{{
 
 if has('mac') || has('macunix')
-	command! -nargs=? Dict call OpenDictionary(<q-args>)
+    command! -nargs=? Dict call OpenDictionary(<q-args>)
 endif
 
 " }}}
@@ -384,7 +384,7 @@ endfunction
 
 " Open Dictionary.app on mac systems
 function! OpenDictionary(...)
-	let word = ''
+    let word = ''
 
     if a:1 !=# ''
         let word = a:1
