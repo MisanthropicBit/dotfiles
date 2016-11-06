@@ -5,7 +5,7 @@ if [ -e ~/.private_aliases ]; then
 fi
 
 # Use coreutils for sorting by file extension if available through homebrew
-if !(alias lx) > /dev/null; then
+if ! alias lx > /dev/null 2>&1; then
     if [[ -x $(which brew) && -d $(brew --prefix coreutils) ]]; then
         alias lx="$(brew --prefix coreutils)/bin/gls -lahX --color=auto"
     fi
