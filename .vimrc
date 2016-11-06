@@ -1,3 +1,6 @@
+" Author: Alexander Asp Bock
+" Source: https://github.com/MisanthropicBit/dotfiles
+
 " Pathogen {{{
 
 " Update runtimepath with plugins from ~/.vim/bundle/
