@@ -65,6 +65,26 @@ endif
 " Prefer wildmenu
 set wildmenu
 
+" Set file patterns to ignore in the wildmenu
+set wildignore+=.hg,.git,.svn                         " Version control files
+set wildignore+=*.aux,*.out,*.toc                     " LaTeX files
+set wildignore+=*.jpeg,*.jpg,*.bmp,*.gif,*.png,*.tiff " Image files
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.*.manifest    " Object files
+set wildignore+=*.sw?                                 " vim swap files
+set wildignore+=*.pyc                                 " Python bytecode files
+set wildignore+=*.class                               " Java class files
+
+" Trying out some of Steve Losh's vimrc stuff
+set visualbell
+set showbreak=↪
+set shiftround
+set linebreak
+set formatoptions=croqln
+set ignorecase
+set smartcase
+nnoremap / /\v
+vnoremap / /\v
+
 " }}}
 
 " Colors {{{
@@ -180,6 +200,10 @@ set incsearch
 " Do not jump forward to the next match when searching for the current word
 nnoremap <silent> * *N
 
+" Center the next or previous search matches
+nnoremap n nzvzz
+nnoremap N Nzvzz
+
 " }}}
 
 " Tabs, spaces and indentation {{{
@@ -250,6 +274,16 @@ endif
 " Autocommands {{{
 
 if has("autocmd")
+    " Automatically resize windows when vim is resized
+    autocmd VimResized * :wincmd =
+
+    augroup trailing
+        " Show trailing whitespace when not in insert mode
+        autocmd!
+        autocmd InsertEnter * :set listchars-=trail:⌴
+        autocmd InsertLeave * :set listchars+=trail:⌴
+    augroup END
+
     augroup clike
         " Use C-style indentation rules for C/C++/CUDA
         autocmd FileType c setlocal cindent
@@ -297,9 +331,11 @@ if has("autocmd")
 
     augroup save_edit_position
       " Remember last editing position (see ':h last-position-jump')
+      " Use 'zv' to open just enough folds for the line to be visible and
+      " 'zz' to center the line
       autocmd BufReadPost *
           \ if line("'\"") > 1 && line("'\"") <= line("$") |
-          \   execute "normal! g`\"" |
+          \   execute 'normal! g`"zvzz' |
           \ endif
     augroup END
 endif
@@ -602,6 +638,15 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " }}}
+
+" ag {{{
+
+" Mapping for the silver searcher
+nnoremap <leader>a :Ack!<space>
+let g:ackprg = 'ag --smart-case --nogroup --nocolor --column'
+
+" }}}
+
 " }}}
 
 " vim: foldenable foldmethod=marker foldlevel=0
