@@ -3,7 +3,7 @@ export PATH=$PATH:/usr/local/bin
 
 # Set Python path
 PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
-export PYTHONPATH=~/Dropbox/Projekter/Python:$PYTHONPATH
+export PYTHONPATH=~/Dropbox/projects/python:$PYTHONPATH
 
 # pyenv
 PYENV_ROOT=$HOME/.pyenv
