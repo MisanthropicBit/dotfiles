@@ -148,6 +148,7 @@ inoremap {<cr> {<cr>}<C-o>O
 " Shortcut for editing the vimrc file
 nnoremap <leader>vh :sp $MYVIMRC<cr>
 nnoremap <leader>vv :vsp $MYVIMRC<cr>
+nnoremap <leader>vt :tabe $MYVIMRC<cr>
 
 " Shortcut to reload the vimrc file
 nnoremap <leader>sv :source $MYVIMRC<cr>
