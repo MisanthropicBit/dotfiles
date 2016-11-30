@@ -284,8 +284,8 @@ if has("autocmd")
     augroup trailing
         " Show trailing whitespace when not in insert mode
         autocmd!
-        autocmd InsertEnter * :set listchars-=trail:⌴
-        autocmd InsertLeave * :set listchars+=trail:⌴
+        autocmd InsertEnter * :set listchars-=trail:⌴,nbsp:¬
+        autocmd InsertLeave * :set listchars+=trail:⌴,nbsp:¬
     augroup END
 
     augroup clike
