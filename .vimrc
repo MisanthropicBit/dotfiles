@@ -79,10 +79,10 @@ set wildignore+=*.class                                       " Java class files
 
 " Trying out some of Steve Losh's vimrc stuff
 set visualbell
-set showbreak=↪
+set showbreak="↪ "
 set shiftround
 set linebreak
-set formatoptions=croqln
+set formatoptions=croqlnt
 set ignorecase
 set smartcase
 nnoremap / /\v
