@@ -302,7 +302,7 @@ if has("autocmd")
     augroup END
 
     augroup python
-        autocmd FileType python setlocal colorcolumn=80 textwidth=80
+        autocmd FileType python setlocal colorcolumn=80 textwidth=79
 
         " Automatically delete trailing whitespace when saving Python files
         autocmd BufWrite *.py :call <SID>DeleteTrailingWhitespace()
