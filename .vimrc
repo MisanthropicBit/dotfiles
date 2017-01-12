@@ -645,9 +645,11 @@ nmap ga <Plug>(EasyAlign)
 
 " ag {{{
 
-" Mapping for the silver searcher
-nnoremap <leader>a :Ack!<space>
-let g:ackprg = 'ag --smart-case --nogroup --nocolor --column'
+if executable('ag')
+    " Mapping for the silver searcher
+    nnoremap <leader>a :Ack!<space>
+    let g:ackprg = 'ag --smart-case --nogroup --nocolor --column'
+endif
 
 " }}}
 
