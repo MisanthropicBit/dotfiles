@@ -99,7 +99,7 @@ endif
 
 " Set the default colorscheme
 try
-    colorscheme bubblegum-256-dark
+    colorscheme quantum
 catch
 endtry
 
