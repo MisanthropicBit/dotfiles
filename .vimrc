@@ -191,6 +191,10 @@ nnoremap <silent> <leader>rtp :echo "Plugins:\n" . join(<SID>GetPluginNames(), "
 " Delete trailing whitespace (should this be an autocommand on saving/exiting?)
 nnoremap <silent> <leader>rw :call <SID>DeleteTrailingWhitespace()<cr>
 
+" Open manpage (default) for the word under the cursor (since K is remapped to
+" moving lines upwards)
+nnoremap <silent> <leader>k K
+
 " }}}
 
 " Searching {{{
