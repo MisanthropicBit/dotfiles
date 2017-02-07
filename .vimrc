@@ -654,8 +654,11 @@ nmap ga <Plug>(EasyAlign)
 
 if executable('ag')
     " Mapping for the silver searcher
-    nnoremap <leader>a :Ack!<space>
-    let g:ackprg = 'ag --smart-case --nogroup --nocolor --column'
+    nnoremap <leader>a :Ag<space>
+    let g:ackprg = 'ag --smart-case --nocolor --column'
+
+    " This speeds up CtrlP searches significantly
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
 " }}}
