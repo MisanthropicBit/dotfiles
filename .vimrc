@@ -613,6 +613,9 @@ let g:ctrlp_show_hidden = 1
 " Custom root marker for manually setting the CtrlP root
 let g:ctrlp_root_markers = ['.ctrlproot']
 
+" Shortcut mapping for viewing (r)ecently (u)sed files
+nnoremap <localleader>ru :CtrlPMRUFiles<cr>
+
 " }}}
 
 " colorizer {{{
