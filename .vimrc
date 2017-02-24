@@ -577,6 +577,8 @@ let g:syntastic_scala_checkers = ['fsc']
 
 let g:syntastic_haskell_checkers = ['hlint']
 
+let g:syntastic_fsharp_checkers = ['syntax']
+
 " }}}
 
 " UltiSnips {{{
