@@ -584,6 +584,7 @@ let g:syntastic_fsharp_checkers = ['syntax']
 " UltiSnips {{{
 
 " Set the private UltiSnips directory
+let g:UltiSnipsSnippetDirectories = '~/.vim/bundle/ultisnips/UltiSnips'
 let g:UltiSnipsSnippetsDir = '~/.vim/bundle/ultisnips/UltiSnips'
 
 " Split the :UltiSnipsEdit window horizontally or vertically depending on context
