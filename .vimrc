@@ -195,6 +195,9 @@ nnoremap <silent> <leader>rw :call <SID>DeleteTrailingWhitespace()<cr>
 " moving lines upwards)
 nnoremap <silent> <leader>k K
 
+" Short-cut for 'goto tag' if tags are available through ctags
+nnoremap <silent> <leader>gt <c-]>
+
 " }}}
 
 " Searching {{{
