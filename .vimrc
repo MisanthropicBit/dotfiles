@@ -622,6 +622,9 @@ let g:ctrlp_root_markers = ['.ctrlproot']
 " Shortcut mapping for viewing (r)ecently (u)sed files
 nnoremap <localleader>ru :CtrlPMRUFiles<cr>
 
+" Shortcut mapping for viewing and (s)earching for (t)ags
+nnoremap <localleader>st :CtrlPTag<cr>
+
 " }}}
 
 " colorizer {{{
