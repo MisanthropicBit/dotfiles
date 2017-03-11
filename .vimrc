@@ -286,7 +286,7 @@ endif
 
 if has("autocmd")
     " Automatically resize windows when vim is resized
-    autocmd VimResized * :wincmd =
+    autocmd VimResized * :tabdo :wincmd =
 
     augroup trailing
         " Show trailing whitespace when not in insert mode
