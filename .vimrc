@@ -672,6 +672,12 @@ endif
 
 " }}}
 
+" vim-fsharp {{{
+
+let g:fsharp_only_check_errors_on_write = 1
+
+" }}}
+
 " }}}
 
 " vim: foldenable foldmethod=marker foldlevel=0
