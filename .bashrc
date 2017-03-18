@@ -3,7 +3,14 @@ alias bashrc='$EDITOR ~/.bashrc'
 alias bashprofile='$EDITOR ~/.bash_profile'
 alias profile='$EDITOR ~/.profile'
 
+##########################################################################################
+# inputrc
+##########################################################################################
+# Use tab to autocomplete paths etc.
 bind TAB:menu-complete
+
+# Disable XON/XOFF to use CTRL-s to search forward in reverse history
+stty -ixon
 
 if [ -f ~/.aliases ]; then
     source ~/.aliases
