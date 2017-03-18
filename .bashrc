@@ -1,4 +1,6 @@
+##########################################################################################
 # Aliases
+##########################################################################################
 alias bashrc='$EDITOR ~/.bashrc'
 alias bashprofile='$EDITOR ~/.bash_profile'
 alias profile='$EDITOR ~/.profile'
@@ -16,6 +18,9 @@ if [ -f ~/.aliases ]; then
     source ~/.aliases
 fi
 
+##########################################################################################
+# Functions
+##########################################################################################
 # Extract a compressed file using the appropriate tool
 extract() {
     # Warn the user if a program does not exist, before using it
