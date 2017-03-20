@@ -1,0 +1,36 @@
+[include]
+    path = ~/.private_gitconfig # Requires at least v1.7.10.2
+[core]
+    autocrlf = false
+    pager = less -r
+    ui = true
+    excludesfile = .gitignore_global
+[push]
+    default = simple
+[alias]
+    alias = config --get-regexp "^alias\\."
+    ap = add --patch
+    au = add -u
+    ba = branch -a
+    br = branch
+    browse = __git_browse $1 $2
+    cf = !git show --pretty="format:" --name-status
+    cm = commit -m
+    co = checkout
+    count = rev-list --count HEAD
+    dc = diff --cached
+    dl = !git diff --color=always $@ | less -r
+    filelog = log --name-status --oneline
+    getfile = !git archive --remote=~$1 HEAD:~$2 ~$3 | tar -x
+    graph = !git log --graph --color | less -r
+    issue = "!__git_issue_2945() { git branch -a | grep --color=always "issue-$1"; }; __git_issue_2945"
+    last = log -1 HEAD
+    rv = remote -v
+    sa = stash apply
+    sb = status -sb
+    sl = stash list
+    tracked = ls-files
+    unstage = reset HEAD --
+    update = clone https://www.github.com/git/git
+[web]
+    browser = open
