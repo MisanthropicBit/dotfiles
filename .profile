@@ -50,10 +50,10 @@ export HISTCONTROL=erasedups
 # Also see http://osxdaily.com/2012/02/21/add-color-to-the-terminal-in-mac-os-x/
 export LSCOLORS='ExfxxxxxBx'
 
-if [ -e ~/.bash_powerline.sh ]; then
-    source ~/.bash_powerline.sh
-    export BASH_POWERLINE_THEME=simplistic
-    export PROMPT_COMMAND=__bash_powerline_prompt
+if [ -f ~/.bash_powerprompt.sh ]; then
+    export BASH_POWERPROMPT_THEME=candy
+    source ~/.bash_powerprompt.sh
+    export PROMPT_COMMAND=__bash_powerprompt
 fi
 
 # MacTeX needs to be exported on El Capitan due to Apple's new rootless feature
