@@ -509,6 +509,9 @@ let g:airline#extensions#syntastic#enabled = 1
 " Enable Tagbar annotations in the statusline
 let g:airline#extensions#tagbar#enabled = 1
 
+" Limit the length of long branch names (appends '...')
+let g:airline#extensions#branch#displayed_head_limit = 32
+
 " }}}
 
 " vim-surround {{{
