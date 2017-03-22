@@ -506,6 +506,7 @@ let g:airline_powerline_fonts=1
 " Enable the Syntastic plugin for vim-airline
 let g:airline#extensions#syntastic#enabled = 1
 
+" Enable Tagbar annotations in the statusline
 let g:airline#extensions#tagbar#enabled = 1
 
 " }}}
