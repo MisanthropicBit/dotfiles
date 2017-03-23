@@ -32,5 +32,6 @@
     tracked = ls-files
     unstage = reset HEAD --
     update = clone https://www.github.com/git/git
+    upstream = !git rev-parse --abbrev-ref $1@{upstream}
 [web]
     browser = open
