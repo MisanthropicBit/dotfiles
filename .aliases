@@ -36,6 +36,7 @@ alias updatedb="sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.l
 alias upl="cd .. && l"
 alias v="pbpaste"
 alias vbundle="cd ~/.vim/bundle"
+alias vh=vimhelp
 alias vimrc="$EDITOR ~/.vimrc"
 
 if type pygmentize > /dev/null; then
@@ -58,8 +59,6 @@ fi
 vimhelp() {
     vim -c "help $1 | only"
 }
-
-alias vh=vimhelp
 
 man() {
     /usr/bin/man $@ | col -b | vim -R -c "set ft=man nomod nolist" -
