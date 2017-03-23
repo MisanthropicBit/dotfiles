@@ -403,7 +403,7 @@ function! OpenDictionary(...)
         let word = shellescape(expand('<cword>'))
     endif
 
-    " Handle missing file and "know application can open ..." errors
+    " Handle missing file and "no application can open ..." errors
     call system("open dict://" . word)
 endfunction
 
