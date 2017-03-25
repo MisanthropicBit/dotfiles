@@ -238,6 +238,9 @@ nnoremap <C-t> :tabnew<cr>
 nnoremap <s-l> gt
 nnoremap <s-h> gT
 
+" Open up to 15 tabs, instead of 10, with the '-p' option
+set tabpagemax=15
+
 " }}}
 
 " Windows {{{
