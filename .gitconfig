@@ -29,6 +29,7 @@
     sa = stash apply
     sb = status -sb
     sl = stash list
+    ss = stash show
     tracked = ls-files
     unstage = reset HEAD --
     update = clone https://www.github.com/git/git
