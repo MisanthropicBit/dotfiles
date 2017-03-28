@@ -490,6 +490,11 @@ let g:NERDTreeMapOpenSplit = 's'
 
 augroup NERDTree
     autocmd WinEnter * call s:CloseNerdTreeIfOnlyWindow()
+
+    if v:version >= 703
+        " Use relative line numbering for quick navigation
+        autocmd FileType nerdtree setlocal relativenumber
+    endif
 augroup END
 
 " }}}
