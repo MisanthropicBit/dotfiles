@@ -480,6 +480,9 @@ noremap <silent> <C-n> :NERDTreeToggle<cr>
 " Always show hidden files
 let NERDTreeShowHidden = 1
 
+" Show line numbers
+let NERDTreeShowLineNumbers = 1
+
 " Remap keys for opening files in splits to resemble
 " ':split' and ':vsplit'
 let g:NERDTreeMapOpenVSplit = 'v'
