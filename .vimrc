@@ -284,6 +284,8 @@ if has('mac') || has('macunix')
     command! -nargs=? Dict call OpenDictionary(<q-args>)
 endif
 
+command! -nargs=? Plugins :echo "Plugins:\n" . join(<SID>GetPluginNames(<q-args>), "\n")
+
 " }}}
 
 " Autocommands {{{
