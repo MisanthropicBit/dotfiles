@@ -693,6 +693,12 @@ let g:fsharp_only_check_errors_on_write = 1
 
 " }}}
 
+" Tagbar {{{
+
+" Toggle the Tagbar window
+nnoremap <c-b> :TagbarToggle<cr>
+
+" }}}
 " }}}
 
 " vim: foldenable foldmethod=marker foldlevel=0
