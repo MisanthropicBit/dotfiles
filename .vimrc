@@ -186,7 +186,8 @@ endif
 inoremap jk <esc>
 
 " Display everyting in &runtimepath on separate lines
-nnoremap <silent> <leader>rtp :echo "Plugins:\n" . join(<SID>GetPluginNames(), "\n")<cr>
+nnoremap <silent> <leader>rtp :echo "Plugins:\n" . join(<SID>GetPluginNames(''), "\n")<cr>
+
 
 " Delete trailing whitespace (should this be an autocommand on saving/exiting?)
 nnoremap <silent> <leader>rw :call <SID>DeleteTrailingWhitespace()<cr>
@@ -461,12 +462,15 @@ function! s:FoldSafeVisualMove(dir) range
     normal! gv
 endfunction
 
-function! s:GetPluginNames()
+function! s:GetPluginNames(regex)
     " Remove stuff not in .vim/bundle/, get the tail of the paths and sort them
     let plugins = sort(map(filter(split(&runtimepath, ","), 'v:val =~# "bundle"'), 'fnamemodify(v:val, ":t")'))
 
-    " Remove after directories
-    return filter(plugins, 'v:val !~# "after"')
+    if empty(a:regex)
+        return filter(plugins, 'v:val !~# "after"')
+    endif
+
+    return filter(plugins, 'v:val !~# "after" && v:val =~# "' . a:regex . '"')
 endfunction
 
 " }}}
