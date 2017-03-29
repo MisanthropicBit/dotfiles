@@ -475,7 +475,7 @@ endfunction
 " NERDTree {{{
 
 " Shortcut to toggle NERDTree
-noremap <silent> <C-n> :NERDTreeToggle<cr>
+noremap <silent> <c-n> :NERDTreeToggle<cr>
 
 " Always show hidden files
 let NERDTreeShowHidden = 1
