@@ -199,6 +199,10 @@ nnoremap <silent> <leader>k K
 " Short-cut for 'goto tag' if tags are available through ctags
 nnoremap <silent> <leader>gt <c-]>
 
+" Automatically reselect the visual block when indenting or dedenting
+vnoremap <silent> > :call <SID>VisualIndentReselect(1)<cr>
+vnoremap <silent> < :call <SID>VisualIndentReselect(-1)<cr>
+
 " }}}
 
 " Searching {{{
@@ -461,6 +465,11 @@ function! s:FoldSafeVisualMove(dir) range
     execute printf("silent %s,%sm %s<cr>", a:firstline, a:lastline, target)
 
     let &l:foldmethod = oldfoldmethod
+    normal! gv
+endfunction
+
+function! s:VisualIndentReselect(dir)
+    execute (a:dir >= 1 ? '>' : '<')
     normal! gv
 endfunction
 
