@@ -487,6 +487,63 @@ endfunction
 " }}}
 
 " Plugins {{{
+
+" ag {{{
+
+if executable('ag')
+    " Mapping for the silver searcher
+    nnoremap <leader>a :Ag<space>
+    let g:ackprg = 'ag --smart-case --nocolor --column'
+
+    " This speeds up CtrlP searches significantly
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+" }}}
+
+" colorizer {{{
+
+" colorizer is inefficient for large files (like 'eval.txt')
+" so limit it to files with lines < 100
+let g:colorizer_maxlines = 100
+
+" Disable the default colorizer mapping
+let g:colorizer_nomap = 1
+
+" Custom mapping for toggling colorization
+nnoremap <leader>tc <Plug>Colorizer
+
+" }}}
+
+" CtrlP {{{
+
+" Ignore shared libraries, class files and version control directories
+let g:ctrlp_custom_ignore = {
+    \ 'file': '\v\.(swp|so|dll|class)$',
+    \ 'dir' : '\v[\/]\.(git|hg|svn|idea)$'
+\ }
+
+" Always show hidden files
+let g:ctrlp_show_hidden = 1
+
+" Custom root marker for manually setting the CtrlP root
+let g:ctrlp_root_markers = ['.ctrlproot']
+
+" Shortcut mapping for viewing (r)ecently (u)sed files
+nnoremap <localleader>ru :CtrlPMRUFiles<cr>
+
+" Shortcut mapping for viewing and (s)earching for (t)ags
+nnoremap <localleader>st :CtrlPTag<cr>
+
+" }}}
+
+" delimitMate {{{
+
+" Expand any pair of delimiting characters when pressing enter
+let delimitMate_expand_cr = 1
+
+" }}}
+
 " NERDTree {{{
 
 " Shortcut to toggle NERDTree
@@ -514,65 +571,11 @@ augroup END
 
 " }}}
 
-" vim-airline {{{
+" neocomplete {{{
 
-" Fancy tabs!
-let g:airline#extensions#tabline#enabled = 1
+" Enable neocomplete at startup
+let g:neocomplete#enable_at_startup = 1
 
-" Show tab numbers
-let g:airline#extensions#tabline#show_tab_nr = 1
-let g:airline#extensions#tabline#tab_nr_type = 1
-
-" Do not show buffers when only a single tab is open
-let g:airline#extensions#tabline#show_buffers = 0
-
-" Use the sweet powerline fonts
-let g:airline_powerline_fonts=1
-
-" Enable the Syntastic plugin for vim-airline
-let g:airline#extensions#syntastic#enabled = 1
-
-" Enable Tagbar annotations in the statusline
-let g:airline#extensions#tagbar#enabled = 1
-
-" Limit the length of long branch names (appends '...')
-let g:airline#extensions#branch#displayed_head_limit = 32
-
-" }}}
-
-" vim-surround {{{
-
-" Quickly surround text with LaTeX (e)nvironments
-"
-" For example, typing 'ySwe' followed by 'center' when prompted on the text '|hello'
-" where '|' is the cursor yields:
-"
-" \begin{center}
-"     hello
-" \end{center}
-let g:surround_{char2nr('e')}="\\begin{\1environment: \1}\r\\end{\1\1}"
-
-" Quickly surround text with LaTeX markup
-"
-" For example, typing 'ySwl' followed by 'textbf' when prompted on the text '|vim'
-" where '|' is the cursor yields:
-"
-" \textbf{vim}
-"let g:surround_{char2nr('l')}="\\\1markup: \1{\r}"
-
-" Surround text with a LaTeX command using 'c'
-let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
-
-" }}}
-
-" vim-fugitive {{{
-" Useful git mappings based on the spf13-vim distribution
-nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>gd :Gdiff<cr>
-nnoremap <leader>gc :Gcommit<cr>
-nnoremap <leader>gb :Gblame<cr>
-nnoremap <leader>gl :Glog<cr>
-nnoremap <leader>gp :Git push<cr>
 " }}}
 
 " Syntastic {{{
@@ -614,6 +617,13 @@ let g:syntastic_fsharp_checkers = ['syntax']
 
 " }}}
 
+" Tagbar {{{
+
+" Toggle the Tagbar window
+nnoremap <c-b> :TagbarToggle<cr>
+
+" }}}
+
 " UltiSnips {{{
 
 " Set the private UltiSnips directory
@@ -628,54 +638,29 @@ nnoremap <leader>sf :UltiSnipsEdit<cr>
 
 " }}}
 
-" neocomplete {{{
+" vim-airline {{{
 
-" Enable neocomplete at startup
-let g:neocomplete#enable_at_startup = 1
+" Fancy tabs!
+let g:airline#extensions#tabline#enabled = 1
 
-" }}}
+" Show tab numbers
+let g:airline#extensions#tabline#show_tab_nr = 1
+let g:airline#extensions#tabline#tab_nr_type = 1
 
-" CtrlP {{{
+" Do not show buffers when only a single tab is open
+let g:airline#extensions#tabline#show_buffers = 0
 
-" Ignore shared libraries, class files and version control directories
-let g:ctrlp_custom_ignore = {
-    \ 'file': '\v\.(swp|so|dll|class)$',
-    \ 'dir' : '\v[\/]\.(git|hg|svn|idea)$'
-\ }
+" Use the sweet powerline fonts
+let g:airline_powerline_fonts=1
 
-" Always show hidden files
-let g:ctrlp_show_hidden = 1
+" Enable the Syntastic plugin for vim-airline
+let g:airline#extensions#syntastic#enabled = 1
 
-" Custom root marker for manually setting the CtrlP root
-let g:ctrlp_root_markers = ['.ctrlproot']
+" Enable Tagbar annotations in the statusline
+let g:airline#extensions#tagbar#enabled = 1
 
-" Shortcut mapping for viewing (r)ecently (u)sed files
-nnoremap <localleader>ru :CtrlPMRUFiles<cr>
-
-" Shortcut mapping for viewing and (s)earching for (t)ags
-nnoremap <localleader>st :CtrlPTag<cr>
-
-" }}}
-
-" colorizer {{{
-
-" colorizer is inefficient for large files (like 'eval.txt')
-" so limit it to files with lines < 100
-let g:colorizer_maxlines = 100
-
-" Disable the default colorizer mapping
-let g:colorizer_nomap = 1
-
-" Custom mapping for toggling colorization
-nnoremap <leader>tc <Plug>Colorizer
-
-" }}}
-
-" vim-task {{{
-
-let g:vimtask#fancy_arrows = 1
-
-let g:vimtask#note_foldtext = ' (notes)'
+" Limit the length of long branch names (appends '...')
+let g:airline#extensions#branch#displayed_head_limit = 32
 
 " }}}
 
@@ -689,36 +674,60 @@ nmap ga <Plug>(EasyAlign)
 
 " }}}
 
-" ag {{{
-
-if executable('ag')
-    " Mapping for the silver searcher
-    nnoremap <leader>a :Ag<space>
-    let g:ackprg = 'ag --smart-case --nocolor --column'
-
-    " This speeds up CtrlP searches significantly
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
-
-" }}}
-
 " vim-fsharp {{{
 
 let g:fsharp_only_check_errors_on_write = 1
 
 " }}}
 
-" Tagbar {{{
+" vim-fugitive {{{
+" Useful git mappings based on the spf13-vim distribution
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gc :Gcommit<cr>
+nnoremap <leader>gb :Gblame<cr>
+nnoremap <leader>gl :Glog<cr>
+nnoremap <leader>gp :Git push<cr>
+" }}}
 
-" Toggle the Tagbar window
-nnoremap <c-b> :TagbarToggle<cr>
+" vim-surround {{{
+
+" Quickly surround text with LaTeX (e)nvironments
+"
+" For example, typing 'ySwe' followed by 'center' when prompted on the text '|hello'
+" where '|' is the cursor yields:
+"
+" \begin{center}
+"     hello
+" \end{center}
+let g:surround_{char2nr('e')}="\\begin{\1environment: \1}\r\\end{\1\1}"
+
+" Quickly surround text with LaTeX markup
+"
+" For example, typing 'ySwl' followed by 'textbf' when prompted on the text '|vim'
+" where '|' is the cursor yields:
+"
+" \textbf{vim}
+"let g:surround_{char2nr('l')}="\\\1markup: \1{\r}"
+
+" Surround text with a LaTeX command using 'c'
+let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 
 " }}}
 
-" delimitMate {{{
+" vim-task {{{
 
-" Expand any pair of delimiting characters when pressing enter
-let delimitMate_expand_cr = 1
+let g:vimtask#enable_mappings = 1
+let g:vimtask#fancy_arrows = 1
+let g:vimtask#notes_only_foldtext = ' (notes)'
+let g:vimtask#automove_completed_tasks = 1
+let g:vimtask#automove_cancelled_tasks = 1
+let g:vimtask#search_paths = ['~/phd/']
+let g:vimtask#archive_mode = 2
+let g:vimtask#done_symbol = '✔'
+let g:vimtask#todo_symbol = '☐'
+let g:vimtask#cancelled_symbol = '✗'
+let g:vimtask#bullet_symbols = ['•', '◦', '‣', '▹']
 
 " }}}
 
