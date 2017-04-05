@@ -714,6 +714,14 @@ let g:fsharp_only_check_errors_on_write = 1
 nnoremap <c-b> :TagbarToggle<cr>
 
 " }}}
+
+" delimitMate {{{
+
+" Expand any pair of delimiting characters when pressing enter
+let delimitMate_expand_cr = 1
+
+" }}}
+
 " }}}
 
 " vim: foldenable foldmethod=marker foldlevel=0
