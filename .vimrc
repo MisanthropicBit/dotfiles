@@ -103,6 +103,9 @@ endtry
 " Enable syntax highlighting
 syntax on
 
+" Default to using bash syntax highlighting
+let g:is_bash = 1
+
 " }}}
 
 " Mappings {{{
