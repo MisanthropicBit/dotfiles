@@ -145,9 +145,6 @@ nnoremap <silent> <leader>o :%s/<c-r><c-w>//gn<cr>
 nnoremap j gj
 nnoremap k gk
 
-" Auto-close curly brackets after pressing [Enter]
-inoremap {<cr> {<cr>}<C-o>O
-
 " Shortcut for editing the vimrc file
 nnoremap <leader>vh :sp $MYVIMRC<cr>
 nnoremap <leader>vv :vsp $MYVIMRC<cr>
