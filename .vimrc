@@ -30,9 +30,6 @@ endif
 " Prefer utf-8
 set encoding=utf8
 
-" Enable syntax highlighting
-syntax on
-
 " Set margin for the zt and zb commands
 set scrolloff=3
 
@@ -90,7 +87,7 @@ vnoremap / /\v
 
 " }}}
 
-" Colors {{{
+" Colors and syntax {{{
 
 " Enable 256 color mode
 if !has('gui_running')
@@ -102,6 +99,9 @@ try
     colorscheme quantum
 catch
 endtry
+
+" Enable syntax highlighting
+syntax on
 
 " }}}
 
