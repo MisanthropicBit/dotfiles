@@ -597,22 +597,16 @@ let g:syntastic_style_error_symbol = '⛔'
 
 " Enable checkers for Syntastic using various linters and compilers
 let g:syntastic_python_checkers = ['flake8', 'pep257']
-
 let g:syntastic_c_checkers = ['clang']
 let g:syntastic_cpp_checkers = ['clang++']
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
-
 let g:syntastic_cs_checkers = ['mcs']
-
 let g:tex_flavor = 'tex'
 let g:syntastic_plaintex_checkers = ['lacheck']
-
 let g:syntastic_scala_fsc_options = '-Ystop-after:parser'
 let g:syntastic_scala_checkers = ['fsc']
-
 let g:syntastic_haskell_checkers = ['hlint']
-
 let g:syntastic_fsharp_checkers = ['syntax']
 
 " }}}
