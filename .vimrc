@@ -202,6 +202,28 @@ nnoremap <silent> <leader>gt <c-]>
 vnoremap <silent> > :call <SID>VisualIndentReselect(1)<cr>
 vnoremap <silent> < :call <SID>VisualIndentReselect(-1)<cr>
 
+" Disable arrow keys and page-up/down in normal-, insert- and visual-mode
+"
+" For a plugin solution, see https://github.com/wikitopian/hardmode
+nnoremap <Up>       <nop>
+nnoremap <Down>     <nop>
+nnoremap <Left>     <nop>
+nnoremap <Right>    <nop>
+nnoremap <PageUp>   <nop>
+nnoremap <PageDown> <nop>
+inoremap <Up>       <nop>
+inoremap <Down>     <nop>
+inoremap <Left>     <nop>
+inoremap <Right>    <nop>
+inoremap <PageUp>   <nop>
+inoremap <PageDown> <nop>
+vnoremap <Up>       <nop>
+vnoremap <Down>     <nop>
+vnoremap <Left>     <nop>
+vnoremap <Right>    <nop>
+vnoremap <PageUp>   <nop>
+vnoremap <PageDown> <nop>
+
 " }}}
 
 " Searching {{{
