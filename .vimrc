@@ -89,9 +89,13 @@ vnoremap / /\v
 
 " Colors and syntax {{{
 
-" Enable 256 color mode
+" Attempt to use true-colors in terminal vim, otherwise fall back to 256 colors
 if !has('gui_running')
-    set t_Co=256
+    if has('termguicolors') || has('nvim')
+        set termguicolors
+    else
+        set t_Co=256
+    endif
 endif
 
 " Set the default colorscheme
