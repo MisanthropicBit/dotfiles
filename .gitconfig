@@ -28,6 +28,7 @@
     rv = remote -v
     sa = stash apply
     sb = status -sb
+    sd = stash drop
     sl = stash list
     ss = stash show
     tracked = ls-files
