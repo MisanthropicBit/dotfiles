@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 # Aliases that can be shared between bash and zsh
 
 if [ -e ~/.private_aliases ]; then
