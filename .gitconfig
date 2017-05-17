@@ -14,6 +14,7 @@
     ba = branch -a
     br = branch
     browse = __git_browse $1 $2
+    bs = branch --list
     cf = !git show --pretty="format:" --name-status
     cm = commit -m
     co = checkout
