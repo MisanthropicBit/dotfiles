@@ -389,6 +389,11 @@ if has("autocmd")
           \   execute 'normal! g`"zvzz' |
           \ endif
     augroup END
+
+    augroup quickfix
+        autocmd!
+        autocmd QuickFixCmdPost vimgrep cwindow
+    augroup END
 endif
 
 " }}}
