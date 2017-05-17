@@ -707,6 +707,9 @@ nmap ga <Plug>(EasyAlign)
 
 let g:fsharp_only_check_errors_on_write = 1
 
+" Remap F# type-checking to avoid clashing with vim-task mappings
+let g:fsharp_map_typecheck = 'y'
+
 " }}}
 
 " vim-fugitive {{{
