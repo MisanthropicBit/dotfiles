@@ -320,6 +320,8 @@ endif
 
 command! -nargs=? Plugins :echo "Plugins:\n" . join(<SID>GetPluginNames(<q-args>), "\n")
 
+command! RandomColorscheme :call <SID>RandomColorscheme()
+
 " }}}
 
 " Autocommands {{{
@@ -517,6 +519,23 @@ function! s:GetPluginNames(regex)
     endif
 
     return filter(plugins, 'v:val !~# "after" && v:val =~# "' . a:regex . '"')
+endfunction
+
+let s:builtin_colorschemes = ['blue', 'darkblue', 'default', 'delek', 'desert', 'elflord', 'evening',
+                             \'koehler', 'morning', 'murphy', 'pablo', 'peachpuff', 'slate', 'shine',
+                             \'torte', 'zellner']
+
+" Find and choose and random user-defined colorscheme
+function! s:RandomColorscheme()
+    let colorschemes = map(split(globpath(&runtimepath, 'colors/*.vim'), '\n'),
+                          \'fnamemodify(v:val, ":t:r")')
+    let user_colorschemes = filter(colorschemes,
+                                  \'index(s:builtin_colorschemes, v:val) == -1')
+
+    let random = system('echo $RANDOM') % len(user_colorschemes)
+    let chosen = get(user_colorschemes, random)
+
+    execute ':colorscheme ' . chosen
 endfunction
 
 " }}}
