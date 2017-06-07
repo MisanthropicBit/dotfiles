@@ -457,19 +457,21 @@ function! <SID>DeleteTrailingWhitespace()
     call cursor(line, col)
 endfunction
 
-" Open Dictionary.app on mac systems
-function! OpenDictionary(...)
-    let word = ''
+if has('mac') || has('macunix')
+    " Open Dictionary.app on mac systems
+    function! OpenDictionary(...)
+        let word = ''
 
-    if a:1 !=# ''
-        let word = a:1
-    else
-        let word = shellescape(expand('<cword>'))
-    endif
+        if a:1 !=# ''
+            let word = a:1
+        else
+            let word = shellescape(expand('<cword>'))
+        endif
 
-    " Handle missing file and "no application can open ..." errors
-    call system("open dict://" . word)
-endfunction
+        " Handle missing file and "no application can open ..." errors
+        call system("open dict://" . word)
+    endfunction
+endif
 
 " Automatically close the NERDTree file explorer window
 " if it is the only window left
