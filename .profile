@@ -51,6 +51,7 @@ export HISTCONTROL=erasedups
 export LSCOLORS='ExfxxxxxBx'
 
 if [ -f ~/.bash_powerprompt.sh ]; then
+    export BASH_POWERPROMPT_DIRECTORY="/Users/albo/Dropbox/projects/bash/bash_powerline/"
     export BASH_POWERPROMPT_THEME=candy
     source ~/.bash_powerprompt.sh
     export PROMPT_COMMAND=__bash_powerprompt
