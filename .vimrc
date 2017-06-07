@@ -400,6 +400,12 @@ if has("autocmd")
         autocmd!
         autocmd QuickFixCmdPost vimgrep cwindow
     augroup END
+
+    augroup csharp
+        autocmd!
+        autocmd FileType cs nnoremap <buffer> <silent> <localleader>ot :OmniSharpTypeLookup<cr>
+                         \| nnoremap <buffer> <silent> <localleader>od :OmniSharpGotoDefinition<cr>
+    augroup END
 endif
 
 " }}}
