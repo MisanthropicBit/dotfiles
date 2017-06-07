@@ -486,6 +486,7 @@ function! s:CloseNerdTreeIfOnlyWindow()
     endif
 endfunction
 
+" Move a range of lines up or down while retaining folds
 function! s:FoldSafeMove(dir) range
     let dist = (a:dir > 0 ? v:count1 : -1 - v:count1)
 
@@ -503,6 +504,7 @@ function! s:FoldSafeMove(dir) range
     call cursor('.', oldcol)
 endfunction
 
+" Visually move a range of lines up or down while retaining folds
 function! s:FoldSafeVisualMove(dir) range
     if a:dir > 0
         let target = a:lastline + v:count1
@@ -524,11 +526,13 @@ function! s:FoldSafeVisualMove(dir) range
     normal! gv
 endfunction
 
+" Reselect a visual selection after indenting or dedenting
 function! s:VisualIndentReselect(dir)
     execute (a:dir >= 1 ? '>' : '<')
     normal! gv
 endfunction
 
+" Return an alphabetically sorted list of all the currently installed plugins
 function! s:GetPluginNames(regex)
     " Remove stuff not in .vim/bundle/, get the tail of the paths and sort them
     let plugins = sort(map(filter(split(&runtimepath, ","), 'v:val =~# "bundle"'), 'fnamemodify(v:val, ":t")'))
