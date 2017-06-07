@@ -406,6 +406,13 @@ if has("autocmd")
         autocmd FileType cs nnoremap <buffer> <silent> <localleader>ot :OmniSharpTypeLookup<cr>
                          \| nnoremap <buffer> <silent> <localleader>od :OmniSharpGotoDefinition<cr>
     augroup END
+
+    if has('conceal')
+        augroup task
+            autocmd!
+            autocmd FileType task setlocal conceallevel=2
+        augroup END
+    endif
 endif
 
 " }}}
