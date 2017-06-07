@@ -233,6 +233,10 @@ vnoremap <Right>    <nop>
 vnoremap <PageUp>   <nop>
 vnoremap <PageDown> <nop>
 
+" Always center jumps
+nnoremap <c-o> <c-o>zz
+nnoremap <c-i> <c-i>zz
+
 " }}}
 
 " Searching {{{
