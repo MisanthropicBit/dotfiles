@@ -323,7 +323,6 @@ if has('mac') || has('macunix')
 endif
 
 command! -nargs=? Plugins :echo "Plugins:\n" . join(<SID>GetPluginNames(<q-args>), "\n")
-
 command! RandomColorscheme :call <SID>RandomColorscheme()
 
 " }}}
@@ -535,7 +534,8 @@ endfunction
 " Return an alphabetically sorted list of all the currently installed plugins
 function! s:GetPluginNames(regex)
     " Remove stuff not in .vim/bundle/, get the tail of the paths and sort them
-    let plugins = sort(map(filter(split(&runtimepath, ","), 'v:val =~# "bundle"'), 'fnamemodify(v:val, ":t")'))
+    let plugins = sort(map(filter(split(&runtimepath, ","), 'v:val =~# "bundle"'),
+                          \'fnamemodify(v:val, ":t")'))
 
     if empty(a:regex)
         return filter(plugins, 'v:val !~# "after"')
@@ -544,9 +544,9 @@ function! s:GetPluginNames(regex)
     return filter(plugins, 'v:val !~# "after" && v:val =~# "' . a:regex . '"')
 endfunction
 
-let s:builtin_colorschemes = ['blue', 'darkblue', 'default', 'delek', 'desert', 'elflord', 'evening',
-                             \'koehler', 'morning', 'murphy', 'pablo', 'peachpuff', 'slate', 'shine',
-                             \'torte', 'zellner']
+let s:builtin_colorschemes = ['blue', 'darkblue', 'default', 'delek', 'desert', 'elflord',
+                             \'evening', 'koehler', 'morning', 'murphy', 'pablo', 'peachpuff',
+                             \'slate', 'shine', 'torte', 'zellner']
 
 " Find and choose and random user-defined colorscheme
 function! s:RandomColorscheme()
