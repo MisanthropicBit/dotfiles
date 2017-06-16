@@ -404,6 +404,7 @@ if has("autocmd")
         autocmd!
         autocmd FileType cs nnoremap <buffer> <silent> <localleader>ot :OmniSharpTypeLookup<cr>
                          \| nnoremap <buffer> <silent> <localleader>od :OmniSharpGotoDefinition<cr>
+                         \| nnoremap <buffer> <silent> <localleader>ou :OmniSharpFindUsages<cr>
     augroup END
 
     if has('conceal')
