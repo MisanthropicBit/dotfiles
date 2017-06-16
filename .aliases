@@ -64,3 +64,13 @@ vimhelp() {
 man() {
     /usr/bin/man $@ | col -b | vim -R -c "set ft=man nomod nolist" -
 }
+
+tophist() {
+    local top="$1"
+
+    if [ -z "$top" ]; then
+        top=3
+    fi
+
+    history | awk '{print $2}' | awk 'BEGIN {FS="|"}{print $1}' | sort | uniq -c | sort -nr | head -n $top
+}
