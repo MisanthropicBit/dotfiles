@@ -11,6 +11,158 @@ execute pathogen#helptags()
 
 " }}}
 
+" Functions {{{
+
+" Show syntax group for current word
+function! <SID>SynStack()
+    if !exists("*synstack")
+        return
+    endif
+
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunction
+
+" Function that deletes trailing whitespace
+function! <SID>DeleteTrailingWhitespace()
+    " Save current search history and position
+    let s = @/
+    let line = line('.')
+    let col = col('.')
+
+    " '%' specifies the entire file, 'e' supresses error messages
+    %s/\s\+$//e
+
+    " Restore previous search history and position
+    let @/ = s
+    call cursor(line, col)
+endfunction
+
+if has('mac') || has('macunix')
+    " Open Dictionary.app on mac systems
+    function! OpenDictionary(...)
+        let word = ''
+
+        if a:1 !=# ''
+            let word = a:1
+        else
+            let word = shellescape(expand('<cword>'))
+        endif
+
+        " Handle missing file and "no application can open ..." errors
+        call system("open dict://" . word)
+    endfunction
+endif
+
+" Automatically close the NERDTree file explorer window
+" if it is the only window left
+" Credit: https://github.com/scrooloose/nerdtree/issues/21
+function! s:CloseNerdTreeIfOnlyWindow()
+    if exists("t:NERDTreeBufName")
+        if bufwinnr(t:NERDTreeBufName) != -1
+            if winnr("$") == 1
+                q
+            endif
+        endif
+    endif
+endfunction
+
+" Move a range of lines up or down while retaining folds
+function! s:FoldSafeMove(dir) range
+    let dist = (a:dir > 0 ? v:count1 : -1 - v:count1)
+
+    if line('.') + dist > line('$') || line('.') + dist < 0
+        return
+    endif
+
+    setlocal foldmethod=manual
+    let oldfoldmethod = &l:foldmethod
+    let oldcol = col('.')
+
+    execute "silent m ." . string(dist) . "<cr>"
+
+    let &l:foldmethod = oldfoldmethod
+    call cursor('.', oldcol)
+endfunction
+
+" Visually move a range of lines up or down while retaining folds
+"
+" TODO: Test if we can use getpos("'<") to do correct target calculations
+function! s:FoldSafeVisualMove(dir) range
+    if a:dir > 0
+        let target = a:lastline + v:count1
+    else
+        let target = a:firstline - v:count1 - 1
+    endif
+
+    if target > line('$') || target < 0
+        normal! gv
+        return
+    endif
+
+    setlocal foldmethod=manual
+    let oldfoldmethod = &l:foldmethod
+
+    execute printf("silent %s,%sm %s<cr>", a:firstline, a:lastline, target)
+
+    let &l:foldmethod = oldfoldmethod
+    normal! gv
+endfunction
+
+" Reselect a visual selection after indenting or dedenting
+function! s:VisualIndentReselect(dir)
+    execute (a:dir >= 1 ? '>' : '<')
+    normal! gv
+endfunction
+
+" Return an alphabetically sorted list of all the currently installed plugins
+function! s:GetPluginNames(regex)
+    " Remove stuff not in .vim/bundle/, get the tail of the paths and sort them
+    let plugins = sort(map(filter(split(&runtimepath, ","), 'v:val =~# "bundle"'),
+                          \'fnamemodify(v:val, ":t")'))
+
+    if empty(a:regex)
+        return filter(plugins, 'v:val !~# "after"')
+    endif
+
+    return filter(plugins, 'v:val !~# "after" && v:val =~# "' . a:regex . '"')
+endfunction
+
+let s:builtin_colorschemes = ['blue', 'darkblue', 'default', 'delek', 'desert', 'elflord',
+                             \'evening', 'koehler', 'morning', 'murphy', 'pablo', 'peachpuff',
+                             \'slate', 'shine', 'torte', 'zellner']
+
+" For use in s:RandomColorscheme. Lists colorschemes that are broken or do not
+" support true-color
+let s:exclude_colorschemes = ['one-dark', 'hybrid', 'ron', 'tayra', 'charcoal_candy']
+
+" Find and choose and random user-defined colorscheme
+function! s:RandomColorscheme()
+    let colorschemes = map(split(globpath(&runtimepath, 'colors/*.vim'), '\n'),
+                          \'fnamemodify(v:val, ":t:r")')
+
+    let exclude = []
+
+    if exists("s:builtin_colorschemes")
+        let exclude += s:builtin_colorschemes
+    endif
+
+    if exists("s:exclude_colorschemes")
+        let exclude += s:exclude_colorschemes
+    endif
+
+    let user_colorschemes = filter(colorschemes,
+                                  \'index(exclude, v:val) == -1')
+
+    let random = system('echo $RANDOM') % len(user_colorschemes)
+    let chosen = get(user_colorschemes, random)
+
+    execute ':colorscheme ' . chosen
+
+    return chosen
+endfunction
+
+" }}}
+
 " General {{{
 
 " Ignore backwards compatibility to vi
@@ -428,139 +580,6 @@ endif
 
 " Show stats in :Explorer mode
 let g:netrw_liststyle = 3
-
-" }}}
-
-" Functions {{{
-
-" Show syntax group for current word
-function! <SID>SynStack()
-    if !exists("*synstack")
-        return
-    endif
-
-    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunction
-
-" Function that deletes trailing whitespace
-function! <SID>DeleteTrailingWhitespace()
-    " Save current search history and position
-    let s = @/
-    let line = line('.')
-    let col = col('.')
-
-    " '%' specifies the entire file, 'e' supresses error messages
-    %s/\s\+$//e
-
-    " Restore previous search history and position
-    let @/ = s
-    call cursor(line, col)
-endfunction
-
-if has('mac') || has('macunix')
-    " Open Dictionary.app on mac systems
-    function! OpenDictionary(...)
-        let word = ''
-
-        if a:1 !=# ''
-            let word = a:1
-        else
-            let word = shellescape(expand('<cword>'))
-        endif
-
-        " Handle missing file and "no application can open ..." errors
-        call system("open dict://" . word)
-    endfunction
-endif
-
-" Automatically close the NERDTree file explorer window
-" if it is the only window left
-" Credit: https://github.com/scrooloose/nerdtree/issues/21
-function! s:CloseNerdTreeIfOnlyWindow()
-    if exists("t:NERDTreeBufName")
-        if bufwinnr(t:NERDTreeBufName) != -1
-            if winnr("$") == 1
-                q
-            endif
-        endif
-    endif
-endfunction
-
-" Move a range of lines up or down while retaining folds
-function! s:FoldSafeMove(dir) range
-    let dist = (a:dir > 0 ? v:count1 : -1 - v:count1)
-
-    if line('.') + dist > line('$') || line('.') + dist < 0
-        return
-    endif
-
-    setlocal foldmethod=manual
-    let oldfoldmethod = &l:foldmethod
-    let oldcol = col('.')
-
-    execute "silent m ." . string(dist) . "<cr>"
-
-    let &l:foldmethod = oldfoldmethod
-    call cursor('.', oldcol)
-endfunction
-
-" Visually move a range of lines up or down while retaining folds
-function! s:FoldSafeVisualMove(dir) range
-    if a:dir > 0
-        let target = a:lastline + v:count1
-    else
-        let target = a:firstline - v:count1 - 1
-    endif
-
-    if target > line('$') || target < 0
-        normal! gv
-        return
-    endif
-
-    setlocal foldmethod=manual
-    let oldfoldmethod = &l:foldmethod
-
-    execute printf("silent %s,%sm %s<cr>", a:firstline, a:lastline, target)
-
-    let &l:foldmethod = oldfoldmethod
-    normal! gv
-endfunction
-
-" Reselect a visual selection after indenting or dedenting
-function! s:VisualIndentReselect(dir)
-    execute (a:dir >= 1 ? '>' : '<')
-    normal! gv
-endfunction
-
-" Return an alphabetically sorted list of all the currently installed plugins
-function! s:GetPluginNames(regex)
-    " Remove stuff not in .vim/bundle/, get the tail of the paths and sort them
-    let plugins = sort(map(filter(split(&runtimepath, ","), 'v:val =~# "bundle"'),
-                          \'fnamemodify(v:val, ":t")'))
-
-    if empty(a:regex)
-        return filter(plugins, 'v:val !~# "after"')
-    endif
-
-    return filter(plugins, 'v:val !~# "after" && v:val =~# "' . a:regex . '"')
-endfunction
-
-let s:builtin_colorschemes = ['blue', 'darkblue', 'default', 'delek', 'desert', 'elflord',
-                             \'evening', 'koehler', 'morning', 'murphy', 'pablo', 'peachpuff',
-                             \'slate', 'shine', 'torte', 'zellner']
-
-" Find and choose and random user-defined colorscheme
-function! s:RandomColorscheme()
-    let colorschemes = map(split(globpath(&runtimepath, 'colors/*.vim'), '\n'),
-                          \'fnamemodify(v:val, ":t:r")')
-    let user_colorschemes = filter(colorschemes,
-                                  \'index(s:builtin_colorschemes, v:val) == -1')
-
-    let random = system('echo $RANDOM') % len(user_colorschemes)
-    let chosen = get(user_colorschemes, random)
-
-    execute ':colorscheme ' . chosen
-endfunction
 
 " }}}
 
