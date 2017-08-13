@@ -256,10 +256,12 @@ if !has('gui_running')
 endif
 
 " Set the default colorscheme
-try
-    colorscheme quantum
-catch
-endtry
+"try
+"    colorscheme quantum
+"catch
+"endtry
+
+call <SID>RandomColorscheme()
 
 " Enable syntax highlighting
 syntax on
@@ -475,7 +477,7 @@ if has('mac') || has('macunix')
 endif
 
 command! -nargs=? Plugins :echo "Plugins:\n" . join(<SID>GetPluginNames(<q-args>), "\n")
-command! RandomColorscheme :call <SID>RandomColorscheme()
+command! RandomColorscheme :echo printf("Selected: %s", <SID>RandomColorscheme())
 
 " }}}
 
