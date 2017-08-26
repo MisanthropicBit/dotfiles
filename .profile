@@ -52,7 +52,7 @@ export LSCOLORS='ExfxxxxxBx'
 
 if [ -f ~/.bash_powerprompt.sh ]; then
     export BASH_POWERPROMPT_DIRECTORY="/Users/albo/Dropbox/projects/bash/bash_powerline/"
-    export BASH_POWERPROMPT_THEME=candy
+    export BASH_POWERPROMPT_THEME=random
     source ~/.bash_powerprompt.sh
     export PROMPT_COMMAND=__bash_powerprompt
 fi
