@@ -21,6 +21,10 @@ export GIT_EDITOR="vim"
 # Erase duplicates in history
 export HISTCONTROL=erasedups
 
+if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+    source "$(brew --prefix)/etc/bash_completion"
+fi
+
 # Change directory color to cyan
 # a = black
 # b = red
