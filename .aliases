@@ -41,6 +41,10 @@ alias vbundle="cd ~/.vim/bundle"
 alias vh=vimhelp
 alias vimrc="$EDITOR ~/.vimrc"
 
+bpprand() {
+    export BASH_POWERPROMPT_THEME=random
+}
+
 if type pygmentize > /dev/null; then
     highlight() {
         pygmentize -O style=fruity -f terminal16m "$1" | less -r
