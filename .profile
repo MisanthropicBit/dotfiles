@@ -52,7 +52,7 @@ fi
 # 11. Directories writable to others, without sticky bit set
 #
 # Also see http://osxdaily.com/2012/02/21/add-color-to-the-terminal-in-mac-os-x/
-export LSCOLORS='ExfxxxxxBx'
+export LSCOLORS='ExFxxxxxBx'
 
 if [ -f ~/.bash_powerprompt.sh ]; then
     export BASH_POWERPROMPT_DIRECTORY="/Users/albo/Dropbox/projects/bash/bash_powerline/"
