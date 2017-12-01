@@ -62,6 +62,15 @@ if type python > /dev/null; then
             }
         fi
     fi
+
+    # Outputs the filesize in megabytes
+    filesize() {
+        if [ -n "$1" ]; then
+            python -c "import os; print '%.2f MB' % (os.stat('$1').st_size / 10**6.0)"
+        else
+            printf "%s\n" "Usage: filesize <file>"
+        fi
+    }
 fi
 
 vimhelp() {
