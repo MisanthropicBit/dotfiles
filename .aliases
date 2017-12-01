@@ -90,3 +90,7 @@ tophist() {
 
     history | awk '{print $2}' | awk 'BEGIN {FS="|"}{print $1}' | sort | uniq -c | sort -nr | head -n $top
 }
+
+mkdir2() {
+    mkdir $1 && cd $_
+}
