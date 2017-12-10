@@ -586,6 +586,13 @@ let g:netrw_liststyle = 3
 
 " }}}
 
+" {{{ Neovim
+if has('nvim')
+    " Enable interactive command line substitution without window splitting
+    set inccommand=nosplit
+endif
+" }}}
+
 " Plugins {{{
 
 " ag {{{
