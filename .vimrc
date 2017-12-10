@@ -711,7 +711,7 @@ let g:syntastic_c_checkers = ['clang']
 let g:syntastic_cpp_checkers = ['clang++']
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
-let g:syntastic_cs_checkers = ['mcs']
+let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues', 'mcs']
 let g:tex_flavor = 'tex'
 let g:syntastic_plaintex_checkers = ['lacheck']
 let g:syntastic_scala_fsc_options = '-Ystop-after:parser'
