@@ -626,7 +626,7 @@ nnoremap <leader>tc <Plug>Colorizer
 
 " Ignore shared libraries, class files and version control directories
 let g:ctrlp_custom_ignore = {
-    \ 'file': '\v\.(swp|so|dll|class)$',
+    \ 'file': '\v\.(swp|so|dll|class|pyo|pyc)$',
     \ 'dir' : '\v[\/]\.(git|hg|svn|idea)$'
 \ }
 
