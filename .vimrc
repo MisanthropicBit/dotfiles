@@ -330,7 +330,7 @@ nnoremap gf <c-w>gf
 nnoremap Y y$
 
 " Shortcut for calling '!make'
-nnoremap <leader>m :!make<cr>
+nnoremap <leader>m :silent !make<cr>
 
 " Quicker way to increment and decrement numbers
 " Mnemonics: [u]p and [d]own
