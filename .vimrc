@@ -801,6 +801,14 @@ nnoremap <leader>gc :Gcommit<cr>
 nnoremap <leader>gb :Gblame<cr>
 nnoremap <leader>gl :Glog<cr>
 nnoremap <leader>gp :Git push<cr>
+
+" Define a command and mapping for viewing staged changes
+command! Gcached :Gtabedit! diff --cached
+nnoremap <leader>gr :Gcached<cr>
+
+" Mappings for diffput and diffget
+xnoremap <localleader>dp :diffput<cr>
+xnoremap <localleader>dg :diffget<cr>
 " }}}
 
 " vim-surround {{{
