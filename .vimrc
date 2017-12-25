@@ -811,6 +811,12 @@ xnoremap <localleader>dp :diffput<cr>
 xnoremap <localleader>dg :diffget<cr>
 " }}}
 
+" vim-startify {{{
+if &encoding == 'utf-8'
+    let g:startify_fortune_use_unicode = 1
+endif
+" }}}
+
 " vim-surround {{{
 
 " Quickly surround text with LaTeX (e)nvironments
