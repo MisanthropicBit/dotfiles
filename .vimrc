@@ -723,6 +723,12 @@ let g:syntastic_fsharp_checkers = ['syntax']
 
 " Tagbar {{{
 
+" Set the path to the Exuberant version of ctags
+let g:tagbar_ctags_bin = '/usr/local/Cellar/ctags/5.8_1/bin/ctags'
+
+" Make it easier to navigate in the Tagbar window
+let g:tagbar_show_linenumbers = 2
+
 " Toggle the Tagbar window
 nnoremap <c-b> :TagbarToggle<cr>
 
