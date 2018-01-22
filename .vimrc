@@ -654,6 +654,14 @@ let delimitMate_expand_cr = 1
 
 " }}}
 
+" goyo.vim {{{
+
+" Use the width of the textwidth option as the default width for goyo
+" Use a buffer of 5 for extra spaces in formatting or commented lines
+let g:goyo_width = max([80, &textwidth + 5])
+
+" }}}
+
 " NERDTree {{{
 
 " Shortcut to toggle NERDTree
