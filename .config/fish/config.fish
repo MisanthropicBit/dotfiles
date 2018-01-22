@@ -6,4 +6,4 @@ set --universal FISH_POWERPROMPT_THEME "random"
 set --universal fish_color_command 00c5d7 darkcyan
 set -gx LSCOLORS ExfxxxxxBx
 
-source aliases.fish
+source ./aliases.fish
