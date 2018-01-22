@@ -558,6 +558,8 @@ if has("autocmd")
                          \| nnoremap <buffer> <silent> <localleader>od :OmniSharpGotoDefinition<cr>
                          \| nnoremap <buffer> <silent> <localleader>ou :OmniSharpFindUsages<cr>
                          \| nnoremap <buffer> <silent> <localleader>or :OmniSharpRename<cr>
+                         \| nnoremap <buffer> <silent> <localleader>os :OmniSharpFindSymbol<cr>
+                         \| :silent OmniSharpHighlightTypes
     augroup END
 
     if has('conceal')
