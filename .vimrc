@@ -335,11 +335,6 @@ nnoremap Y y$
 " Shortcut for calling '!make'
 nnoremap <leader>m :silent !make<cr>
 
-" Quicker way to increment and decrement numbers
-" Mnemonics: [u]p and [d]own
-nnoremap <leader>u <c-a>
-nnoremap <leader>d <c-x>
-
 " Quickly toggle folds
 nnoremap <leader>f za
 
