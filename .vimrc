@@ -237,6 +237,9 @@ set smartcase
 nnoremap / /\v
 vnoremap / /\v
 
+" Highlight the line which the cursor is on
+set cursorline
+
 " }}}
 
 " Colors and syntax {{{
