@@ -36,5 +36,6 @@
     unstage = reset HEAD --
     update = clone https://www.github.com/git/git
     upstream = !git rev-parse --abbrev-ref $1@{upstream}
+    wd = diff --word-diff
 [web]
     browser = open
