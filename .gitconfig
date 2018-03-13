@@ -34,20 +34,24 @@
     dc = diff --cached
     dl = !git diff --color=always $@ | less -r
     filelog = log --name-status --oneline
+    fp = fetch --prune
     getfile = !git archive --remote=~$1 HEAD:~$2 ~$3 | tar -x
     graph = !git log --graph --color | less -r
     issue = "!__git_issue_2945() { git branch -a | grep --color=always "issue-$1"; }; __git_issue_2945"
     last = log -1 HEAD
+    pr = '!f() { git fetch ${2:-upstream}refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f'
     rv = remote -v
     sa = stash apply
     sb = status -sb
     sd = stash drop
     sl = stash list
+    sp = stash save --patch
     ss = stash show
     tracked = ls-files
     unstage = reset HEAD --
     update = clone https://www.github.com/git/git
     upstream = !git rev-parse --abbrev-ref $1@{upstream}
     wd = diff --word-diff
+    wdc = diff --word-diff --cached
 [web]
     browser = open
