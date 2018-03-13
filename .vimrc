@@ -245,13 +245,17 @@ endif
 set wildmenu
 
 " Set file patterns to ignore in the wildmenu
-set wildignore+=.hg,.git,.svn                                 " Version control files
-set wildignore+=*.aux,*.bbl,*.bcf,*.blg,*.run.xml,*.out,*.toc " LaTeX files
-set wildignore+=*.jpeg,*.jpg,*.bmp,*.gif,*.png,*.tiff         " Image files
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.*.manifest            " Object files
-set wildignore+=*.sw?                                         " vim swap files
-set wildignore+=*.pyc                                         " Python bytecode files
-set wildignore+=*.class                                       " Java class files
+set wildignore+=.hg,.git,.svn                           " Version control files
+set wildignore+=*.aux,*.bbl,*.bcf,*.blg,*.run.xml,*.toc " LaTeX files
+set wildignore+=*.jpeg,*.jpg,*.bmp,*.gif,*.png,*.tiff   " Image files
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.*.manifest      " Object files
+set wildignore+=*.sw?                                   " vim swap files
+set wildignore+=*.pyc                                   " Python bytecode files
+set wildignore+=*.class                                 " Java class files
+set wildignore+=*.fdb_latexmk,*.fls                     " Latexmk build files
+
+" List log files at the end
+set suffixes+=*.log
 
 " Trying out some of Steve Losh's vimrc stuff
 set visualbell
