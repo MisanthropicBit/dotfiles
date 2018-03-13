@@ -48,7 +48,7 @@
     sp = stash save --patch
     ss = stash show
     tracked = ls-files
-    unstage = reset HEAD --
+    unstage = reset --quiet HEAD --
     update = clone https://www.github.com/git/git
     upstream = !git rev-parse --abbrev-ref $1@{upstream}
     wd = diff --word-diff
