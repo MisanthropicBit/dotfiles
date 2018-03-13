@@ -738,6 +738,15 @@ let g:neocomplete#enable_at_startup = 1
 
 " }}}
 
+" omnisharp-vim {{{
+
+" Enable snippet completion on return type and method arguments (via Ultisnips)
+"let g:OmniSharp_want_snippet = 1
+let g:OmniSharp_want_return_type = 1
+let g:OmniSharp_want_method_header = 1
+
+" }}}
+
 " Syntastic {{{
 
 " Check syntax when opening files
