@@ -687,6 +687,12 @@ let delimitMate_expand_cr = 1
 
 " }}}
 
+" deoplete.nvim {{{
+
+let g:deoplete#enable_at_startup = 1
+
+" }}}
+
 " goyo.vim {{{
 
 " Use the width of the textwidth option as the default width for goyo
