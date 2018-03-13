@@ -591,6 +591,8 @@ if has("autocmd")
                          \| nnoremap <buffer> <silent> <localleader>or :OmniSharpRename<cr>
                          \| nnoremap <buffer> <silent> <localleader>os :OmniSharpFindSymbol<cr>
                          \| :silent OmniSharpHighlightTypes
+
+        autocmd CompleteDone *.cs call OmniSharp#ExpandAutoCompleteSnippet()
     augroup END
 
     if has('conceal')
