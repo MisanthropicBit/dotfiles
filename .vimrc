@@ -40,16 +40,43 @@ endfunction
 if has('mac') || has('macunix')
     " Open Dictionary.app on mac systems
     function! OpenDictionary(...)
+        let bang = a:1
         let word = ''
 
-        if a:1 !=# ''
-            let word = a:1
+        if a:2 !=# ''
+            let word = a:2
         else
             let word = shellescape(expand('<cword>'))
         endif
 
-        " Handle missing file and "no application can open ..." errors
-        call system("open dict://" . word)
+        if bang
+            if !(has('multi_byte') && (has('python') || has('python3')))
+                echoerr "Dict! needs +multi_byte and +python or +python3"
+                return
+            endif
+
+            " Echo the definition
+            python << EOF
+import DictionaryServices as ds
+import sys
+import vim
+
+sword = vim.eval('word').decode('utf-8')
+result = ds.DCSCopyTextDefinition(None, sword, (0, len(sword)))
+
+if not result:
+    print("No result for '{0}' found in dictionary".format(sword))
+else:
+    result = result.encode('utf-8')
+    result = result.replace('▶', '\n\n▶ ')
+    result = result.replace('•', '\n    •')
+    result = result.replace('ORIGIN', '\n\nORIGIN:')
+    print(result)
+EOF
+        else
+            " Handle missing file and "no application can open ..." errors
+            call system(printf('open dict://"%s"', word))
+        endif
     endfunction
 endif
 
@@ -471,7 +498,7 @@ set foldnestmax=3
 " Commands {{{
 
 if has('mac') || has('macunix')
-    command! -nargs=? Dict call OpenDictionary(<q-args>)
+    command! -bang -nargs=? Dict call OpenDictionary(<bang>0, <q-args>)
 endif
 
 command! -nargs=? Plugins :echo "Plugins:\n" . join(<SID>GetPluginNames(<q-args>), "\n")
