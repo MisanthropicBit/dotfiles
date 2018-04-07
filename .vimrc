@@ -919,6 +919,10 @@ let g:vimtask#todo_symbol = '☐'
 let g:vimtask#cancelled_symbol = '✗'
 let g:vimtask#bullet_symbols = ['•', '◦', '‣', '▹']
 
+" vimtex {{{
+
+let g:vimtex_fold_enabled = 1
+
 " }}}
 
 " }}}
