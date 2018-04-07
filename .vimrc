@@ -3,6 +3,8 @@
 
 " Pathogen {{{
 
+let g:pathogen_disabled = ['vim-prism', 'deoplete.nvim']
+
 " Update runtimepath with plugins from ~/.vim/bundle/
 execute pathogen#infect()
 
@@ -796,8 +798,7 @@ nnoremap <c-b> :TagbarToggle<cr>
 " UltiSnips {{{
 
 " Set the private UltiSnips directory
-let g:UltiSnipsSnippetDirectories = '~/.vim/bundle/ultisnips/UltiSnips'
-let g:UltiSnipsSnippetsDir = '~/.vim/bundle/ultisnips/UltiSnips'
+let g:UltiSnipsSnippetsDir = '~/.vim/bundle/vim-snippets/UltiSnips'
 
 " Split the :UltiSnipsEdit window horizontally or vertically depending on context
 let g:UltiSnipsEditSplit = 'context'
