@@ -46,7 +46,7 @@ if has('mac') || has('macunix')
         if a:2 !=# ''
             let word = a:2
         else
-            let word = shellescape(expand('<cword>'))
+            let word = expand('<cword>')
         endif
 
         if bang
