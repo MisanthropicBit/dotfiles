@@ -29,6 +29,7 @@
     bs = branch --list
     cf = !git show --pretty="format:" --name-status
     cm = commit -m
+    cnv = commit --no-verify -m
     co = checkout
     count = rev-list --count HEAD
     dc = diff --cached
