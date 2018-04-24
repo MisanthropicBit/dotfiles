@@ -712,7 +712,7 @@ let g:goyo_linenr = 1
 noremap <silent> <c-n> :NERDTreeToggle<cr>
 
 " Ignore python bytecode files and swap files
-let NERDTreeIgnore = ['\~$', '\.pyc$', '\.sw[op]$']
+let NERDTreeIgnore = ['\~$', '\.py[co]$', '\.sw[op]$']
 
 " Always show hidden files
 let NERDTreeShowHidden = 1
