@@ -837,6 +837,19 @@ let g:airline#extensions#branch#displayed_head_limit = 32
 
 " }}}
 
+" vim-choosewin {{{
+
+" Map '-' to visually choosing a window to jump to
+nnoremap - <Plug>(choosewin)
+
+" Mapping for quickly swapping two windows
+nnoremap <localleader>swc :ChooseWinSwap<enter>
+
+" Enable window overlay characters
+let g:choosewin_overlay_enable = 1
+
+" }}}
+
 " vim-easy-align {{{
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
