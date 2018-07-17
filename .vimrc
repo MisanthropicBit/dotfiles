@@ -936,6 +936,38 @@ let g:vimtask#bullet_symbols = ['•', '◦', '‣', '▹']
 
 let g:vimtex_fold_enabled = 1
 
+" Use Skim for viewing PDFs
+let g:vimtex_view_general_options = '-a Skim'
+
+" Disable auto viewing to keep writing
+let g:vimtex_view_automatic = 0
+
+" Disable continuous mode
+let g:vimtex_compiler_latexmk = {
+    \'backend' : 'jobs',
+    \'background' : 1,
+    \'build_dir' : '',
+    \'callback' : 1,
+    \'continuous' : 0,
+    \'executable' : 'latexmk',
+    \'options' : [
+    \    '-pdf',
+    \    '-verbose',
+    \    '-file-line-error',
+    \    '-synctex=1',
+    \    '-interaction=nonstopmode',
+    \],
+\}
+
+" Switch to neovim's job control if applicable
+if has('nvim')
+    let g:vimtex_compiler_latexmk.backend = 'nvim'
+endif
+
+" Do not open the quickfix window automatically since there are usually just
+" warnings and no errors
+let g:vimtex_quickfix_mode = 0
+
 " }}}
 
 " }}}
