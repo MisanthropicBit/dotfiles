@@ -586,6 +586,12 @@ if has("autocmd")
     augroup quickfix
         autocmd!
         autocmd QuickFixCmdPost vimgrep cwindow
+
+        " Mappings to open the error under the cursor in a split, vertical
+        " split or new tab (there is also the QFEnter plugin)
+        autocmd FileType qf nnoremap <buffer> s <c-w><cr>
+        autocmd FileType qf nnoremap <buffer> v <c-w><cr><c-w>L
+        autocmd FileType qf nnoremap <buffer> t <c-w><cr><c-w>T
     augroup END
 
     augroup csharp
