@@ -689,6 +689,9 @@ let delimitMate_expand_cr = 1
 
 " }}}
 
+" deoplete-jedi {{{
+" }}}
+
 " deoplete.nvim {{{
 
 let g:deoplete#enable_at_startup = 1
@@ -703,6 +706,24 @@ let g:goyo_width = max([90, &textwidth + 5])
 
 " Keep line numbers around when Goyo is enabled
 let g:goyo_linenr = 1
+
+" jedi-vim {{{
+
+" Disable jedi-vim and use deoplete-jedi instead (we still want to use its
+" mappings though)
+let g:jedi#completions_enabled = 0
+
+" Avoid clash with vim-fugitive mappings
+nnoremap <leader>ga :call jedi#goto_assignments()<cr>
+nnoremap <leader>ge :call jedi#goto_definitions()<cr>
+
+let g:jedi#use_tabs_not_buffers = 1
+
+" Disable preview when autocompleting
+augroup jedivim
+    autocmd!
+    autocmd FileType python setlocal completeopt-=preview
+augroup END
 
 " }}}
 
