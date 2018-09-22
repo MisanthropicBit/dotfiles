@@ -345,7 +345,7 @@ nnoremap j gj
 nnoremap k gk
 
 " Shortcut for editing the vimrc file
-nnoremap <leader>vh :sp $MYVIMRC<cr>
+nnoremap <leader>vs :sp $MYVIMRC<cr>
 nnoremap <leader>vv :vsp $MYVIMRC<cr>
 nnoremap <leader>vt :tabe $MYVIMRC<cr>
 
