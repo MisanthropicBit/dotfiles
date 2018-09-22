@@ -486,6 +486,9 @@ nnoremap <leader>swh <c-w>t <c-w>K
 " Mnenomic: Swap Windows to Vertical
 nnoremap <leader>swv <c-w>t <c-w>H
 
+" Open file under cursor in a vertical split
+nnoremap <c-w>gv :vertical wincmd f<cr>
+
 " }}}
 
 " Folding {{{
