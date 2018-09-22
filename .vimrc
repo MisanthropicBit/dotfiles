@@ -634,6 +634,10 @@ let g:netrw_liststyle = 3
 if has('nvim')
     " Enable interactive command line substitution without window splitting
     set inccommand=nosplit
+
+    " Point neovim to its specific python virtual environments
+    let g:python_host_prog = '/Users/albo/.neovim_venvs/neovim2/bin/python'
+    let g:python3_host_prog = '/Users/albo/.neovim_venvs/neovim3/bin/python'
 endif
 " }}}
 
