@@ -3,7 +3,7 @@
 
 " Pathogen {{{
 
-let g:pathogen_disabled = ['vim-prism', 'deoplete.nvim']
+let g:pathogen_disabled = ['vim-prism']
 
 " Update runtimepath with plugins from ~/.vim/bundle/
 execute pathogen#infect()
@@ -733,13 +733,6 @@ augroup NERDTree
         autocmd FileType nerdtree setlocal relativenumber
     endif
 augroup END
-
-" }}}
-
-" neocomplete {{{
-
-" Enable neocomplete at startup
-let g:neocomplete#enable_at_startup = 1
 
 " }}}
 
