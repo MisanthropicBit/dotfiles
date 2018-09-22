@@ -716,6 +716,11 @@ let g:goyo_width = max([90, &textwidth + 5])
 " Keep line numbers around when Goyo is enabled
 let g:goyo_linenr = 1
 
+" Quickly set up Goyo with a width of 50%
+nnoremap <localleader>gy :Goyo 50%<cr>
+
+" }}}
+
 " jedi-vim {{{
 
 " Disable jedi-vim and use deoplete-jedi instead (we still want to use its
