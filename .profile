@@ -1,14 +1,6 @@
 # Set up general environment variables
 export PATH=$PATH:/usr/local/bin
 
-# Set Python path
-PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
-export PYTHONPATH=~/Dropbox/projects/python:$PYTHONPATH
-
-# pyenv
-PYENV_ROOT=$HOME/.pyenv
-PATH=$PYENV_ROOT/shims:$PATH
-
 # Always use UTF-8
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
