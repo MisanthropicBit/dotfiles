@@ -61,3 +61,6 @@ export PATH="$PATH:/usr/local/sbin"
 
 # Add cabal install path to PATH
 export PATH="$PATH:$HOME/.cabal/bin"
+
+# Make sure we use Homebrew's OpenSSL installation
+export PATH="/usr/local/opt/openssl/bin:$PATH"
