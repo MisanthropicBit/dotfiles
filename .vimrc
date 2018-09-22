@@ -1000,6 +1000,9 @@ endif
 " warnings and no errors
 let g:vimtex_quickfix_mode = 0
 
+" Mapping for toggling the table of contents
+nnoremap <localleader>toc :VimtexTocToggle<cr>
+
 " }}}
 
 " }}}
