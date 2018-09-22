@@ -6,9 +6,9 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # Editor environment variables
-export EDITOR="vim"
-export HOMEBREW_EDITOR="vim"
-export GIT_EDITOR="vim"
+export EDITOR="nvim"
+export HOMEBREW_EDITOR="nvim"
+export GIT_EDITOR="nvim"
 
 # Erase duplicates in history
 export HISTCONTROL=erasedups
