@@ -61,3 +61,6 @@
 [submodule ".vim/bundle/vader.vim"]
 	path = .vim/bundle/vader.vim
 	url = https://github.com/junegunn/vader.vim
+[submodule ".vim/bundle/vim-glsl"]
+	path = .vim/bundle/vim-glsl
+	url = https://github.com/tikhomirov/vim-glsl
