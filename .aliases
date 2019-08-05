@@ -12,6 +12,7 @@ if ! alias lx > /dev/null 2>&1; then
     fi
 fi
 
+# Aliases
 alias ..2="cd ../.."
 alias ..3="cd ../../.."
 alias ..4="cd ../../../.."
