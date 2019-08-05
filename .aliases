@@ -44,15 +44,49 @@ alias vbundle="cd ~/.vim/bundle"
 alias vh=vimhelp
 alias vimrc="$EDITOR ~/.vimrc"
 
-bpprand() {
-    export BASH_POWERPROMPT_THEME=random
-}
+bpp() {
+    for i in "$@"; do
+        case $i in
+            -h|--help)
+                printf "%s\n" "Usage: bpp"
+                printf "%s\n" "       bpp [theme_name]"
+                printf "%s\n" "       bpp [-l | --list] [-h, --help]"
+                return
+            ;;
 
-if type pygmentize > /dev/null; then
-    highlight() {
-        pygmentize -O style=fruity -f terminal16m "$1" | less -r
-    }
-fi
+            -l|--list)
+                local random_themes=${BASH_POWERPROMPT_RANDOM_THEMES:-""}
+
+                if [ -n "$BASH_POWERPROMPT_DIRECTORY" ]; then
+                    for theme in $BASH_POWERPROMPT_DIRECTORY/themes/*.theme; do
+                        local bname=${theme##*/}
+                        local is_random_theme
+                        [[ "$random_themes" = *"${bname%.*}"* ]] && is_random_theme="*" || is_random_theme=""
+
+                        printf "%s%s\n" ${bname%.*} "$is_random_theme"
+                    done
+                else
+                    printf "\033[31;1mError:\033[0m \033[38;1m%s\033[0m%s\n" "BASH_POWERPROMPT_DIRECTORY" " not set to install directory, cannot list themes"
+                fi
+
+                return
+            ;;
+
+            *)
+            ;;
+        esac
+    done
+
+    if [ -n "$1" ]; then
+        if [ "$1" = "random" ] && [ -n "$BASH_POWERPROMPT_RANDOM_THEMES" ]; then
+            printf "Random theme selected from: ${BASH_POWERPROMPT_RANDOM_THEMES[@]}\n"
+        fi
+
+        export BASH_POWERPROMPT_THEME="$1"
+    else
+        printf "Current theme is \033[38;1m%s\033[0m\n" "$BASH_POWERPROMPT_THEME"
+    fi
+}
 
 if type python > /dev/null; then
     if type pip > /dev/null; then
