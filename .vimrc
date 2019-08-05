@@ -739,8 +739,22 @@ let g:goyo_width = max([90, &textwidth + 5])
 " Keep line numbers around when Goyo is enabled
 let g:goyo_linenr = 1
 
+" Function for toggling goyo mode since quitting goyo mode with 'q' puts the
+" cursor at the top of the file
+function! s:goyo_toggle() abort
+    if exists('#goyo')
+        silent Goyo!
+    else
+        " Use the width of the textwidth option as the default width for goyo
+        " Use a buffer of 5 for extra spaces in formatting or commented lines
+        let g:goyo_width = max([&textwidth, 80]) + 5
+
+        silent Goyo
+    endif
+endfunction
+
 " Quickly set up Goyo with a width of 50%
-nnoremap <localleader>gy :Goyo 50%<cr>
+nnoremap <localleader>gy :call <SID>goyo_toggle()<cr>
 
 " }}}
 
