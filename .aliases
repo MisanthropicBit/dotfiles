@@ -131,3 +131,17 @@ tophist() {
 mkdir2() {
     mkdir $1 && cd $_
 }
+
+# Short-hand function for activating a top-level virtual environment directory
+sve() {
+    if [ -z "$1" ]; then
+        if [ -n "$VIRTUAL_ENV" ]; then
+            printf "Current virtual environment is '$VIRTUAL_ENV'\n"
+        else
+            printf "No currently active virtual environment\n"
+        fi
+    else
+        source "$1/bin/activate"
+        printf "%s\n" "Virtual environment '$VIRTUAL_ENV' is active"
+    fi
+}
