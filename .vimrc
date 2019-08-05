@@ -308,6 +308,12 @@ match ErrorMsg '\v^(\<|\=|\>){7}([^\=].+)?$'
 
 " }}}
 
+" Indentation {{{
+
+" Get rid of default preprocessor directive indentation rules which removes
+" all indentation
+set cinkeys-=0#
+
 " }}}
 
 " Mappings {{{
