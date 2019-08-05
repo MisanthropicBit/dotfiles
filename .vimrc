@@ -952,6 +952,29 @@ xnoremap <localleader>dp :diffput<cr>
 xnoremap <localleader>dg :diffget<cr>
 " }}}
 
+" vim-prism {{{
+let g:prism#weights = {
+    \'seoul256':       'auto',
+    \'seoul256-light': 'auto',
+    \'chito':          'auto',
+    \'jellybeans':     'auto',
+    \'scheakur':       'auto',
+    \'mod8':           'auto',
+    \'beachcomber':    'auto',
+    \'vilight':        'auto',
+    \'pacific':        'auto',
+    \'black_angus':    'auto',
+    \'obsidian':       {'weight': 'auto', 'truecolor': 0},
+\}
+
+let g:prism#python#weights = {
+    \'mod8':       0.7,
+    \'deus':       0.2,
+    \'seoul256':   'auto',
+    \'jellybeans': 'auto'
+\}
+" }}}
+
 " vim-startify {{{
 if &encoding == 'utf-8'
     let g:startify_fortune_use_unicode = 1
