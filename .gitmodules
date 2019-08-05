@@ -91,3 +91,6 @@
 [submodule ".vim/bundle/vimtex"]
 	path = .vim/bundle/vimtex
 	url = https://github.com/lervag/vimtex
+[submodule ".vim/bundle/dracula.vim"]
+	path = .vim/bundle/dracula.vim
+	url = https://github.com/dracula/vim
