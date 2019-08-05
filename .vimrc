@@ -638,7 +638,7 @@ endif
 " Shell {{{
 
 " Allow external bash commands inside vim to use aliases etc.
-"set shell=bash\ --rcfile\ ~/.bash_profile
+set shell=bash
 
 " }}}
 
