@@ -17,7 +17,7 @@ execute pathogen#helptags()
 
 " Show syntax group for current word
 function! <SID>SynStack()
-    if !exists("*synstack")
+    if !exists("*synstack") || !exists('*synIDattr')
         return
     endif
 
