@@ -292,12 +292,10 @@ if !has('gui_running')
 endif
 
 " Set the default colorscheme
-"try
-"    colorscheme quantum
-"catch
-"endtry
-
-call <SID>RandomColorscheme()
+try
+    colorscheme seoul256
+catch
+endtry
 
 " Enable syntax highlighting
 syntax on
