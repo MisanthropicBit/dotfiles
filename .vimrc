@@ -1050,18 +1050,19 @@ let g:vimtex_view_automatic = 0
 
 " Disable continuous mode
 let g:vimtex_compiler_latexmk = {
-    \'backend' : 'jobs',
-    \'background' : 1,
-    \'build_dir' : '',
-    \'callback' : 1,
-    \'continuous' : 0,
-    \'executable' : 'latexmk',
-    \'options' : [
+    \'backend':    'jobs',
+    \'background': 1,
+    \'build_dir':  '',
+    \'callback':   1,
+    \'continuous': 0,
+    \'executable': 'latexmk',
+    \'options':    [
     \    '-pdf',
     \    '-verbose',
     \    '-file-line-error',
     \    '-synctex=1',
     \    '-interaction=nonstopmode',
+    \    '-shell-escape'
     \],
 \}
 
@@ -1074,8 +1075,18 @@ endif
 " warnings and no errors
 let g:vimtex_quickfix_mode = 0
 
-" Mapping for toggling the table of contents
-nnoremap <localleader>toc :VimtexTocToggle<cr>
+function! s:filter_vimtex_warnings() abort
+    let qf = getqflist()
+    let filtered = filter(qf, 'get(v:val, "type") !~ "w"')
+
+    call setqflist(filtered, 'r')
+endfunction
+
+" New mapping for listing (a)ll warnings and errors
+nmap <silent> <localleader>la <Plug>(vimtex-errors)
+
+" Remap vimtex's le mapping to only show errors
+nmap <localleader>le call s:filter_vimtex_warnings()<cr>
 
 " }}}
 
