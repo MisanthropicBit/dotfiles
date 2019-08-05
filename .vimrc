@@ -431,6 +431,15 @@ vnoremap <PageDown> <nop>
 nnoremap <c-o> <c-o>zz
 nnoremap <c-i> <c-i>zz
 
+" Rotate random colors
+nnoremap <silent> <f8> :RandomColorscheme<cr>
+
+" Quickly look up a word in the dictionary
+if has('mac') || has('macunix')
+    nnoremap <silent> <leader>d :Dict!<cr>
+    nnoremap <silent> <leader>D :Dict<cr>
+endif
+
 " }}}
 
 " Searching {{{
