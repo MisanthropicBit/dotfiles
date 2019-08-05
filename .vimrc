@@ -440,6 +440,9 @@ if has('mac') || has('macunix')
     nnoremap <silent> <leader>D :Dict<cr>
 endif
 
+" Use familiar cmdline binding in vim's cmdline
+cnoremap <c-a> <c-b>
+
 " }}}
 
 " Searching {{{
