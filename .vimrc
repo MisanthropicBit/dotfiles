@@ -979,6 +979,11 @@ let g:prism#python#weights = {
 if &encoding == 'utf-8'
     let g:startify_fortune_use_unicode = 1
 endif
+
+let g:startify_custom_header_quotes = [
+    \['The optimal allocation is one that never happens.', '', '- Joseph E. Hoag'],
+    \['Design is, as always, the art of finding compromises.', '', '- Eric Lippert']
+\] + startify#fortune#predefined_quotes()
 " }}}
 
 " vim-surround {{{
