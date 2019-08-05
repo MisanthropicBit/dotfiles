@@ -31,7 +31,9 @@
     cm = commit -m
     cnv = commit --no-verify -m
     co = checkout
+    cp = checkout --patch
     count = rev-list --count HEAD
+    cr=log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
     dc = diff --cached
     dl = !git diff --color=always $@ | less -r
     filelog = log --name-status --oneline
@@ -42,6 +44,7 @@
     last = log -1 HEAD
     pr = '!f() { git fetch ${2:-upstream}refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f'
     rcount = rev-list --count @{u}
+    rp = reset --patch
     rv = remote -v
     sa = stash apply
     sb = status -sb
@@ -50,10 +53,11 @@
     sp = stash save --patch
     ss = stash show
     tracked = ls-files
+    summary = log --oneline --decorate
     unstage = reset --quiet HEAD --
     update = clone https://www.github.com/git/git
     upstream = !git rev-parse --abbrev-ref $1@{upstream}
     wd = diff --word-diff
     wdc = diff --word-diff --cached
 [web]
-    browser = open
+	browser = google-chrome
