@@ -537,20 +537,20 @@ command! RandomColorscheme :echo printf("Selected: %s", <SID>RandomColorscheme()
 
 if has("autocmd")
     " Automatically resize windows when vim is resized
-    autocmd VimResized * :tabdo :wincmd =
+    autocmd VimResized * tabdo :wincmd =
 
     augroup trailing
         " Show trailing whitespace when not in insert mode
         autocmd!
-        autocmd InsertEnter * :set listchars-=trail:⌴,nbsp:¬
-        autocmd InsertLeave * :set listchars+=trail:⌴,nbsp:¬
+        autocmd InsertEnter * set listchars-=trail:⌴,nbsp:¬
+        autocmd InsertLeave * set listchars+=trail:⌴,nbsp:¬
     augroup END
 
     augroup clike
         " Use C-style indentation rules for C/C++/CUDA
-        autocmd FileType c setlocal cindent
-        autocmd FileType cpp setlocal cindent
-        autocmd FileType cuda setlocal cindent
+        autocmd FileType c setlocal cindent | setlocal indentkeys-=0#
+        autocmd FileType cpp setlocal cindent | setlocal indentkeys-=0#
+        autocmd FileType cuda setlocal cindent | setlocal indentkeys-=0#
     augroup END
 
     augroup scons
@@ -578,7 +578,7 @@ if has("autocmd")
 
     augroup latex
         " Enable spell-checking for Latex files
-        autocmd FileType tex,plaintex setlocal spell spelllang=en_gb tw=90
+        autocmd FileType tex,plaintex setlocal spell spelllang=en_gb tw=90 conceallevel=2
     augroup END
 
     augroup makefile
@@ -620,6 +620,7 @@ if has("autocmd")
                          \| nnoremap <buffer> <silent> <localleader>or :OmniSharpRename<cr>
                          \| nnoremap <buffer> <silent> <localleader>os :OmniSharpFindSymbol<cr>
                          \| :silent OmniSharpHighlightTypes
+                         \| setlocal indentkeys-=0#
 
         autocmd CompleteDone *.cs call OmniSharp#ExpandAutoCompleteSnippet()
     augroup END
@@ -703,13 +704,13 @@ let g:ctrlp_show_hidden = 1
 let g:ctrlp_root_markers = ['.ctrlproot']
 
 " Shortcut mapping for viewing (r)ecently (u)sed files
-nnoremap <localleader>ru :CtrlPMRUFiles<cr>
+nnoremap <silent> <localleader>ru :CtrlPMRUFiles<cr>
 
 " Shortcut mapping for searching current buffers
-nnoremap <localleader>bb :CtrlPBuffer<cr>
+nnoremap <silent> <localleader>bb :CtrlPBuffer<cr>
 
 " Shortcut mapping for viewing and (s)earching for (t)ags
-nnoremap <localleader>st :CtrlPTag<cr>
+nnoremap <silent> <localleader>st :CtrlPTag<cr>
 
 " }}}
 
