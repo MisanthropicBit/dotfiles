@@ -303,6 +303,11 @@ syntax on
 " Default to using bash syntax highlighting
 let g:is_bash = 1
 
+" Highlight git merge conflict markers
+match ErrorMsg '\v^(\<|\=|\>){7}([^\=].+)?$'
+
+" }}}
+
 " }}}
 
 " Mappings {{{
