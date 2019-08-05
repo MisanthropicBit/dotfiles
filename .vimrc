@@ -386,7 +386,7 @@ if v:version >= 703
 endif
 
 " Quicker way to exit insert mode
-inoremap jk <esc>
+inoremap <expr> jk pumvisible() ? "<c-e>" : "<esc>"
 
 " Display everyting in &runtimepath on separate lines
 nnoremap <silent> <leader>rtp :echo "Plugins:\n" . join(<SID>GetPluginNames(''), "    \n")<cr>
