@@ -7,8 +7,10 @@ set --universal FISH_POWERPROMPT_THEME "random"
 set --universal fish_color_command 00c5d7 darkcyan
 set -gx LSCOLORS ExfxxxxxBx
 
-if type -q ~/aliases.fish
-    source ~/aliases.fish
+set --local script_dir (dirname (status -f))
+
+if test -e "$script_dir/aliases.fish"
+    source "$script_dir/aliases.fish"
 end
 
 # Add macports bin/ directory
