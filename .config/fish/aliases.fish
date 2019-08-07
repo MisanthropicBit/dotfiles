@@ -38,18 +38,19 @@ function tophist -d "Show the top 'n' most used commands"
 end
 
 function sve -d "Display or activate a virtual environment"
-    if -z "$1"
-        if -n "$VIRTUAL_ENV"
+    if test -z "$argv[1]"
+        if test -n "$VIRTUAL_ENV"
             printf "Current virtual environment is '$VIRTUAL_ENV'\n"
         else
             printf "No currently active virtual environment\n"
         end
     else
-        if -e "$1/bin/activate"
-            source "$1/bin/activate"
+        if test -e "$argv[1]/bin/activate.fish"
+            source "$argv[1]/bin/activate.fish"
             printf "%s\n" "Virtual environment '$VIRTUAL_ENV' is active"
         else
-            printf "'$1' is not a virtual environment"
+            printf "'$argv[1]' is not a virtual environment"
+        end
     end
 end
 
