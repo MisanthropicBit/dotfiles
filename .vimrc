@@ -1046,7 +1046,10 @@ let g:vimtask#progress_format = '+-- %i%l. %n'
 let g:vimtex_fold_enabled = 1
 
 " Use Skim for viewing PDFs
-let g:vimtex_view_general_options = '-a Skim'
+let g:vimtex_view_method = 'skim'
+
+" Autofocus skim
+let g:vimtex_view_skim_activate = 1
 
 " Disable auto viewing to keep writing
 let g:vimtex_view_automatic = 0
