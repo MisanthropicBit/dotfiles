@@ -94,3 +94,15 @@
 [submodule ".vim/bundle/dracula.vim"]
 	path = .vim/bundle/dracula.vim
 	url = https://github.com/dracula/vim
+[submodule ".vim/bundle/tex-conceal.vim"]
+	path = .vim/bundle/tex-conceal.vim
+	url = https://github.com/KeitaNakamura/tex-conceal.vim
+[submodule ".vim/bundle/chromatica.nvim"]
+	path = .vim/bundle/chromatica.nvim
+	url = https://github.com/arakashic/chromatica.nvim
+[submodule ".vim/bundle/vim-css-color"]
+	path = .vim/bundle/vim-css-color
+	url = https://github.com/ap/vim-css-color
+[submodule ".vim/bundle/vim-devicons"]
+	path = .vim/bundle/vim-devicons
+	url = https://github.com/ryanoasis/vim-devicons
