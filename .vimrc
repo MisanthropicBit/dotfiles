@@ -918,6 +918,10 @@ let g:choosewin_overlay_enable = 1
 
 " }}}
 
+" vim-devicons {{{
+let g:DevIconsEnableFoldersOpenClose = 1
+" }}}
+
 " vim-easy-align {{{
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
