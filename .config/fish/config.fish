@@ -1,7 +1,7 @@
-set --universal EDITOR                 nvim
-set --universal GIT_EDITOR             nvim
-set --universal VISUAL                 nvim
-set --universal FISH_POWERPROMPT_THEME "random"
+set --export EDITOR                 nvim
+set --export GIT_EDITOR             nvim
+set --export VISUAL                 nvim
+set --export FISH_POWERPROMPT_THEME "random"
 
 # Colors
 set --universal fish_color_command 00c5d7 darkcyan
