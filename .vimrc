@@ -849,7 +849,7 @@ let g:syntastic_plaintex_checkers = ['lacheck']
 let g:syntastic_scala_fsc_options = '-Ystop-after:parser'
 let g:syntastic_scala_checkers = ['fsc']
 let g:syntastic_haskell_checkers = ['hlint']
-let g:syntastic_fsharp_checkers = ['syntax']
+let g:syntastic_fsharp_checkers = ['']
 
 " }}}
 
