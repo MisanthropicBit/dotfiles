@@ -25,7 +25,7 @@
     au = add -u
     ba = branch -a
     br = branch
-    browse = __git_browse $1 $2
+    browse = !~/git-browse.py
     bs = branch --list
     cf = !git show --pretty="format:" --name-status
     cm = commit -m
