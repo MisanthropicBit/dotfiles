@@ -949,6 +949,7 @@ nnoremap <leader>gc :Gcommit<cr>
 nnoremap <leader>gb :Gblame<cr>
 nnoremap <leader>gl :Glog<cr>
 nnoremap <leader>gp :Git push<cr>
+nnoremap <leader>gv :Gvsplit! diff --cached<cr>
 
 " Define a command and mapping for viewing staged changes
 command! Gcached :Gtabedit! diff --cached
