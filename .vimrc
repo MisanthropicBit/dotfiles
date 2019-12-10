@@ -599,7 +599,7 @@ if has("autocmd")
       " Use 'zv' to open just enough folds for the line to be visible and
       " 'zz' to center the line
       autocmd BufReadPost *
-          \ if line("'\"") > 1 && line("'\"") <= line("$") |
+          \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'gitcommit' |
           \   execute 'normal! g`"zvzz' |
           \ endif
     augroup END
