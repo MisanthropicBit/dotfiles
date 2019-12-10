@@ -54,6 +54,10 @@ function sve -d "Display or activate a virtual environment"
     end
 end
 
+function pup -d "Upgrade pip using pip"
+    command pip install --upgrade pip
+end
+
 #function bpp
 #    echo "$FISH_POWERPROMPT_THEME"
 #end
