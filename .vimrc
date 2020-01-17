@@ -182,8 +182,13 @@ function! s:RandomColorscheme()
     let user_colorschemes = filter(colorschemes,
                                   \'index(exclude, v:val) == -1')
 
-    let random = system('echo $RANDOM') % len(user_colorschemes)
-    let chosen = get(user_colorschemes, random)
+    if &shell == 'bash'
+        let random = system('echo -n $RANDOM')
+    elseif &shell == 'fish'
+        let random = system('echo -n (random)')
+    endif
+
+    let chosen = get(user_colorschemes, random % len(user_colorschemes))
 
     execute ':colorscheme ' . chosen
 
