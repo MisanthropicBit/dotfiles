@@ -30,6 +30,7 @@
     cf = !git show --pretty="format:" --name-status
     cm = commit -m
     cnv = commit --no-verify -m
+    cv = !env GIT_EDITOR='nvim -c \"Gvsplit! diff --cached | wincmd h\"' git commit
     co = checkout
     cp = checkout --patch
     count = rev-list --count HEAD
