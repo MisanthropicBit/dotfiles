@@ -672,6 +672,13 @@ set shell=fish
 
 " }}}
 
+" Terminal {{{
+
+" Use escape to exit terminal mode
+tnoremap <esc> <c-\><c-n>
+
+" }}}
+
 " Explorer {{{
 
 " Show stats in :Explorer mode
