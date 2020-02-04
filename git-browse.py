@@ -309,7 +309,6 @@ class API:
         """Request and return json data from a url."""
         url = construct_url(url_parts)
         request = Request(url)
-        self._pat = '154d79a324446a2e1889cc113e2bc6e63ef72626'
         self.add_authorization_token(request)
 
         try:
