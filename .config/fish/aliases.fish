@@ -58,6 +58,16 @@ function pup -d "Upgrade pip using pip"
     command pip install --upgrade pip
 end
 
+function weather -d "Show the current weather in the terminal"
+    set -l arg "$argv[1]"
+
+    if test -z $arg
+        curl -s wttr.in
+    else
+        curl -s "wttr.in?$arg"
+    end
+end
+
 #function bpp
 #    echo "$FISH_POWERPROMPT_THEME"
 #end
