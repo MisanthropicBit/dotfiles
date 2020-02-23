@@ -296,10 +296,23 @@ if !has('gui_running')
     endif
 endif
 
+let s:preferred_colors = [
+    \'badwolf',
+    \'dracula',
+    \'edge',
+    \'seoul256',
+    \'codedark'
+\]
+
 " Set the default colorscheme
 try
-    colorscheme seoul256
+    call s:RandomColorscheme(1)
 catch
+    try
+        colorscheme seoul256
+    catch
+        colorscheme default
+    endtry
 endtry
 
 " Enable syntax highlighting
