@@ -668,6 +668,11 @@ if has("autocmd")
         autocmd CompleteDone *.cs call OmniSharp#ExpandAutoCompleteSnippet()
     augroup END
 
+    augroup gitcommit
+        autocmd!
+        autocmd FileType gitcommit setlocal spell
+    augroup END
+
     if has('conceal')
         augroup task
             autocmd!
