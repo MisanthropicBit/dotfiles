@@ -305,6 +305,11 @@ class API:
         """Add an authorization token to the header of a request."""
         raise NotImplementedError()
 
+    def is_remote_branch(self, ref: str) -> bool:
+        """Return whether a reference is a remote branch."""
+        return run_git_command('git branch --remote | grep ' + ref,
+                               silent=True)
+
     def get_json(self, url_parts: UrlParts) -> Dict[str, Union[str, list]]:
         """Request and return json data from a url."""
         url = construct_url(url_parts)
@@ -393,7 +398,7 @@ class API:
         """Return the url parts for the repository's wiki."""
         raise NotImplementedError()
 
-    def reference(self, ref) -> UrlParts:
+    def reference(self, ref: str) -> UrlParts:
         """Return the url parts for a specific commit."""
         raise NotImplementedError()
 
@@ -510,8 +515,11 @@ class GitHubAPI(API):
     def wiki(self) -> UrlParts:
         return UrlParts(self.repo_url, ['wiki'])
 
-    def reference(self, ref) -> UrlParts:
-        return UrlParts(self.repo_url, ['tree', resolve_commit(ref)])
+    def reference(self, ref: str) -> UrlParts:
+        if self.is_remote_branch(ref):
+            return UrlParts(self.repo_url, ['tree', ref])
+        else:
+            return UrlParts(self.repo_url, ['tree', resolve_commit(ref)])
 
     def stats(self) -> None:
         keys = [
@@ -768,7 +776,7 @@ _APIS = {
 }
 
 
-def run_git_command(cmd: str) -> str:
+def run_git_command(cmd: str, silent=False) -> str:
     """Run a git command and return the result."""
     try:
         return subprocess.check_output(
@@ -777,8 +785,11 @@ def run_git_command(cmd: str) -> str:
             stderr=subprocess.STDOUT
         ).strip().decode('utf-8')
     except subprocess.CalledProcessError as ex:
-        error_msg = ex.stdout.decode('utf-8').strip()
-        sys.exit(f'Error: Failed to run git command: {error_msg} ({ex})')
+        if not silent:
+            error_msg = ex.stdout.decode('utf-8').strip()
+            sys.exit(f'Error: Failed to run git command: {error_msg} ({ex})')
+        else:
+            return ''
 
 
 def get_repository_url() -> str:
