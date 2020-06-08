@@ -30,7 +30,7 @@
     cf = !git show --pretty="format:" --name-status
     cm = commit -m
     cnv = commit --no-verify -m
-    cv = !env GIT_EDITOR='nvim -c \"Gvsplit! diff --cached | wincmd h\"' git commit
+    cv = !env GIT_EDITOR='nvim -c \"Gvsplit! diff --cached | wincmd h | nmap q :qa<cr>\"' git commit
     co = checkout
     cp = checkout --patch
     count = rev-list --count HEAD
@@ -39,6 +39,7 @@
     dl = !git diff --color=always $@ | less -r
     filelog = log --name-status --oneline
     fp = fetch --prune
+    g1 = log -1
     getfile = !git archive --remote=~$1 HEAD:~$2 ~$3 | tar -x
     graph = !git log --graph --color | less -r
     issue = "!__git_issue_2945() { git branch -a | grep --color=always "issue-$1"; }; __git_issue_2945"
