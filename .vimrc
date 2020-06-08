@@ -662,6 +662,10 @@ endif
 
 command! -nargs=? Plugins :echo "Plugins:\n" . join(<SID>GetPluginNames(<q-args>), "\n")
 command! RandomColorscheme :echo printf("Selected: %s", <SID>RandomColorscheme())
+if executable('grip')
+    " https://pypi.org/project/grip/
+    command! ViewMarkdown :silent !grip --browser --quiet %
+endif
 
 " }}}
 
