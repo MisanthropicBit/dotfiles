@@ -1167,28 +1167,29 @@ let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 
 " vim-task {{{
 
-let g:vimtask#enable_mappings = 1
-let g:vimtask#fancy_arrows = 1
-let g:vimtask#notes_only_foldtext = ' (notes)'
-let g:vimtask#automove_completed_tasks = 1
-let g:vimtask#automove_cancelled_tasks = 1
-let g:vimtask#archive_mode = 2
-let g:vimtask#done_symbol = '✔'
-let g:vimtask#todo_symbol = '☐'
-let g:vimtask#cancelled_symbol = '✗'
-let g:vimtask#bullet_symbols = ['•', '◦', '‣', '▹']
-let g:vimtask#automove_tasks = 1
-let g:vimtask#tag_tasks_with_dates = 1
-let g:vimtask#show_progress = 1
-let g:vimtask#tag_expansion = 1
-let g:vimtask#insert_mode_on_new_task = 1
-let g:vimtask#highlight_code = 1
-let g:vimtask#conceal_inline_code = 1
-let g:vimtask#highlight_urls = 1
-let g:vimtask#conceal_urls = 1
-let g:vimtask#autofold_internal_archive = 1
+let g:vimtask#enable_mappings             = 1
+let g:vimtask#fancy_arrows                = 1
+let g:vimtask#automove_completed_tasks    = 1
+let g:vimtask#automove_cancelled_tasks    = 1
+let g:vimtask#automove_tasks              = 1
+let g:vimtask#tag_tasks_with_dates        = 1
+let g:vimtask#show_progress               = 1
+let g:vimtask#tag_expansion               = 1
+let g:vimtask#insert_mode_on_new_task     = 1
+let g:vimtask#highlight_code              = 1
+let g:vimtask#conceal_inline_code         = 1
+let g:vimtask#highlight_urls              = 1
+let g:vimtask#conceal_urls                = 1
+let g:vimtask#autofold_internal_archive   = 1
 let g:vimtask#autofold_complete_tasklists = 1
-let g:vimtask#progress_format = '+-- %i%l. %n'
+"let g:vimtask#conceal_font_styles         = 1
+let g:vimtask#archive_mode                = 'internal'
+let g:vimtask#done_symbol                 = '✔'
+let g:vimtask#todo_symbol                 = '☐'
+let g:vimtask#cancelled_symbol            = '✗'
+let g:vimtask#bullet_symbols              = ['•', '◦', '‣', '▹']
+let g:vimtask#notes_only_foldtext         = ' (notes)'
+let g:vimtask#search_paths                = ['~/research/tasks']
 
 " }}}
 
