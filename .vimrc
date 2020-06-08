@@ -1017,9 +1017,6 @@ nnoremap <c-b> :TagbarToggle<cr>
 
 " UltiSnips {{{
 
-" Set the private UltiSnips directory
-let g:UltiSnipsSnippetsDir = '~/.vim/bundle/vim-snippets/UltiSnips'
-
 " Split the :UltiSnipsEdit window horizontally or vertically depending on context
 let g:UltiSnipsEditSplit = 'context'
 
