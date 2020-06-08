@@ -16,6 +16,10 @@ end
 # Add macports bin/ directory
 set PATH /opt/local/bin $PATH
 
+set PATH /usr/local/bin $PATH
+set PATH /usr/local/texlive/2019/bin/x86_64-darwin/ $PATH
+set PATH ~/.npm-global/bin $PATH
+
 # Add pyenv to path
 set --universal PYENV_ROOT "$HOME/.pyenv"
 set PATH "$PYENV_ROOT/bin" $PATH
