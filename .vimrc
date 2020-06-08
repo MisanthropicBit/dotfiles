@@ -39,9 +39,34 @@ function! <SID>DeleteTrailingWhitespace()
     call cursor(line, col)
 endfunction
 
+function! s:OpenScratchBuffer(text, height, location, leave_map) abort
+    let loc = a:location
+
+    if a:location == 'auto'
+        let loc = 'bel'
+    endif
+
+    " Open the new window
+    execute printf('%s %dnew', loc, a:height)
+
+    if len(a:leave_map)
+        " Useful mapping for leaving the scratch-buffer
+        execute printf('nnoremap <buffer> <silent> %s :q<cr>', a:leave_map)
+    endif
+
+    " Set text of the buffer
+    call setline(1, split(a:text, '\n'))
+
+    " Make this a scratch-buffer
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+    setlocal noswapfile
+    setlocal readonly
+endfunction
+
 if has('mac') || has('macunix')
     " Open Dictionary.app on mac systems
-    function! OpenDictionary(...)
+    function! OpenDictionary(...) abort
         let bang = a:1
         let word = ''
 
@@ -53,28 +78,91 @@ if has('mac') || has('macunix')
 
         if bang
             if !(has('multi_byte') && (has('python') || has('python3')))
-                echoerr "Dict! needs +multi_byte and +python or +python3"
+                echoerr "Dict[!] command requires +multi_byte and +python or +python3"
                 return
             endif
 
             " Echo the definition
-            python << EOF
+            python3 << EOF
 import DictionaryServices as ds
-import sys
+import re
+from textwrap import wrap
 import vim
 
-sword = vim.eval('word').decode('utf-8')
-result = ds.DCSCopyTextDefinition(None, sword, (0, len(sword)))
+sword = vim.eval('word')
+result = str(ds.DCSCopyTextDefinition(None, sword, (0, len(sword))))
 
 if not result:
     print("No result for '{0}' found in dictionary".format(sword))
 else:
-    result = result.encode('utf-8')
-    result = result.replace('▶', '\n\n▶ ')
-    result = result.replace('•', '\n    •')
-    result = result.replace('ORIGIN', '\n\nORIGIN:')
-    print(result)
+    # Split and reindent the ORIGIN section
+    result = re.sub('(ORIGIN)', r'\n\n    \g<1>:', result)
+
+    # Split and reindent additional sections
+    result = re.sub(
+        '(PHRASES|PHRASAL VERBS|DERIVATIVES)',
+        r'\n\n    \g<1>',
+        result
+    )
+
+    # Split at the first section of the definition of a noun, adjective or verb
+    result = re.sub(
+        '(noun|adjective|verb) (1)',
+        r'\g<1>\n\n    \g<2>',
+        result,
+        count=1
+    )
+
+    # Split at the first section of the definition of a noun, adjective or verb
+    # if there is no numbered list for multiple definitions
+    result = re.sub(
+        '(\| noun|adjective|verb) ([^0-9])',
+        r'\g<1>\n\n    \g<2>',
+        result,
+        count=1
+    )
+
+    result = result.replace('•', '\n        •')
+
+    # Split subsequent noun, adjective or verb sections
+    result = re.sub(r'\. (noun|adjective|verb)', r'\n\n\g<1>', result)
+
+    # Split different definitions of a noun, adjective or verb
+    result = re.sub(r'\. (\d+)', r'\n\n    \g<1>', result)
+
+    # Indent and wrap bulleted items
+    wrapped = []
+
+    for line in re.split('([\r\n]+)', result):
+        m = re.match(r'^(\s+)(• )', line) or re.match(r'(^\s+)(\d+ )', line)
+
+        if m:
+            lines = wrap(line, width=150)
+
+            for i in range(1, len(lines)):
+                lines[i] = m.group(1) + ' ' * len(m.group(2)) + lines[i]
+
+            wrapped.append('\n'.join(lines))
+        else:
+            wrapped.append(line)
+
+    var = 'let py_result = "{0}"'.format(''.join(wrapped))
+    vim.command(var)
 EOF
+
+            call s:OpenScratchBuffer(py_result, 15, 'auto', 'q')
+            call matchadd('Todo',       '\v%1l^\w+')
+            call matchadd('Number',     '\v^\s+\zs\d+\ze')
+            call matchadd('Identifier', '\v(\||\.)\s+\zs(noun|adjective|verb)\ze')
+            call matchadd('Identifier', '\v^\s+\zs(noun|adjective|verb)\ze')
+            call matchadd('Identifier', '\v^\zs(noun|adjective|verb)\ze')
+            call matchadd('Special',   '\v^\s+PHRASES|PHRASAL VERBS')
+            call matchadd('Statement',  'DERIVATIVES')
+            call matchadd('Keyword',    'ORIGIN')
+            call matchadd('Type',       '\v^\s+\zs•\ze')
+            call matchadd('Comment',    '\v\[.{-}\]')
+            call matchadd('Constant',   '\v\(.{-}\)')
+            call matchadd('String',     '\v‘.{-}’')
         else
             " Handle missing file and "no application can open ..." errors
             call system(printf('open dict://"%s"', word))
