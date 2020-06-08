@@ -874,6 +874,10 @@ let g:deoplete#enable_at_startup = 1
 
 " }}}
 
+" fzf {{{
+set rtp+=/opt/local/share/fzf/vim
+" }}}
+
 " goyo.vim {{{
 
 " Use the width of the textwidth option as the default width for goyo
