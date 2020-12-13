@@ -985,7 +985,7 @@ function! s:goyo_toggle() abort
 endfunction
 
 " Quickly set up Goyo with a width of 50%
-nnoremap <localleader>gy :call <SID>goyo_toggle()<cr>
+nnoremap <silent> <localleader>gy :call <SID>goyo_toggle()<cr>
 
 " }}}
 
