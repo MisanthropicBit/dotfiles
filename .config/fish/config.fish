@@ -42,3 +42,6 @@ if type nvim &> /dev/null
 end
 
 status --is-interactive; and source (pyenv init -|psub)
+
+source ~/projects/fish/nigiri/fish_prompt.fish
+source ~/projects/fish/nigiri/fish_right_prompt.fish
