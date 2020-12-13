@@ -283,6 +283,47 @@ function! s:RandomColorscheme()
     return chosen
 endfunction
 
+" Find the root directory of the current project
+function s:LocateProjectRoot(depth, ...) abort
+    let gitdir = system('git rev-parse --show-toplevel')
+
+    if gitdir !~# '^fatal:'
+      return gitdir
+    endif
+
+    let root_dir_markers = ['.git', '.hg', '.svn', '.bzr']
+    let root_file_markers = ['.gitignore', 'MANIFEST.in', 'tox.ini', 'setup.py']
+    let depth = a:depth
+    let cwd = getcwd()
+
+    if a:0 > 0
+        let root_dir_markers += a:1
+    endif
+
+    if a:0 > 1
+        let root_file_markers += a:2
+    endif
+
+    while depth > 0
+        for dir in root_dir_markers
+            if !empty(finddir(dir, cwd))
+                return cwd
+            endif
+        endfor
+
+        for filename in root_file_markers
+            if !empty(findfile(filename, cwd))
+                return cwd
+            endif
+        endfor
+
+        let cwd = fnamemodify(cwd, ':h')
+        let depth -= 1
+    endwhile
+
+    return ''
+endfunction
+
 " }}}
 
 " General {{{
