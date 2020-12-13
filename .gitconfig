@@ -30,10 +30,10 @@
     cf = !git show --pretty="format:" --name-status
     cm = commit -m
     cnv = commit --no-verify -m
-    cv = !env GIT_EDITOR='nvim -c \"Gvsplit! diff --cached | wincmd h | nmap q :qa<cr>\"' git commit
     co = checkout
-    cp = checkout --patch
     count = rev-list --count HEAD
+    cp = checkout --patch
+    cv = !env GIT_EDITOR='nvim -c \"Gvsplit! diff --cached | wincmd h | nmap q :qa<cr>\"' git commit
     cr=log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
     dc = diff --cached
     dl = !git diff --color=always $@ | less -r
