@@ -44,6 +44,7 @@
     graph = !git log --graph --color | less -r
     issue = "!__git_issue_2945() { git branch -a | grep --color=always "issue-$1"; }; __git_issue_2945"
     last = log -1 HEAD
+    mergetest = !git merge-tree `git merge-base $1 $2` $1 $2 | diff-so-fancy
     pr = '!f() { git fetch ${2:-upstream}refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f'
     rcount = rev-list --count @{u}
     rp = reset --patch
