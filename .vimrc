@@ -936,6 +936,29 @@ let g:deoplete#enable_at_startup = 1
 
 " fzf {{{
 set rtp+=/opt/local/share/fzf/vim
+
+" ctrl-s makes more sense to me for split windows
+let g:fzf_action = {
+    \'ctrl-t': 'tab split',
+    \'ctrl-s': 'split',
+    \'ctrl-v': 'vsplit',
+\}
+
+" Remove the built-in colors from :Colors command
+command! -bang Colors call fzf#run(fzf#wrap({
+    \'source':  fzf#vim#_uniq(s:GetPluginColorschemes(0)),
+    \'sink':    'colo',
+    \'options': '+m --prompt="Colors> "',
+\}))
+
+" Find files within a project (marked by .git, .gitignore, setup.py etc.)
+command! -bang PFiles call fzf#vim#files(s:LocateProjectRoot(3), <bang>0)
+
+command! -bang -nargs=* GGrep
+\ call fzf#vim#grep(
+\   'git grep --line-number -- '.shellescape(<q-args>), 0,
+\   fzf#vim#with_preview({'dir': '/Users/alexb/projects/react-native/BakerFriend'}), <bang>0)
+
 " }}}
 
 " goyo.vim {{{
