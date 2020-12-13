@@ -14,11 +14,23 @@ if test -e "$script_dir/aliases.fish"
 end
 
 # Add macports bin/ directory
-set PATH /opt/local/bin $PATH
+set -x PATH /opt/local/bin $PATH
 
-set PATH /usr/local/bin $PATH
-set PATH /usr/local/texlive/2019/bin/x86_64-darwin/ $PATH
-set PATH ~/.npm-global/bin $PATH
+set -x PATH /usr/local/bin $PATH
+set -x PATH /usr/local/texlive/2019/bin/x86_64-darwin/ $PATH
+set -x PATH ~/.npm-global/bin $PATH
+set -x PATH /Library/Frameworks/Mono.framework/Versions/Current/bin $PATH
+set -x PATH /usr/local/share/dotnet/ $PATH
+
+# Android
+set -x ANDROID_HOME $HOME/Library/Android/sdk
+set -a PATH $ANDROID_HOME/emulator
+set -a PATH $ANDROID_HOME/tools
+set -a PATH $ANDROID_HOME/tools/bin
+set -a PATH $ANDROID_HOME/platform-tools
+
+# Opt out of Microsoft's CLI telemetry
+set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
 
 # Add pyenv to path
 set --universal PYENV_ROOT "$HOME/.pyenv"
