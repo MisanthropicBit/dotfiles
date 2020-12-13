@@ -813,6 +813,21 @@ if has("autocmd")
             autocmd FileType task setlocal conceallevel=2
         augroup END
     endif
+
+    augroup typescript
+      autocmd!
+      autocmd BufRead,BufNewFile *.ts,*.tsx setlocal shiftwidth=2 | colo codedark
+    augroup END
+
+    augroup jsx
+        autocmd!
+        autocmd BufRead,BufNewFile *.jsx setlocal shiftwidth=2 | colo codedark
+    augroup END
+
+    augroup fsproj
+        autocmd!
+        autocmd BufRead,BufNewFile *.fsproj setlocal ft=xml
+    augroup END
 endif
 
 " }}}
