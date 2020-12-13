@@ -36,4 +36,9 @@ set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
 set --universal PYENV_ROOT "$HOME/.pyenv"
 set PATH "$PYENV_ROOT/bin" $PATH
 
+# Use neovim as a pager for manpages
+if type nvim &> /dev/null
+    set -x MANPAGER "nvim +Man!"
+end
+
 status --is-interactive; and source (pyenv init -|psub)
