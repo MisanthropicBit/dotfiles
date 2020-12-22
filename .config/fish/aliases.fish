@@ -31,13 +31,13 @@ alias vh        "vimhelp"
 alias vimrc     "$EDITOR ~/.vimrc"
 
 function tophist -d "Show the top 'n' most used commands"
-    set -l top "$1"
+    set -l top "$argv[1]"
 
-    if -z "$top"
-        set -l top 3
+    if test -z "$top"
+        set top 3
     end
 
-    history | awk '{print $2}' | awk 'BEGIN {FS="|"}{print $1}' | sort | uniq -c | sort -nr | head -n $top
+    history | awk 'BEGIN {FS="|"}{print $1}' | awk '{print $1}' | sort | uniq -c | sort -nr | head -n "$top"
 end
 
 function sve -d "Display or activate a virtual environment"
