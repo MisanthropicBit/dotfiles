@@ -1,0 +1,10 @@
+# Ignore case when autocompleting
+set completion-ignore-case on
+
+# Use filetype colors when displaying possible completions
+set colored-stats on
+
+# Show all completions if they are ambiguous
+set show-all-if-ambiguous on
+
+Control-B: backward-kill-word
