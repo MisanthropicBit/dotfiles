@@ -1124,6 +1124,8 @@ let g:syntastic_scala_fsc_options = '-Ystop-after:parser'
 let g:syntastic_scala_checkers = ['fsc']
 let g:syntastic_haskell_checkers = ['hlint']
 let g:syntastic_fsharp_checkers = ['']
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_typescript_checkers = ['eslint']
 
 " }}}
 
