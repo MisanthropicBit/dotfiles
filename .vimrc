@@ -244,31 +244,33 @@ function! s:GetPluginNames(regex)
     return filter(plugins, 'v:val !~# "after" && v:val =~# "' . a:regex . '"')
 endfunction
 
-let s:builtin_colorschemes = ['blue', 'darkblue', 'default', 'delek', 'desert', 'elflord',
-                             \'evening', 'koehler', 'morning', 'murphy', 'pablo', 'peachpuff',
-                             \'slate', 'shine', 'torte', 'zellner']
+let s:builtin_colorschemes = [
+    \'blue',
+    \'darkblue',
+    \'default',
+    \'delek',
+    \'desert',
+    \'elflord',
+    \'evening',
+    \'koehler',
+    \'morning',
+    \'murphy',
+    \'pablo',
+    \'peachpuff',
+    \'ron',
+    \'shine',
+    \'slate',
+    \'torte',
+    \'zellner',
+\]
 
 " For use in s:RandomColorscheme. Lists colorschemes that are broken or do not
 " support true-color
 let s:exclude_colorschemes = ['one-dark', 'hybrid', 'ron', 'tayra', 'charcoal_candy']
 
 " Find and choose and random user-defined colorscheme
-function! s:RandomColorscheme()
-    let colorschemes = map(split(globpath(&runtimepath, 'colors/*.vim'), '\n'),
-                          \'fnamemodify(v:val, ":t:r")')
-
-    let exclude = []
-
-    if exists("s:builtin_colorschemes")
-        let exclude += s:builtin_colorschemes
-    endif
-
-    if exists("s:exclude_colorschemes")
-        let exclude += s:exclude_colorschemes
-    endif
-
-    let user_colorschemes = filter(colorschemes,
-                                  \'index(exclude, v:val) == -1')
+function! s:RandomColorscheme(bang)
+    let user_colorschemes = s:GetPluginColorschemes(a:bang)
 
     if &shell == 'bash'
         let random = system('echo -n $RANDOM')
@@ -281,6 +283,37 @@ function! s:RandomColorscheme()
     execute ':colorscheme ' . chosen
 
     return chosen
+endfunction
+
+" Return a list of colorschemes installed by plugin, excluding built-in
+" colorschemes
+function! s:GetPluginColorschemes(use_preferred, ...) abort
+    let user_colorschemes = []
+
+    if a:use_preferred && exists('s:preferred_colors')
+        let user_colorschemes = s:preferred_colors
+    else
+        let colors = map(split(globpath(&runtimepath, 'colors/*.vim'), '\n'),
+                        \'fnamemodify(v:val, ":t:r")')
+
+        if has('packages')
+            let colors += split(globpath(&packpath, 'pack/*/opt/*/colors/*.vim'), '\n')
+        endif
+
+        let exclude = []
+
+        if exists('s:builtin_colorschemes')
+            let exclude += s:builtin_colorschemes
+        endif
+
+        if a:0 > 0 && !empty(a:1)
+            let exclude += a:1
+        endif
+
+        let user_colorschemes = filter(colors, 'index(exclude, v:val) == -1')
+    endif
+
+    return uniq(sort(user_colorschemes))
 endfunction
 
 " Find the root directory of the current project
@@ -702,7 +735,8 @@ if has('mac') || has('macunix')
 endif
 
 command! -nargs=? Plugins :echo "Plugins:\n" . join(<SID>GetPluginNames(<q-args>), "\n")
-command! RandomColorscheme :echo printf("Selected: %s", <SID>RandomColorscheme())
+command! -bang RandomColorscheme :echo printf("Selected: %s", <SID>RandomColorscheme(<bang>0))
+
 if executable('grip')
     " https://pypi.org/project/grip/
     command! ViewMarkdown :silent !grip --browser --quiet %
