@@ -91,6 +91,8 @@ Commands:
     tag         Open a tag.
     website     Open the website associated with the repository, if any.
     wiki        Open the wiki page of the repository.
+    travis      Open the repository on Travis CI.
+    actions     Open the Github actions page.
 
 See 'git browse help <command>' for more information on a specific command.
 
@@ -198,6 +200,18 @@ Open the wiki page of the repository.
 
 """
 
+travis_help = """usage: travis
+
+Open the travis page of the repository.
+
+"""
+
+actions_help = """Usage: actions
+
+Open the Github actions page.
+
+"""
+
 command_help = {
     'help':      help_help,
     'apis':      apis_help,
@@ -210,6 +224,8 @@ command_help = {
     'tag':       tag_help,
     'website':   website_help,
     'wiki':      wiki_help,
+    'travis':    travis_help,
+    'actions':   actions_help,
 }
 
 # Handy named tuple for parts of a url that is to be assembled and opened
@@ -398,6 +414,14 @@ class API:
         """Return the url parts for the repository's wiki."""
         raise NotImplementedError()
 
+    def travis(self) -> UrlParts:
+        """Return the url parts for the repository on Travis CI."""
+        raise NotImplementedError()
+
+    def actions(self) -> UrlParts:
+        """Return the url parts for the Github actions page."""
+        raise NotImplementedError('requires a Github repository')
+
     def reference(self, ref: str) -> UrlParts:
         """Return the url parts for a specific commit."""
         raise NotImplementedError()
@@ -514,6 +538,14 @@ class GitHubAPI(API):
 
     def wiki(self) -> UrlParts:
         return UrlParts(self.repo_url, ['wiki'])
+
+    def travis(self) -> UrlParts:
+        user, repo = self.get_user_repo_names()
+
+        return UrlParts('https://travis-ci.org/github', [user, repo])
+
+    def actions(self) -> UrlParts:
+        return UrlParts(self.repo_url, ['actions'])
 
     def reference(self, ref: str) -> UrlParts:
         if self.is_remote_branch(ref):
@@ -890,6 +922,10 @@ def execute_command(api, args) -> Optional[UrlParts]:
             return api.website()
         elif command == 'wiki':
             return api.wiki()
+        elif command == 'travis':
+            return api.travis()
+        elif command == 'actions':
+            return api.actions()
     else:
         if args['<command>']:
             return api.reference(args['<command>'])
