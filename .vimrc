@@ -864,6 +864,16 @@ if has("autocmd")
         autocmd!
         autocmd BufRead,BufNewFile *.fsproj setlocal ft=xml
     augroup END
+
+    augroup web
+        autocmd!
+        autocmd BufRead,BufNewFile *.html,*.yml,*.json setlocal shiftwidth=2
+    augroup END
+
+    augroup docker
+        " Use dockerfile syntax for production dockerfiles
+        autocmd BufRead,BufNewFile Dockerfile.prod setlocal filetype=dockerfile
+    augroup END
 endif
 
 " }}}
