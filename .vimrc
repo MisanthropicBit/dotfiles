@@ -884,12 +884,12 @@ if has("autocmd")
 
     augroup typescript
       autocmd!
-      autocmd BufRead,BufNewFile *.ts,*.tsx setlocal shiftwidth=2 | colo codedark
+      autocmd BufRead,BufNewFile *.ts,*.tsx setlocal shiftwidth=2
     augroup END
 
     augroup jsx
         autocmd!
-        autocmd BufRead,BufNewFile *.jsx setlocal shiftwidth=2 | colo codedark
+        autocmd BufRead,BufNewFile *.jsx setlocal shiftwidth=2
     augroup END
 
     augroup fsproj
