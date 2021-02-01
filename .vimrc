@@ -3,7 +3,15 @@
 
 " Pathogen {{{
 
-let g:pathogen_disabled = ['vim-prism']
+let g:pathogen_disabled = [
+    \'vim-prism',
+    \'a.vim',
+    \'vader_skipif.vim',
+    \'tsuquyomi',
+    \'vim-git',
+    \'typescript-vim',
+    \'vim-jsx-typescript',
+\]
 
 " Update runtimepath with plugins from ~/.vim/bundle/
 execute pathogen#infect()
