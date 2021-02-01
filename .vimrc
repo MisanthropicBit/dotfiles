@@ -903,8 +903,11 @@ if has("autocmd")
     augroup END
 
     augroup docker
-        " Use dockerfile syntax for production dockerfiles
-        autocmd BufRead,BufNewFile Dockerfile.prod setlocal filetype=dockerfile
+        autocmd!
+
+        " Use dockerfile syntax for production, test dockerfiles etc.
+        autocmd BufRead,BufNewFile Dockerfile.* setlocal filetype=dockerfile
+    augroup END
     augroup END
 endif
 
