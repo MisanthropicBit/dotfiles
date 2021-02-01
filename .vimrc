@@ -465,6 +465,14 @@ vnoremap / /\v
 " Highlight the line which the cursor is on
 set cursorline
 
+" Highlight select languages in markdown code blocks
+let g:markdown_fenced_languages = [
+    \'html',
+    \'python',
+    \'bash=sh',
+    \'vim',
+\]
+
 " }}}
 
 " Colors and syntax {{{
