@@ -115,3 +115,6 @@
 [submodule ".vim/bundle/vim-snippets"]
 	path = .vim/bundle/vim-snippets
 	url = https://github.com/honza/vim-snippets
+[submodule ".vim/pack/plugins/start/python-syntax"]
+	path = .vim/pack/plugins/start/python-syntax
+	url = https://github.com/vim-python/python-syntax
