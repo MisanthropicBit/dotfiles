@@ -922,8 +922,12 @@ set shell=fish
 
 " Terminal {{{
 
-" Use escape to exit terminal mode
-tnoremap <esc> <c-\><c-n>
+if exists(':tnoremap') == 2
+    " Use escape to exit terminal mode
+    tnoremap <esc> <c-\><c-n>
+
+    tnoremap jk <c-\><c-n>
+endif
 
 " }}}
 
