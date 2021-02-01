@@ -23,13 +23,29 @@ execute pathogen#helptags()
 
 " Functions {{{
 
-" Show syntax group for current word
-function! <SID>SynStack()
-    if !exists("*synstack") || !exists('*synIDattr')
+" Show syntax group, linked group and colors for current word
+function! <SID>SynStack() abort
+    if !exists('*synID') || !exists('*synIDtrans') || !exists('*synIDattr')
         return
     endif
 
-    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    let synID = synID(line('.'), col('.'), 0)
+
+    if synID == 0
+        echo 'No syntax information for element'
+        return
+    endif
+
+    let name = synIDattr(synID, 'name')
+    let linkedGroup = synIDtrans(synID)
+
+    if synID != linkedGroup
+        " This is not the root of the stack
+        let synID = linkedGroup
+    endif
+
+    echohl Title | echon 'Name  ' | echohl None | echo name "\n\n"
+    echohl Title | echon 'Root  ' | echohl None | execute printf(':hi %s', synIDattr(synID, 'name'))
 endfunction
 
 " Function that deletes trailing whitespace
@@ -536,7 +552,7 @@ let mapleader = "\<space>"
 let maplocalleader = "\<space>"
 
 " Display the syntax group(s) of the current word
-nnoremap <leader>sg :call <SID>SynStack()<cr>
+nnoremap <silent> <leader>sg :call <SID>SynStack()<cr>
 
 " Shortcut for disabling highlighting
 nnoremap <silent> <leader><space> :nohl<cr>
