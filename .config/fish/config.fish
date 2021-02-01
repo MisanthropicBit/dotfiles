@@ -5,7 +5,7 @@ set --export FISH_POWERPROMPT_THEME "random"
 
 # Colors
 set --universal fish_color_command 00c5d7 darkcyan
-set -gx LSCOLORS ExfxxxxxBx
+set -gx LSCOLORS FxfxxxxxBx
 
 set --local script_dir (dirname (status -f))
 
