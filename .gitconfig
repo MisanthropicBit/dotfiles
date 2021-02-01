@@ -12,11 +12,14 @@
     newHighlight = green bold 22
 [color.diff]
     meta       = yellow
-    frag       = blue bold
+    frag       = cyan
+    func       = yellow bold
     commit     = magenta bold
     old        = red bold
     new        = green bold
     whitespace = red reverse
+[color.interactive]
+    prompt = cyan
 [push]
     default = simple
 [alias]
@@ -54,6 +57,7 @@
     sl = stash list
     sp = stash save --patch
     ss = stash show
+    tags = show-ref --tags --dereference
     tracked = ls-files
     summary = log --oneline --decorate
     unstage = reset --quiet HEAD --
