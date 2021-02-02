@@ -35,6 +35,10 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-python/python-syntax'
 
+if executable('node') && executable('yarn')
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+endif
+
 " Colorschemes
 Plug 'dracula/vim'
 Plug 'junegunn/seoul256.vim'
