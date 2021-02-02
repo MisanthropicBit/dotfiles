@@ -1,23 +1,61 @@
 " Author: Alexander Asp Bock
 " Source: https://github.com/MisanthropicBit/dotfiles
 
-" Pathogen {{{
+" Plugin install {{{
 
-let g:pathogen_disabled = [
-    \'vim-prism',
-    \'a.vim',
-    \'vader_skipif.vim',
-    \'tsuquyomi',
-    \'vim-git',
-    \'typescript-vim',
-    \'vim-jsx-typescript',
-\]
+call plug#begin('~/.vim/plugged')
 
-" Update runtimepath with plugins from ~/.vim/bundle/
-execute pathogen#infect()
+" Main plugins
+Plug 'dag/vim-fish'
+Plug 'dense-analysis/ale'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'honza/vim-snippets'
+Plug 'junegunn/fzf.vim' " fzf is installed via MacPorts
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'
+Plug 'KeitaNakamura/tex-conceal.vim'
+Plug 'Konfekt/FastFold'
+Plug 'lervag/vimtex', { 'for': ['tex', 'bib'] }
+Plug 'mhinz/vim-startify'
+Plug 'preservim/tagbar'
+Plug 'Raimondi/delimitMate'
+Plug 'rhysd/git-messenger.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'sirver/UltiSnips'
+Plug 't9md/vim-choosewin'
+Plug 'tommcdo/vim-exchange'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-python/python-syntax'
 
-" Generate help tags
-execute pathogen#helptags()
+" Colorschemes
+Plug 'dracula/vim'
+Plug 'junegunn/seoul256.vim'
+Plug 'srcery-colors/srcery-vim'
+
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'deoplete-plugins/deoplete-jedi'
+endif
+
+" Local plugins
+Plug '~/projects/vim/vim-numbers'
+Plug '~/projects/vim/vim-warlock'
+Plug '~/Dropbox/projects/vim/vim-task'
+
+" Active forks
+Plug '~/Dropbox/projects/vim/vader.vim/vader.vim'
+Plug '~/projects/vim/git-messenger.vim'
+
+
+call plug#end()
 
 " }}}
 
@@ -949,57 +987,11 @@ if has('nvim')
 endif
 " }}}
 
-" Plugins {{{
+" Plugin configuration {{{
 
-" ag {{{
+" ALE {{{
 
-if executable('ag')
-    " Mapping for the silver searcher
-    nnoremap <leader>a :Ag<space>
-    let g:ackprg = 'ag --smart-case --nocolor --column'
-
-    " This speeds up CtrlP searches significantly
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
-
-" }}}
-
-" colorizer {{{
-
-" colorizer is inefficient for large files (like 'eval.txt')
-" so limit it to files with lines < 100
-let g:colorizer_maxlines = 100
-
-" Disable the default colorizer mapping
-let g:colorizer_nomap = 1
-
-" Custom mapping for toggling colorization
-nnoremap <leader>tc <Plug>Colorizer
-
-" }}}
-
-" CtrlP {{{
-
-" Ignore shared libraries, class files and version control directories
-let g:ctrlp_custom_ignore = {
-    \ 'file': '\v\.(swp|so|dll|class|pyo|pyc)$',
-    \ 'dir' : '\v[\/]\.(git|hg|svn|idea)$'
-\ }
-
-" Always show hidden files
-let g:ctrlp_show_hidden = 1
-
-" Custom root marker for manually setting the CtrlP root
-let g:ctrlp_root_markers = ['.ctrlproot']
-
-" Shortcut mapping for viewing (r)ecently (u)sed files
-nnoremap <silent> <localleader>ru :CtrlPMRUFiles<cr>
-
-" Shortcut mapping for searching current buffers
-nnoremap <silent> <localleader>bb :CtrlPBuffer<cr>
-
-" Shortcut mapping for viewing and (s)earching for (t)ags
-nnoremap <silent> <localleader>st :CtrlPTag<cr>
+let g:ale_hover_to_floating_preview = 1
 
 " }}}
 
@@ -1020,6 +1012,7 @@ let g:deoplete#enable_at_startup = 1
 " }}}
 
 " fzf {{{
+
 set rtp+=/opt/local/share/fzf/vim
 
 " ctrl-s makes more sense to me for split windows
@@ -1124,17 +1117,8 @@ augroup END
 
 " }}}
 
-" omnisharp-vim {{{
-
-" Enable snippet completion on return type and method arguments (via Ultisnips)
-"let g:OmniSharp_want_snippet = 1
-let g:OmniSharp_want_return_type = 1
-let g:OmniSharp_want_method_header = 1
-
-" }}}
-
 " python-syntax {{{
-"let g:python_highlight_all = 1
+
 let g:python_highlight_builtins = 1
 let g:python_highlight_exceptions = 1
 let g:python_highlight_string_formatting = 1
@@ -1148,6 +1132,7 @@ let g:python_highlight_func_calls = 1
 let g:python_highlight_class_vars = 1
 let g:python_highlight_operators = 1
 let g:python_highlight_file_headers_as_comments = 1
+
 " }}}
 
 " Syntastic {{{
@@ -1238,7 +1223,7 @@ let g:airline#extensions#branch#displayed_head_limit = 32
 " vim-choosewin {{{
 
 " Map '-' to visually choosing a window to jump to
-nnoremap - <Plug>(choosewin)
+nmap - <Plug>(choosewin)
 
 " Mapping for quickly swapping two windows
 nnoremap <localleader>swc :ChooseWinSwap<enter>
@@ -1249,7 +1234,9 @@ let g:choosewin_overlay_enable = 1
 " }}}
 
 " vim-devicons {{{
+
 let g:DevIconsEnableFoldersOpenClose = 1
+
 " }}}
 
 " vim-easy-align {{{
@@ -1262,16 +1249,8 @@ nmap ga <Plug>(EasyAlign)
 
 " }}}
 
-" vim-fsharp {{{
-
-let g:fsharp_only_check_errors_on_write = 1
-
-" Remap F# type-checking to avoid clashing with vim-task mappings
-let g:fsharp_map_typecheck = 'y'
-
-" }}}
-
 " vim-fugitive {{{
+
 " Useful git mappings based on the spf13-vim distribution
 nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gd :Gdiff<cr>
@@ -1285,35 +1264,10 @@ nnoremap <leader>gv :Gvsplit! diff --cached<cr>
 command! Gcached :Gtabedit! diff --cached
 nnoremap <leader>gr :Gcached<cr>
 
-" Mappings for diffput and diffget
-xnoremap <localleader>dp :diffput<cr>
-xnoremap <localleader>dg :diffget<cr>
-" }}}
-
-" vim-prism {{{
-let g:prism#weights = {
-    \'seoul256':       'auto',
-    \'seoul256-light': 'auto',
-    \'chito':          'auto',
-    \'jellybeans':     'auto',
-    \'scheakur':       'auto',
-    \'mod8':           'auto',
-    \'beachcomber':    'auto',
-    \'vilight':        'auto',
-    \'pacific':        'auto',
-    \'black_angus':    'auto',
-    \'obsidian':       {'weight': 'auto', 'truecolor': 0},
-\}
-
-let g:prism#python#weights = {
-    \'mod8':       0.7,
-    \'deus':       0.2,
-    \'seoul256':   'auto',
-    \'jellybeans': 'auto'
-\}
 " }}}
 
 " vim-startify {{{
+
 if &encoding == 'utf-8'
     let g:startify_fortune_use_unicode = 1
 endif
@@ -1322,6 +1276,7 @@ let g:startify_custom_header_quotes = [
     \['The optimal allocation is one that never happens.', '', '- Joseph E. Hoag'],
     \['Design is, as always, the art of finding compromises.', '', '- Eric Lippert']
 \] + startify#fortune#predefined_quotes()
+
 " }}}
 
 " vim-surround {{{

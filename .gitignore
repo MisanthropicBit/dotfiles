@@ -2,3 +2,4 @@ copy_vimrc.sh
 update_vimrc.sh
 *.DS_Store
 *.swp
+.vim/plugged/
