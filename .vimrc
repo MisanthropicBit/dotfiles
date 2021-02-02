@@ -293,19 +293,6 @@ function! s:VisualIndentReselect(dir)
     normal! gv
 endfunction
 
-" Return an alphabetically sorted list of all the currently installed plugins
-function! s:GetPluginNames(regex)
-    " Remove stuff not in .vim/bundle/, get the tail of the paths and sort them
-    let plugins = sort(map(filter(split(&runtimepath, ","), 'v:val =~# "bundle"'),
-                          \'fnamemodify(v:val, ":t")'))
-
-    if empty(a:regex)
-        return filter(plugins, 'v:val !~# "after"')
-    endif
-
-    return filter(plugins, 'v:val !~# "after" && v:val =~# "' . a:regex . '"')
-endfunction
-
 let s:builtin_colorschemes = [
     \'blue',
     \'darkblue',
@@ -661,9 +648,6 @@ endif
 " Quicker way to exit insert mode
 inoremap <expr> jk pumvisible() ? "<c-e>" : "<esc>"
 
-" Display everyting in &runtimepath on separate lines
-nnoremap <silent> <leader>rtp :echo "Plugins:\n" . join(<SID>GetPluginNames(''), "    \n")<cr>
-
 " Delete trailing whitespace (should this be an autocommand on saving/exiting?)
 nnoremap <silent> <leader>rw :call <SID>DeleteTrailingWhitespace()<cr>
 
@@ -806,7 +790,6 @@ if has('mac') || has('macunix')
     command! -bang -nargs=? Dict call OpenDictionary(<bang>0, <q-args>)
 endif
 
-command! -nargs=? Plugins :echo "Plugins:\n" . join(<SID>GetPluginNames(<q-args>), "\n")
 command! -bang RandomColorscheme :echo printf("Selected: %s", <SID>RandomColorscheme(<bang>0))
 
 if executable('grip')
