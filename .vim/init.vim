@@ -1,1 +1,1 @@
-/Users/alexb/Dropbox/projects/dotfiles/.vimrc
+../.vimrc
