@@ -57,7 +57,6 @@ Plug '~/Dropbox/projects/vim/vim-task'
 Plug '~/Dropbox/projects/vim/vader.vim/vader.vim'
 Plug '~/projects/vim/git-messenger.vim'
 
-
 call plug#end()
 
 " }}}
@@ -946,9 +945,8 @@ set shell=fish
 " Terminal {{{
 
 if exists(':tnoremap') == 2
-    " Use escape to exit terminal mode
+    " Use escape or 'jk' to exit terminal mode
     tnoremap <esc> <c-\><c-n>
-
     tnoremap jk <c-\><c-n>
 endif
 
