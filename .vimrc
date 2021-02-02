@@ -1330,6 +1330,23 @@ let g:vimtask#bullet_symbols              = ['•', '◦', '‣', '▹']
 let g:vimtask#notes_only_foldtext         = ' (notes)'
 let g:vimtask#search_paths                = ['~/research/tasks']
 
+function! StatusBarProgress(format_map, progress_modifiers) abort
+    let completed_symbol = '■'
+    let todo_symbol = '☐'
+
+    let progress = float2nr(10.0 * a:format_map.all_completion / 100.0)
+    let progress_bar = repeat(completed_symbol, progress) .
+        \repeat(todo_symbol, 10 - progress)
+
+    if a:format_map.all_total_tasks == 0 && a:format_map.all_cancelled == 0
+        return '+-- (notes) '
+    endif
+
+    return printf('+-- [%s] %.f%% ', progress_bar, a:format_map.all_completion)
+endfunction
+
+"let g:VimtaskUserProgressFormatter = function('StatusBarProgress')
+
 " }}}
 
 " vimtex {{{
