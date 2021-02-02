@@ -39,6 +39,9 @@ Plug 'vim-python/python-syntax'
 Plug 'dracula/vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'srcery-colors/srcery-vim'
+Plug 'haishanh/night-owl.vim'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'ajmwagar/vim-deus'
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
