@@ -2,4 +2,6 @@ copy_vimrc.sh
 update_vimrc.sh
 *.DS_Store
 *.swp
+.mypy_cache/
+.vim/.netrwhist
 .vim/plugged/
