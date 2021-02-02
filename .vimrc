@@ -655,7 +655,7 @@ if v:version >= 703
 endif
 
 " Quicker way to exit insert mode
-inoremap <expr> jk pumvisible() ? "<c-e>" : "<esc>"
+inoremap <expr> jk "<esc>"
 
 " Delete trailing whitespace (should this be an autocommand on saving/exiting?)
 nnoremap <silent> <leader>rw :call <SID>DeleteTrailingWhitespace()<cr>
