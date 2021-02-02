@@ -520,11 +520,14 @@ if !has('gui_running')
 endif
 
 let s:preferred_colors = [
-    \'badwolf',
+    \'deus'
     \'dracula',
     \'edge',
+    \'night-owl',
+    \'palenight',
     \'seoul256',
-    \'codedark'
+    \'srcery',
+    \'warlock',
 \]
 
 " Set the default colorscheme
