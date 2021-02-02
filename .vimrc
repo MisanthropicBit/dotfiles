@@ -809,7 +809,10 @@ endif
 
 if has("autocmd")
     " Automatically resize windows when vim is resized
-    autocmd VimResized * tabdo :wincmd =
+    augroup vimresize
+        autocmd!
+        autocmd VimResized * tabdo :wincmd =
+    augroup END
 
     augroup trailing
         " Show trailing whitespace when not in insert mode
@@ -820,6 +823,7 @@ if has("autocmd")
 
     augroup clike
         " Use C-style indentation rules for C/C++/CUDA
+        autocmd!
         autocmd FileType c setlocal cindent | setlocal indentkeys-=0#
         autocmd FileType cpp setlocal cindent | setlocal indentkeys-=0#
         autocmd FileType cuda setlocal cindent | setlocal indentkeys-=0#
@@ -827,50 +831,52 @@ if has("autocmd")
 
     augroup scons
         " Use Python syntax for SCons files
+        autocmd!
         autocmd BufReadPost SCons* setlocal filetype=python
         autocmd BufRead,BufNewFile *.scons setlocal filetype=python
     augroup END
 
     augroup python
+        autocmd!
         autocmd FileType python setlocal colorcolumn=80 textwidth=79
 
         " Automatically delete trailing whitespace when saving Python files
         autocmd BufWrite *.py :call <SID>DeleteTrailingWhitespace()
     augroup END
 
-    augroup json
-        " Using javascript highlighting for json files
-        autocmd BufRead,BufNewFile *.json setlocal filetype=javascript
-    augroup END
-
     augroup handlebars
         " Using html highlighting for handlebars files
+        autocmd!
         autocmd BufRead,BufNewFile *.hbs setlocal filetype=html
     augroup END
 
     augroup latex
-        " Enable spell-checking for Latex files
+        " Enable spell-checking, set textwidth and conceal level for Latex files
+        autocmd!
         autocmd FileType tex,plaintex setlocal spell spelllang=en_gb tw=90 conceallevel=2
     augroup END
 
     augroup makefile
         " Switch indentation to use tabs instead of spaces for makefiles
+        autocmd!
         autocmd BufRead,BufNewFile Makefile setlocal noexpandtab
     augroup END
 
     augroup markdown
         " Set text width to 80 and spell-checking on for markdown files
-        autocmd FileType markdown setlocal tw=80
+        autocmd!
+        autocmd FileType markdown setlocal tw=80 spell
     augroup END
 
     augroup save_edit_position
-      " Remember last editing position (see ':h last-position-jump')
-      " Use 'zv' to open just enough folds for the line to be visible and
-      " 'zz' to center the line
-      autocmd BufReadPost *
-          \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'gitcommit' |
-          \   execute 'normal! g`"zvzz' |
-          \ endif
+        " Remember last editing position (see ':h last-position-jump')
+        " Use 'zv' to open just enough folds for the line to be visible and
+        " 'zz' to center the line
+        autocmd!
+        autocmd BufReadPost *
+            \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'gitcommit' |
+            \   execute 'normal! g`"zvzz' |
+            \ endif
     augroup END
 
     augroup quickfix
@@ -886,15 +892,7 @@ if has("autocmd")
 
     augroup csharp
         autocmd!
-        autocmd FileType cs nnoremap <buffer> <silent> <localleader>ot :OmniSharpTypeLookup<cr>
-                         \| nnoremap <buffer> <silent> <localleader>od :OmniSharpGotoDefinition<cr>
-                         \| nnoremap <buffer> <silent> <localleader>ou :OmniSharpFindUsages<cr>
-                         \| nnoremap <buffer> <silent> <localleader>or :OmniSharpRename<cr>
-                         \| nnoremap <buffer> <silent> <localleader>os :OmniSharpFindSymbol<cr>
-                         \| :silent OmniSharpHighlightTypes
-                         \| setlocal indentkeys-=0#
-
-        autocmd CompleteDone *.cs call OmniSharp#ExpandAutoCompleteSnippet()
+        autocmd FileType cs setlocal indentkeys-=0#
     augroup END
 
     augroup gitcommit
@@ -930,11 +928,9 @@ if has("autocmd")
     augroup END
 
     augroup docker
-        autocmd!
-
         " Use dockerfile syntax for production, test dockerfiles etc.
+        autocmd!
         autocmd BufRead,BufNewFile Dockerfile.* setlocal filetype=dockerfile
-    augroup END
     augroup END
 endif
 
