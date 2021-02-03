@@ -1176,8 +1176,10 @@ nnoremap <c-b> :TagbarToggle<cr>
 " Split the :UltiSnipsEdit window horizontally or vertically depending on context
 let g:UltiSnipsEditSplit = 'context'
 
+let g:UltiSnipsSnippetDirectories = ['UltiSnips', 'custom-ultisnips']
+
 " Open the snippets file for the current file type
-nnoremap <leader>sf :UltiSnipsEdit<cr>
+nnoremap <leader>sf :UltiSnipsEdit!<cr>
 
 " }}}
 
