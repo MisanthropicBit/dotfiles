@@ -979,6 +979,34 @@ endif
 " ALE {{{
 
 let g:ale_hover_to_floating_preview = 1
+let g:ale_sign_error = '✗ '
+let g:ale_sign_warning = '⚠ '
+let g:airline#extensions#ale#enabled = 1
+let g:ale_echo_msg_format = '[%linter%] %s (%code%:%severity%)'
+
+let s:ale_js_ts_fixers = ['prettier', 'eslint']
+
+let g:ale_fixers = {
+    \'*': ['remove_trailing_lines', 'trim_whitespace'],
+    \'python': ['isort'],
+    \'javascript': s:ale_js_ts_fixers,
+    \'javascriptreact': s:ale_js_ts_fixers,
+    \'typescript': s:ale_js_ts_fixers,
+    \'typescriptreact': s:ale_js_ts_fixers,
+\}
+
+nmap <silent> <leader>an <Plug>(ale_next_wrap)
+nmap <silent> <leader>ap <Plug>(ale_previous_wrap)
+nmap <silent> <leader>af <Plug>(ale_fix)
+nmap <silent> <leader>at <Plug>(ale_toggle)
+nmap <silent> <leader>ao :ALEOrganizeImports<cr>
+nmap <silent> <leader>ac <Plug>(ale_documentation)
+nmap <silent> <leader>ar <Plug>(ale_find_references)
+nmap <silent> <leader>ag <Plug>(ale_go_to_definition)
+nmap <silent> <leader>am :ALERename<cr>
+nmap <silent> <leader>as :ALESymbolSearch<cr>
+nmap <silent> <leader>ah <Plug>(ale_hover)
+nmap <silent> <leader>ad <Plug>(ale_detail)
 
 " }}}
 
