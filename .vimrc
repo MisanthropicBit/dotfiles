@@ -21,7 +21,7 @@ Plug 'preservim/tagbar'
 Plug 'Raimondi/delimitMate'
 Plug 'rhysd/git-messenger.vim'
 Plug 'ryanoasis/vim-devicons'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
 Plug 'sirver/UltiSnips'
 Plug 't9md/vim-choosewin'
 Plug 'tommcdo/vim-exchange'
