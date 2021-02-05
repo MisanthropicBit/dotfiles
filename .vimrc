@@ -13,7 +13,6 @@ Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf.vim' " fzf is installed via MacPorts
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'junegunn/vim-easy-align'
 Plug 'KeitaNakamura/tex-conceal.vim'
 Plug 'Konfekt/FastFold'
 Plug 'lervag/vimtex', { 'for': ['tex', 'bib'] }
