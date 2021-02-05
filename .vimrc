@@ -1216,6 +1216,9 @@ let g:airline#extensions#branch#displayed_head_limit = 32
 " Map '-' to visually choosing a window to jump to
 nmap - <Plug>(choosewin)
 
+" Map '_' to quickly swap windows (sadly no <Plug> command)
+nnoremap _ :<c-u>call choosewin#start(range(1, winnr('$')), {'swap': 1, 'swap_stay': 0 })<cr>
+
 " Mapping for quickly swapping two windows
 nnoremap <localleader>swc :ChooseWinSwap<enter>
 
