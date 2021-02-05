@@ -981,10 +981,20 @@ endif
 let g:ale_hover_to_floating_preview = 1
 let g:ale_sign_error = '✗ '
 let g:ale_sign_warning = '⚠ '
+let g:ale_sign_style_error = '⚡ '
+let g:ale_sign_style_warning = '⛔  '
 let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_format = '[%linter%] %s (%code%:%severity%)'
 
+let s:ale_js_ts_linters = ['prettier']
 let s:ale_js_ts_fixers = ['prettier', 'eslint']
+
+" let g:ale_linters = {
+"     \'javascript': s:ale_js_ts_linters,
+"     \'javascriptreact': s:ale_js_ts_linters,
+"     \'typescript': s:ale_js_ts_linters,
+"     \'typescriptreact': s:ale_js_ts_linters,
+" \}
 
 let g:ale_fixers = {
     \'*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -1147,42 +1157,6 @@ let g:python_highlight_func_calls = 1
 let g:python_highlight_class_vars = 1
 let g:python_highlight_operators = 1
 let g:python_highlight_file_headers_as_comments = 1
-
-" }}}
-
-" Syntastic {{{
-
-" Check syntax when opening files
-let g:syntastic_check_on_open = 1
-
-" Do not run checks on scala files because 'fsc' and 'scala' are too slow
-"let g:syntastic_mode_map = {
-"    \'mode': 'active',
-"    \'passive_filetypes': ['scala']
-"\}
-
-" Set unicode symbols
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_style_warning_symbol = '⚡'
-let g:syntastic_style_error_symbol = '⛔'
-
-" Enable checkers for Syntastic using various linters and compilers
-let g:syntastic_python_checkers = ['flake8', 'pydocstyle', 'mypy']
-let g:syntastic_c_checkers = ['clang', 'gcc']
-let g:syntastic_cpp_checkers = ['clang++']
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
-let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues', 'mcs']
-let g:tex_flavor = 'tex'
-let g:syntastic_plaintex_checkers = ['lacheck']
-let g:syntastic_scala_fsc_options = '-Ystop-after:parser'
-let g:syntastic_scala_checkers = ['fsc']
-let g:syntastic_haskell_checkers = ['hlint']
-let g:syntastic_fsharp_checkers = ['']
-let g:syntastic_javascript_checkers = ['eslint', 'prettier']
-let g:syntastic_typescript_checkers = ['eslint', 'prettier', 'tsc']
-let g:syntastic_fish_checkers = ['fish']
 
 " }}}
 
