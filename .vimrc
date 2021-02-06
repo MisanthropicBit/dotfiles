@@ -40,12 +40,13 @@ if executable('node') && executable('yarn')
 endif
 
 " Colorschemes
+Plug 'ajmwagar/vim-deus'
 Plug 'dracula/vim'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'haishanh/night-owl.vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'srcery-colors/srcery-vim'
-Plug 'haishanh/night-owl.vim'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'ajmwagar/vim-deus'
+Plug 'sts10/vim-pink-moon'
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -525,12 +526,14 @@ endif
 let s:preferred_colors = [
     \'deus'
     \'dracula',
-    \'edge',
     \'night-owl',
+    \'orange-moon',
     \'palenight',
+    \'pink-moon',
     \'seoul256',
     \'srcery',
     \'warlock',
+    \'yellow-moon',
 \]
 
 " Set the default colorscheme
