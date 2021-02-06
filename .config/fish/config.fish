@@ -36,6 +36,9 @@ set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
 set --universal PYENV_ROOT "$HOME/.pyenv"
 set PATH "$PYENV_ROOT/bin" $PATH
 
+# Add terminal blocks game to path
+set -a PATH ~/projects/c/terminal_blocks
+
 # Use neovim as a pager for manpages
 if type nvim &> /dev/null
     set -x MANPAGER "nvim +Man!"
