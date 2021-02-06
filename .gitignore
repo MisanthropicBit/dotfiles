@@ -5,3 +5,4 @@ update_vimrc.sh
 .mypy_cache/
 .vim/.netrwhist
 .vim/plugged/
+fishd.*
