@@ -322,7 +322,7 @@ let s:builtin_colorschemes = [
 
 " For use in s:RandomColorscheme. Lists colorschemes that are broken or do not
 " support true-color
-let s:exclude_colorschemes = ['one-dark', 'hybrid', 'ron', 'tayra', 'charcoal_candy']
+let s:exclude_colorschemes = []
 
 " Find and choose and random user-defined colorscheme
 function! s:RandomColorscheme(bang)
