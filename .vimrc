@@ -971,9 +971,11 @@ if has('nvim')
     " Enable interactive command line substitution without window splitting
     set inccommand=nosplit
 
+    let s:python3_host_prog_base_path = '~/.neovim_venvs/neovim3'
+
     " Point neovim to its specific python virtual environments
     let g:python_host_prog = expand('~/.neovim_venvs/neovim2/bin/python')
-    let g:python3_host_prog = expand('~/.neovim_venvs/neovim3/bin/python')
+    let g:python3_host_prog = expand(s:python3_host_prog_base_path . '/bin/python')
 endif
 " }}}
 
@@ -982,15 +984,25 @@ endif
 " ALE {{{
 
 let g:ale_hover_to_floating_preview = 1
-let g:ale_sign_error = '✗ '
-let g:ale_sign_warning = '⚠ '
+let g:ale_sign_error = '✖ '
+let g:ale_sign_warning = '!'
 let g:ale_sign_style_error = '⚡ '
 let g:ale_sign_style_warning = '⛔  '
 let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_format = '[%linter%] %s (%code%:%severity%)'
 
+if has('nvim')
+    " Point to neovim python3 virtual environment for the jedi-language-server
+    " executable
+    let g:ale_python_jedils_executable = expand(s:python3_host_prog_base_path . '/bin/jedi-language-server')
+endif
+
 let s:ale_js_ts_linters = ['prettier']
 let s:ale_js_ts_fixers = ['prettier', 'eslint']
+
+let g:ale_linters = {
+    \'python': ['flake8', 'mypy', 'pylint', 'pyright', 'jedils'],
+\}
 
 " let g:ale_linters = {
 "     \'javascript': s:ale_js_ts_linters,
