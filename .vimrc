@@ -905,7 +905,7 @@ if has("autocmd")
 
     augroup gitcommit
         autocmd!
-        autocmd FileType gitcommit setlocal spell
+        autocmd FileType gitcommit setlocal spell colorcolumn=50
     augroup END
 
     if has('conceal')
