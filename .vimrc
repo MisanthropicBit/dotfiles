@@ -45,6 +45,7 @@ Plug 'dracula/vim'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'haishanh/night-owl.vim'
 Plug 'junegunn/seoul256.vim'
+Plug 'rhysd/vim-color-spring-night'
 Plug 'srcery-colors/srcery-vim'
 Plug 'sts10/vim-pink-moon'
 
@@ -531,6 +532,7 @@ let s:preferred_colors = [
     \'palenight',
     \'pink-moon',
     \'seoul256',
+    \'spring-night',
     \'srcery',
     \'warlock',
     \'yellow-moon',
