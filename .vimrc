@@ -17,6 +17,7 @@ Plug 'KeitaNakamura/tex-conceal.vim'
 Plug 'Konfekt/FastFold'
 Plug 'lervag/vimtex', { 'for': ['tex', 'bib'] }
 Plug 'mhinz/vim-startify'
+Plug 'pangloss/vim-javascript'
 Plug 'preservim/tagbar'
 Plug 'Raimondi/delimitMate'
 Plug 'rhysd/git-messenger.vim'
