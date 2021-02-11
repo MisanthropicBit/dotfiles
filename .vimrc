@@ -941,6 +941,11 @@ if has("autocmd")
         autocmd!
         autocmd BufRead,BufNewFile Dockerfile.* setlocal filetype=dockerfile
     augroup END
+
+    augroup jslintrc
+        autocmd!
+        autocmd BufRead,BufNewFile .eslintrc setlocal filetype=json
+    augroup END
 endif
 
 " }}}
