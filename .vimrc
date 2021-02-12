@@ -1046,8 +1046,10 @@ nmap <silent> <leader>ao :ALEOrganizeImports<cr>
 nmap <silent> <leader>ac <Plug>(ale_documentation)
 nmap <silent> <leader>ar <Plug>(ale_find_references)
 nmap <silent> <leader>ag <Plug>(ale_go_to_definition)
+nmap <silent> <leader>as <Plug>(ale_go_to_definition_in_split)
+nmap <silent> <leader>av <Plug>(ale_go_to_definition_in_vsplit)
+nmap <silent> <leader>av <Plug>(ale_go_to_definition_in_tab)
 nmap <silent> <leader>am :ALERename<cr>
-nmap <silent> <leader>as :ALESymbolSearch<cr>
 nmap <silent> <leader>ah <Plug>(ale_hover)
 nmap <silent> <leader>ad <Plug>(ale_detail)
 
