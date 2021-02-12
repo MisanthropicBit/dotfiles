@@ -336,13 +336,16 @@ let s:exclude_colorschemes = []
 function! s:RandomColorscheme(bang)
     let user_colorschemes = s:GetPluginColorschemes(a:bang)
 
-    if &shell == 'bash'
+    if &shell =~# 'bash'
         let random = system('echo -n $RANDOM')
-    elseif &shell == 'fish'
+    elseif &shell =~# 'fish'
         let random = system('echo -n (random)')
+    else
+        let random = 0
     endif
 
-    let chosen = get(user_colorschemes, random % len(user_colorschemes))
+    let irandom = str2nr(random)
+    let chosen = get(user_colorschemes, irandom % len(user_colorschemes))
 
     execute ':colorscheme ' . chosen
 
@@ -532,7 +535,7 @@ if !has('gui_running')
 endif
 
 let s:preferred_colors = [
-    \'deus'
+    \'deus',
     \'dracula',
     \'night-owl',
     \'orange-moon',
