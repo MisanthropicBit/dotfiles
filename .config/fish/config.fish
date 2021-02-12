@@ -46,11 +46,11 @@ end
 
 status --is-interactive; and source (pyenv init -|psub)
 
-set --local nigiri_files\
+set --local -a nigiri_files\
     '~/projects/fish/nigiri/fish_prompt.fish'\
     '~/projects/fish/nigiri/fish_right_prompt.fish'
 
-for nigiri_file in nigiri_files
+for nigiri_file in $nigiri_files
     if test \( -e $nigiri_file \) -a \( -f $nigiri_file \)
         source $nigiri_file
     end
