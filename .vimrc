@@ -55,14 +55,20 @@ if has('nvim')
     Plug 'deoplete-plugins/deoplete-jedi'
 endif
 
-" Local plugins
-Plug '~/projects/vim/vim-numbers'
-Plug '~/projects/vim/vim-warlock'
-Plug '~/Dropbox/projects/vim/vim-task'
+" Local plugins and active forks
+let s:local_plugins = [
+    \'~/projects/vim/vim-numbers',
+    \'~/projects/vim/vim-warlock',
+    \'~/Dropbox/projects/vim/vim-task',
+    \'~/Dropbox/projects/vim/vader.vim/vader.vim',
+    \'~/projects/vim/git-messenger.vim',
+\]
 
-" Active forks
-Plug '~/Dropbox/projects/vim/vader.vim/vader.vim'
-Plug '~/projects/vim/git-messenger.vim'
+for local_plugin in s:local_plugins
+    if filereadable(local_plugin)
+        Plug local_plugin
+    endif
+endfor
 
 call plug#end()
 
