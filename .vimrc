@@ -1091,6 +1091,10 @@ command! -bang -nargs=* GGrep
 
 " }}}
 
+" git-messenger.vim {{{
+let g:git_messenger_conceal_word_diff_marker = 1
+" }}}
+
 " goyo.vim {{{
 
 " Use the width of the textwidth option as the default width for goyo
