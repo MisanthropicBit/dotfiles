@@ -8,6 +8,7 @@ call plug#begin('~/.vim/plugged')
 " Main plugins
 Plug 'dag/vim-fish'
 Plug 'dense-analysis/ale'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf.vim' " fzf is installed via MacPorts
