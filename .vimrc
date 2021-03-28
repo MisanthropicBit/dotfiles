@@ -1096,6 +1096,11 @@ nnoremap <silent> <localleader>gf :GFiles<cr>
 
 " }}}
 
+" vim-gitgutter {{{
+nmap <silent> <leader> hn <Plug>(GitGutterNextHunk)
+nmap <silent> <leader> hp <Plug>(GitGutterPreviousHunk)
+nmap <silent> <leader> hv <Plug>(GitGutterPreviewHunk)
+nmap <silent> <leader> ht <Plug>(GitGutterBufferToogle)
 " }}}
 
 " git-messenger.vim {{{
