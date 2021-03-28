@@ -1289,17 +1289,17 @@ nmap ga <Plug>(EasyAlign)
 " vim-fugitive {{{
 
 " Useful git mappings based on the spf13-vim distribution
-nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>gd :Gdiff<cr>
-nnoremap <leader>gc :Gcommit<cr>
-nnoremap <leader>gb :Gblame<cr>
-nnoremap <leader>gl :Glog<cr>
-nnoremap <leader>gp :Git push<cr>
-nnoremap <leader>gv :Gvsplit! diff --cached<cr>
+nnoremap <silent> <leader>gs :Gstatus<cr>
+nnoremap <silent> <leader>gd :Gdiff<cr>
+nnoremap <silent> <leader>gc :Gcommit<cr>
+nnoremap <silent> <leader>gb :Gblame<cr>
+nnoremap <silent> <leader>gl :Glog<cr>
+nnoremap <silent> <leader>gp :Git push<cr>
+nnoremap <silent> <leader>gv :Gvsplit! diff --cached<cr>
 
 " Define a command and mapping for viewing staged changes
 command! Gcached :Gtabedit! diff --cached
-nnoremap <leader>gr :Gcached<cr>
+nnoremap <silent> <leader>gr :Gcached<cr>
 
 " }}}
 
