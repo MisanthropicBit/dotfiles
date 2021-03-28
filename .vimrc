@@ -1443,4 +1443,4 @@ nmap <localleader>le call s:filter_vimtex_warnings()<cr>
 
 " }}}
 
-" vim: foldenable foldmethod=marker foldlevel=0
+" vim: foldenable foldmethod=marker foldlevel=0 fileencoding=utf-8
