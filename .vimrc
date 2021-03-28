@@ -1005,9 +1005,9 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_format = '[%linter%] %s (%code%:%severity%)'
 
 if has('nvim')
-    " Point to neovim python3 virtual environment for the jedi-language-server
-    " executable
+    " Point to neovim python3 virtual environment for specific language servers
     let g:ale_python_jedils_executable = expand(s:python3_host_prog_base_path . '/bin/jedi-language-server')
+    let g:ale_vim_vint_executable = expand(s:python3_host_prog_base_path . '/bin/vint')
 endif
 
 let s:ale_js_ts_linters = ['prettier']
