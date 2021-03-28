@@ -23,6 +23,7 @@
 [push]
     default = simple
 [alias]
+    l1 = log -1
     alias = config --get-regexp "^alias\\."
     ap = add --patch
     au = add -u
