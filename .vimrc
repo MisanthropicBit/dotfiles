@@ -1092,6 +1092,10 @@ command! -bang -nargs=* GGrep
 \   'git grep --line-number -- '.shellescape(<q-args>), 0,
 \   fzf#vim#with_preview({'dir': '/Users/alexb/projects/react-native/BakerFriend'}), <bang>0)
 
+nnoremap <silent> <localleader>gf :GFiles<cr>
+
+" }}}
+
 " }}}
 
 " git-messenger.vim {{{
