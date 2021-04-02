@@ -36,7 +36,7 @@
     co = checkout
     count = rev-list --count HEAD
     cp = checkout --patch
-    cv = !env GIT_EDITOR='nvim -c \"Gvsplit! diff --cached | wincmd h | nmap q :qa<cr>\"' git commit
+    cv = !env GIT_EDITOR='nvim -c \"vert Git --paginate diff --cached | wincmd h | nmap q :qa<cr>\"' git commit
     cr=log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
     dc = diff --cached
     dl = !git diff --color=always $@ | less -r
