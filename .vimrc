@@ -323,6 +323,7 @@ let s:builtin_colorschemes = [
     \'desert',
     \'elflord',
     \'evening',
+    \'industry',
     \'koehler',
     \'morning',
     \'murphy',
