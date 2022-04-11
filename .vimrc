@@ -926,6 +926,8 @@ if has("autocmd")
     augroup gitcommit
         autocmd!
         autocmd FileType gitcommit setlocal spell colorcolumn=50
+        autocmd FileType gitcommit inoremap <expr> skci '[skip ci]'
+        autocmd FileType gitcommit inoremap <expr> cisk '[ci skip]'
     augroup END
 
     if has('conceal')
