@@ -1011,8 +1011,8 @@ endif
 " Plugin configuration {{{
 
 " ALE {{{
-
 let g:ale_hover_to_floating_preview = 1
+let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
 let g:ale_sign_error = '✖ '
 let g:ale_sign_warning = '!'
 let g:ale_sign_style_error = '⚡ '
@@ -1111,13 +1111,15 @@ command! -bang -nargs=* GGrep
 
 nnoremap <silent> <localleader>gf :GFiles<cr>
 
+nnoremap <silent> <localleader>rg :Rg<cr>
+
 " }}}
 
 " vim-gitgutter {{{
-nmap <silent> hn <Plug>(GitGutterNextHunk)
-nmap <silent> hp <Plug>(GitGutterPreviousHunk)
-nmap <silent> hv <Plug>(GitGutterPreviewHunk)
-nmap <silent> ht <Plug>(GitGutterBufferToogle)
+nmap <silent> <leader>hn <Plug>(GitGutterNextHunk)
+nmap <silent> <leader>hp <Plug>(GitGutterPreviousHunk)
+nmap <silent> <leader>hv <Plug>(GitGutterPreviewHunk)
+nmap <silent> <leader>ht <Plug>(GitGutterBufferToogle)
 " }}}
 
 " git-messenger.vim {{{
@@ -1306,11 +1308,11 @@ nmap ga <Plug>(EasyAlign)
 " vim-fugitive {{{
 
 " Useful git mappings based on the spf13-vim distribution
-nnoremap <silent> <leader>gs :Gstatus<cr>
+nnoremap <silent> <leader>gs :G<cr>
 nnoremap <silent> <leader>gd :Gdiff<cr>
-nnoremap <silent> <leader>gc :Gcommit<cr>
-nnoremap <silent> <leader>gb :Gblame<cr>
-nnoremap <silent> <leader>gl :Glog<cr>
+nnoremap <silent> <leader>gc :G commit<cr>
+nnoremap <silent> <leader>gb :G blame<cr>
+nnoremap <silent> <leader>gl :G log<cr>
 nnoremap <silent> <leader>gp :Git push<cr>
 nnoremap <silent> <leader>gv :Gvsplit! diff --cached<cr>
 
@@ -1403,6 +1405,17 @@ endfunction
 
 " }}}
 
+" vim-test {{{
+let s:vim_test_window_args = 'bo 30'
+
+if has('nvim')
+    let test#strategy = 'neovim'
+    let test#neovim#term_position = s:vim_test_window_args
+else
+    let test#vim#term_position = s:vim_test_window_args
+endif
+" }}}
+
 " vimtex {{{
 
 let g:vimtex_fold_enabled = 1
@@ -1456,6 +1469,22 @@ nmap <silent> <localleader>la <Plug>(vimtex-errors)
 " Remap vimtex's le mapping to only show errors
 nmap <localleader>le call s:filter_vimtex_warnings()<cr>
 
+" }}}
+
+" vim-ultest {{{
+let g:ultest_running_sign=''
+let g:ultest_pass_sign=''
+let g:ultest_fail_sign=''
+
+nmap <localleader>ut <Plug>(ultest-run-nearest)
+nmap <localleader>us <Plug>(ultest-summary-toggle)
+nmap <localleader>uo <Plug>(ultest-output-show)
+nmap ]t <Plug>(ultest-next-fail)
+nmap [t <Plug>(ultest-prev-fail)
+" }}}
+
+" vim-yank-window {{{
+let g:yank_window#enable_mappings = 1
 " }}}
 
 " }}}
