@@ -71,3 +71,5 @@
     wdc = diff --word-diff --cached
 [web]
 	browser = google-chrome
+[init]
+	defaultBranch = master
