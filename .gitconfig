@@ -38,6 +38,7 @@
     cp = checkout --patch
     cv = !env GIT_EDITOR='nvim -c \"vert Git --paginate diff --cached | wincmd h | nmap q :qa<cr>\"' git commit
     cr=log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+    d = diff
     dc = diff --cached
     dl = !git diff --color=always $@ | less -r
     filelog = log --name-status --oneline
@@ -48,6 +49,7 @@
     graph = !git log --graph --color --abbrev-commit --decorate --date=relative
     issue = "!__git_issue_2945() { git branch -a | grep --color=always "issue-$1"; }; __git_issue_2945"
     last = log -1 HEAD
+    m = checkout master
     mergetest = !git merge-tree `git merge-base $1 $2` $1 $2 | diff-so-fancy
     pr = '!f() { git fetch ${2:-upstream}refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f'
     rcount = rev-list --count @{u}
