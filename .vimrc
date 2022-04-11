@@ -731,6 +731,8 @@ endif
 
 " Use familiar cmdline binding in vim's cmdline
 cnoremap <c-a> <c-b>
+cnoremap <m-left> <c-left>
+cnoremap <m-right> <c-right>
 
 " Tag TODOs with a timestamp
 inoremap <expr> TODOT printf('TODO (%s): ', strftime('%Y-%m-%d, %H:%M:%S'))
