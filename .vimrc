@@ -23,6 +23,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'pangloss/vim-javascript'
 Plug 'preservim/tagbar'
 Plug 'Raimondi/delimitMate'
+Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins' }
 Plug 'rhysd/git-messenger.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
@@ -38,20 +39,29 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-python/python-syntax'
+Plug 'vim-test/vim-test'
 
 if executable('node') && executable('yarn')
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+else
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 endif
 
 " Colorschemes
 Plug 'ajmwagar/vim-deus'
 Plug 'dracula/vim'
 Plug 'drewtempelmeyer/palenight.vim'
+Plug 'ghifarit53/tokyonight-vim'
 Plug 'haishanh/night-owl.vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'rhysd/vim-color-spring-night'
 Plug 'srcery-colors/srcery-vim'
-Plug 'sts10/vim-pink-moon'
+Plug 'sainnhe/everforest'
+Plug 'arcticicestudio/nord-vim'
+Plug 'wadackel/vim-dogrun'
+Plug 'iandwelker/rose-pine-vim'
+Plug 'arzg/vim-colors-xcode'
+Plug 'ackyshake/Spacegray.vim'
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -64,6 +74,8 @@ Plug '~/projects/vim/vim-warlock'
 Plug '~/Dropbox/projects/vim/vim-task'
 Plug '~/Dropbox/projects/vim/vader.vim/vader.vim'
 Plug '~/projects/vim/git-messenger.vim'
+Plug '~/projects/vim/vim-yank-window'
+Plug '~/projects/vim/vim-encodings'
 
 call plug#end()
 
