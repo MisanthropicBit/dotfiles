@@ -42,6 +42,7 @@
     dl = !git diff --color=always $@ | less -r
     filelog = log --name-status --oneline
     fp = fetch --prune
+    f = !nvim -c 'G | only'
     g1 = log -1
     getfile = !git archive --remote=~$1 HEAD:~$2 ~$3 | tar -x
     graph = !git log --graph --color --abbrev-commit --decorate --date=relative
