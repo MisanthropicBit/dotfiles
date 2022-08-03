@@ -6,3 +6,4 @@ update_vimrc.sh
 .vim/.netrwhist
 .vim/plugged/
 fishd.*
+.config/fish/work_aliases.fish
