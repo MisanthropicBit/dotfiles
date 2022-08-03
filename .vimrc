@@ -986,7 +986,6 @@ let g:sql_type_default = 'mysql'
 
 " Allow external bash commands inside vim to use aliases etc.
 set shell=fish
-
 " }}}
 
 " Terminal {{{
