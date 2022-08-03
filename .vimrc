@@ -1015,6 +1015,10 @@ if has('nvim')
     " Point neovim to its specific python virtual environments
     let g:python_host_prog = expand('~/.neovim_venvs/neovim2/bin/python')
     let g:python3_host_prog = expand(s:python3_host_prog_base_path . '/bin/python')
+
+    " vim supports a 'vertical'/'tab' prefix before :terminal, but neovim
+    " currently doesn't
+    command! -nargs=* Term <mods> new | startinsert | term <args>
 endif
 " }}}
 
