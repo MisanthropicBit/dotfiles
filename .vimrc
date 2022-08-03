@@ -796,7 +796,7 @@ set hlsearch
 set incsearch
 
 " Do not jump forward to the next match when searching for the current word
-nnoremap <silent> * *N
+nnoremap <silent> * *Nzz
 
 " Center the next or previous search matches
 nnoremap n nzvzz
