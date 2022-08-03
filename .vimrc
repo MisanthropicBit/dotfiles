@@ -841,14 +841,6 @@ nnoremap <c-l> <c-w>l
 " Open vsplits on the right side
 set splitright
 
-" Change two vertically split windows to a horizontal layout
-" Mnenomic: Swap Windows to Horizontal
-nnoremap <leader>swh <c-w>t <c-w>K
-
-" Change two horizontally split windows to a vertical layout
-" Mnenomic: Swap Windows to Vertical
-nnoremap <leader>swv <c-w>t <c-w>H
-
 " Open file under cursor in a vertical split
 nnoremap <c-w>gv :vertical wincmd f<cr>
 
