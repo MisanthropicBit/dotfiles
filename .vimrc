@@ -5,14 +5,21 @@
 
 call plug#begin('~/.vim/plugged')
 
+" Adds help for vim-plug itself
+Plug 'junegunn/vim-plug'
+
 " Main plugins
 Plug 'airblade/vim-gitgutter'
+Plug 'AndrewRadev/sideways.vim'
+Plug 'andymass/vim-matchup'
+Plug 'arthurxavierx/vim-caser'
 Plug 'dag/vim-fish'
 Plug 'dense-analysis/ale'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'honza/vim-snippets'
-Plug 'junegunn/fzf.vim' " fzf is installed via MacPorts
+Plug 'itchyny/lightline.vim'
+Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vader.vim'
 Plug 'junegunn/vim-easy-align'
@@ -20,7 +27,11 @@ Plug 'KeitaNakamura/tex-conceal.vim'
 Plug 'Konfekt/FastFold'
 Plug 'lervag/vimtex', { 'for': ['tex', 'bib'] }
 Plug 'mhinz/vim-startify'
-Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'mustache/vim-mustache-handlebars'
+" Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'bfrg/vim-cpp-modern'
+Plug 'MisanthropicBit/vim-numbers'
+Plug 'MisanthropicBit/vim-yank-window'
 Plug 'pangloss/vim-javascript'
 Plug 'preservim/tagbar'
 Plug 'Raimondi/delimitMate'
@@ -29,15 +40,17 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
 Plug 'sirver/UltiSnips'
+Plug 'sk1418/Join'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
+Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
 Plug 'vim-python/python-syntax'
 Plug 'vim-test/vim-test'
 
@@ -49,19 +62,30 @@ endif
 
 " Colorschemes
 Plug 'ajmwagar/vim-deus'
-Plug 'dracula/vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'drewtempelmeyer/palenight.vim'
+Plug 'embark-theme/vim'
 Plug 'ghifarit53/tokyonight-vim'
 Plug 'haishanh/night-owl.vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'rhysd/vim-color-spring-night'
+Plug 'sonph/onehalf'
 Plug 'srcery-colors/srcery-vim'
 Plug 'sainnhe/everforest'
 Plug 'arcticicestudio/nord-vim'
 Plug 'wadackel/vim-dogrun'
-Plug 'iandwelker/rose-pine-vim'
-Plug 'arzg/vim-colors-xcode'
+Plug 'morhetz/gruvbox'
+Plug 'mhartington/oceanic-next'
+Plug 'relastle/bluewery.vim'
+Plug 'sainnhe/sonokai'
+Plug 'savq/melange'
+Plug 'sainnhe/edge'
+Plug 'ray-x/aurora'
+Plug 'glepnir/zephyr-nvim'
 Plug 'ackyshake/Spacegray.vim'
+Plug 'arzg/vim-colors-xcode'
+Plug 'iandwelker/rose-pine-vim'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -73,6 +97,10 @@ if has('nvim')
     Plug 'quangnguyen30192/cmp-nvim-ultisnips'
     Plug 'hrsh7th/nvim-cmp'
     Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'mfussenegger/nvim-dap'
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'rktjmp/lush.nvim'
+    Plug 'Maan2003/lsp_lines.nvim'
 endif
 
 " Local plugins and active forks
@@ -84,72 +112,8 @@ Plug '~/projects/vim/vim-encodings'
 call plug#end()
 
 if has('nvim')
-    lua require('lspconfig').pyright.setup{}
-    lua require('goto-preview').setup{}
-    lua require('trouble').setup{}
-
-lua <<EOF
-    -- Setup nvim-cmp.
-    local cmp = require'cmp'
-
-    cmp.setup({
-        snippet = {
-        -- REQUIRED - you must specify a snippet engine
-        expand = function(args)
-            vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-        end,
-        },
-        window = {
-            completion = cmp.config.window.bordered(),
-            documentation = cmp.config.window.bordered(),
-        },
-        mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        }),
-        sources = cmp.config.sources({
-            { name = 'ultisnips' },
-        }, {
-            { name = 'buffer' },
-        })
-    })
-
-    -- Set configuration for specific filetype.
-    cmp.setup.filetype('gitcommit', {
-        sources = cmp.config.sources({
-        { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-        }, {
-        { name = 'buffer' },
-        })
-    })
-
-    -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline('/', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-        { name = 'buffer' }
-        }
-    })
-
-    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-        { name = 'path' }
-        }, {
-        { name = 'cmdline' }
-        })
-    })
-
-    -- Setup lspconfig.
-    local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-    require('lspconfig')['pyright'].setup {
-        capabilities = capabilities
-    }
-EOF
+    let s:lua_config_path = fnamemodify(resolve(expand('<sfile>:p')), ':h') .. '/config.lua'
+    execute 'luafile' '/Users/aab/projects/dotfiles/.vim/config.lua'
 endif
 
 " }}}
