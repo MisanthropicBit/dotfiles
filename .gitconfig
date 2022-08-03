@@ -2,7 +2,7 @@
     path = ~/.private_gitconfig # Requires at least v1.7.10.2
 [core]
     autocrlf = false
-    pager = diff-so-fancy | less --tabs=4 -RFX
+    pager = delta
     ui = true
     excludesfile = .gitignore_global
 [color.diff-highlight]
@@ -18,33 +18,46 @@
     old        = red bold
     new        = green bold
     whitespace = red reverse
+[interactive]
+    diffFilter = delta --color-only
+[diff]
+    colorMoved = default
+[delta]
+    navigate = true
+[merge]
+    conflictstyle = diff3
 [color.interactive]
     prompt = cyan
 [push]
     default = simple
 [alias]
+    sw = switch -
     l1 = log -1
+    lp = log -p
     alias = config --get-regexp "^alias\\."
     ap = add --patch
     au = add -u
     ba = branch -a
     br = branch
-    browse = !~/git-browse.py
+    bs = !git br --list -vv $(git br --show-current)
+    browse = !~/projects/dotfiles/git-browse.py
     cf = !git show --pretty="format:" --name-status
     cm = commit -m
     cnv = commit --no-verify -m
     co = checkout
     count = rev-list --count HEAD
     cp = checkout --patch
+    ct = commit
     cv = !env GIT_EDITOR='nvim -c \"vert Git --paginate diff --cached | wincmd h | nmap q :qa<cr>\"' git commit
     cr=log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
     d = diff
     dc = diff --cached
     dl = !git diff --color=always $@ | less -r
+    f = !nvim -c 'G | only'
     filelog = log --name-status --oneline
     fp = fetch --prune
     f = !nvim -c 'G | only'
-    g1 = log -1
+    l1 = log -1
     getfile = !git archive --remote=~$1 HEAD:~$2 ~$3 | tar -x
     graph = !git log --graph --color --abbrev-commit --decorate --date=relative
     issue = "!__git_issue_2945() { git branch -a | grep --color=always "issue-$1"; }; __git_issue_2945"
@@ -52,6 +65,8 @@
     m = checkout master
     mergetest = !git merge-tree `git merge-base $1 $2` $1 $2 | diff-so-fancy
     pr = '!f() { git fetch ${2:-upstream}refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f'
+    pt = stash push -m "temp"
+    puo = push -u origin HEAD
     rcount = rev-list --count @{u}
     rp = reset --patch
     rv = remote -v
@@ -59,7 +74,8 @@
     sb = status -sb
     sd = stash drop
     sl = stash list
-    sp = stash save --patch
+    sp = stash push
+    spp = stash push --patch
     ss = stash show
     tags = show-ref --tags --dereference
     tracked = ls-files
