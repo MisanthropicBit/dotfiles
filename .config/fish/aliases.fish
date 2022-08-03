@@ -14,12 +14,13 @@ alias dbox      "~/Dropbox/"
 alias fucking   "sudo"
 alias gitconfig "$EDITOR ~/.gitconfig"
 alias gofish    "source ~/.config/fish/config.fish"
+alias gstatus   "nvim -c 'G | only'"
 alias l         "ls -laGh"
 alias ll        "clear; l"
 alias lz        "ls -laGhS"
 alias nvimdiff  "nvim -d"
 alias nvimrc    "$EDITOR ~/.config/nvim/init.vim"
-alias path      "echo $PATH | tr ':' '\n' | sort -u"
+alias path      "echo $PATH | tr ':' '\n'"
 alias projects  "cd ~/Dropbox/projects"
 alias research  "cd ~/research"
 alias todo      "cg --exclude-dir=tmp -HIni ' todo:'"
@@ -27,6 +28,13 @@ alias v         "pbpaste"
 alias vbundle   "cd ~/.vim/bundle"
 alias vh        "vimhelp"
 alias vimrc     "$EDITOR ~/.vimrc"
+
+set --local script_dir (dirname (status -f))
+set --local work_aliases "$script_dir/work_aliases.fish"
+
+if test -f "$work_aliases"
+    source "$work_aliases"
+end
 
 function tophist -d "Show the top 'n' most used commands"
     set -l top "$argv[1]"
