@@ -1,0 +1,24 @@
+snippet testfile "Create the basis of a test file"
+const expect = require('../../$1test/unexpected')
+const sinon = require('sinon')
+
+describe('$2', () => {
+	beforeEach(() => {
+		$3
+	})
+
+	afterEach(async () => {
+		$4
+	})
+
+	it('$5', async () => {
+		$6
+	})
+})
+endsnippet
+
+snippet ita "it('should do', () => { ... })" b
+it('${1:}', async () => {
+	${0:${VISUAL}}
+})
+endsnippet
