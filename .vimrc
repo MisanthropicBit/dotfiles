@@ -561,6 +561,10 @@ let g:markdown_fenced_languages = [
     \'vim',
 \]
 
+set signcolumn=yes:2
+
+set updatetime=500
+
 " }}}
 
 " Colors and syntax {{{
