@@ -1034,6 +1034,7 @@ let g:ale_sign_style_warning = '⛔  '
 let g:ale_sign_info = '💡  '
 let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_format = '[%linter%] %s (%code%:%severity%)'
+let g:ale_virtualtext_cursor = 1
 
 if has('nvim')
     " Point to neovim python3 virtual environment for specific language servers
@@ -1043,6 +1044,9 @@ endif
 
 let s:ale_js_ts_linters = ['prettier']
 let s:ale_js_ts_fixers = ['prettier', 'eslint']
+
+" Prefer using local .prettierrc configs. Required for prettier < v1.4.0
+let g:ale_javascript_prettier_use_local_config = 1
 
 let g:ale_linters = {
     \'python': ['flake8', 'mypy', 'pylint', 'pyright', 'jedils'],
@@ -1063,6 +1067,8 @@ let g:ale_fixers = {
     \'typescript': s:ale_js_ts_fixers,
     \'typescriptreact': s:ale_js_ts_fixers,
 \}
+
+set omnifunc=ale#completion#OmniFunc
 
 nmap <silent> <leader>an <Plug>(ale_next_wrap)
 nmap <silent> <leader>ap <Plug>(ale_previous_wrap)
@@ -1123,6 +1129,9 @@ command! -bang -nargs=* GGrep
 \   'git grep --line-number -- '.shellescape(<q-args>), 0,
 \   fzf#vim#with_preview({'dir': '/Users/alexb/projects/react-native/BakerFriend'}), <bang>0)
 
+command! -bang -nargs=* -complete=dir Dirs
+\ call fzf#run(fzf#wrap({'source': 'fd --type d --color=never', 'options': ['--preview', 'tree -C -L 1 {}']}))
+
 nnoremap <silent> <localleader>gf :GFiles<cr>
 
 nnoremap <silent> <localleader>rg :Rg<cr>
@@ -1134,6 +1143,9 @@ nmap <silent> <leader>hn <Plug>(GitGutterNextHunk)
 nmap <silent> <leader>hp <Plug>(GitGutterPreviousHunk)
 nmap <silent> <leader>hv <Plug>(GitGutterPreviewHunk)
 nmap <silent> <leader>ht <Plug>(GitGutterBufferToogle)
+nmap <silent> <leader>un <Plug>(GitGutterNextHunk)
+nmap <silent> <leader>up <Plug>(GitGutterPreviousHunk)
+nmap <silent> <leader>uv <Plug>(GitGutterPreviewHunk)
 " }}}
 
 " git-messenger.vim {{{
@@ -1236,6 +1248,16 @@ let g:python_highlight_file_headers_as_comments = 1
 
 " }}}
 
+" sideways.vim {{{
+nnoremap <silent> <localleader>sh :SidewaysLeft<cr>
+nnoremap <silent> <localleader>sl :SidewaysRight<cr>
+
+omap aa <Plug>SidewaysArgumentTextobjA
+xmap aa <Plug>SidewaysArgumentTextobjA
+omap ia <Plug>SidewaysArgumentTextobjI
+xmap ia <Plug>SidewaysArgumentTextobjI
+" }}}
+
 " Tagbar {{{
 
 " Set the path to the Exuberant version of ctags
@@ -1249,12 +1271,23 @@ nnoremap <c-b> :TagbarToggle<cr>
 
 " }}}
 
+" trouble.nvim {{{
+nnoremap <localleader>xq <cmd>TroubleToggle quickfix<cr>
+nnoremap <localleader>xl <cmd>TroubleToggle loclist<cr>
+" }}}
+
 " UltiSnips {{{
 
 " Split the :UltiSnipsEdit window horizontally or vertically depending on context
 let g:UltiSnipsEditSplit = 'context'
 
 let g:UltiSnipsSnippetDirectories = ['UltiSnips', 'custom-ultisnips']
+
+let g:ultisnips_javascript = {
+    \'keyword-spacing': 'always',
+    \'semi': 'never',
+    \'space-before-function-paren': 'never',
+\}
 
 " Open the snippets file for the current file type
 nnoremap <leader>sf :UltiSnipsEdit!<cr>
@@ -1329,11 +1362,11 @@ nnoremap <silent> <leader>gb :G blame<cr>
 nnoremap <silent> <leader>gl :G log<cr>
 nnoremap <silent> <leader>gp :Git push<cr>
 nnoremap <silent> <leader>gv :Gvsplit! diff --cached<cr>
+nnoremap <silent> <leader>gw :Gwrite<cr>
 
 " Define a command and mapping for viewing staged changes
 command! Gcached :Gtabedit! diff --cached
 nnoremap <silent> <leader>gr :Gcached<cr>
-
 " }}}
 
 " vim-startify {{{
@@ -1428,6 +1461,15 @@ if has('nvim')
 else
     let test#vim#term_position = s:vim_test_window_args
 endif
+
+let g:test#javascript#jest#file_pattern = '\v(__tests__/.*|(it|spec|test))\.(js|jsx|coffee|ts|tsx)$'
+let g:test#javascript#mocha#file_pattern = '\v(tests?/.*|(it|test))\.(js|jsx|coffee)$'
+
+nnoremap <silent> <leader>tn :TestNearest<cr>
+nnoremap <silent> <leader>tf :TestFile<cr>
+nnoremap <silent> <leader>ts :TestSuite<cr>
+nnoremap <silent> <leader>tl :TestLast<cr>
+nnoremap <silent> <leader>tv :TestVisit<cr>
 " }}}
 
 " vimtex {{{
@@ -1478,11 +1520,35 @@ function! s:filter_vimtex_warnings() abort
 endfunction
 
 " New mapping for listing (a)ll warnings and errors
-nmap <silent> <localleader>la <Plug>(vimtex-errors)
+" nmap <silent> <localleader>la <Plug>(vimtex-errors)
 
 " Remap vimtex's le mapping to only show errors
-nmap <localleader>le call s:filter_vimtex_warnings()<cr>
+" nmap <localleader>le call s:filter_vimtex_warnings()<cr>
 
+" }}}
+
+" vim-ultest {{{
+let g:ultest_running_sign=''
+let g:ultest_pass_sign=''
+let g:ultest_fail_sign=''
+
+nmap <localleader>ut <Plug>(ultest-run-nearest)
+nmap <localleader>us <Plug>(ultest-summary-toggle)
+nmap <localleader>uo <Plug>(ultest-output-show)
+nmap ]t <Plug>(ultest-next-fail)
+nmap [t <Plug>(ultest-prev-fail)
+" }}}
+
+" vim-projectionist {{{
+let g:projectionist_heuristics = {
+    \'src/**/*.test.js': {
+        \'alternate': '{}.js'
+    \}
+\}
+" }}}
+
+" vim-yank-window {{{ "
+let g:yank_window#enable_mappings = 1
 " }}}
 
 " vim-ultest {{{
