@@ -672,10 +672,6 @@ nnoremap <silent> <leader><space> :nohl<cr>
 " Quickly toggle paste mode
 nnoremap <silent> <leader>pp :setlocal paste!<cr>
 
-" Tab navigation shortcuts
-nnoremap <leader>h gT
-nnoremap <leader>l gt
-
 " Quickly save the current buffer
 nnoremap <leader>w :w<cr>
 
