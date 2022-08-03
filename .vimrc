@@ -776,9 +776,15 @@ endif
 cnoremap <c-a> <c-b>
 cnoremap <m-left> <c-left>
 cnoremap <m-right> <c-right>
+cnoremap <c-j> <c-left>
+cnoremap <c-k> <c-right>
 
 " Tag TODOs with a timestamp
 inoremap <expr> TODOT printf('TODO (%s): ', strftime('%Y-%m-%d, %H:%M:%S'))
+
+nnoremap <silent> <localleader>dt :call <SID>DiffToggle()<cr>
+
+nnoremap <silent> <localleader>hi :His<cr>
 " }}}
 
 " Searching {{{
