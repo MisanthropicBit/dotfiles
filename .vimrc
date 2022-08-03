@@ -924,6 +924,46 @@ if has('autocmd')
         autocmd FileType qf nnoremap <buffer> t <c-w><cr><c-w>T
     augroup END
 
+    augroup csharp
+        autocmd!
+        autocmd FileType cs setlocal indentkeys-=0#
+    augroup END
+
+    augroup gitcommit
+        autocmd!
+        autocmd FileType gitcommit setlocal spell colorcolumn=50
+        autocmd FileType gitcommit inoremap <expr> skci '[skip ci]'
+        autocmd FileType gitcommit inoremap <expr> cisk '[ci skip]'
+        autocmd FileType gitcommit inoremap <expr> icom 'Initial commit'
+    augroup END
+
+    if has('conceal')
+        augroup task
+            autocmd!
+            autocmd FileType task setlocal conceallevel=2
+        augroup END
+    endif
+
+    augroup typescript
+      autocmd!
+      autocmd BufRead,BufNewFile *.ts,*.tsx setlocal shiftwidth=2
+    augroup END
+
+    augroup jsx
+        autocmd!
+        autocmd BufRead,BufNewFile *.jsx setlocal shiftwidth=2
+    augroup END
+
+    augroup fsproj
+        autocmd!
+        autocmd BufRead,BufNewFile *.fsproj setlocal ft=xml
+    augroup END
+
+    augroup web
+        autocmd!
+        autocmd BufRead,BufNewFile *.html,*.yml,*.json setlocal shiftwidth=2
+    augroup END
+
     augroup docker
         " Use dockerfile syntax for production, test dockerfiles etc.
         autocmd!
