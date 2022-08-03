@@ -584,22 +584,28 @@ if !has('gui_running')
 endif
 
 let s:preferred_colors = [
-    \'deus',
-    \'dracula',
+    \'catppuccin',
+    \'everforest',
+    \'melange',
     \'night-owl',
-    \'orange-moon',
-    \'palenight',
-    \'pink-moon',
+    \'nord',
     \'seoul256',
+    \'sonokai',
     \'spring-night',
     \'srcery',
     \'warlock',
-    \'yellow-moon',
+    \'zephyr',
 \]
+
+let g:default_colorscheme_override = ''
 
 " Set the default colorscheme
 try
-    call s:RandomColorscheme(1)
+    if exists('g:default_colorscheme_override') && !empty(g:default_colorscheme_override)
+        execute printf('colorscheme %s', g:default_colorscheme_override)
+    else
+        call s:RandomColorscheme(1)
+    endif
 catch
     try
         colorscheme seoul256
