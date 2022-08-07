@@ -1545,6 +1545,8 @@ nmap <localleader>us <Plug>(ultest-summary-toggle)
 nmap <localleader>uo <Plug>(ultest-output-show)
 nmap ]t <Plug>(ultest-next-fail)
 nmap [t <Plug>(ultest-prev-fail)
+
+let g:ultest_deprecation_notice = 0
 " }}}
 
 " vim-projectionist {{{
