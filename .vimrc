@@ -29,7 +29,6 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
 Plug 'sirver/UltiSnips'
-Plug 't9md/vim-choosewin'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
@@ -67,13 +66,18 @@ Plug 'ackyshake/Spacegray.vim'
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'deoplete-plugins/deoplete-jedi'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'rmagatti/goto-preview'
+    Plug 'kyazdani42/nvim-web-devicons'
+    Plug 'folke/trouble.nvim'
+    Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-nvim-lsp'
 endif
 
 " Local plugins and active forks
 Plug '~/projects/vim/vim-numbers'
 Plug '~/projects/vim/vim-warlock'
-Plug '~/Dropbox/projects/vim/vim-task'
-Plug '~/projects/vim/git-messenger.vim'
 Plug '~/projects/vim/vim-yank-window'
 Plug '~/projects/vim/vim-encodings'
 
