@@ -970,6 +970,10 @@ endif
 
 " }}}
 
+" Databases {{{
+let g:sql_type_default = 'mysql'
+" }}}
+
 " Shell {{{
 
 " Allow external bash commands inside vim to use aliases etc.
