@@ -584,11 +584,16 @@ if !has('gui_running')
 endif
 
 let s:preferred_colors = [
+    \'aurora',
     \'catppuccin',
+    \'dogrun',
+    \'embark',
     \'everforest',
     \'melange',
     \'night-owl',
     \'nord',
+    \'OceanicNext',
+    \'rose-pine-dark',
     \'seoul256',
     \'sonokai',
     \'spring-night',
