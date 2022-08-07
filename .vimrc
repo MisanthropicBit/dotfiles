@@ -833,6 +833,9 @@ nnoremap <s-h> gT
 " Open up to 15 tabs, instead of 10, with the '-p' option
 set tabpagemax=15
 
+" Always show tabs
+set showtabline=2
+
 " }}}
 
 " Windows {{{
