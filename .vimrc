@@ -908,7 +908,7 @@ endif
 
 " Autocommands {{{
 
-if has("autocmd")
+if has('autocmd')
     " Automatically resize windows when vim is resized
     augroup vimresize
         autocmd!
@@ -922,51 +922,16 @@ if has("autocmd")
         autocmd InsertLeave * set listchars+=trail:⌴,nbsp:¬
     augroup END
 
-    augroup clike
-        " Use C-style indentation rules for C/C++/CUDA
-        autocmd!
-        autocmd FileType c setlocal cindent | setlocal indentkeys-=0#
-        autocmd FileType cpp setlocal cindent | setlocal indentkeys-=0#
-        autocmd FileType cuda setlocal cindent | setlocal indentkeys-=0#
-    augroup END
-
     augroup scons
-        " Use Python syntax for SCons files
+        " Use Python syntax for SCons build files
         autocmd!
         autocmd BufReadPost SCons* setlocal filetype=python
-        autocmd BufRead,BufNewFile *.scons setlocal filetype=python
-    augroup END
-
-    augroup python
-        autocmd!
-        autocmd FileType python setlocal colorcolumn=80 textwidth=79
-
-        " Automatically delete trailing whitespace when saving Python files
-        autocmd BufWrite *.py :call <SID>DeleteTrailingWhitespace()
-    augroup END
-
-    augroup handlebars
-        " Using html highlighting for handlebars files
-        autocmd!
-        autocmd BufRead,BufNewFile *.hbs setlocal filetype=html
-    augroup END
-
-    augroup latex
-        " Enable spell-checking, set textwidth and conceal level for Latex files
-        autocmd!
-        autocmd FileType tex,plaintex setlocal spell spelllang=en_gb tw=90 conceallevel=2
     augroup END
 
     augroup makefile
         " Switch indentation to use tabs instead of spaces for makefiles
         autocmd!
         autocmd BufRead,BufNewFile Makefile setlocal noexpandtab
-    augroup END
-
-    augroup markdown
-        " Set text width to 80 and spell-checking on for markdown files
-        autocmd!
-        autocmd FileType markdown setlocal tw=80 spell
     augroup END
 
     augroup save_edit_position
@@ -989,45 +954,6 @@ if has("autocmd")
         autocmd FileType qf nnoremap <buffer> s <c-w><cr>
         autocmd FileType qf nnoremap <buffer> v <c-w><cr><c-w>L
         autocmd FileType qf nnoremap <buffer> t <c-w><cr><c-w>T
-    augroup END
-
-    augroup csharp
-        autocmd!
-        autocmd FileType cs setlocal indentkeys-=0#
-    augroup END
-
-    augroup gitcommit
-        autocmd!
-        autocmd FileType gitcommit setlocal spell colorcolumn=50
-        autocmd FileType gitcommit inoremap <expr> skci '[skip ci]'
-        autocmd FileType gitcommit inoremap <expr> cisk '[ci skip]'
-    augroup END
-
-    if has('conceal')
-        augroup task
-            autocmd!
-            autocmd FileType task setlocal conceallevel=2
-        augroup END
-    endif
-
-    augroup typescript
-      autocmd!
-      autocmd BufRead,BufNewFile *.ts,*.tsx setlocal shiftwidth=2
-    augroup END
-
-    augroup jsx
-        autocmd!
-        autocmd BufRead,BufNewFile *.jsx setlocal shiftwidth=2
-    augroup END
-
-    augroup fsproj
-        autocmd!
-        autocmd BufRead,BufNewFile *.fsproj setlocal ft=xml
-    augroup END
-
-    augroup web
-        autocmd!
-        autocmd BufRead,BufNewFile *.html,*.yml,*.json setlocal shiftwidth=2
     augroup END
 
     augroup docker
