@@ -77,6 +77,20 @@ function weather -d "Show the current weather in the terminal"
     end
 end
 
+function npa -d "Run multiple npm scripts"
+    for script in $argv
+        npm run "$script"
+
+        if test $status -gt 0
+            break
+        end
+    end
+end
+
+function dh -d "Fuzzy search directory history"
+    set -l result (dirh | fzf --color='pointer:bright-blue' --with-nth=2 --height=50% --tiebreak=end --preview='tree -C -L 1 -hp --dirsfirst {2}' --pointer='⇨ ' | string split -f2 ') '); and cd "$result"
+end
+
 #function bpp
 #    echo "$FISH_POWERPROMPT_THEME"
 #end
