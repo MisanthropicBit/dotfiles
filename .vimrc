@@ -1113,7 +1113,9 @@ let g:deoplete#enable_at_startup = 1
 
 " fzf {{{
 
+" Add fzf paths for both homebrew and macports
 set rtp+=/opt/local/share/fzf/vim
+set rtp+=/usr/local/opt/fzf
 
 " ctrl-s makes more sense to me for split windows
 let g:fzf_action = {
