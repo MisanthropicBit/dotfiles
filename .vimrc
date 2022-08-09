@@ -65,7 +65,6 @@ Plug 'ajmwagar/vim-deus'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'embark-theme/vim'
-Plug 'ghifarit53/tokyonight-vim'
 Plug 'haishanh/night-owl.vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'rhysd/vim-color-spring-night'
@@ -86,6 +85,7 @@ Plug 'ackyshake/Spacegray.vim'
 Plug 'arzg/vim-colors-xcode'
 Plug 'iandwelker/rose-pine-vim'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
