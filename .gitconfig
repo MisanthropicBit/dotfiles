@@ -83,6 +83,10 @@
     unstage = reset --quiet HEAD --
     update = clone https://www.github.com/git/git
     upstream = !git rev-parse --abbrev-ref $1@{upstream}
+    w = worktree
+    wl = worktree list
+    wa = worktree add
+    wr = worktree remove
     wd = diff --word-diff
     wdc = diff --word-diff --cached
 [web]
