@@ -94,13 +94,18 @@ if has('nvim')
     Plug 'rmagatti/goto-preview'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'folke/trouble.nvim'
-    Plug 'quangnguyen30192/cmp-nvim-ultisnips'
-    Plug 'hrsh7th/nvim-cmp'
-    Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'mfussenegger/nvim-dap'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'rktjmp/lush.nvim'
     Plug 'Maan2003/lsp_lines.nvim'
+
+    " nvim-cmp plugin and sources
+    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-cmdline'
+    Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 endif
 
 " Local plugins and active forks
@@ -1107,7 +1112,7 @@ let delimitMate_expand_cr = 1
 
 " deoplete.nvim {{{
 
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
 " }}}
 

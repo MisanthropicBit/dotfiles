@@ -52,11 +52,36 @@ vim.diagnostic.config({
 })
 
 -- nvim-cmp
+
+-- Completion kinds
+local kind_icons = {
+    Class = ' ',
+    Color = ' ',
+    Constant = ' ',
+    Constructor = ' ',
+    Enum = '了 ',
+    EnumMember = ' ',
+    Field = ' ',
+    File = ' ',
+    Folder = ' ',
+    Function = ' ',
+    Interface = 'ﰮ ',
+    Keyword = ' ',
+    Method = 'ƒ ',
+    Module = ' ',
+    Property = ' ',
+    Snippet = '﬌ ',
+    Struct = ' ',
+    Text = ' ',
+    Unit = ' ',
+    Value = ' ',
+    Variable = ' ',
+}
+
 cmp.setup({
     snippet = {
-    -- REQUIRED - you must specify a snippet engine
     expand = function(args)
-        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        vim.fn['UltiSnips#Anon'](args.body) -- For `ultisnips` users.
     end,
     },
     window = {
@@ -64,82 +89,68 @@ cmp.setup({
         documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<c-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<c-f>'] = cmp.mapping.scroll_docs(4),
+        ['<c-n>'] = cmp.mapping.complete(),
+        ['<c-e>'] = cmp.mapping.abort(),
+        ['<c-y>'] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
         { name = 'ultisnips' },
     }, {
         { name = 'buffer' },
-    })
-})
+    }),
+    formatting = {
+        fields = { 'kind', 'abbr', 'menu' },
+        format = function(entry, vim_item) 
+            local text_kind = vim_item.kind
+            vim_item.kind = kind_icons[vim_item.kind]
 
--- Set configuration for specific filetype.
-cmp.setup.filetype('gitcommit', {
-    sources = cmp.config.sources({
-    { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-    }, {
-    { name = 'buffer' },
-    })
+            local type = ({
+                buffer = '[Buffer]',
+                nvim_lsp = '[LSP]',
+                latex_symbols = '[LaTeX]',
+                path = '[Path]',
+            })[entry.source.name]
+
+            vim_item.menu = "    (" .. text_kind .. ')'
+
+            if type ~= nil then
+                vim_item.menu = vim_item.menu .. ' ' .. type
+            end
+
+            return vim_item
+        end
+    }
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
-    { name = 'buffer' }
+        { name = 'buffer' }
     }
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-    { name = 'path' }
-    }, {
-    { name = 'cmdline' }
-    })
-})
+-- cmp.setup.cmdline(':', {
+--     mapping = cmp.mapping.preset.cmdline(),
+--     sources = cmp.config.sources({
+--         { name = 'path' }
+--     }, {
+--         { name = 'cmdline' }
+--     })
+-- })
 
--- Completion kinds
--- local M = {}
+vim.api.nvim_set_hl(0, 'CmpItemKindFunction', { fg = "#EADFF0", bg = "#A377BF" })
 
--- M.icons = {
---     Class = " ",
---     Color = " ",
---     Constant = " ",
---     Constructor = " ",
---     Enum = "了 ",
---     EnumMember = " ",
---     Field = " ",
---     File = " ",
---     Folder = " ",
---     Function = " ",
---     Interface = "ﰮ ",
---     Keyword = " ",
---     Method = "ƒ ",
---     Module = " ",
---     Property = " ",
---     Snippet = "﬌ ",
---     Struct = " ",
---     Text = " ",
---     Unit = " ",
---     Value = " ",
---     Variable = " ",
--- }
-
--- function M.setup()
---   local kinds = vim.lsp.protocol.CompletionItemKind
-
---   for i, kind in ipairs(kinds) do
---     kinds[i] = M.icons[kind] or kind
---   end
--- end
-
--- return M
+local function open_in_split(split_cmd, cmd)
+  return function()
+    vim.cmd(split_cmd)
+    cmd()
+  end
+end
 
 -- Mappings
 local opts = { noremap=true, silent=true }
@@ -164,13 +175,31 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<localleader>lc', vim.lsp.buf.declaration, bufopts)
     vim.keymap.set('n', '<localleader>ld', vim.lsp.buf.definition, bufopts)
     vim.keymap.set('n', '<localleader>lh', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', '<localleader>li', vim.lsp.buf.implementation, bufopts)
     vim.keymap.set('n', '<localleader>ls', vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set('n', '<localleader>lt', vim.lsp.buf.type_definition, bufopts)
     vim.keymap.set('n', '<localleader>lm', vim.lsp.buf.rename, bufopts)
     vim.keymap.set('n', '<localleader>la', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', '<localleader>lr', vim.lsp.buf.references, bufopts)
     vim.keymap.set('n', '<localleader>lf', vim.lsp.buf.formatting, bufopts)
+
+    vim.keymap.set(
+        'n',
+        '<localleader>lis',
+        open_in_split('split', vim.lsp.buf.implementation),
+        bufopts
+    )
+    vim.keymap.set(
+        'n',
+        '<localleader>liv',
+        open_in_split('vsplit', vim.lsp.buf.implementation),
+        bufopts
+    )
+    vim.keymap.set(
+        'n',
+        '<localleader>lit',
+        open_in_split('tab', vim.lsp.buf.implementation),
+        bufopts
+    )
 end
 
 -- nvim's builtin lsp
