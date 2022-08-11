@@ -90,6 +90,11 @@ function dh -d "Fuzzy search directory history"
     set -l result (dirh | fzf --color='pointer:bright-blue' --with-nth=2 --height=50% --tiebreak=end --preview='tree -C -L 1 -hp --dirsfirst {2}' --pointer='⇨ ' | string split -f2 ') '); and cd "$result"
 end
 
+function G -d "execute git commands and open them in vim/nvim"
+    # Inspired by fugitive.vim
+    $EDITOR -c "G $argv | only"
+end
+
 #function bpp
 #    echo "$FISH_POWERPROMPT_THEME"
 #end
