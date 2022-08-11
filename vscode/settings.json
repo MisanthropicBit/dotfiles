@@ -1,0 +1,110 @@
+{
+    "telemetry.enableTelemetry": false,
+    "telemetry.enableCrashReporter": false,
+    "settingsSync.keybindingsPerPlatform": false,
+    "workbench.enableExperiments": false,
+    "workbench.settings.enableNaturalLanguageSearch": false,
+
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["j", "k"],
+            "after": ["<Esc>"]
+        }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["g", "p"],
+            "commands": ["editor.action.peekImplementation"]
+        },
+        {
+            "before": ["g", "d"],
+            "commands": ["editor.action.peekDeclaration"]
+        },
+        {
+            "before": ["g", "f"],
+            "commands": ["editor.action.peekDefinition"]
+        },
+        {
+            "before": ["g", "t"],
+            "commands": ["editor.action.peekTypeDefinition"]
+        },
+        {
+            "before": ["l", "i"],
+            "commands": ["editor.action.goToImplementation"]
+        },
+        {
+            "before": ["l", "r"],
+            "commands": ["references-view.findReferences"]
+        },
+        {
+            "before": ["l", "m"],
+            "commands": ["editor.action.rename"]
+        },
+        {
+            "before": ["l", "n"],
+            "commands": ["editor.action.marker.next"]
+        },
+        {
+            "before": ["l", "p"],
+            "commands": ["editor.action.marker.prev"]
+        },
+        {
+            "before": ["g", "v"],
+            "commands": ["gitlens.diffWithWorking"]
+        },
+        {
+            "before": ["<space>", "<space>"],
+            "commands": [":nohl"]
+        },
+        {
+            "before": ["<leader>", "w"],
+            "commands": [":w"]
+        },
+        {
+            "before": ["H"],
+            "commands": [":tabprevious"]
+        },
+        {
+            "before": ["L"],
+            "commands": [":tabnext"]
+        },
+        {
+            "before": ["<leader>", "t", "r"],
+            "commands": ["workbench.action.terminal.focus"]
+        }
+    ],
+    "vim.visualModeKeyBindings": [
+        {
+            "before": [
+                ">"
+            ],
+            "commands": [
+                "editor.action.indentLines"
+            ]
+        },
+        {
+            "before": [
+                "<"
+            ],
+            "commands": [
+                "editor.action.outdentLines"
+            ]
+        }
+    ],
+    "debug.javascript.autoAttachFilter": "onlyWithFlag",
+    "editor.lineNumbers": "relative",
+    "telemetry.telemetryLevel": "off",
+    "vim.enableNeovim": true,
+    "vim.highlightedyank.enable": true,
+    "vim.leader": "<space>",
+    "vim.neovimPath": "/usr/local/bin/nvim",
+    "vim.neovimUseConfigFile": true,
+    "vim.shell": "/usr/local/bin/fish",
+    "vim.showMarksInGutter": true,
+    "vim.vimrc.enable": true,
+    "workbench.colorTheme": "Ayu Mirage Bordered"
+}
