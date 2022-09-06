@@ -37,6 +37,7 @@
     alias = config --get-regexp "^alias\\."
     ap = add --patch
     au = add -u
+    b = !fish -c git_fzf_branches
     ba = branch -a
     br = branch
     bs = !git br --list -vv $(git br --show-current)

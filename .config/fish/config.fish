@@ -62,5 +62,6 @@ set -x FZF_DEFAULT_COMMAND "fd -tf --color=never"
 set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND --search-path \$dir"
 set -x FZF_CTRL_T_OPTS '--multi --bind="ctrl-s:select" --bind="ctrl-u:deselect" --bind="ctrl-f:reload(find . -type f \$dir)" --bind="ctrl-d:reload(find . -type d \$dir)" --preview="bat -n --color=always --line-range :20 {}"'
 set -x FZF_ALT_C_COMMAND 'fd -td --color=never'
+set -x FZF_DEFAULT_OPTS "--color='pointer:bright-blue' --height=50% --pointer='⇨ '"
 
 source ~/.work-config.fish

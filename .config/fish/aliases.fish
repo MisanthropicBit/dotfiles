@@ -88,7 +88,12 @@ function npa -d "Run multiple npm scripts"
 end
 
 function dh -d "Fuzzy search directory history"
-    set -l result (dirh | fzf --color='pointer:bright-blue' --with-nth=2 --height=50% --tiebreak=end --preview='tree -C -L 1 -hp --dirsfirst {2}' --pointer='⇨ ' | string split -f2 ') '); and cd "$result"
+    set -l result (dirh | fzf --with-nth=2 --tiebreak=end --preview='tree -C -L 1 -hp --dirsfirst {2}' | string split -f2 ') '); and cd "$result"
+end
+
+function git_fzf_branches -d "Checkout branches"
+    set -l branch (git --no-pager branch -v --color=always | fzf --ansi --no-multi --preview='git log -5 {1} | bat --color=always --style=plain' | string trim | string split -f1 ' '); and git checkout "$branch"
+end
 end
 
 function G -d "execute git commands and open them in vim/nvim"
