@@ -9,6 +9,31 @@ lsp_lines.setup{}
 -- Temporarily disable lsp_lines
 lsp_lines.toggle()
 
+
+-- bufferline.nvim
+
+local function diagnostics_indicator(count, leve, diagnostics_dict, context)
+  local s = ' '
+
+  for e, n in pairs(diagnostics_dict) do
+    local sym = e == 'error' and ' ' or (e == 'warning' and ' ' or ' ')
+
+    s = s .. n .. sym
+  end
+  return s
+end
+
+require('bufferline').setup{
+  options = {
+    mode = 'tabs',
+    diagnostics = 'nvim_lsp',
+    color_icons = true,
+    diagnostics_indicator = diagnostics_indicator,
+  }
+}
+
+vim.keymap.set('n', 'gb', '<cmd>BufferLinePick', { silent = true })
+
 -- Globally override lsp border settings
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 
@@ -19,7 +44,7 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
     return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 
 for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type

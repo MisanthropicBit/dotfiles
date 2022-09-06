@@ -98,6 +98,7 @@ if has('nvim')
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'rktjmp/lush.nvim'
     Plug 'Maan2003/lsp_lines.nvim'
+    Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 
     " nvim-cmp plugin and sources
     Plug 'hrsh7th/nvim-cmp'
@@ -1213,6 +1214,31 @@ augroup jedivim
     autocmd FileType python setlocal completeopt-=preview
 augroup END
 
+" }}}
+
+" lightline.vim {{{
+function! CurrentColorscheme() abort
+    return g:colors_name
+endfunction
+
+let g:lightline = {
+    \'active': {
+        \'left': [ [ 'mode', 'paste' ],
+        \[ 'gitbranch', 'current_colorscheme', 'readonly', 'filename', 'modified' ] ]
+    \},
+    \'component_function': {
+        \'gitbranch': 'FugitiveHead',
+        \'current_colorscheme': 'CurrentColorscheme',
+    \},
+    \'component_type': {
+        \'gitbranch': 'error',
+    \}
+\}
+
+let g:lightline.enable = {
+    \'statusline': 1,
+    \'tabline': 0
+\}
 " }}}
 
 " NERDTree {{{
