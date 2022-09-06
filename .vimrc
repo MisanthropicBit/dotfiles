@@ -8,7 +8,6 @@ call plug#begin('~/.vim/plugged')
 " Adds help for vim-plug itself
 Plug 'junegunn/vim-plug'
 
-" Main plugins
 Plug 'airblade/vim-gitgutter'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'andymass/vim-matchup'
@@ -28,7 +27,6 @@ Plug 'Konfekt/FastFold'
 Plug 'lervag/vimtex', { 'for': ['tex', 'bib'] }
 Plug 'mhinz/vim-startify'
 Plug 'mustache/vim-mustache-handlebars'
-" Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'bfrg/vim-cpp-modern'
 Plug 'MisanthropicBit/vim-numbers'
 Plug 'MisanthropicBit/vim-yank-window'
@@ -66,7 +64,7 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'embark-theme/vim'
 Plug 'haishanh/night-owl.vim'
-Plug 'junegunn/seoul256.vim'
+" Plug 'junegunn/seoul256.vim'
 Plug 'rhysd/vim-color-spring-night'
 Plug 'sonph/onehalf'
 Plug 'srcery-colors/srcery-vim'
@@ -80,12 +78,9 @@ Plug 'sainnhe/sonokai'
 Plug 'savq/melange'
 Plug 'sainnhe/edge'
 Plug 'ray-x/aurora'
-Plug 'glepnir/zephyr-nvim'
 Plug 'ackyshake/Spacegray.vim'
 Plug 'arzg/vim-colors-xcode'
 Plug 'iandwelker/rose-pine-vim'
-Plug 'catppuccin/nvim', {'as': 'catppuccin'}
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -99,6 +94,9 @@ if has('nvim')
     Plug 'rktjmp/lush.nvim'
     Plug 'Maan2003/lsp_lines.nvim'
     Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-neotest/neotest'
+    Plug 'nvim-neotest/neotest-vim-test'
     Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 
     " nvim-cmp plugin and sources
@@ -108,6 +106,15 @@ if has('nvim')
     Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/cmp-cmdline'
     Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+
+    " nvim colorschemes
+    Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+    Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+    Plug 'EdenEast/nightfox.nvim'
+    Plug 'shaunsingh/moonlight.nvim'
+    Plug 'shaunsingh/seoul256.nvim'
+    Plug 'navarasu/onedark.nvim'
+    Plug 'glepnir/zephyr-nvim'
 endif
 
 " Local plugins and active forks
