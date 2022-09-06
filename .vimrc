@@ -790,8 +790,8 @@ endif
 cnoremap <c-a> <c-b>
 cnoremap <m-left> <c-left>
 cnoremap <m-right> <c-right>
-cnoremap <c-j> <c-left>
-cnoremap <c-k> <c-right>
+cnoremap <c-h> <c-left>
+cnoremap <c-l> <c-right>
 
 " Tag TODOs with a timestamp
 inoremap <expr> TODOT printf('TODO (%s): ', strftime('%Y-%m-%d, %H:%M:%S'))
