@@ -98,6 +98,7 @@ if has('nvim')
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'rktjmp/lush.nvim'
     Plug 'Maan2003/lsp_lines.nvim'
+    Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
     Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 
     " nvim-cmp plugin and sources
@@ -1041,14 +1042,15 @@ endif
 " ALE {{{
 let g:ale_hover_to_floating_preview = 1
 let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
+let g:ale_set_signs = 0
 let g:ale_sign_error = '✖ '
 let g:ale_sign_warning = '!'
 let g:ale_sign_style_error = '⚡ '
 let g:ale_sign_style_warning = '⛔  '
 let g:ale_sign_info = '💡  '
-let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#ale#enabled = 0
 let g:ale_echo_msg_format = '[%linter%] %s (%code%:%severity%)'
-let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_cursor = 0
 
 if has('nvim')
     " Point to neovim python3 virtual environment for specific language servers

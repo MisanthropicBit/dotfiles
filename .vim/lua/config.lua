@@ -180,16 +180,12 @@ end
 -- Mappings
 local opts = { noremap=true, silent=true }
 
-vim.keymap.set('n', '<localleader>ll', lsp_lines.toggle, opts)
 vim.keymap.set('n', 'gp', goto_preview.goto_preview_definition, opts)
-vim.keymap.set('n', 'gt', goto_preview.goto_preview_type_definition, opts)
+vim.keymap.set('n', '<localleader>gt', goto_preview.goto_preview_type_definition, opts)
 vim.keymap.set('n', 'gi', goto_preview.goto_preview_implementation, opts)
 vim.keymap.set('n', 'ge', goto_preview.close_all_win, opts)
 
--- LSP mappings
-vim.keymap.set('n', '<localleader>ln', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<localleader>lp', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', '<localleader>le', vim.diagnostic.open_float, opts)
+local has_lspsaga, lspsaga = pcall(require, 'lspsaga')
 
 -- Use on_attach to only map the following keys after the language server
 -- attaches to the current buffer
@@ -202,11 +198,15 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<localleader>lh', vim.lsp.buf.hover, bufopts)
     vim.keymap.set('n', '<localleader>ls', vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set('n', '<localleader>lt', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', '<localleader>lm', vim.lsp.buf.rename, bufopts)
-    vim.keymap.set('n', '<localleader>la', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', '<localleader>lr', vim.lsp.buf.references, bufopts)
     vim.keymap.set('n', '<localleader>lf', vim.lsp.buf.formatting, bufopts)
 
+    if not has_lspsaga then
+        vim.keymap.set('n', '<localleader>la', vim.lsp.buf.code_action, bufopts)
+        vim.keymap.set('n', '<localleader>lm', vim.lsp.buf.rename, bufopts)
+    end
+
+    vim.keymap.set('n', '<localleader>lig', vim.lsp.buf.implementation, bufopts)
     vim.keymap.set(
         'n',
         '<localleader>lis',
@@ -222,7 +222,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set(
         'n',
         '<localleader>lit',
-        open_in_split('tab', vim.lsp.buf.implementation),
+        open_in_split('tab split', vim.lsp.buf.implementation),
         bufopts
     )
 end
@@ -230,3 +230,22 @@ end
 -- nvim's builtin lsp
 require('lspconfig').eslint.setup{ on_attach = on_attach }
 require('lspconfig').tsserver.setup{ on_attach = on_attach }
+
+-- lspsaga
+vim.keymap.set('n', '<localleader>le', vim.diagnostic.open_float, opts)
+
+if has_lspsaga then
+    lspsaga.init_lsp_saga()
+
+    -- Overwrite lsp defaults with lspsaga
+    local bufopts = { silent = true }
+    vim.keymap.set('n', '<localleader>la', '<cmd>Lspsaga code_action<cr>', bufopts)
+    vim.keymap.set('n', '<localleader>ln', '<cmd>Lspsaga diagnostic_jump_next<cr>', bufopts)
+    vim.keymap.set('n', '<localleader>lp', '<cmd>Lspsaga diagnostic_jump_prev<cr>', bufopts)
+    vim.keymap.set('n', '<localleader>ll', '<cmd>Lspsaga show_line_diagnostics<cr>', bufopts)
+    vim.keymap.set('n', '<localleader>lm', '<cmd>Lspsaga rename<cr>', bufopts)
+    vim.keymap.set('n', '<localleader>ly', '<cmd>LSoutlineToggle<cr>', bufopts)
+else
+    vim.keymap.set('n', '<localleader>ln', vim.diagnostic.goto_next, opts)
+    vim.keymap.set('n', '<localleader>lp', vim.diagnostic.goto_prev, opts)
+end
