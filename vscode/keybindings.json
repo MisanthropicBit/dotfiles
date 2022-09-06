@@ -18,5 +18,10 @@
         "key": "ctrl+p",
         "command": "-workbench.action.quickOpenSelectPrevious",
         "when": "inQuickOpen"
+    },
+    {
+        "key": "ctrl+alt+c",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "panelFocus"
     }
 ]

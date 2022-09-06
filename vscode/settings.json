@@ -37,6 +37,18 @@
             "commands": ["editor.action.goToImplementation"]
         },
         {
+            "before": ["l", "d"],
+            "commands": ["editor.action.revealDeclaration"]
+        },
+        {
+            "before": ["l", "f"],
+            "commands": ["editor.action.revealDefinition"]
+        },
+        {
+            "before": ["l", "t"],
+            "commands": ["editor.action.goToTypeDefinition"]
+        },
+        {
             "before": ["l", "r"],
             "commands": ["references-view.findReferences"]
         },
@@ -51,6 +63,14 @@
         {
             "before": ["l", "p"],
             "commands": ["editor.action.marker.prev"]
+        },
+        {
+            "before": ["l", "h"],
+            "commands": ["editor.action.showHover"]
+        },
+        {
+            "before": ["<leader>", "l", "a"],
+            "commands": ["editor.action.sourceAction"]
         },
         {
             "before": ["g", "v"],
@@ -75,6 +95,14 @@
         {
             "before": ["<leader>", "t", "r"],
             "commands": ["workbench.action.terminal.focus"]
+        },
+        {
+            "before": ["<leader>", "p", "r"],
+            "commands": ["workbench.panel.markers.view.focus"]
+        },
+        {
+            "before": ["<leader>", "p", "l"],
+            "commands": ["workbench.action.closePanel"]
         }
     ],
     "vim.visualModeKeyBindings": [
@@ -106,5 +134,9 @@
     "vim.shell": "/usr/local/bin/fish",
     "vim.showMarksInGutter": true,
     "vim.vimrc.enable": true,
-    "workbench.colorTheme": "Ayu Mirage Bordered"
+    "workbench.colorTheme": "Ayu Mirage Bordered",
+    "editor.peekWidgetDefaultFocus": "editor",
+    "editor.minimap.enabled": false,
+    "editor.cursorSurroundingLines": 3,
+    "editor.wordWrap": "on"
 }
