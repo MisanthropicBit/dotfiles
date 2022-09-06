@@ -54,10 +54,8 @@
     d = diff
     dc = diff --cached
     dl = !git diff --color=always $@ | less -r
-    f = !nvim -c 'G | only'
     filelog = log --name-status --oneline
     fp = fetch --prune
-    f = !nvim -c 'G | only'
     l1 = log -1
     getfile = !git archive --remote=~$1 HEAD:~$2 ~$3 | tar -x
     graph = !git log --graph --color --abbrev-commit --decorate --date=relative
