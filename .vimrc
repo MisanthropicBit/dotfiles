@@ -125,11 +125,6 @@ Plug '~/projects/vim/vim-encodings'
 
 call plug#end()
 
-if has('nvim')
-    let s:lua_config_path = fnamemodify(resolve(expand('<sfile>:p')), ':h') .. '/config.lua'
-    execute 'luafile' '/Users/aab/projects/dotfiles/.vim/config.lua'
-endif
-
 " }}}
 
 " Functions {{{
@@ -804,6 +799,12 @@ inoremap <expr> TODOT printf('TODO (%s): ', strftime('%Y-%m-%d, %H:%M:%S'))
 nnoremap <silent> <localleader>dt :call <SID>DiffToggle()<cr>
 
 nnoremap <silent> <localleader>hi :His<cr>
+
+if has('nvim')
+    " Set this after setting mapleader/maplocalleader
+    lua require('config')
+endif
+
 " }}}
 
 " Searching {{{
