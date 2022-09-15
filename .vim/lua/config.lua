@@ -249,3 +249,35 @@ else
     vim.keymap.set('n', '<localleader>ln', vim.diagnostic.goto_next, opts)
     vim.keymap.set('n', '<localleader>lp', vim.diagnostic.goto_prev, opts)
 end
+
+-- neotest
+
+vim.diagnostic.config({}, vim.api.nvim_create_namespace('neotest'))
+
+require('neotest').setup{
+  icons = {
+    running = "●",
+  },
+  adapters = {
+    require('neotest-jest')({
+      jestCommand = 'npm test --runInBand --',
+      jestConfigFile = 'jest.config.ts',
+      env = { TZ = 'UTC' },
+      cwd = function(path)
+        return vim.fn.getcwd()
+      end,
+    }),
+    require("neotest-vim-test")({}),
+  }
+}
+
+local bufopts = { noremap = true, silent = true }
+
+vim.keymap.set('n', '<localleader>tt', require('neotest').run.run, bufopts)
+vim.keymap.set('n', '<localleader>tl', require('neotest').run.run_last, bufopts)
+vim.keymap.set('n', '<localleader>tf', function() require('neotest').run.run(vim.fn.expand('%')) end, bufopts)
+vim.keymap.set('n', '<localleader>ts', require('neotest').summary.toggle, bufopts)
+vim.keymap.set('n', '<localleader>tp', require('neotest').jump.prev, bufopts)
+vim.keymap.set('n', '<localleader>tn', require('neotest').jump.next, bufopts)
+vim.keymap.set('n', '<localleader>tP', function() require('neotest').jump.prev({ status = 'failed' }) end, bufopts)
+vim.keymap.set('n', '<localleader>tN', function() require('neotest').jump.next({ status = 'failed' }) end, bufopts)

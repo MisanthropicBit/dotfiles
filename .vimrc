@@ -97,6 +97,7 @@ if has('nvim')
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-neotest/neotest'
     Plug 'nvim-neotest/neotest-vim-test'
+    Plug 'haydenmeade/neotest-jest'
     Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
 
     " nvim-cmp plugin and sources
@@ -1516,11 +1517,11 @@ endif
 let g:test#javascript#jest#file_pattern = '\v(__tests__/.*|(it|spec|test))\.(js|jsx|coffee|ts|tsx)$'
 let g:test#javascript#mocha#file_pattern = '\v(tests?/.*|(it|test))\.(js|jsx|coffee)$'
 
-nnoremap <silent> <leader>tn :TestNearest<cr>
-nnoremap <silent> <leader>tf :TestFile<cr>
-nnoremap <silent> <leader>ts :TestSuite<cr>
-nnoremap <silent> <leader>tl :TestLast<cr>
-nnoremap <silent> <leader>tv :TestVisit<cr>
+nnoremap <silent> <leader>Tn :TestNearest<cr>
+nnoremap <silent> <leader>Tf :TestFile<cr>
+nnoremap <silent> <leader>Ts :TestSuite<cr>
+nnoremap <silent> <leader>Tl :TestLast<cr>
+nnoremap <silent> <leader>Tv :TestVisit<cr>
 " }}}
 
 " vimtex {{{
