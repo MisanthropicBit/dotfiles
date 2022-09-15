@@ -128,6 +128,8 @@ endif
 Plug '~/projects/vim/vim-warlock'
 Plug '~/projects/vim/vim-encodings'
 
+runtime private.vim
+
 call plug#end()
 
 " }}}
