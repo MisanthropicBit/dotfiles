@@ -1235,6 +1235,21 @@ function! CurrentColorscheme() abort
 endfunction
 
 let g:lightline = {
+      \ 'component_function': {
+      \   'filetype': 'MyFiletype',
+      \   'fileformat': 'MyFileformat',
+      \ }
+      \ }
+
+function! LightLineFileTypeSymbol()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! LightlineFileFormatSymbol()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+
+let g:lightline = {
     \'active': {
         \'left': [ [ 'mode', 'paste' ],
         \[ 'gitbranch', 'current_colorscheme', 'readonly', 'filename', 'modified' ] ]
@@ -1242,6 +1257,8 @@ let g:lightline = {
     \'component_function': {
         \'gitbranch': 'FugitiveHead',
         \'current_colorscheme': 'CurrentColorscheme',
+        \'filetype': 'LightLineFileTypeSymbol',
+        \'fileformat': 'LightlineFileFormatSymbol',
     \},
     \'component_type': {
         \'gitbranch': 'error',
