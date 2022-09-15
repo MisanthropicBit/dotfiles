@@ -9,3 +9,4 @@ fishd.*
 .config/fish/work_aliases.fish
 .config/fish/config.fish.backup
 .config/fish/fish_variables
+private.vim
