@@ -125,9 +125,7 @@ if has('nvim')
 endif
 
 " Local plugins and active forks
-Plug '~/projects/vim/vim-numbers'
 Plug '~/projects/vim/vim-warlock'
-Plug '~/projects/vim/vim-yank-window'
 Plug '~/projects/vim/vim-encodings'
 
 call plug#end()
