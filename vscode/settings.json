@@ -4,7 +4,6 @@
     "settingsSync.keybindingsPerPlatform": false,
     "workbench.enableExperiments": false,
     "workbench.settings.enableNaturalLanguageSearch": false,
-
     "vim.incsearch": true,
     "vim.useSystemClipboard": true,
     "vim.useCtrlKeys": true,
@@ -138,5 +137,75 @@
     "editor.peekWidgetDefaultFocus": "editor",
     "editor.minimap.enabled": false,
     "editor.cursorSurroundingLines": 3,
-    "editor.wordWrap": "on"
+    "editor.wordWrap": "on",
+    "github.copilot.enable": {
+        "*.js":true,
+        "*.ts":true
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Run mocha on project",
+                "program": "${workspaceFolder}/node_modules/.bin/mocha",
+                "args": [
+                    "--exit",
+                    "\"src/**/*.test.js\""
+                ],
+                "console": "integratedTerminal",
+                "internalConsoleOptions": "neverOpen",
+                "env": {
+                    "NODE_ENV": "test"
+                }
+            },
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Run mocha on current file",
+                "program": "${workspaceFolder}/node_modules/.bin/mocha",
+                "args": [
+                    "--require", "./test/babel-register",
+                    "--exit",
+                    "${file}"
+                ],
+                "console": "integratedTerminal",
+                "internalConsoleOptions": "neverOpen",
+                "env": {
+                    "NODE_ENV": "test"
+                }
+            },
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Run jest on project",
+                "program": "${workspaceFolder}/node_modules/.bin/jest",
+                "args": ["--runInBand"],
+                "console": "integratedTerminal",
+                "internalConsoleOptions": "neverOpen",
+                "env": {
+                    "TZ": "UTC"
+                }
+            },
+            {
+                "type": "node",
+                "request": "launch",
+                "name": "Run mocha on current file",
+                "program": "${workspaceFolder}/node_modules/.bin/mocha",
+                "args": [
+                    "--runInBand",
+                    "${fileBasenameNoExtension}"
+                ],
+                "console": "integratedTerminal",
+                "internalConsoleOptions": "neverOpen",
+                "env": {
+                    "TZ": "UTC"
+                }
+            }
+        ]
+    },
+    "editor.detectIndentation": false,
+    "editor.stickyScroll.enabled": true,
+    "terminal.integrated.smoothScrolling": true
 }
