@@ -11,7 +11,6 @@ lsp_lines.toggle()
 
 
 -- bufferline.nvim
-
 local function diagnostics_indicator(count, leve, diagnostics_dict, context)
   local s = ' '
 
@@ -29,6 +28,7 @@ require('bufferline').setup{
     diagnostics = 'nvim_lsp',
     color_icons = true,
     diagnostics_indicator = diagnostics_indicator,
+    sort_by = 'tabs',
   }
 }
 
