@@ -1,6 +1,12 @@
 " Author: Alexander Asp Bock
 " Source: https://github.com/MisanthropicBit/dotfiles
 
+" Set leader character
+let mapleader = "\<space>"
+
+" Set the local leader character
+let maplocalleader = "\<space>"
+
 " Plugin install {{{
 
 call plug#begin('~/.vim/plugged')
@@ -126,6 +132,12 @@ Plug '~/projects/vim/vim-encodings'
 
 call plug#end()
 
+" }}}
+
+" lua config {{{
+if has('nvim')
+    lua require('config')
+endif
 " }}}
 
 " Functions {{{
@@ -672,12 +684,6 @@ set cinkeys-=0#
 
 " Mappings {{{
 
-" Set leader character
-let mapleader = "\<space>"
-
-" Set the local leader character
-let maplocalleader = "\<space>"
-
 " Display the syntax group(s) of the current word
 nnoremap <silent> <leader>sg :call <SID>SynStack()<cr>
 
@@ -800,11 +806,6 @@ inoremap <expr> TODOT printf('TODO (%s): ', strftime('%Y-%m-%d, %H:%M:%S'))
 nnoremap <silent> <localleader>dt :call <SID>DiffToggle()<cr>
 
 nnoremap <silent> <localleader>hi :His<cr>
-
-if has('nvim')
-    " Set this after setting mapleader/maplocalleader
-    lua require('config')
-endif
 
 " }}}
 
