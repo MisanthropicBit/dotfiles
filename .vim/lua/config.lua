@@ -1,16 +1,32 @@
-local goto_preview = require('goto-preview')
+-- vim: foldenable foldmethod=marker foldlevel=0 fileencoding=utf-8
+
 local lsp_lines = require('lsp_lines')
 local cmp = require('cmp')
 require('trouble').setup{}
 
-goto_preview.setup{}
 lsp_lines.setup{}
+
+local bufopts = { noremap = true, silent = true }
+
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+local yank_group = augroup('HighlightYank', {})
+
+autocmd('TextYankPost', {
+    group = yank_group,
+    pattern = '*',
+    callback = function()
+        vim.highlight.on_yank({
+            higroup = 'IncSearch',
+            timeout = 40,
+        })
+    end,
+})
 
 -- Temporarily disable lsp_lines
 lsp_lines.toggle()
 
-
--- bufferline.nvim
+-- bufferline.nvim {{{
 local function diagnostics_indicator(count, leve, diagnostics_dict, context)
   local s = ' '
 
@@ -33,6 +49,7 @@ require('bufferline').setup{
 }
 
 vim.keymap.set('n', 'gb', '<cmd>BufferLinePick', { silent = true })
+-- }}}
 
 -- Globally override lsp border settings
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
@@ -51,6 +68,7 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
+-- nvim-treesitter {{{
 require('nvim-treesitter.configs').setup{
     ensure_installed = { "fish", "javascript", "json", "python", "typescript", "vim" },
     sync_install = false,
@@ -62,6 +80,7 @@ require('nvim-treesitter.configs').setup{
         additional_vim_regex_highlighting = false,
     },
 }
+-- }}}
 
 vim.diagnostic.config({
     virtual_text = {
@@ -76,8 +95,7 @@ vim.diagnostic.config({
     severity_sort = true,
 })
 
--- nvim-cmp
-
+-- nvim-cmp {{{
 -- Completion kinds
 local kind_icons = {
     Class = ' ',
@@ -180,12 +198,21 @@ end
 -- Mappings
 local opts = { noremap=true, silent=true }
 
+-- goto_preview {{{
+local goto_preview = require('goto-preview')
+
+goto_preview.setup{}
 vim.keymap.set('n', 'gp', goto_preview.goto_preview_definition, opts)
 vim.keymap.set('n', '<localleader>gt', goto_preview.goto_preview_type_definition, opts)
 vim.keymap.set('n', 'gi', goto_preview.goto_preview_implementation, opts)
 vim.keymap.set('n', 'ge', goto_preview.close_all_win, opts)
+-- }}}
 
 local has_lspsaga, lspsaga = pcall(require, 'lspsaga')
+
+if not has_lspsaga then
+    vim.keymap.set('n', '<localleader>le', vim.diagnostic.open_float, opts)
+end
 
 -- Use on_attach to only map the following keys after the language server
 -- attaches to the current buffer
@@ -227,31 +254,29 @@ local on_attach = function(client, bufnr)
     )
 end
 
--- nvim's builtin lsp
+-- nvim's builtin lsp {{{
 require('lspconfig').eslint.setup{ on_attach = on_attach }
 require('lspconfig').tsserver.setup{ on_attach = on_attach }
+-- }}}
 
--- lspsaga
-vim.keymap.set('n', '<localleader>le', vim.diagnostic.open_float, opts)
-
+-- lspsaga {{{
 if has_lspsaga then
     lspsaga.init_lsp_saga()
 
     -- Overwrite lsp defaults with lspsaga
-    local bufopts = { silent = true }
+    vim.keymap.set('n', '<localleader>le', '<cmd>Lspsaga show_line_diagnostics<cr>', bufopts)
     vim.keymap.set('n', '<localleader>la', '<cmd>Lspsaga code_action<cr>', bufopts)
     vim.keymap.set('n', '<localleader>ln', '<cmd>Lspsaga diagnostic_jump_next<cr>', bufopts)
     vim.keymap.set('n', '<localleader>lp', '<cmd>Lspsaga diagnostic_jump_prev<cr>', bufopts)
-    vim.keymap.set('n', '<localleader>ll', '<cmd>Lspsaga show_line_diagnostics<cr>', bufopts)
     vim.keymap.set('n', '<localleader>lm', '<cmd>Lspsaga rename<cr>', bufopts)
     vim.keymap.set('n', '<localleader>ly', '<cmd>LSoutlineToggle<cr>', bufopts)
 else
     vim.keymap.set('n', '<localleader>ln', vim.diagnostic.goto_next, opts)
     vim.keymap.set('n', '<localleader>lp', vim.diagnostic.goto_prev, opts)
 end
+-- }}}
 
--- neotest
-
+-- neotest {{{
 vim.diagnostic.config({}, vim.api.nvim_create_namespace('neotest'))
 
 require('neotest').setup{
@@ -271,8 +296,6 @@ require('neotest').setup{
   }
 }
 
-local bufopts = { noremap = true, silent = true }
-
 vim.keymap.set('n', '<localleader>tt', require('neotest').run.run, bufopts)
 vim.keymap.set('n', '<localleader>tl', require('neotest').run.run_last, bufopts)
 vim.keymap.set('n', '<localleader>tf', function() require('neotest').run.run(vim.fn.expand('%')) end, bufopts)
@@ -281,3 +304,4 @@ vim.keymap.set('n', '<localleader>tp', require('neotest').jump.prev, bufopts)
 vim.keymap.set('n', '<localleader>tn', require('neotest').jump.next, bufopts)
 vim.keymap.set('n', '<localleader>tP', function() require('neotest').jump.prev({ status = 'failed' }) end, bufopts)
 vim.keymap.set('n', '<localleader>tN', function() require('neotest').jump.next({ status = 'failed' }) end, bufopts)
+-- }}}
