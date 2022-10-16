@@ -1169,12 +1169,9 @@ nnoremap <silent> <localleader>rg :Rg<cr>
 
 " vim-gitgutter {{{
 nmap <silent> <leader>hn <Plug>(GitGutterNextHunk)
-nmap <silent> <leader>hp <Plug>(GitGutterPreviousHunk)
+nmap <silent> <leader>hp <Plug>(GitGutterPrevHunk)
 nmap <silent> <leader>hv <Plug>(GitGutterPreviewHunk)
 nmap <silent> <leader>ht <Plug>(GitGutterBufferToogle)
-nmap <silent> <leader>un <Plug>(GitGutterNextHunk)
-nmap <silent> <leader>up <Plug>(GitGutterPreviousHunk)
-nmap <silent> <leader>uv <Plug>(GitGutterPreviewHunk)
 " }}}
 
 " git-messenger.vim {{{
