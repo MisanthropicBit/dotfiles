@@ -1618,10 +1618,6 @@ let g:projectionist_heuristics = {
 \}
 " }}}
 
-" vim-yank-window {{{ "
-let g:yank_window#enable_mappings = 1
-" }}}
-
 " vim-ultest {{{
 let g:ultest_running_sign=''
 let g:ultest_pass_sign=''
