@@ -401,7 +401,7 @@ let s:exclude_colorschemes = []
 
 " Find and choose and random user-defined colorscheme
 function! s:RandomColorscheme(bang)
-    let user_colorschemes = s:GetPluginColorschemes(a:bang)
+    let user_colorschemes = s:GetPluginColorschemes(!a:bang)
 
     if &shell =~# 'bash'
         let random = system('echo -n $RANDOM')
@@ -633,7 +633,7 @@ try
     if exists('g:default_colorscheme_override') && !empty(g:default_colorscheme_override)
         execute printf('colorscheme %s', g:default_colorscheme_override)
     else
-        call s:RandomColorscheme(1)
+        call s:RandomColorscheme(0)
     endif
 catch
     try
