@@ -620,7 +620,8 @@ let s:preferred_colors = [
     \'seoul256',
     \'sonokai',
     \'spring-night',
-    \'srcery',
+    \'spacegray',
+    \'terafox',
     \'warlock',
     \'zephyr',
 \]
