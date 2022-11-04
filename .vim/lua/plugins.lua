@@ -7,8 +7,6 @@ local lsp_lines = require('lsp_lines')
 
 lsp_lines.setup{}
 lsp_lines.toggle() -- Temporarily disable lsp_lines
-
-vim.keymap.set('n', '<localleader>ll', lsp_lines.toggle, map_options)
 -- }}}
 
 -- bufferline.nvim {{{
@@ -186,11 +184,17 @@ local has_lspsaga, lspsaga = pcall(require, 'lspsaga')
 if has_lspsaga then
     lspsaga.init_lsp_saga()
 
+    local lspsaga_diagnostic = require('lspsaga.diagnostic')
+    local goto_prev_error = function() lspsaga_diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end
+    local goto_next_error = function() lspsaga_diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end
+
     -- Overwrite lsp defaults with lspsaga
     vim.keymap.set('n', '<localleader>le', '<cmd>Lspsaga show_line_diagnostics<cr>', map_options)
     vim.keymap.set('n', '<localleader>la', '<cmd>Lspsaga code_action<cr>', map_options)
-    vim.keymap.set('n', '<localleader>ln', '<cmd>Lspsaga diagnostic_jump_next<cr>', map_options)
     vim.keymap.set('n', '<localleader>lp', '<cmd>Lspsaga diagnostic_jump_prev<cr>', map_options)
+    vim.keymap.set('n', '<localleader>ln', '<cmd>Lspsaga diagnostic_jump_next<cr>', map_options)
+    vim.keymap.set('n', '<localleader>ep', goto_prev_error)
+    vim.keymap.set('n', '<localleader>en', goto_next_error)
     vim.keymap.set('n', '<localleader>lm', '<cmd>Lspsaga rename<cr>', map_options)
     vim.keymap.set('n', '<localleader>ly', '<cmd>LSoutlineToggle<cr>', map_options)
 end

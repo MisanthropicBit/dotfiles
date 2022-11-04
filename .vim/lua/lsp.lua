@@ -46,9 +46,20 @@ end
 local has_lspsaga, lspsaga = pcall(require, 'lspsaga')
 
 if not has_lspsaga then
-    vim.keymap.set('n', '<localleader>ln', vim.diagnostic.goto_next, map_options)
+    local function goto_diagnostic_wrapper(func, severity)
+        return function()
+            func({ severity = severity })
+        end
+    end
+
+    local goto_prev_error = goto_diagnostic_wrapper(vim.diagnostic.goto_prev, vim.diagnostic.severity.ERROR)
+    local goto_next_error = goto_diagnostic_wrapper(vim.diagnostic.goto_next, vim.diagnostic.severity.ERROR)
+
     vim.keymap.set('n', '<localleader>lp', vim.diagnostic.goto_prev, map_options)
-    vim.keymap.set('n', '<localleader>le', vim.diagnostic.open_float, map_options)
+    vim.keymap.set('n', '<localleader>ln', vim.diagnostic.goto_next, map_options)
+    vim.keymap.set('n', '<localleader>ep', goto_prev_error)
+    vim.keymap.set('n', '<localleader>en', goto_next_error)
+    vim.keymap.set('n', '<localleader>ll', vim.diagnostic.open_float, map_options)
 end
 
 -- Use on_attach to only map the following keys after the language server
