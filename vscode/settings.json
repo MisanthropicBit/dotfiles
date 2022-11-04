@@ -1,211 +1,260 @@
 {
-    "telemetry.enableTelemetry": false,
-    "telemetry.enableCrashReporter": false,
-    "settingsSync.keybindingsPerPlatform": false,
-    "workbench.enableExperiments": false,
-    "workbench.settings.enableNaturalLanguageSearch": false,
-    "vim.incsearch": true,
-    "vim.useSystemClipboard": true,
-    "vim.useCtrlKeys": true,
-    "vim.hlsearch": true,
-    "vim.insertModeKeyBindings": [
+	"telemetry.enableTelemetry": false,
+	"telemetry.enableCrashReporter": false,
+	"settingsSync.keybindingsPerPlatform": false,
+	"workbench.enableExperiments": false,
+	"workbench.settings.enableNaturalLanguageSearch": false,
+	"vim.incsearch": true,
+	"vim.useSystemClipboard": true,
+	"vim.useCtrlKeys": true,
+	"vim.hlsearch": true,
+	"vim.insertModeKeyBindings": [
+		{
+			"before": ["j", "k"],
+			"after": ["<Esc>"]
+		}
+	],
+	"vim.normalModeKeyBindingsNonRecursive": [
+		{
+			"before": ["g", "p"],
+			"commands": ["editor.action.peekImplementation"]
+		},
+		{
+			"before": ["g", "d"],
+			"commands": ["editor.action.peekDeclaration"]
+		},
+		{
+			"before": ["g", "f"],
+			"commands": ["editor.action.peekDefinition"]
+		},
+		{
+			"before": ["g", "t"],
+			"commands": ["editor.action.peekTypeDefinition"]
+		},
+		{
+			"before": ["l", "i"],
+			"commands": ["editor.action.goToImplementation"]
+		},
+		{
+			"before": ["l", "d"],
+			"commands": ["editor.action.revealDeclaration"]
+		},
+		{
+			"before": ["l", "f"],
+			"commands": ["editor.action.revealDefinition"]
+		},
+		{
+			"before": ["l", "t"],
+			"commands": ["editor.action.goToTypeDefinition"]
+		},
+		{
+			"before": ["l", "r"],
+			"commands": ["references-view.findReferences"]
+		},
+		{
+			"before": ["l", "m"],
+			"commands": ["editor.action.rename"]
+		},
+		{
+			"before": ["l", "n"],
+			"commands": ["editor.action.marker.next"]
+		},
+		{
+			"before": ["l", "p"],
+			"commands": ["editor.action.marker.prev"]
+		},
+		{
+			"before": ["l", "h"],
+			"commands": ["editor.action.showHover"]
+		},
+		{
+			"before": ["<leader>", "l", "a"],
+			"commands": ["editor.action.sourceAction"]
+		},
+		{
+			"before": ["g", "v"],
+			"commands": ["gitlens.diffWithWorking"]
+		},
+		{
+			"before": ["<space>", "<space>"],
+			"commands": [":nohl"]
+		},
+		{
+			"before": ["<leader>", "w"],
+			"commands": [":w"]
+		},
+		{
+			"before": ["H"],
+			"commands": [":tabprevious"]
+		},
+		{
+			"before": ["L"],
+			"commands": [":tabnext"]
+		},
+		{
+			"before": ["<leader>", "t", "r"],
+			"commands": ["workbench.action.terminal.focus"]
+		},
+		{
+			"before": ["<leader>", "p", "r"],
+			"commands": ["workbench.panel.markers.view.focus"]
+		},
+		{
+			"before": ["<leader>", "p", "l"],
+			"commands": ["workbench.action.closePanel"]
+		},
         {
-            "before": ["j", "k"],
-            "after": ["<Esc>"]
+            "before": ["<leader>", "h", "n"],
+            "commands": ["workbench.action.compareEditor"]
+        },
+        {
+			"before": ["<leader>", "h", "n"],
+            "commands": ["workbench.action.editor.nextChange"],
+            "when": "editorTextFocus && !textCompareEditorActive"
+        },
+        {
+			"before": ["<leader>", "h", "p"],
+            "commands": ["workbench.action.editor.previousChange"],
+            "when": "editorTextFocus && !textCompareEditorActive"
+        },
+		{
+			"before": ["<leader>", "d", "n"],
+			"commands": ["workbench.action.debug.stepOver"],
+			"when": "debugState == 'stopped' && vim.mode == 'Normal'"
+		},
+		{
+			"before": ["<leader>", "d", "i"],
+			"commands": ["workbench.action.debug.stepInto"],
+			"when": "debugState == 'stopped' && vim.mode == 'Normal'"
+		},
+		{
+			"before": ["<leader>", "d", "o"],
+			"commands": ["workbench.action.debug.stepInto"],
+			"when": "debugState == 'stopped' && vim.mode == 'Normal'"
+		},
+        {
+			"before": ["<leader>", "d", "d"],
+            "command": "workbench.action.debug.disconnect",
+            "when": "focusedSessionIsAttach && inDebugMode"
+        },
+        {
+			"before": ["<leader>", "b", "t"],
+            "commands": ["editor.debug.action.toggleBreakpoint"],
+            "when": "editorTextFocus"
+        },
+        {
+			"before": ["<leader>", "b", "n"],
+            "commands": ["editor.debug.action.goToNextBreakpoint"],
+            "when": "editorTextFocus"
+        },
+        {
+			"before": ["<leader>", "b", "p"],
+            "commands": ["editor.debug.action.goToPreviousBreakpoint"],
+            "when": "editorTextFocus"
         }
-    ],
-    "vim.normalModeKeyBindingsNonRecursive": [
-        {
-            "before": ["g", "p"],
-            "commands": ["editor.action.peekImplementation"]
-        },
-        {
-            "before": ["g", "d"],
-            "commands": ["editor.action.peekDeclaration"]
-        },
-        {
-            "before": ["g", "f"],
-            "commands": ["editor.action.peekDefinition"]
-        },
-        {
-            "before": ["g", "t"],
-            "commands": ["editor.action.peekTypeDefinition"]
-        },
-        {
-            "before": ["l", "i"],
-            "commands": ["editor.action.goToImplementation"]
-        },
-        {
-            "before": ["l", "d"],
-            "commands": ["editor.action.revealDeclaration"]
-        },
-        {
-            "before": ["l", "f"],
-            "commands": ["editor.action.revealDefinition"]
-        },
-        {
-            "before": ["l", "t"],
-            "commands": ["editor.action.goToTypeDefinition"]
-        },
-        {
-            "before": ["l", "r"],
-            "commands": ["references-view.findReferences"]
-        },
-        {
-            "before": ["l", "m"],
-            "commands": ["editor.action.rename"]
-        },
-        {
-            "before": ["l", "n"],
-            "commands": ["editor.action.marker.next"]
-        },
-        {
-            "before": ["l", "p"],
-            "commands": ["editor.action.marker.prev"]
-        },
-        {
-            "before": ["l", "h"],
-            "commands": ["editor.action.showHover"]
-        },
-        {
-            "before": ["<leader>", "l", "a"],
-            "commands": ["editor.action.sourceAction"]
-        },
-        {
-            "before": ["g", "v"],
-            "commands": ["gitlens.diffWithWorking"]
-        },
-        {
-            "before": ["<space>", "<space>"],
-            "commands": [":nohl"]
-        },
-        {
-            "before": ["<leader>", "w"],
-            "commands": [":w"]
-        },
-        {
-            "before": ["H"],
-            "commands": [":tabprevious"]
-        },
-        {
-            "before": ["L"],
-            "commands": [":tabnext"]
-        },
-        {
-            "before": ["<leader>", "t", "r"],
-            "commands": ["workbench.action.terminal.focus"]
-        },
-        {
-            "before": ["<leader>", "p", "r"],
-            "commands": ["workbench.panel.markers.view.focus"]
-        },
-        {
-            "before": ["<leader>", "p", "l"],
-            "commands": ["workbench.action.closePanel"]
-        }
-    ],
-    "vim.visualModeKeyBindings": [
-        {
-            "before": [
-                ">"
-            ],
-            "commands": [
-                "editor.action.indentLines"
-            ]
-        },
-        {
-            "before": [
-                "<"
-            ],
-            "commands": [
-                "editor.action.outdentLines"
-            ]
-        }
-    ],
-    "debug.javascript.autoAttachFilter": "onlyWithFlag",
-    "editor.lineNumbers": "relative",
-    "telemetry.telemetryLevel": "off",
-    "vim.enableNeovim": true,
-    "vim.highlightedyank.enable": true,
-    "vim.leader": "<space>",
-    "vim.neovimPath": "/usr/local/bin/nvim",
-    "vim.neovimUseConfigFile": true,
-    "vim.shell": "/usr/local/bin/fish",
-    "vim.showMarksInGutter": true,
-    "vim.vimrc.enable": true,
-    "workbench.colorTheme": "Ayu Mirage Bordered",
-    "editor.peekWidgetDefaultFocus": "editor",
-    "editor.minimap.enabled": false,
-    "editor.cursorSurroundingLines": 3,
-    "editor.wordWrap": "on",
-    "github.copilot.enable": {
-        "*.js":true,
-        "*.ts":true
-    },
-    "launch": {
-        "version": "0.2.0",
-        "configurations": [
-            {
-                "type": "node",
-                "request": "launch",
-                "name": "Run mocha on project",
-                "program": "${workspaceFolder}/node_modules/.bin/mocha",
-                "args": [
-                    "--exit",
-                    "\"src/**/*.test.js\""
-                ],
-                "console": "integratedTerminal",
-                "internalConsoleOptions": "neverOpen",
-                "env": {
-                    "NODE_ENV": "test"
-                }
-            },
-            {
-                "type": "node",
-                "request": "launch",
-                "name": "Run mocha on current file",
-                "program": "${workspaceFolder}/node_modules/.bin/mocha",
-                "args": [
-                    "--require", "./test/babel-register",
-                    "--exit",
-                    "${file}"
-                ],
-                "console": "integratedTerminal",
-                "internalConsoleOptions": "neverOpen",
-                "env": {
-                    "NODE_ENV": "test"
-                }
-            },
-            {
-                "type": "node",
-                "request": "launch",
-                "name": "Run jest on project",
-                "program": "${workspaceFolder}/node_modules/.bin/jest",
-                "args": ["--runInBand"],
-                "console": "integratedTerminal",
-                "internalConsoleOptions": "neverOpen",
-                "env": {
-                    "TZ": "UTC"
-                }
-            },
-            {
-                "type": "node",
-                "request": "launch",
-                "name": "Run mocha on current file",
-                "program": "${workspaceFolder}/node_modules/.bin/mocha",
-                "args": [
-                    "--runInBand",
-                    "${fileBasenameNoExtension}"
-                ],
-                "console": "integratedTerminal",
-                "internalConsoleOptions": "neverOpen",
-                "env": {
-                    "TZ": "UTC"
-                }
-            }
-        ]
-    },
-    "editor.detectIndentation": false,
-    "editor.stickyScroll.enabled": true,
-    "terminal.integrated.smoothScrolling": true
+	],
+	"vim.visualModeKeyBindings": [
+		{
+			"before": [
+				">"
+			],
+			"commands": [
+				"editor.action.indentLines"
+			]
+		},
+		{
+			"before": [
+				"<"
+			],
+			"commands": [
+				"editor.action.outdentLines"
+			]
+		}
+	],
+	"debug.javascript.autoAttachFilter": "onlyWithFlag",
+	"editor.lineNumbers": "relative",
+	"telemetry.telemetryLevel": "off",
+	"vim.enableNeovim": true,
+	"vim.highlightedyank.enable": true,
+	"vim.leader": "<space>",
+	"vim.neovimPath": "/usr/local/bin/nvim",
+	"vim.neovimUseConfigFile": true,
+	"vim.shell": "/usr/local/bin/fish",
+	"vim.showMarksInGutter": true,
+	"vim.vimrc.enable": true,
+	"workbench.colorTheme": "Ayu Mirage Bordered",
+	"editor.peekWidgetDefaultFocus": "editor",
+	"editor.minimap.enabled": false,
+	"editor.cursorSurroundingLines": 3,
+	"editor.wordWrap": "on",
+	"github.copilot.enable": {
+		"*.js":true,
+		"*.ts":true
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"type": "node",
+				"request": "launch",
+				"name": "Run mocha on project",
+				"program": "${workspaceFolder}/node_modules/.bin/mocha",
+				"args": [
+					"--exit",
+					"\"src/**/*.test.js\""
+				],
+				"console": "integratedTerminal",
+				"internalConsoleOptions": "neverOpen",
+				"env": {
+					"NODE_ENV": "test"
+				}
+			},
+			{
+				"type": "node",
+				"request": "launch",
+				"name": "Run mocha on current file",
+				"program": "${workspaceFolder}/node_modules/.bin/mocha",
+				"args": [
+					"--require", "./test/babel-register",
+					"--exit",
+					"${file}"
+				],
+				"console": "integratedTerminal",
+				"internalConsoleOptions": "neverOpen",
+				"env": {
+					"NODE_ENV": "test"
+				}
+			},
+			{
+				"type": "node",
+				"request": "launch",
+				"name": "Run jest on project",
+				"program": "${workspaceFolder}/node_modules/.bin/jest",
+				"args": ["--runInBand"],
+				"console": "integratedTerminal",
+				"internalConsoleOptions": "neverOpen",
+				"env": {
+					"TZ": "UTC"
+				}
+			},
+			{
+				"type": "node",
+				"request": "launch",
+				"name": "Run mocha on current file",
+				"program": "${workspaceFolder}/node_modules/.bin/mocha",
+				"args": [
+					"--runInBand",
+					"${fileBasenameNoExtension}"
+				],
+				"console": "integratedTerminal",
+				"internalConsoleOptions": "neverOpen",
+				"env": {
+					"TZ": "UTC"
+				}
+			}
+		]
+	},
+	"editor.detectIndentation": false,
+	"editor.stickyScroll.enabled": true,
+	"terminal.integrated.smoothScrolling": true
 }
