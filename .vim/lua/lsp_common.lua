@@ -25,4 +25,29 @@ M.kind_icons = {
     Variable = ' ',
 }
 
+-- Map lsp kinds to default vim highlight groups
+M.kind_to_hl = {
+    Class = 'StorageClass',
+    Color = 'Type',
+    Constant = 'Constant',
+    Constructor = 'Function',
+    Enum = 'StorageClass',
+    EnumMember = 'Identifier',
+    Field = 'Label',
+    File = 'String',
+    Folder = 'Special',
+    Function = 'Function',
+    Interface = 'StorageClass',
+    Keyword = 'Keyword',
+    Method = 'Function',
+    Module = 'Special',
+    Property = 'Type',
+    Snippet = 'Special',
+    Struct = 'Structure',
+    Text = 'Normal',
+    Unit = 'Special',
+    Value = 'Number',
+    Variable = 'Identifier',
+}
+
 return M

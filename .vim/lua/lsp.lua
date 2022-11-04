@@ -64,6 +64,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<localleader>lt', vim.lsp.buf.type_definition, map_options)
     vim.keymap.set('n', '<localleader>lr', vim.lsp.buf.references, map_options)
     vim.keymap.set('n', '<localleader>lf', vim.lsp.buf.formatting, map_options)
+    vim.keymap.set('n', '<localleader>ss', vim.lsp.buf.document_symbol, map_options)
 
     if not has_lspsaga then
         vim.keymap.set('n', '<localleader>la', vim.lsp.buf.code_action, map_options)
@@ -102,5 +103,17 @@ lspconfig.tsserver.setup{ on_attach = on_attach }
     local fuzzy_lsp_symbols = require('fuzzy_lsp_symbols')
 
     vim.lsp.handlers['textDocument/documentSymbol'] = fuzzy_lsp_symbols.fuzzy_symbol_handler
+
+    local function invoke_symbol_handler(arg)
+        vim.b.fuzzy_symbol_handler_command_arg = arg
+        vim.lsp.buf.document_symbol()
+    end
+
+    vim.api.nvim_create_user_command('Symbols', invoke_symbol_handler, {
+        nargs = '?',
+        complete = function()
+            return vim.tbl_map(string.lower, vim.tbl_keys(require('lsp_common').kind_icons))
+        end
+    })
 -- end
 -- }}}
