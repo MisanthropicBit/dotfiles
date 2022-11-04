@@ -7,7 +7,7 @@ let mapleader = "\<space>"
 " Set the local leader character
 let maplocalleader = "\<space>"
 
-" Plugin install {{{
+" Plugins {{{
 
 call plug#begin('~/.vim/plugged')
 
@@ -15,47 +15,39 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 
 Plug 'airblade/vim-gitgutter'
-Plug 'AndrewRadev/sideways.vim'
 Plug 'andymass/vim-matchup'
-Plug 'arthurxavierx/vim-caser'
+Plug 'arthurxavierx/vim-caser' " TODO: Remove?
 Plug 'dag/vim-fish'
 Plug 'dense-analysis/ale'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'HerringtonDarkholme/yats.vim'
+Plug 'HerringtonDarkholme/yats.vim' " TODO: Remove?
 Plug 'honza/vim-snippets'
 Plug 'itchyny/lightline.vim'
-Plug 'junegunn/fzf.vim', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
-Plug 'junegunn/vader.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'KeitaNakamura/tex-conceal.vim'
 Plug 'Konfekt/FastFold'
-Plug 'lervag/vimtex', { 'for': ['tex', 'bib'] }
 Plug 'mhinz/vim-startify'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'bfrg/vim-cpp-modern'
 Plug 'MisanthropicBit/vim-numbers'
 Plug 'MisanthropicBit/vim-yank-window'
 Plug 'pangloss/vim-javascript'
-Plug 'preservim/tagbar'
 Plug 'Raimondi/delimitMate'
-Plug 'rcarriga/vim-ultest', { 'do': ':UpdateRemotePlugins' }
 Plug 'rhysd/git-messenger.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdtree'
 Plug 'sirver/UltiSnips'
-Plug 'sk1418/Join'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
-Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
-Plug 'vim-python/python-syntax'
 Plug 'vim-test/vim-test'
 
 if executable('node') && executable('yarn')
@@ -66,14 +58,11 @@ endif
 
 " Colorschemes
 Plug 'ajmwagar/vim-deus'
-Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'embark-theme/vim'
 Plug 'haishanh/night-owl.vim'
-" Plug 'junegunn/seoul256.vim'
 Plug 'rhysd/vim-color-spring-night'
-Plug 'sonph/onehalf'
-Plug 'srcery-colors/srcery-vim'
+Plug 'sonph/onehalf' " TODO: Remove?
 Plug 'sainnhe/everforest'
 Plug 'arcticicestudio/nord-vim'
 Plug 'wadackel/vim-dogrun'
@@ -85,8 +74,7 @@ Plug 'savq/melange'
 Plug 'sainnhe/edge'
 Plug 'ray-x/aurora'
 Plug 'ackyshake/Spacegray.vim'
-Plug 'arzg/vim-colors-xcode'
-Plug 'iandwelker/rose-pine-vim'
+Plug 'kartikp10/noctis.nvim'
 
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -106,6 +94,7 @@ if has('nvim')
     Plug 'haydenmeade/neotest-jest'
     Plug 'adrigzr/neotest-mocha'
     Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
+    Plug 'sbdchd/neoformat'
     Plug 'nat-418/boole.nvim'
 
     " nvim-cmp plugin and sources
@@ -1131,9 +1120,6 @@ let delimitMate_expand_cr = 1
 
 " }}}
 
-" deoplete-jedi {{{
-" }}}
-
 " deoplete.nvim {{{
 
 let g:deoplete#enable_at_startup = 0
@@ -1278,6 +1264,11 @@ let g:lightline.enable = {
 \}
 " }}}
 
+" neoformat {{{
+let g:neoformat_only_msg_on_error = 1
+let g:neoformat_try_node_exe = 1
+" }}}
+
 " NERDTree {{{
 
 " Shortcut to toggle NERDTree
@@ -1306,34 +1297,6 @@ augroup NERDTree
     endif
 augroup END
 
-" }}}
-
-" python-syntax {{{
-
-let g:python_highlight_builtins = 1
-let g:python_highlight_exceptions = 1
-let g:python_highlight_string_formatting = 1
-let g:python_highlight_string_format = 1
-let g:python_highlight_string_templates = 1
-let g:python_highlight_indent_errors = 1
-let g:python_highlight_space_errors = 1
-let g:python_highlight_doctests = 1
-let g:python_print_as_function = 1
-let g:python_highlight_func_calls = 1
-let g:python_highlight_class_vars = 1
-let g:python_highlight_operators = 1
-let g:python_highlight_file_headers_as_comments = 1
-
-" }}}
-
-" sideways.vim {{{
-nnoremap <silent> <localleader>sh :SidewaysLeft<cr>
-nnoremap <silent> <localleader>sl :SidewaysRight<cr>
-
-omap aa <Plug>SidewaysArgumentTextobjA
-xmap aa <Plug>SidewaysArgumentTextobjA
-omap ia <Plug>SidewaysArgumentTextobjI
-xmap ia <Plug>SidewaysArgumentTextobjI
 " }}}
 
 " Tagbar {{{
@@ -1398,25 +1361,11 @@ let g:airline#extensions#branch#displayed_head_limit = 32
 
 " }}}
 
-" vim-choosewin {{{
-
-" Map '-' to visually choosing a window to jump to
-nmap - <Plug>(choosewin)
-
-" Map '_' to quickly swap windows (sadly no <Plug> command)
-nnoremap _ :<c-u>call choosewin#start(range(1, winnr('$')), {'swap': 1, 'swap_stay': 0 })<cr>
-
-" Mapping for quickly swapping two windows
-nnoremap <localleader>swc :ChooseWinSwap<enter>
-
-" Enable window overlay characters
-let g:choosewin_overlay_enable = 1
-
-" }}}
-
 " vim-devicons {{{
 
 let g:DevIconsEnableFoldersOpenClose = 1
+" let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+" let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['mysql'] = g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['sql']
 
 " }}}
 
@@ -1485,51 +1434,6 @@ let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
 
 " }}}
 
-" vim-task {{{
-
-let g:vimtask#enable_mappings             = 1
-let g:vimtask#fancy_arrows                = 1
-let g:vimtask#automove_completed_tasks    = 1
-let g:vimtask#automove_cancelled_tasks    = 1
-let g:vimtask#automove_tasks              = 1
-let g:vimtask#tag_tasks_with_dates        = 1
-let g:vimtask#show_progress               = 1
-let g:vimtask#tag_expansion               = 1
-let g:vimtask#insert_mode_on_new_task     = 1
-let g:vimtask#highlight_code              = 1
-let g:vimtask#conceal_inline_code         = 1
-let g:vimtask#highlight_urls              = 1
-let g:vimtask#conceal_urls                = 1
-let g:vimtask#autofold_internal_archive   = 1
-let g:vimtask#autofold_complete_tasklists = 1
-"let g:vimtask#conceal_font_styles         = 1
-let g:vimtask#archive_mode                = 'internal'
-let g:vimtask#done_symbol                 = '✔'
-let g:vimtask#todo_symbol                 = '☐'
-let g:vimtask#cancelled_symbol            = '✗'
-let g:vimtask#bullet_symbols              = ['•', '◦', '‣', '▹']
-let g:vimtask#notes_only_foldtext         = ' (notes)'
-let g:vimtask#search_paths                = ['~/research/tasks']
-
-function! StatusBarProgress(format_map, progress_modifiers) abort
-    let completed_symbol = '■'
-    let todo_symbol = '☐'
-
-    let progress = float2nr(10.0 * a:format_map.all_completion / 100.0)
-    let progress_bar = repeat(completed_symbol, progress) .
-        \repeat(todo_symbol, 10 - progress)
-
-    if a:format_map.all_total_tasks == 0 && a:format_map.all_cancelled == 0
-        return '+-- (notes) '
-    endif
-
-    return printf('+-- [%s] %.f%% ', progress_bar, a:format_map.all_completion)
-endfunction
-
-"let g:VimtaskUserProgressFormatter = function('StatusBarProgress')
-
-" }}}
-
 " vim-test {{{
 let s:vim_test_window_args = 'bo 30'
 
@@ -1548,95 +1452,6 @@ nnoremap <silent> <leader>Tf :TestFile<cr>
 nnoremap <silent> <leader>Ts :TestSuite<cr>
 nnoremap <silent> <leader>Tl :TestLast<cr>
 nnoremap <silent> <leader>Tv :TestVisit<cr>
-" }}}
-
-" vimtex {{{
-
-let g:vimtex_fold_enabled = 1
-
-" Use Skim for viewing PDFs
-let g:vimtex_view_method = 'skim'
-
-" Autofocus skim
-let g:vimtex_view_skim_activate = 1
-
-" Disable auto viewing to keep writing
-let g:vimtex_view_automatic = 0
-
-" Disable continuous mode
-let g:vimtex_compiler_latexmk = {
-    \'backend':    'jobs',
-    \'background': 1,
-    \'build_dir':  '',
-    \'callback':   1,
-    \'continuous': 0,
-    \'executable': 'latexmk',
-    \'options':    [
-    \    '-xelatex',
-    \    '-verbose',
-    \    '-file-line-error',
-    \    '-synctex=1',
-    \    '-interaction=nonstopmode',
-    \    '-shell-escape'
-    \],
-\}
-
-" Switch to neovim's job control if applicable
-if has('nvim')
-    let g:vimtex_compiler_latexmk.backend = 'nvim'
-endif
-
-" Do not open the quickfix window automatically since there are usually just
-" warnings and no errors
-let g:vimtex_quickfix_mode = 0
-
-function! s:filter_vimtex_warnings() abort
-    let qf = getqflist()
-    let filtered = filter(qf, 'get(v:val, "type") !~ "w"')
-
-    call setqflist(filtered, 'r')
-endfunction
-
-" New mapping for listing (a)ll warnings and errors
-" nmap <silent> <localleader>la <Plug>(vimtex-errors)
-
-" Remap vimtex's le mapping to only show errors
-" nmap <localleader>le call s:filter_vimtex_warnings()<cr>
-
-" }}}
-
-" vim-ultest {{{
-let g:ultest_running_sign=''
-let g:ultest_pass_sign=''
-let g:ultest_fail_sign=''
-
-nmap <localleader>ut <Plug>(ultest-run-nearest)
-nmap <localleader>us <Plug>(ultest-summary-toggle)
-nmap <localleader>uo <Plug>(ultest-output-show)
-nmap ]t <Plug>(ultest-next-fail)
-nmap [t <Plug>(ultest-prev-fail)
-
-let g:ultest_deprecation_notice = 0
-" }}}
-
-" vim-projectionist {{{
-let g:projectionist_heuristics = {
-    \'src/**/*.test.js': {
-        \'alternate': '{}.js'
-    \}
-\}
-" }}}
-
-" vim-ultest {{{
-let g:ultest_running_sign=''
-let g:ultest_pass_sign=''
-let g:ultest_fail_sign=''
-
-nmap <localleader>ut <Plug>(ultest-run-nearest)
-nmap <localleader>us <Plug>(ultest-summary-toggle)
-nmap <localleader>uo <Plug>(ultest-output-show)
-nmap ]t <Plug>(ultest-next-fail)
-nmap [t <Plug>(ultest-prev-fail)
 " }}}
 
 " vim-yank-window {{{
