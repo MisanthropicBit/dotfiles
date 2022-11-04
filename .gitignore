@@ -10,3 +10,4 @@ fishd.*
 .config/fish/config.fish.backup
 .config/fish/fish_variables
 private.vim
+private_plugins.lua
