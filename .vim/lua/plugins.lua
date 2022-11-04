@@ -205,18 +205,28 @@ vim.diagnostic.config({}, vim.api.nvim_create_namespace('neotest'))
 
 local neotest = require('neotest')
 
+local function get_cwd(path)
+    return vim.fn.getcwd()
+end
+
 neotest.setup{
   icons = {
-    running = "●",
+      running = '●',
+      running_animated = {'⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'},
+      passed = '',
+      failed = '',
+      skipped = '➠',
+      unknown = '?',
   },
   adapters = {
     require('neotest-jest')({
-      jestCommand = 'npm test --runInBand --',
-      jestConfigFile = 'jest.config.ts',
-      env = { TZ = 'UTC' },
-      cwd = function(path)
-        return vim.fn.getcwd()
-      end,
+        jestCommand = 'npm test --runInBand --',
+        jestConfigFile = 'jest.config.ts',
+        cwd = get_cwd,
+    }),
+    require('neotest-mocha')({
+        command = 'npm test --',
+        cwd = get_cwd,
     }),
     require("neotest-vim-test")({}),
   }
