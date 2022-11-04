@@ -1377,13 +1377,15 @@ nmap ga <Plug>(EasyAlign)
 
 " Useful git mappings based on the spf13-vim distribution
 nnoremap <silent> <leader>gs :G<cr>
-nnoremap <silent> <leader>gd :Gdiff<cr>
+nnoremap <silent> <leader>gd :Gdiffsplit<cr>
 nnoremap <silent> <leader>gc :G commit<cr>
 nnoremap <silent> <leader>gb :G blame<cr>
-nnoremap <silent> <leader>gl :G log<cr>
-nnoremap <silent> <leader>gp :Git push<cr>
-nnoremap <silent> <leader>gv :Gvsplit! diff --cached<cr>
+nnoremap <silent> <leader>gl :Term git log<cr>
+nnoremap <silent> <leader>gp :G push<cr>
+nnoremap <silent> <leader>gv :vert G --paginate diff --cached<cr>
 nnoremap <silent> <leader>gw :Gwrite<cr>
+nnoremap <silent> <leader>gu :GBrowse!<cr>
+xnoremap <silent> <leader>gu :GBrowse!<cr>
 
 " Define a command and mapping for viewing staged changes
 command! Gcached :Gtabedit! diff --cached
