@@ -241,3 +241,14 @@ vim.keymap.set('n', '<localleader>tn', neotest.jump.next, map_options)
 vim.keymap.set('n', '<localleader>tP', function() require('neotest').jump.prev({ status = 'failed' }) end, map_options)
 vim.keymap.set('n', '<localleader>tN', function() require('neotest').jump.next({ status = 'failed' }) end, map_options)
 -- }}}
+
+-- boole.nvim {{{
+require('boole').setup({
+    mappings = {
+        increment = '<c-a>',
+        decrement = '<c-x>',
+    },
+})
+-- }}}
+
+pcall(require, 'private_plugins')

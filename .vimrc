@@ -106,6 +106,7 @@ if has('nvim')
     Plug 'haydenmeade/neotest-jest'
     Plug 'adrigzr/neotest-mocha'
     Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
+    Plug 'nat-418/boole.nvim'
 
     " nvim-cmp plugin and sources
     Plug 'hrsh7th/nvim-cmp'
