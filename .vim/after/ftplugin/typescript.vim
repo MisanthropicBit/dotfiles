@@ -1,3 +1,4 @@
-set shiftwidth=2
+setlocal shiftwidth=2
+setlocal makeprg=npm\ run\ build
+
 UltiSnipsAddFiletypes javascript-mocha
-set makeprg=npm\ run\ build
