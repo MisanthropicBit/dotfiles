@@ -125,12 +125,6 @@ call plug#end()
 
 " }}}
 
-" lua config {{{
-if has('nvim')
-    lua require('config')
-endif
-" }}}
-
 " Functions {{{
 
 " Show syntax group, linked group and colors for current word
@@ -1458,6 +1452,12 @@ nnoremap <silent> <leader>Tv :TestVisit<cr>
 let g:yank_window#enable_mappings = 1
 " }}}
 
+" }}}
+
+" lua config {{{
+if has('nvim')
+    lua require('config')
+endif
 " }}}
 
 " vim: foldenable foldmethod=marker foldlevel=0 fileencoding=utf-8
