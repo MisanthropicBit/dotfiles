@@ -826,6 +826,13 @@ nnoremap <silent> * *Nzz
 nnoremap n nzvzz
 nnoremap N Nzvzz
 
+if executable('rg')
+    set grepprg=rg\ --vimgrep\ --smart-case\ --hidden
+    set grepformat=%f:%l:%c:%m
+endif
+
+command! -nargs=+ Grep execute 'silent grep! <args> | copen'
+
 " }}}
 
 " Tabs, spaces and indentation {{{
