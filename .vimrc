@@ -304,9 +304,9 @@ endif
 " if it is the only window left
 " Credit: https://github.com/scrooloose/nerdtree/issues/21
 function! s:CloseNerdTreeIfOnlyWindow()
-    if exists("t:NERDTreeBufName")
+    if exists('t:NERDTreeBufName')
         if bufwinnr(t:NERDTreeBufName) != -1
-            if winnr("$") == 1
+            if winnr('$') == 1
                 q
             endif
         endif
@@ -592,10 +592,11 @@ if !has('gui_running')
     endif
 endif
 
+" Disable until treesitter hl groups are fixed
+" \'dogrun',
+" \'aurora',
 let s:preferred_colors = [
-    \'aurora',
     \'catppuccin',
-    \'dogrun',
     \'duskfox',
     \'embark',
     \'everforest',
@@ -604,7 +605,6 @@ let s:preferred_colors = [
     \'nightfox',
     \'nordfox',
     \'OceanicNext',
-    \'seoul256',
     \'sonokai',
     \'spring-night',
     \'spacegray',
@@ -691,9 +691,6 @@ nnoremap <leader>q :q<cr>
 " Shortcut for correcting a misspelled word with its first suggestion
 nnoremap <leader>1 1z=
 
-" Count and display the occurrences of <cword>
-nnoremap <silent> <leader>o :%s/<c-r><c-w>//gn<cr>
-
 " Move vertically while ignoring true lines
 nnoremap j gj
 nnoremap k gk
@@ -719,9 +716,6 @@ nnoremap gf <c-w>gf
 " Yank from cursor to the end of line instead of the entire line
 nnoremap Y y$
 
-" Shortcut for calling '!make'
-nnoremap <leader>m :silent !make<cr>
-
 " Quickly toggle folds
 nnoremap <leader>f za
 
@@ -739,9 +733,6 @@ nnoremap <silent> <leader>rw :call <SID>DeleteTrailingWhitespace()<cr>
 " Open manpage (default) for the word under the cursor (since K is remapped to
 " moving lines upwards)
 nnoremap <silent> <leader>k K
-
-" Short-cut for 'goto tag' if tags are available through ctags
-nnoremap <silent> <leader>gt <c-]>
 
 " Automatically reselect the visual block when indenting or dedenting
 vnoremap <silent> > :call <SID>VisualIndentReselect(1)<cr>
@@ -773,9 +764,6 @@ vnoremap <PageDown> <nop>
 nnoremap <c-o> <c-o>zz
 nnoremap <c-i> <c-i>zz
 
-" Rotate random colors
-nnoremap <silent> <f8> :RandomColorscheme<cr>
-
 " Quickly look up a word in the dictionary
 if has('mac') || has('macunix')
     nnoremap <silent> <leader>d :Dict!<cr>
@@ -791,8 +779,6 @@ cnoremap <c-l> <c-right>
 
 " Tag TODOs with a timestamp
 inoremap <expr> TODOT printf('TODO (%s): ', strftime('%Y-%m-%d, %H:%M:%S'))
-
-nnoremap <silent> <localleader>dt :call <SID>DiffToggle()<cr>
 
 nnoremap <silent> <localleader>hi :His<cr>
 
@@ -862,9 +848,6 @@ nnoremap <c-l> <c-w>l
 " Open vsplits on the right side
 set splitright
 
-" Open file under cursor in a vertical split
-nnoremap <c-w>gv :vertical wincmd f<cr>
-
 " }}}
 
 " Folding {{{
@@ -887,11 +870,6 @@ if has('mac') || has('macunix')
 endif
 
 command! -bang RandomColorscheme :echo printf("Selected: %s", <SID>RandomColorscheme(<bang>0))
-
-if executable('grip')
-    " https://pypi.org/project/grip/
-    command! ViewMarkdown :silent !grip --browser --quiet %
-endif
 
 " }}}
 
@@ -934,36 +912,10 @@ if has('autocmd')
             \ endif
     augroup END
 
-    augroup quickfix
-        autocmd!
-        autocmd QuickFixCmdPost vimgrep cwindow
-
-        " Mappings to open the error under the cursor in a split, vertical
-        " split or new tab (there is also the QFEnter plugin)
-        autocmd FileType qf nnoremap <buffer> s <c-w><cr>
-        autocmd FileType qf nnoremap <buffer> v <c-w><cr><c-w>L
-        autocmd FileType qf nnoremap <buffer> t <c-w><cr><c-w>T
-    augroup END
-
     augroup csharp
         autocmd!
         autocmd FileType cs setlocal indentkeys-=0#
     augroup END
-
-    augroup gitcommit
-        autocmd!
-        autocmd FileType gitcommit setlocal spell colorcolumn=50
-        autocmd FileType gitcommit inoremap <expr> skci '[skip ci]'
-        autocmd FileType gitcommit inoremap <expr> cisk '[ci skip]'
-        autocmd FileType gitcommit inoremap <expr> icom 'Initial commit'
-    augroup END
-
-    if has('conceal')
-        augroup task
-            autocmd!
-            autocmd FileType task setlocal conceallevel=2
-        augroup END
-    endif
 
     augroup typescript
       autocmd!
@@ -1004,26 +956,21 @@ let g:sql_type_default = 'mysql'
 " }}}
 
 " Shell {{{
-
 " Allow external bash commands inside vim to use aliases etc.
 set shell=fish
 " }}}
 
 " Terminal {{{
-
 if exists(':tnoremap') == 2
     " Use escape or 'jk' to exit terminal mode
     tnoremap <esc> <c-\><c-n>
     tnoremap jk <c-\><c-n>
 endif
-
 " }}}
 
 " Explorer {{{
-
 " Show stats in :Explorer mode
 let g:netrw_liststyle = 3
-
 " }}}
 
 " {{{ Neovim
@@ -1110,20 +1057,15 @@ nmap <silent> <leader>ad <Plug>(ale_detail)
 " }}}
 
 " delimitMate {{{
-
 " Expand any pair of delimiting characters when pressing enter
 let delimitMate_expand_cr = 1
-
 " }}}
 
 " deoplete.nvim {{{
-
 let g:deoplete#enable_at_startup = 0
-
 " }}}
 
 " fzf {{{
-
 " Add fzf paths for both homebrew and macports
 set rtp+=/opt/local/share/fzf/vim
 set rtp+=/usr/local/opt/fzf
@@ -1156,7 +1098,6 @@ command! -bang -nargs=* -complete=dir Dirs
 nnoremap <silent> <localleader>gf :GFiles<cr>
 
 nnoremap <silent> <localleader>rg :Rg<cr>
-
 " }}}
 
 " vim-gitgutter {{{
@@ -1171,7 +1112,6 @@ let g:git_messenger_conceal_word_diff_marker = 1
 " }}}
 
 " goyo.vim {{{
-
 " Use the width of the textwidth option as the default width for goyo
 " Use a buffer of 5 for extra spaces in formatting or commented lines
 let g:goyo_width = max([90, &textwidth + 5])
@@ -1195,27 +1135,6 @@ endfunction
 
 " Quickly set up Goyo with a width of 50%
 nnoremap <silent> <localleader>gy :call <SID>goyo_toggle()<cr>
-
-" }}}
-
-" jedi-vim {{{
-
-" Disable jedi-vim and use deoplete-jedi instead (we still want to use its
-" mappings though)
-let g:jedi#completions_enabled = 0
-
-" Avoid clash with vim-fugitive mappings
-nnoremap <leader>ga :call jedi#goto_assignments()<cr>
-nnoremap <leader>ge :call jedi#goto_definitions()<cr>
-
-let g:jedi#use_tabs_not_buffers = 1
-
-" Disable preview when autocompleting
-augroup jedivim
-    autocmd!
-    autocmd FileType python setlocal completeopt-=preview
-augroup END
-
 " }}}
 
 " lightline.vim {{{
@@ -1266,7 +1185,6 @@ let g:neoformat_try_node_exe = 1
 " }}}
 
 " NERDTree {{{
-
 " Shortcut to toggle NERDTree
 noremap <silent> <c-n> :NERDTreeToggle<cr>
 
@@ -1292,20 +1210,6 @@ augroup NERDTree
         autocmd FileType nerdtree setlocal relativenumber
     endif
 augroup END
-
-" }}}
-
-" Tagbar {{{
-
-" Set the path to the Exuberant version of ctags
-let g:tagbar_ctags_bin = '/opt/local/bin/ctags'
-
-" Make it easier to navigate in the Tagbar window
-let g:tagbar_show_linenumbers = 2
-
-" Toggle the Tagbar window
-nnoremap <c-b> :TagbarToggle<cr>
-
 " }}}
 
 " trouble.nvim {{{
@@ -1314,7 +1218,6 @@ nnoremap <localleader>xl <cmd>TroubleToggle loclist<cr>
 " }}}
 
 " UltiSnips {{{
-
 " Split the :UltiSnipsEdit window horizontally or vertically depending on context
 let g:UltiSnipsEditSplit = 'context'
 
@@ -1328,11 +1231,9 @@ let g:ultisnips_javascript = {
 
 " Open the snippets file for the current file type
 nnoremap <leader>sf :UltiSnipsEdit!<cr>
-
 " }}}
 
 " vim-airline {{{
-
 " Fancy tabs!
 let g:airline#extensions#tabline#enabled = 1
 
@@ -1354,29 +1255,23 @@ let g:airline#extensions#tagbar#enabled = 1
 
 " Limit the length of long branch names (appends '...')
 let g:airline#extensions#branch#displayed_head_limit = 32
-
 " }}}
 
 " vim-devicons {{{
-
 let g:DevIconsEnableFoldersOpenClose = 1
 " let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
 " let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['mysql'] = g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['sql']
-
 " }}}
 
 " vim-easy-align {{{
-
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
-
 " }}}
 
 " vim-fugitive {{{
-
 " Useful git mappings based on the spf13-vim distribution
 nnoremap <silent> <leader>gs :G<cr>
 nnoremap <silent> <leader>gd :Gdiffsplit<cr>
@@ -1395,7 +1290,6 @@ nnoremap <silent> <leader>gr :Gcached<cr>
 " }}}
 
 " vim-startify {{{
-
 if &encoding == 'utf-8'
     let g:startify_fortune_use_unicode = 1
 endif
@@ -1404,11 +1298,9 @@ let g:startify_custom_header_quotes = [
     \['The optimal allocation is one that never happens.', '', '- Joseph E. Hoag'],
     \['Design is, as always, the art of finding compromises.', '', '- Eric Lippert']
 \] + startify#fortune#predefined_quotes()
-
 " }}}
 
 " vim-surround {{{
-
 " Quickly surround text with LaTeX (e)nvironments
 "
 " For example, typing 'ySwe' followed by 'center' when prompted on the text '|hello'
@@ -1429,7 +1321,6 @@ let g:surround_{char2nr('e')}="\\begin{\1environment: \1}\r\\end{\1\1}"
 
 " Surround text with a LaTeX command using 'c'
 let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
-
 " }}}
 
 " vim-test {{{
