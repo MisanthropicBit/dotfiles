@@ -189,7 +189,7 @@ if has_lspsaga then
     local goto_next_error = function() lspsaga_diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end
 
     -- Overwrite lsp defaults with lspsaga
-    vim.keymap.set('n', '<localleader>le', '<cmd>Lspsaga show_line_diagnostics<cr>', map_options)
+    vim.keymap.set('n', '<localleader>ll', '<cmd>Lspsaga show_line_diagnostics<cr>', map_options)
     vim.keymap.set('n', '<localleader>la', '<cmd>Lspsaga code_action<cr>', map_options)
     vim.keymap.set('n', '<localleader>lp', '<cmd>Lspsaga diagnostic_jump_prev<cr>', map_options)
     vim.keymap.set('n', '<localleader>ln', '<cmd>Lspsaga diagnostic_jump_next<cr>', map_options)
