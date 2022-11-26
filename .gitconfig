@@ -32,7 +32,7 @@
     default = simple
 [alias]
     sw = switch -
-    l1 = log -1
+    l = log -1
     lp = log -p
     alias = config --get-regexp "^alias\\."
     ap = add --patch
