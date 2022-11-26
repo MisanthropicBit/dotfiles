@@ -837,6 +837,17 @@ set tabpagemax=15
 " Always show tabs
 set showtabline=2
 
+if !exists('g:last_tab')
+    let g:last_tab = tabpagenr()
+endif
+
+nnoremap <localleader>pt :execute 'tabnext ' . g:last_tab<cr>
+
+augroup LastTab
+    autocmd!
+    autocmd TabLeave * let g:last_tab = tabpagenr()
+augroup END
+
 " }}}
 
 " Windows {{{
