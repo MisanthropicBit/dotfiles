@@ -50,12 +50,6 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'vim-test/vim-test'
 
-if executable('node') && executable('yarn')
-    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-else
-    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-endif
-
 " Colorschemes
 Plug 'ajmwagar/vim-deus'
 Plug 'drewtempelmeyer/palenight.vim'
@@ -74,9 +68,14 @@ Plug 'savq/melange'
 Plug 'sainnhe/edge'
 Plug 'ray-x/aurora'
 Plug 'ackyshake/Spacegray.vim'
-Plug 'kartikp10/noctis.nvim'
 
 if has('nvim')
+    if executable('node') && executable('yarn')
+        Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+    else
+        Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+    endif
+
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     Plug 'deoplete-plugins/deoplete-jedi'
     Plug 'neovim/nvim-lspconfig'
@@ -85,6 +84,7 @@ if has('nvim')
     Plug 'folke/trouble.nvim'
     Plug 'mfussenegger/nvim-dap'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'rktjmp/lush.nvim'
     Plug 'Maan2003/lsp_lines.nvim'
     Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
@@ -112,9 +112,11 @@ if has('nvim')
     Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
     Plug 'EdenEast/nightfox.nvim'
     Plug 'shaunsingh/moonlight.nvim'
-    Plug 'shaunsingh/seoul256.nvim'
     Plug 'navarasu/onedark.nvim'
     Plug 'glepnir/zephyr-nvim'
+    Plug 'kartikp10/noctis.nvim'
+    Plug 'w3barsi/barstrata.nvim'
+    Plug 'projekt0n/github-nvim-theme'
 endif
 
 " Local plugins and active forks
