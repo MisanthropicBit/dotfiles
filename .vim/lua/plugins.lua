@@ -251,4 +251,17 @@ require('boole').setup({
 })
 -- }}}
 
+-- lsp_signature.nvim {{{
+require('lsp_signature').setup()
+-- }}}
+
+-- indent-blankline.nvim {{{
+require('indent_blankline').setup({
+    show_current_context = true,
+    show_current_context_start = true,
+    char = '',
+    context_char = '│',
+})
+-- }}}
+
 pcall(require, 'private_plugins')

@@ -96,6 +96,8 @@ if has('nvim')
     Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
     Plug 'sbdchd/neoformat'
     Plug 'nat-418/boole.nvim'
+    Plug 'ray-x/lsp_signature.nvim'
+    Plug 'lukas-reineke/indent-blankline.nvim'
 
     " nvim-cmp plugin and sources
     Plug 'hrsh7th/nvim-cmp'
