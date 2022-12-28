@@ -60,9 +60,9 @@ set -x MYSQL_PS1 "mysql v\v [\U][\d]> "
 set -x BAT_THEME zenburn
 set -x FZF_DEFAULT_COMMAND "fd -tf --color=never"
 set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND --search-path \$dir"
-set -x FZF_CTRL_T_OPTS '--multi --bind="ctrl-s:select" --bind="ctrl-u:deselect" --bind="ctrl-f:reload(find . -type f \$dir)" --bind="ctrl-d:reload(find . -type d \$dir)" --preview="bat -n --color=always --line-range :30 {}"'
+set -x FZF_CTRL_T_OPTS '--multi --bind="ctrl-s:select,ctrl-u:deselect,ctrl-f:reload(find . -type f \$dir),ctrl-d:reload(find . -type d \$dir)" --preview="bat -n --color=always {}"'
 set -x FZF_ALT_C_COMMAND 'fd -td --color=never'
-set -x FZF_DEFAULT_OPTS "--color='pointer:bright-blue,marker:bright-green' --height=50% --pointer='⇨ ' --marker='✓'"
+set -x FZF_DEFAULT_OPTS "--color='pointer:bright-blue,marker:bright-green' --height=50% --pointer='⇨ ' --marker='✓' --bind='ctrl-n:preview-page-down,ctrl-p:preview-page-up'"
 
 bind \cb git_fzf_select_branch
 
