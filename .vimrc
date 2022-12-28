@@ -601,12 +601,12 @@ let s:preferred_colors = [
     \'duskfox',
     \'embark',
     \'everforest',
+    \'kanagawa',
     \'melange',
     \'night-owl',
     \'nightfox',
     \'nordfox',
     \'OceanicNext',
-    \'sonokai',
     \'spring-night',
     \'spacegray',
     \'terafox',
@@ -625,7 +625,7 @@ try
     endif
 catch
     try
-        colorscheme seoul256
+        colorscheme duskfox
     catch
         colorscheme default
     endtry
