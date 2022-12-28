@@ -68,3 +68,6 @@ bind \cb git_fzf_branches
 bind \cg git_fzf_log
 
 source ~/.work-config.fish
+
+set -x N_PREFIX ~/.n
+fish_add_path -p "$N_PREFIX/bin"
