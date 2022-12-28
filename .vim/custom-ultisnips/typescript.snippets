@@ -13,3 +13,24 @@ export async function $1(): $2 {
 	$3
 }
 endsnippet
+
+snippet ss "sinon.stub()"
+sinon.stub($1)
+endsnippet
+
+snippet sr "sinon.restore()"
+sinon.restore()
+endsnippet
+
+snippet expcct "expect callCount typescript"
+expect($1.callCount).toEqual(${2:1})
+endsnippet
+
+snippet expat "expect args typescript"
+expect($1.args[0]$2).toEqual([$3])
+endsnippet
+
+snippet expcat "expect callCount and args"
+expect($1.callCount).toEqual(${2:1})
+expect($1.args[0]$3).toEqual([$4])
+endsnippet
