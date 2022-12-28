@@ -1,6 +1,6 @@
 -- vim: foldenable foldmethod=marker foldlevel=0 fileencoding=utf-8
 
-local map_options = require('mappings').map_options
+local map = require('mappings')
 
 local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
 
@@ -55,11 +55,11 @@ if not has_lspsaga then
     local goto_prev_error = goto_diagnostic_wrapper(vim.diagnostic.goto_prev, vim.diagnostic.severity.ERROR)
     local goto_next_error = goto_diagnostic_wrapper(vim.diagnostic.goto_next, vim.diagnostic.severity.ERROR)
 
-    vim.keymap.set('n', '<localleader>lp', vim.diagnostic.goto_prev, map_options)
-    vim.keymap.set('n', '<localleader>ln', vim.diagnostic.goto_next, map_options)
-    vim.keymap.set('n', '<localleader>ep', goto_prev_error)
-    vim.keymap.set('n', '<localleader>en', goto_next_error)
-    vim.keymap.set('n', '<localleader>ll', vim.diagnostic.open_float, map_options)
+    map.set('n', '<localleader>lp', vim.diagnostic.goto_prev, { desc = 'Jump to previous diagnostic' })
+    map.set('n', '<localleader>ln', vim.diagnostic.goto_next, { desc = 'Jump to next diagnostic' })
+    map.set('n', '<localleader>ep', goto_prev_error, { desc = 'Jump to previous diagnostic error' })
+    map.set('n', '<localleader>en', goto_next_error, { desc = 'Jump to next diagnostic error' })
+    map.set('n', '<localleader>ll', vim.diagnostic.open_float, { desc = 'Open diagnostic float' })
 end
 
 -- Use on_attach to only map the following keys after the language server
@@ -67,39 +67,40 @@ end
 local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    local map_options = { noremap = true, silent = true, buffer = bufnr }
-    vim.keymap.set('n', '<localleader>lc', vim.lsp.buf.declaration, map_options)
-    vim.keymap.set('n', '<localleader>ld', vim.lsp.buf.definition, map_options)
-    vim.keymap.set('n', '<localleader>lh', vim.lsp.buf.hover, map_options)
-    vim.keymap.set('n', '<localleader>ls', vim.lsp.buf.signature_help, map_options)
-    vim.keymap.set('n', '<localleader>lt', vim.lsp.buf.type_definition, map_options)
-    vim.keymap.set('n', '<localleader>lr', vim.lsp.buf.references, map_options)
-    vim.keymap.set('n', '<localleader>lf', vim.lsp.buf.formatting, map_options)
-    vim.keymap.set('n', '<localleader>ss', vim.lsp.buf.document_symbol, map_options)
+    local map_options = map.with_default_options({ buffer = bufnr })
+    map.set('n', '<localleader>lc', vim.lsp.buf.declaration, map.merge(map_options, { desc = 'Jump to declaration under cursor' }))
+    map.set('n', '<localleader>ld', vim.lsp.buf.definition, map.merge(map_options, { desc = 'Jump to definition under cursor' }))
+    map.set('n', '<localleader>lh', vim.lsp.buf.hover, map.merge(map_options, { desc = 'Open lsp float' }))
+    map.set('n', '<localleader>ls', vim.lsp.buf.signature_help, map.merge(map_options, { desc = 'Open signature help' }))
+    map.set('n', '<localleader>lt', vim.lsp.buf.type_definition, map.merge(map_options, { desc = 'Jump to type definition' }))
+    map.set('n', '<localleader>lr', vim.lsp.buf.references, map.merge(map_options, { desc = 'Show lsp references' }))
+    map.set('n', '<localleader>lf', vim.lsp.buf.format, map.merge(map_options, { desc = 'Format code under cursor' }))
+    map.set('v', '<localleader>lf', vim.lsp.buf.format, map.merge(map_options, { desc = 'Format code in range' }))
+    map.set('n', '<localleader>ss', vim.lsp.buf.document_symbol, map.merge(map_options, { desc = 'Show document symbol' }))
 
     if not has_lspsaga then
-        vim.keymap.set('n', '<localleader>la', vim.lsp.buf.code_action, map_options)
-        vim.keymap.set('n', '<localleader>lm', vim.lsp.buf.rename, map_options)
+        map.set('n', '<localleader>la', vim.lsp.buf.code_action, map.merge(map_options, { desc = 'Open code action menu' }))
+        map.set('n', '<localleader>lm', vim.lsp.buf.rename, map.merge(map_options, { desc = 'Rename under cursor' }))
     end
 
-    vim.keymap.set('n', '<localleader>lig', vim.lsp.buf.implementation, map_options)
-    vim.keymap.set(
+    map.set('n', '<localleader>lig', vim.lsp.buf.implementation, map.merge(map_options, { desc = 'Jump to implementation under cursor' }))
+    map.set(
         'n',
         '<localleader>lis',
         open_in_split('split', vim.lsp.buf.implementation),
-        map_options
+        map.merge(map_options, { desc = 'Open implementation in a split' })
     )
-    vim.keymap.set(
+    map.set(
         'n',
         '<localleader>liv',
         open_in_split('vsplit', vim.lsp.buf.implementation),
-        map_options
+        map.merge(map_options, { desc = 'Open implementation in a vertical split' })
     )
-    vim.keymap.set(
+    map.set(
         'n',
         '<localleader>lit',
         open_in_split('tab split', vim.lsp.buf.implementation),
-        map_options
+        map.merge(map_options, { desc = 'Open implementation in a tab' })
     )
 end
 -- }}}

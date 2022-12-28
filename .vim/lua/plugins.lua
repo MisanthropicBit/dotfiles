@@ -1,6 +1,6 @@
 -- vim: foldenable foldmethod=marker foldlevel=0 fileencoding=utf-8
 
-local map_options = require('mappings').map_options
+local map = require('mappings')
 
 -- {{{ lsp_lines
 local lsp_lines = require('lsp_lines')
@@ -32,7 +32,7 @@ require('bufferline').setup{
   }
 }
 
-vim.keymap.set('n', 'gb', '<cmd>BufferLinePick', { silent = true })
+map.set('n', 'gb', '<cmd>BufferLinePick<cr>', { desc = 'Interactively pick a tab' })
 -- }}}
 
 -- nvim-treesitter {{{
@@ -168,10 +168,10 @@ end
 local goto_preview = require('goto-preview')
 
 goto_preview.setup{}
-vim.keymap.set('n', 'gp', goto_preview.goto_preview_definition, map_options)
-vim.keymap.set('n', '<localleader>gt', goto_preview.goto_preview_type_definition, map_options)
-vim.keymap.set('n', 'gi', goto_preview.goto_preview_implementation, map_options)
-vim.keymap.set('n', 'ge', goto_preview.close_all_win, map_options)
+map.set('n', 'gp', goto_preview.goto_preview_definition, { desc = 'Preview definition under cursor' })
+map.set('n', '<localleader>gt', goto_preview.goto_preview_type_definition, { desc = 'Preview type definition under cursor' })
+map.set('n', 'gi', goto_preview.goto_preview_implementation, { desc = 'Preview implementation under cursor' })
+map.set('n', 'ge', goto_preview.close_all_win, { desc = 'Close all goto-preview windows' })
 -- }}}
 
 -- trouble.nvim {{{
@@ -189,14 +189,14 @@ if has_lspsaga then
     local goto_next_error = function() lspsaga_diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end
 
     -- Overwrite lsp defaults with lspsaga
-    vim.keymap.set('n', '<localleader>ll', '<cmd>Lspsaga show_line_diagnostics<cr>', map_options)
-    vim.keymap.set('n', '<localleader>la', '<cmd>Lspsaga code_action<cr>', map_options)
-    vim.keymap.set('n', '<localleader>lp', '<cmd>Lspsaga diagnostic_jump_prev<cr>', map_options)
-    vim.keymap.set('n', '<localleader>ln', '<cmd>Lspsaga diagnostic_jump_next<cr>', map_options)
-    vim.keymap.set('n', '<localleader>ep', goto_prev_error)
-    vim.keymap.set('n', '<localleader>en', goto_next_error)
-    vim.keymap.set('n', '<localleader>lm', '<cmd>Lspsaga rename<cr>', map_options)
-    vim.keymap.set('n', '<localleader>ly', '<cmd>LSoutlineToggle<cr>', map_options)
+    map.set('n', '<localleader>ll', '<cmd>Lspsaga show_line_diagnostics<cr>', { desc = 'Show line diagnostics' })
+    map.set('n', '<localleader>la', '<cmd>Lspsaga code_action<cr>', { desc = 'Open code action menu' })
+    map.set('n', '<localleader>lp', '<cmd>Lspsaga diagnostic_jump_prev<cr>', { desc = 'Jump to previous diagnostic' })
+    map.set('n', '<localleader>ln', '<cmd>Lspsaga diagnostic_jump_next<cr>', { desc = 'Jump to next diagnostic' })
+    map.set('n', '<localleader>ep', goto_prev_error, { desc = 'Jump to previous diagnostic error' })
+    map.set('n', '<localleader>en', goto_next_error, { desc = 'Jump to next diagnostic error' })
+    map.set('n', '<localleader>lm', '<cmd>Lspsaga rename<cr>', { desc = 'Rename under cursor' })
+    map.set('n', '<localleader>ly', '<cmd>LSoutlineToggle<cr>', { desc = 'Toggle outline of semantic elements' })
 end
 -- }}}
 
@@ -232,14 +232,19 @@ neotest.setup{
   }
 }
 
-vim.keymap.set('n', '<localleader>tt', neotest.run.run, map_options)
-vim.keymap.set('n', '<localleader>tl', neotest.run.run_last, map_options)
-vim.keymap.set('n', '<localleader>tf', function() require('neotest').run.run(vim.fn.expand('%')) end, map_options)
-vim.keymap.set('n', '<localleader>ts', neotest.summary.toggle, map_options)
-vim.keymap.set('n', '<localleader>tp', neotest.jump.prev, map_options)
-vim.keymap.set('n', '<localleader>tn', neotest.jump.next, map_options)
-vim.keymap.set('n', '<localleader>tP', function() require('neotest').jump.prev({ status = 'failed' }) end, map_options)
-vim.keymap.set('n', '<localleader>tN', function() require('neotest').jump.next({ status = 'failed' }) end, map_options)
+map.set('n', '<localleader>tt', neotest.run.run, { desc = 'Run the test under the cursor' })
+map.set('n', '<localleader>tl', neotest.run.run_last, { desc = 'Run the last run test' })
+map.set('n', '<localleader>tf', function() neotest.run.run(vim.fn.expand('%')) end, { desc = 'Run all tests in file' })
+map.set('n', '<localleader>ts', neotest.summary.toggle, { desc = 'Toggle test summary' })
+map.set('n', '<localleader>tp', neotest.jump.prev, { desc = 'Jump to previous test' })
+map.set('n', '<localleader>tn', neotest.jump.next, { desc = 'Jump to next test' })
+map.set('n', '<localleader>tP', function() neotest.jump.prev({ status = 'failed' }) end, { desc = 'Jump to previous failed test' })
+map.set('n', '<localleader>tN', function() neotest.jump.next({ status = 'failed' }) end, { desc = 'Jump to next failed test' })
+map.set('n', '<localleader>to', neotest.output.open, { desc = 'Open test output' })
+map.set('n', '<localleader>tL', function() neotest.output.open({ last_run = true }) end, { desc = 'Open test output for the last run test' })
+map.set('n', '<localleader>tO', neotest.output_panel.toggle, { desc = 'Toggle the test output panel' })
+map.set('n', '<localleader>td', function() neotest.run.run({ strategy = 'dap' }) end, { desc = 'Run the test under the cursor using dap' })
+map.set('n', '<localleader>tS', function() neotest.run.run({ suite = true }) end, { desc = 'Run entire test suite' })
 -- }}}
 
 -- boole.nvim {{{
