@@ -15,12 +15,12 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 
 Plug 'airblade/vim-gitgutter'
+Plug 'AndrewRadev/sideways.vim'
 Plug 'andymass/vim-matchup'
-Plug 'arthurxavierx/vim-caser' " TODO: Remove?
+Plug 'arthurxavierx/vim-caser'
 Plug 'dag/vim-fish'
 Plug 'dense-analysis/ale'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'HerringtonDarkholme/yats.vim' " TODO: Remove?
 Plug 'honza/vim-snippets'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -29,10 +29,10 @@ Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'Konfekt/FastFold'
 Plug 'mhinz/vim-startify'
-Plug 'mustache/vim-mustache-handlebars'
 Plug 'bfrg/vim-cpp-modern'
 Plug 'MisanthropicBit/vim-numbers'
 Plug 'MisanthropicBit/vim-yank-window'
+Plug 'MisanthropicBit/decipher.nvim'
 Plug 'pangloss/vim-javascript'
 Plug 'Raimondi/delimitMate'
 Plug 'rhysd/git-messenger.vim'
@@ -62,10 +62,7 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'wadackel/vim-dogrun'
 Plug 'morhetz/gruvbox'
 Plug 'mhartington/oceanic-next'
-Plug 'relastle/bluewery.vim'
-Plug 'sainnhe/sonokai'
 Plug 'savq/melange'
-Plug 'sainnhe/edge'
 Plug 'ray-x/aurora'
 Plug 'ackyshake/Spacegray.vim'
 
@@ -83,10 +80,12 @@ if has('nvim')
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'folke/trouble.nvim'
     Plug 'mfussenegger/nvim-dap'
+    Plug 'mxsdev/nvim-dap-vscode-js'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+    " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+    Plug 'nvim-treesitter/playground'
     Plug 'rktjmp/lush.nvim'
-    Plug 'Maan2003/lsp_lines.nvim'
+    Plug 'Maan2003/lsp_lines.nvim' " TODO: Remove
     Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-neotest/neotest'
@@ -117,11 +116,11 @@ if has('nvim')
     Plug 'kartikp10/noctis.nvim'
     Plug 'w3barsi/barstrata.nvim'
     Plug 'projekt0n/github-nvim-theme'
+    Plug 'rebelot/kanagawa.nvim'
 endif
 
 " Local plugins and active forks
 Plug '~/projects/vim/vim-warlock'
-Plug '~/projects/vim/vim-encodings'
 
 runtime private.vim
 
