@@ -64,6 +64,7 @@ set -x FZF_CTRL_T_OPTS '--multi --bind="ctrl-s:select,ctrl-u:deselect,ctrl-f:rel
 set -x FZF_ALT_C_COMMAND 'fd -td --color=never'
 set -x FZF_DEFAULT_OPTS "--color='pointer:bright-blue,marker:bright-green' --height=50% --pointer='⇨ ' --marker='✓' --bind='ctrl-n:preview-page-down,ctrl-p:preview-page-up'"
 
-bind \cb git_fzf_select_branch
+bind \cb git_fzf_branches
+bind \cg git_fzf_log
 
 source ~/.work-config.fish
