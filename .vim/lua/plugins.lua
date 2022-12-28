@@ -211,26 +211,29 @@ local function get_cwd(path)
 end
 
 neotest.setup{
-  icons = {
-      running = '●',
-      running_animated = {'⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'},
-      passed = '',
-      failed = '',
-      skipped = '➠',
-      unknown = '?',
-  },
-  adapters = {
-    require('neotest-jest')({
-        jestCommand = 'npm test --runInBand --',
-        jestConfigFile = 'jest.config.ts',
-        cwd = get_cwd,
-    }),
-    require('neotest-mocha')({
-        command = 'npm test --',
-        cwd = get_cwd,
-    }),
-    require("neotest-vim-test")({}),
-  }
+    icons = {
+        running = '●',
+        running_animated = {'⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'},
+        passed = '',
+        failed = '',
+        skipped = '➠',
+        unknown = '?',
+    },
+    filter_dir = function(name, rel_path, root)
+        return name ~= 'node_modules' and name ~= 'build'
+    end,
+    adapters = {
+        require('neotest-jest')({
+            jestCommand = 'npm test --',
+            jestConfigFile = 'jest.config.ts',
+            cwd = get_cwd,
+        }),
+        -- require('neotest-mocha')({
+            --     command = 'npm test --',
+            --     cwd = get_cwd,
+            -- }),
+            -- require("neotest-vim-test")({}),
+        }
 }
 
 map.set('n', '<localleader>tt', neotest.run.run, { desc = 'Run the test under the cursor' })
