@@ -273,4 +273,60 @@ require('indent_blankline').setup({
 })
 -- }}}
 
+-- nvim-dap {{{
+local dap = require('dap')
+local dap_widgets = require('dap.ui.widgets')
+
+map.set('n', '<localleader>db', dap.toggle_breakpoint, { desc = 'Toggle a breakpoint' })
+map.set('n', '<localleader>dc', dap.continue, { desc = 'Continue debugging' })
+map.set('n', '<localleader>do', dap.step_over, { desc = 'Step over' })
+map.set('n', '<localleader>di', dap.step_into, { desc = 'Step into' })
+map.set('n', '<localleader>du', dap.step_out, { desc = 'Step out of' })
+map.set('n', '<localleader>dr', dap.repl.open, { desc = 'Open the REPL for debugging' })
+map.set('n', '<localleader>dd', dap_widgets.hover, { desc = 'Inspect value of expression under cursor when debugging' })
+map.set('n', '<localleader>dt', dap.terminate, { desc = 'Terminate/stop debugging' })
+
+require('dap-vscode-js').setup({
+    debugger_path = vim.fn.expand('~/vscode-js-debug'),
+    -- debugger_cmd = { "js-debug-adapter" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
+    adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+    log_file_path = '(stdpath cache)/dap_vscode_js.log',
+    log_file_level = false,
+    log_console_level = vim.log.levels.ERROR,
+})
+
+for _, language in ipairs({ 'typescript', 'javascript' }) do
+    dap.adapters[language] = {
+        type = 'executable',
+        command = 'npm run start-env',
+        options = {
+            env = { LOG_LEVEL = 'WARNING' }
+        }
+    }
+
+    dap.configurations[language] = {
+        {
+            type = 'pwa-node',
+            request = 'launch',
+            name = 'Launch file',
+            program = '${file}',
+            cwd = '${workspaceFolder}',
+        },
+        {
+            type = 'pwa-node',
+            request = 'attach',
+            name = 'Attach',
+            processId = require('dap.utils').pick_process,
+            cwd = '${workspaceFolder}',
+        }
+    }
+end
+
+vim.fn.sign_define('DapBreakpoint', { text='🐞' })
+vim.fn.sign_define('DapBreakpointCondition', { text='❗' })
+vim.fn.sign_define('DapLogPoint', { text='📝' })
+vim.fn.sign_define('DapStopped', { text='⇨', texthl = 'ErrorMsg', culhl = 'ErrorMsg' })
+vim.fn.sign_define('DapBreakpointRejected', { text='🚫' })
+-- }}}
+
 pcall(require, 'private_plugins')
