@@ -29,6 +29,7 @@ require('bufferline').setup{
     color_icons = true,
     diagnostics_indicator = diagnostics_indicator,
     sort_by = 'tabs',
+    max_name_length = 25,
   }
 }
 
