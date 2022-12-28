@@ -1,0 +1,15 @@
+extends typescript, typescript_react
+
+snippet exa "export as" b
+export * as $1 from '$2'
+endsnippet
+
+snippet exf "export from" b
+export { $1 } from '$2'
+endsnippet
+
+snippet eaf
+export async function $1(): $2 {
+	$3
+}
+endsnippet
