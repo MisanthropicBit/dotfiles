@@ -129,13 +129,18 @@
 		},
 		{
 			"before": ["<leader>", "d", "o"],
-			"commands": ["workbench.action.debug.stepInto"],
+			"commands": ["workbench.action.debug.stepOut"],
 			"when": "debugState == 'stopped' && vim.mode == 'Normal'"
 		},
         {
 			"before": ["<leader>", "d", "d"],
             "command": "workbench.action.debug.disconnect",
-            "when": "focusedSessionIsAttach && inDebugMode"
+            "when": "debugState == 'stopped' && vim.mode == 'Normal' && inDebugMode"
+        },
+        {
+            "before": ["<leader>", "d", "c"],
+            "command": "workbench.action.debug.continue",
+            "when": "debugState == 'stopped' && vim.mode == 'Normal'"
         },
         {
 			"before": ["<leader>", "b", "t"],
