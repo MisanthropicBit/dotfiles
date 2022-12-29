@@ -183,7 +183,9 @@ require('trouble').setup()
 local has_lspsaga, lspsaga = pcall(require, 'lspsaga')
 
 if has_lspsaga then
-    lspsaga.init_lsp_saga()
+    lspsaga.init_lsp_saga({
+        max_preview_lines = 20,
+    })
 
     local lspsaga_diagnostic = require('lspsaga.diagnostic')
     local goto_prev_error = function() lspsaga_diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end
@@ -192,6 +194,7 @@ if has_lspsaga then
     -- Overwrite lsp defaults with lspsaga
     map.set('n', '<localleader>ll', '<cmd>Lspsaga show_line_diagnostics<cr>', { desc = 'Show line diagnostics' })
     map.set('n', '<localleader>la', '<cmd>Lspsaga code_action<cr>', { desc = 'Open code action menu' })
+    map.set('v', '<localleader>la', '<cmd>Lspsaga code_action<cr>', { desc = 'Open code action menu in visual mode' })
     map.set('n', '<localleader>lp', '<cmd>Lspsaga diagnostic_jump_prev<cr>', { desc = 'Jump to previous diagnostic' })
     map.set('n', '<localleader>ln', '<cmd>Lspsaga diagnostic_jump_next<cr>', { desc = 'Jump to next diagnostic' })
     map.set('n', '<localleader>ep', goto_prev_error, { desc = 'Jump to previous diagnostic error' })
