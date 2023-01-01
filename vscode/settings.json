@@ -92,10 +92,6 @@
 			"commands": [":tabnext"]
 		},
 		{
-			"before": ["<leader>", "t", "r"],
-			"commands": ["workbench.action.terminal.focus"]
-		},
-		{
 			"before": ["<leader>", "p", "r"],
 			"commands": ["workbench.panel.markers.view.focus"]
 		},
