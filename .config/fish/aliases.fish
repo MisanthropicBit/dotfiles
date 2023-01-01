@@ -90,12 +90,60 @@ function npa -d "Run multiple npm scripts"
 end
 
 function dh -d "Fuzzy search directory history"
-    set -l result (dirh | fzf --with-nth=2 --tiebreak=end --preview='tree -C -L 1 -hp --dirsfirst {2}' | string split -f2 ') '); and cd "$result"
+    set -l result (
+        dirh |
+        fzf --with-nth=2 --tiebreak=end --preview='tree -C -L 1 -hp --dirsfirst {2}' |
+        string split -f2 ') '
+    ); and cd "$result"
 end
 
-function git_fzf_branches -d "Checkout branches"
-    set -l branch (git --no-pager branch -v --color=always | fzf --ansi --no-multi --preview='git log -5 {1} | bat --color=always --style=plain' | string trim | string split -f1 ' '); and git checkout "$branch"
+function git_fzf_branches -d "Select a git branch"
+    set -l branch (
+        git --no-pager branch -v --color=always |
+        fzf --ansi --no-multi --preview='git log -5 {1} | bat --color=always --style=plain' |
+        string trim |
+        string split -f1 ' '
+    )
+
+    if test $status -eq 0
+        if status is-interactive
+            commandline -it "$branch"
+        else
+            git checkout "$branch"
+        end
+    end
+
+    # Necessary to get the prompt back again otherwise you have to press enter
+    # yourself or something similar to get the prompt back
+    commandline --function repaint
 end
+
+function git_fzf_log -d "Search the git log"
+    set -l log_format '%C(bold blue)%h%C(reset) %C(cyan)%ad%C(reset) → %C(yellow)%d%C(reset) %C(normal)%s%C(reset) %C(dim normal)[%an]%C(reset)'
+
+    set -l log_line (
+        git log --color=always --format=format:$log_format --date=short |
+        fzf\
+            --ansi --no-multi \
+            --prompt 'Git log> ' \
+            --preview 'git show --color=always --stat --patch {1}' \
+            --query (commandline --current-token)
+    )
+
+    if test $status -eq 0
+        set -l commit (string split -f1 ' ' log_line)
+        commandline --current-token --replace "$commit"
+    end
+
+    commandline --function repaint
+end
+
+function git_fzf_commits -d "Search commit history"
+    git log --graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr""%C(auto)%h%d %s %C(black)%C(bold)%cr"
+
+    fzf --ansi --no-sort --reverse --tiebreak=index --bind="ctrl-s:toggle-sort"
+        --bind="ctrl-m:execute:(grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF' {}
+FZF-EOF"
 end
 
 function G -d "execute git commands and open them in vim/nvim"
