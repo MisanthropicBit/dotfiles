@@ -31,7 +31,16 @@ map.set('n', 'gb', '<cmd>BufferLinePick<cr>', { desc = 'Interactively pick a tab
 
 -- nvim-treesitter {{{
 require('nvim-treesitter.configs').setup{
-    ensure_installed = { 'fish', 'javascript', 'json', 'python', 'typescript', 'vim', 'lua' },
+    ensure_installed = {
+        'cpp',
+        'fish',
+        'javascript',
+        'json',
+        'python',
+        'typescript',
+        'vim',
+        'lua',
+    },
     sync_install = false,
     auto_install = true,
     ignore_install = {},
