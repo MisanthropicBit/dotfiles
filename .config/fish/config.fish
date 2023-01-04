@@ -67,7 +67,14 @@ set -x FZF_DEFAULT_OPTS "--color='pointer:bright-blue,marker:bright-green' --hei
 bind \cb git_fzf_branches
 bind \cg git_fzf_log
 
-source ~/.work-config.fish
+if test -e "/opt/local/share/fzf/shell/key-bindings.fish"
+    source "/opt/local/share/fzf/shell/key-bindings.fish"
+    fzf_key_bindings
+end
+
+if test -e "~/.work-config.fish"
+    source ~/.work-config.fish
+end
 
 set -x N_PREFIX ~/.n
 fish_add_path -p "$N_PREFIX/bin"
