@@ -149,7 +149,8 @@ lspconfig.eslint.setup{ on_attach = on_attach }
 lspconfig.tsserver.setup{ on_attach = on_attach }
 -- }}}
 
--- if vim.g.loaded_fzf then
+-- lsp fuzzy symbols {{{
+if vim.g.loaded_fzf then
     local fuzzy_lsp_symbols = require('fuzzy_lsp_symbols')
 
     vim.lsp.handlers['textDocument/documentSymbol'] = fuzzy_lsp_symbols.fuzzy_symbol_handler
@@ -165,5 +166,5 @@ lspconfig.tsserver.setup{ on_attach = on_attach }
             return vim.tbl_map(string.lower, vim.tbl_keys(require('lsp_common').kind_icons))
         end
     })
--- end
+end
 -- }}}
