@@ -83,7 +83,7 @@ cmp.setup({
         fields = { 'kind', 'abbr', 'menu' },
         format = function(entry, vim_item) 
             local text_kind = vim_item.kind
-            vim_item.kind = ' ' .. kind_icons[vim_item.kind]
+            vim_item.kind = ' ' .. (kind_icons[vim_item.kind] or '')
 
             local type = ({
                 buffer = '[Buffer]',
