@@ -2,13 +2,6 @@
 
 local map = require('mappings')
 
--- {{{ lsp_lines
-local lsp_lines = require('lsp_lines')
-
-lsp_lines.setup{}
-lsp_lines.toggle() -- Temporarily disable lsp_lines
--- }}}
-
 -- bufferline.nvim {{{
 local function diagnostics_indicator(count, level, diagnostics_dict, context)
   local s = ' '
@@ -231,12 +224,7 @@ neotest.setup{
             jestConfigFile = 'jest.config.ts',
             cwd = get_cwd,
         }),
-        -- require('neotest-mocha')({
-            --     command = 'npm test --',
-            --     cwd = get_cwd,
-            -- }),
-            -- require("neotest-vim-test")({}),
-        }
+    }
 }
 
 map.set('n', '<localleader>tt', neotest.run.run, { desc = 'Run the test under the cursor' })
