@@ -108,8 +108,46 @@ end
 -- lsp servers {{{
 local lspconfig = require('lspconfig')
 
+if vim.fn.executable('clangd-mp-11') then
+    lspconfig.clangd.setup{
+        on_attach = on_attach,
+        cmd = { 'clangd-mp-11' }
+    }
+end
+
+if vim.fn.executable('lua-language-server') then
+    local runtime_path = vim.split(package.path, ';')
+    table.insert(runtime_path, 'lua/?.lua')
+    table.insert(runtime_path, 'lua/?/init.lua')
+
+    lspconfig.sumneko_lua.setup{
+        on_attach = on_attach,
+        settings = {
+            Lua = {
+                runtime = {
+                    version = 'LuaJIT',
+                    path = runtime_path,
+                },
+                diagnostics = {
+                    globals = { 'vim' },
+                },
+                workspace = {
+                    library = vim.api.nvim_get_runtime_file('', true),
+                    maxPreload = 2000,
+                    preloadFileSize = 50000,
+                    checkThirdParty = false,
+                },
+                telemetry = {
+                    enable = false,
+                },
+            },
+        },
+    }
+end
+
 lspconfig.eslint.setup{ on_attach = on_attach }
 lspconfig.tsserver.setup{ on_attach = on_attach }
+-- }}}
 
 -- if vim.g.loaded_fzf then
     local fuzzy_lsp_symbols = require('fuzzy_lsp_symbols')
