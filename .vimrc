@@ -88,15 +88,18 @@ if has('nvim')
     Plug 'Maan2003/lsp_lines.nvim' " TODO: Remove
     Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
     Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-neotest/neotest'
-    Plug 'nvim-neotest/neotest-vim-test'
-    Plug 'haydenmeade/neotest-jest'
-    Plug 'adrigzr/neotest-mocha'
     Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
     Plug 'sbdchd/neoformat'
     Plug 'nat-418/boole.nvim'
     Plug 'ray-x/lsp_signature.nvim'
     Plug 'lukas-reineke/indent-blankline.nvim'
+
+    " neotest + adapters
+    Plug 'nvim-neotest/neotest'
+    Plug 'nvim-neotest/neotest-vim-test'
+    Plug 'haydenmeade/neotest-jest'
+    Plug 'adrigzr/neotest-mocha'
+    Plug 'nvim-neotest/neotest-plenary'
 
     " nvim-cmp plugin and sources
     Plug 'hrsh7th/nvim-cmp'
@@ -117,6 +120,10 @@ if has('nvim')
     Plug 'w3barsi/barstrata.nvim'
     Plug 'projekt0n/github-nvim-theme'
     Plug 'rebelot/kanagawa.nvim'
+
+    " Local projects
+    Plug '~/projects/vim/decipher.nvim'
+    Plug '~/projects/vim/neotest-fuzzy'
 endif
 
 " Local plugins and active forks
