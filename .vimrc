@@ -1236,11 +1236,6 @@ augroup NERDTree
 augroup END
 " }}}
 
-" trouble.nvim {{{
-nnoremap <localleader>xq <cmd>TroubleToggle quickfix<cr>
-nnoremap <localleader>xl <cmd>TroubleToggle loclist<cr>
-" }}}
-
 " UltiSnips {{{
 " Split the :UltiSnipsEdit window horizontally or vertically depending on context
 let g:UltiSnipsEditSplit = 'context'

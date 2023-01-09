@@ -186,7 +186,12 @@ map.set('n', 'ge', goto_preview.close_all_win, { desc = 'Close all goto-preview 
 -- }}}
 
 -- trouble.nvim {{{
-require('trouble').setup()
+require('trouble').setup({
+    mode = 'document_diagnostics'
+})
+
+map.set('n', '<localleader>xx', '<cmd>TroubleToggle document_diagnostics<cr>', { desc = 'Toggle document diagnostics in trouble' })
+map.set('n', '<localleader>xl', '<cmd>TroubleToggle loclist<cr>', { desc = 'Toggle loclist diagnostics in trouble' })
 -- }}}
 
 -- lspsaga {{{
