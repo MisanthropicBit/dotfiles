@@ -73,8 +73,6 @@ if has('nvim')
         Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
     endif
 
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'deoplete-plugins/deoplete-jedi'
     Plug 'neovim/nvim-lspconfig'
     Plug 'rmagatti/goto-preview'
     Plug 'kyazdani42/nvim-web-devicons'
