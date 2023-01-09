@@ -52,6 +52,14 @@ require('nvim-treesitter.configs').setup{
 }
 -- }}}
 
+-- nvim-treesitter-playground {{{
+local has_nvim_treesitter_playground = pcall(require, 'nvim-treesitter-playground')
+
+if has_nvim_treesitter_playground then
+    map.set('n', '<localleader>sg', '<cmd>TSHighlightCapturesUnderCursor<cr>', { desc = 'Highlight treesitter or syntax group under cursor' })
+end
+-- }}}
+
 -- nvim-cmp {{{
 local kind_icons = require('lsp_common').kind_icons
 local cmp = require('cmp')
@@ -327,6 +335,30 @@ vim.fn.sign_define('DapBreakpointCondition', { text='❗' })
 vim.fn.sign_define('DapLogPoint', { text='📝' })
 vim.fn.sign_define('DapStopped', { text='⇨', texthl = 'ErrorMsg', culhl = 'ErrorMsg' })
 vim.fn.sign_define('DapBreakpointRejected', { text='🚫' })
+-- }}}
+
+-- null-ls.nvim {{{
+local null_ls = require('null-ls')
+
+null_ls.setup({
+    sources = {
+        null_ls.builtins.formatting.eslint_d.with({
+            condition = function(utils)
+                return utils.root_has_file({ '.eslintrc' })
+            end
+        })
+    }
+})
+-- }}}
+
+-- ts-node-action {{{
+local ts_node_action = require('ts-node-action')
+
+ts_node_action.setup{
+    typescript = require('ts-node-action.filetypes.javascript')
+}
+
+map.set('n', 'gn', ts_node_action.node_action, { desc = 'Trigger node action' })
 -- }}}
 
 pcall(require, 'private_plugins')

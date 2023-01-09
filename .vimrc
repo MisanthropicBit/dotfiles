@@ -92,6 +92,8 @@ if has('nvim')
     Plug 'nat-418/boole.nvim'
     Plug 'ray-x/lsp_signature.nvim'
     Plug 'lukas-reineke/indent-blankline.nvim'
+    Plug 'jose-elias-alvarez/null-ls.nvim'
+    Plug 'ckolkey/ts-node-action'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
