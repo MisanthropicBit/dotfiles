@@ -139,11 +139,51 @@ function git_fzf_log -d "Search the git log"
 end
 
 function git_fzf_commits -d "Search commit history"
-    git log --graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr""%C(auto)%h%d %s %C(black)%C(bold)%cr"
+    set -l log_format "%C(auto)%h %<(70,trunc)%s %C(black)%C(bold)%cr%C(reset) by %C(magenta)%an"
+    set -l extract_commit_sha_cmd 'grep -o "[a-f0-9]\{8\}" | tr -d "\n"'
 
-    fzf --ansi --no-sort --reverse --tiebreak=index --bind="ctrl-s:toggle-sort"
-        --bind="ctrl-m:execute:(grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF' {}
-FZF-EOF"
+    set -l log_line (
+        git --no-pager log --color=always --format="$log_format" |
+        fzf --ansi --no-sort --no-multi --reverse --tiebreak=index \
+            --prompt 'Git commit> ' \
+            --bind "ctrl-y:execute-silent(echo {} | $extract_commit_sha_cmd | pbcopy)" \
+            --preview "git show --color=always --shortstat --patch (echo {} | $extract_commit_sha_cmd)" |
+        grep -o "[a-f0-9]\{8\}"
+    )
+
+    if test $status -eq 0
+        if status is-interactive
+            commandline --current-token --replace "$log_line"
+        end
+    end
+
+    commandline --function repaint
+end
+
+function git_fzf_graph -d "Search git log graph"
+    set -l log_format "%C(auto)%h %<(70,trunc)%s %C(black)%C(bold)%cr%C(reset) by %C(magenta)%an"
+    set -l extract_commit_sha_cmd 'grep -o "[a-f0-9]\{8\}" | tr -d "\n"'
+
+    set -l log_line (
+        git --no-pager log --graph --color=always --format="$log_format" |
+        fzf --ansi --no-sort --no-multi --reverse --tiebreak=index \
+            --prompt 'Git graph commit> ' \
+            --bind "ctrl-y:execute-silent(echo {} | $extract_commit_sha_cmd | pbcopy)" \
+            --preview "git show --color=always --shortstat --patch (echo {} | $extract_commit_sha_cmd)" |
+        grep -o "[a-f0-9]\{8\}"
+    )
+
+    # --bind="ctrl-m:execute:(grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF' {} FZF-EOF"
+
+    if test $status -eq 0
+        if status is-interactive
+            # set -l commit (string split -f1 ' ' log_line)
+            # commandline --current-token --replace "$log_line"
+            commandline -it "$log_line"
+        end
+    end
+
+    commandline --function repaint
 end
 
 function G -d "execute git commands and open them in vim/nvim"
