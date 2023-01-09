@@ -683,13 +683,13 @@ set cinkeys-=0#
 " Mappings {{{
 
 " Display the syntax group(s) of the current word
-nnoremap <silent> <leader>sg :call <SID>SynStack()<cr>
+nnoremap <silent> <localleader>sg :call <SID>SynStack()<cr>
 
 " Shortcut for disabling highlighting
-nnoremap <silent> <leader><space> :nohl<cr>
+nnoremap <silent> <localleader><space> :nohl<cr>
 
 " Quickly toggle paste mode
-nnoremap <silent> <leader>pp :setlocal paste!<cr>
+nnoremap <silent> <localleader>pp :setlocal paste!<cr>
 
 " Quickly save the current buffer
 nnoremap <leader>w :w<cr>
@@ -775,8 +775,8 @@ nnoremap <c-i> <c-i>zz
 
 " Quickly look up a word in the dictionary
 if has('mac') || has('macunix')
-    nnoremap <silent> <leader>d :Dict!<cr>
-    nnoremap <silent> <leader>D :Dict<cr>
+    nnoremap <silent> <leader>dd :Dict!<cr>
+    nnoremap <silent> <leader>DD :Dict<cr>
 endif
 
 " Use familiar cmdline binding in vim's cmdline
