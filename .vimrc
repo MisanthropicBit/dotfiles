@@ -85,7 +85,6 @@ if has('nvim')
     " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'nvim-treesitter/playground'
     Plug 'rktjmp/lush.nvim'
-    Plug 'Maan2003/lsp_lines.nvim' " TODO: Remove
     Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
     Plug 'nvim-lua/plenary.nvim'
     Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
