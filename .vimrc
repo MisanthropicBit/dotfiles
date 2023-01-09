@@ -988,6 +988,10 @@ if exists(':tnoremap') == 2
     tnoremap <esc> <c-\><c-n>
     tnoremap jk <c-\><c-n>
 endif
+
+nnoremap <silent> <c-t><c-s> :Term<cr>
+nnoremap <silent> <c-t><c-v> :vert Term<cr>
+nnoremap <silent> <c-t><c-t> :tab Term<cr>
 " }}}
 
 " Explorer {{{
