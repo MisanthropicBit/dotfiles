@@ -600,15 +600,17 @@ if !has('gui_running')
 endif
 
 " Disable until treesitter hl groups are fixed
-" \'dogrun',
 " \'aurora',
 let s:preferred_colors = [
+    \'barstrata',
     \'catppuccin',
+    \'dogrun',
     \'duskfox',
     \'embark',
     \'everforest',
     \'kanagawa',
     \'melange',
+    \'moonlight',
     \'night-owl',
     \'nightfox',
     \'nordfox',
@@ -616,6 +618,8 @@ let s:preferred_colors = [
     \'spring-night',
     \'spacegray',
     \'terafox',
+    \'tokyonight-night',
+    \'tokyonight-storm',
     \'warlock',
     \'zephyr',
 \]
