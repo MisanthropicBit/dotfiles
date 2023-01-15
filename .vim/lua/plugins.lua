@@ -1,13 +1,14 @@
 -- vim: foldenable foldmethod=marker foldlevel=0 fileencoding=utf-8
 
 local map = require('mappings')
+local icons = require('icons')
 
 -- bufferline.nvim {{{
 local function diagnostics_indicator(count, level, diagnostics_dict, context)
   local s = ' '
 
   for e, n in pairs(diagnostics_dict) do
-    local sym = e == 'error' and ' ' or (e == 'warning' and ' ' or ' ')
+    local sym = e == 'error' and icons.diagnostics.error or (e == 'warning' and icons.diagnostics.warning or icons.diagnostics.info)
 
     s = s .. n .. sym
   end
@@ -235,12 +236,12 @@ end
 
 neotest.setup{
     icons = {
-        running = '●',
+        running = icons.test.running,
         running_animated = {'⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'},
-        passed = '',
-        failed = '',
-        skipped = '➠',
-        unknown = '?',
+        passed = icons.test.passed,
+        failed = icons.test.failed,
+        skipped = icons.test.skipped,
+        unknown = icons.test.unknown,
     },
     filter_dir = function(name, rel_path, root)
         return name ~= 'node_modules' and name ~= 'build'
@@ -340,11 +341,13 @@ for _, language in ipairs({ 'typescript', 'javascript' }) do
     }
 end
 
-vim.fn.sign_define('DapBreakpoint', { text='🐞' })
-vim.fn.sign_define('DapBreakpointCondition', { text='❗' })
-vim.fn.sign_define('DapLogPoint', { text='📝' })
-vim.fn.sign_define('DapStopped', { text='⇨', texthl = 'ErrorMsg', culhl = 'ErrorMsg' })
-vim.fn.sign_define('DapBreakpointRejected', { text='🚫' })
+local debugging = icons.debugging
+vim.fn.sign_define('DapBreakpoint', { text = debugging.breakpoint })
+vim.fn.sign_define('DapBreakpointCondition', { text = debugging.breakpoint_condition })
+vim.fn.sign_define('DapLogPoint', { text = debugging.log_point })
+vim.fn.sign_define('DapStopped', { text = debugging.cursor, texthl = 'ErrorMsg', culhl = 'ErrorMsg' })
+vim.fn.sign_define('DapBreakpointRejected', { text = debugging.rejected })
+-- }}}
 -- }}}
 
 -- null-ls.nvim {{{
