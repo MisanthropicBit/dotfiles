@@ -3,19 +3,19 @@ return {
         breakpoint = '🐞',
         breakpoint_condition = '❗',
         log_point = '📝',
-        cursor = '⇨',
+        cursor = '﯀',
         rejected = '🚫',
     },
     diagnostics = {
         error = ' ',
         warning = ' ',
-        info = ' ',
+        info = ' ',
     },
     test = {
         running = '●',
         passed = '',
         failed = '',
-        skipped = '➠',
+        skipped = 'ﮖ',
         unknown = '?',
     }
 }
