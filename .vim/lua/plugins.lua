@@ -200,6 +200,10 @@ local has_lspsaga, lspsaga = pcall(require, 'lspsaga')
 if has_lspsaga then
     lspsaga.init_lsp_saga({
         max_preview_lines = 20,
+        finder_action_keys = {
+            vsplit = 'v',
+            split = 's',
+        },
     })
 
     local lspsaga_diagnostic = require('lspsaga.diagnostic')
@@ -216,6 +220,7 @@ if has_lspsaga then
     map.set('n', '<localleader>en', goto_next_error, { desc = 'Jump to next diagnostic error' })
     map.set('n', '<localleader>lm', '<cmd>Lspsaga rename<cr>', { desc = 'Rename under cursor' })
     map.set('n', '<localleader>ly', '<cmd>LSoutlineToggle<cr>', { desc = 'Toggle outline of semantic elements' })
+    map.set('n', '<localleader>ls', '<cmd>Lspsaga lsp_finder<cr>', { desc = 'Trigger the lspsaga finder' })
 end
 -- }}}
 
