@@ -240,10 +240,6 @@ vim.diagnostic.config({}, vim.api.nvim_create_namespace('neotest'))
 
 local neotest = require('neotest')
 
-local function get_cwd(path)
-    return vim.fn.getcwd()
-end
-
 neotest.setup{
     icons = {
         running = icons.test.running,
@@ -261,7 +257,7 @@ neotest.setup{
         require('neotest-jest')({
             jestCommand = 'npm test --',
             jestConfigFile = 'jest.config.ts',
-            cwd = get_cwd,
+            cwd = vim.fn.getcwd,
         }),
         require('neotest-plenary')
     }
