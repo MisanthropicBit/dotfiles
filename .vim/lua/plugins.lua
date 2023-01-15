@@ -361,29 +361,23 @@ vim.fn.sign_define('DapStopped', { text = debugging.cursor, texthl = 'ErrorMsg',
 vim.fn.sign_define('DapBreakpointRejected', { text = debugging.rejected })
 -- }}}
 
--- null-ls {{{
+-- null-ls.nvim {{{
 local null_ls = require('null-ls')
 
 null_ls.setup{
     sources = {
         null_ls.builtins.formatting.stylua,
-    }
-}
--- }}}
--- }}}
-
--- null-ls.nvim {{{
-local null_ls = require('null-ls')
-
-null_ls.setup({
-    sources = {
         null_ls.builtins.formatting.eslint_d.with({
             condition = function(utils)
                 return utils.root_has_file({ '.eslintrc' })
             end
-        })
+        }),
     }
-})
+}
+-- }}}
+
+
+    }
 -- }}}
 
 -- ts-node-action {{{
