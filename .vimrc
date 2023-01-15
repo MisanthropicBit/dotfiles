@@ -1169,38 +1169,69 @@ nnoremap <silent> <localleader>gy :call <SID>goyo_toggle()<cr>
 
 " lightline.vim {{{
 function! CurrentColorscheme() abort
-    return g:colors_name
+    return '  ' . g:colors_name
 endfunction
 
-let g:lightline = {
-      \ 'component_function': {
-      \   'filetype': 'MyFiletype',
-      \   'fileformat': 'MyFileformat',
-      \ }
-      \ }
-
-function! LightLineFileTypeSymbol()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+function! LightlineFileTypeSymbol()
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
 endfunction
 
 function! LightlineFileFormatSymbol()
-  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+
+function! LightlineGitBranch()
+    let head = FugitiveHead()
+
+    if !empty(head)
+        return '  ' . FugitiveHead()
+    else
+        return '  -' . FugitiveHead()
+    endif
+endfunction
+
+function! LightlineFilename()
+    return '  ' . expand('%:t')
+endfunction
+
+function! LightlineReadonly()
+    let ro = &readonly
+
+    if ro
+        return ''
+    else
+        return ''
+    endif
+endfunction
+
+function! LightlineModified()
+    let modified = &modified
+
+    if modified
+        return ' '
+    else
+        return ''
+    endif
 endfunction
 
 let g:lightline = {
     \'active': {
         \'left': [ [ 'mode', 'paste' ],
-        \[ 'gitbranch', 'current_colorscheme', 'readonly', 'filename', 'modified' ] ]
+        \[ 'gitbranch', 'current_colorscheme', 'readonly', 'filename' ] ]
     \},
     \'component_function': {
-        \'gitbranch': 'FugitiveHead',
+        \'gitbranch': 'LightlineGitBranch',
         \'current_colorscheme': 'CurrentColorscheme',
-        \'filetype': 'LightLineFileTypeSymbol',
+        \'filetype': 'LightlineFileTypeSymbol',
         \'fileformat': 'LightlineFileFormatSymbol',
+        \'filename': 'LightlineFilename',
+        \'readonly': 'LightlineReadonly',
+        \'modified': 'LightlineModified',
     \},
     \'component_type': {
         \'gitbranch': 'error',
-    \}
+    \},
+    \'colorscheme': 'nord'
 \}
 
 let g:lightline.enable = {
