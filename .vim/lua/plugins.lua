@@ -4,6 +4,7 @@ local map = require('mappings')
 local icons = require('icons')
 
 -- bufferline.nvim {{{
+---@diagnostic disable-next-line:unused-local
 local function diagnostics_indicator(count, level, diagnostics_dict, context)
   local s = ' '
 
@@ -90,7 +91,7 @@ cmp.setup({
     }),
     formatting = {
         fields = { 'kind', 'abbr', 'menu' },
-        format = function(entry, vim_item) 
+        format = function(entry, vim_item)
             local text_kind = vim_item.kind
             vim_item.kind = ' ' .. (kind_icons[vim_item.kind] or '')
 
@@ -152,17 +153,17 @@ cmp.setup.cmdline(':', {
     })
 })
 
-local function inverse_hl(name, fg_color)
-    local color = vim.api.nvim_get_hl_by_name(name, true)
+-- local function inverse_hl(name, fg_color)
+--     local color = vim.api.nvim_get_hl_by_name(name, true)
 
-    if color ~= nil then
-        vim.api.nvim_set_hl(0, name, { fg = fg_color or color.background or 'black', bg = color.foreground })
-    end
-end
+--     if color ~= nil then
+--         vim.api.nvim_set_hl(0, name, { fg = fg_color or color.background or 'black', bg = color.foreground })
+--     end
+-- end
 
-function inverse_cmp_item_kinds()
-    inverse_hl('CmpItemKindFunction')
-end
+-- function inverse_cmp_item_kinds()
+--     inverse_hl('CmpItemKindFunction')
+-- end
 
 -- vim.cmd([[
 --     augroup InvertCmpItemKinds
@@ -243,6 +244,7 @@ neotest.setup{
         skipped = icons.test.skipped,
         unknown = icons.test.unknown,
     },
+    ---@diagnostic disable-next-line:unused-local
     filter_dir = function(name, rel_path, root)
         return name ~= 'node_modules' and name ~= 'build'
     end,
