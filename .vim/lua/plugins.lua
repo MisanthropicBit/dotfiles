@@ -349,6 +349,16 @@ vim.fn.sign_define('DapLogPoint', { text = debugging.log_point })
 vim.fn.sign_define('DapStopped', { text = debugging.cursor, texthl = 'ErrorMsg', culhl = 'ErrorMsg' })
 vim.fn.sign_define('DapBreakpointRejected', { text = debugging.rejected })
 -- }}}
+
+-- null-ls {{{
+local null_ls = require('null-ls')
+
+null_ls.setup{
+    sources = {
+        null_ls.builtins.formatting.stylua,
+    }
+}
+-- }}}
 -- }}}
 
 -- null-ls.nvim {{{
