@@ -131,7 +131,11 @@ if vim.fn.executable('lua-language-server') then
                     globals = { 'vim' },
                 },
                 workspace = {
-                    library = vim.api.nvim_get_runtime_file('', true),
+                    library = {
+                        vim.env.VIMRUNTIME,
+                        '~/.vim/plugged/neotest',
+                        '~/.vim/plugged/plenary.nvim',
+                    },
                     maxPreload = 2000,
                     preloadFileSize = 50000,
                     checkThirdParty = false,
