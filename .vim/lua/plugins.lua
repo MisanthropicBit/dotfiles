@@ -252,6 +252,7 @@ neotest.setup{
             jestConfigFile = 'jest.config.ts',
             cwd = get_cwd,
         }),
+        require('neotest-plenary')
     }
 }
 
