@@ -92,6 +92,7 @@ if has('nvim')
     Plug 'lukas-reineke/indent-blankline.nvim'
     Plug 'jose-elias-alvarez/null-ls.nvim'
     Plug 'ckolkey/ts-node-action'
+    Plug 'glepnir/dashboard-nvim'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'

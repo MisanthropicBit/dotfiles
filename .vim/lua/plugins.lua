@@ -394,4 +394,102 @@ ts_node_action.setup{
 map.set('n', 'gn', ts_node_action.node_action, { desc = 'Trigger node action' })
 -- }}}
 
+-- dashboard-nvim {{{
+local dashboard = require('dashboard')
+
+--- Get a random quote from vim-starify if installed
+---@return string
+local function random_quote()
+    if vim.g.loaded_startify == 1 then
+        return vim.fn['startify#fortune#quote']()
+    end
+
+    return { '' }
+end
+
+--- Right-pad string
+local function rpad(value, size, padchar)
+    local npad = size - #value
+
+    return value .. string.rep(padchar, npad)
+end
+
+local dashboard_option_width = 40
+
+dashboard.custom_header = {
+    ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
+    ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
+    ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
+    ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
+    ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
+    ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
+}
+
+dashboard.custom_footer = random_quote
+dashboard.header_pad = 6
+dashboard.center_pad = 6
+dashboard.footer_pad = 6
+-- dashboard.preview_command = display_image_cmd()
+-- dashboard.custom_header = nil
+dashboard.custom_center = {
+    {
+        icon = 'ﱐ  ',
+        desc = rpad('New file', dashboard_option_width, ' '),
+        shortcut = 'i'
+    },
+    {
+        icon = '  ',
+        desc = rpad('Recently opened files', dashboard_option_width, ' '),
+        shortcut = 'r'
+    },
+    {
+        icon = '  ',
+        desc = rpad('Git files', dashboard_option_width, ' '),
+        action = 'GitFiles',
+        shortcut = 'g'
+    },
+    {
+        icon = '  ',
+        desc = rpad('Find File', dashboard_option_width, ' '),
+        action = 'Files',
+        shortcut = 'f'
+    },
+    {
+        icon = '  ',
+        desc = rpad('Plugins', dashboard_option_width,  ' '),
+        shortcut = 'p'
+    },
+    {
+        icon = '  ',
+        desc = rpad('Dotfiles', dashboard_option_width, ' '),
+        action = '',
+        shortcut = 'd'
+    },
+    {
+        icon = '  ',
+        desc = rpad('Quit', dashboard_option_width, ' '),
+        action = 'q',
+        shortcut = 'q'
+    }
+}
+
+-- dashboard-nvim does not override keymappings (shortcuts are more like hints,
+-- not actual keymaps) so set up buffer-local nowait mappings
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'dashboard',
+    callback = function(args)
+        local map_args = { buffer = args.buf, nowait = true }
+
+        map.set('n', 'i', '<cmd>new | startinsert<cr>', map_args)
+        map.set('n', 'r', '<cmd>History<cr>', map_args)
+        map.set('n', 'g', '<cmd>GitFiles<cr>', map_args)
+        map.set('n', 'f', '<cmd>Files<cr>', map_args)
+        map.set('n', 'p', '<cmd>PlugStatus<cr>', map_args)
+        map.set('n', 'd', '<cmd>Dotfiles<cr>', map_args)
+        map.set('n', 'q', '<cmd>q<cr>', map_args)
+    end,
+    once = true,
+})
+-- }}}
+
 pcall(require, 'private_plugins')
