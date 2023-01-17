@@ -209,12 +209,20 @@ map.set('n', '<localleader>xl', '<cmd>TroubleToggle loclist<cr>', { desc = 'Togg
 local has_lspsaga, lspsaga = pcall(require, 'lspsaga')
 
 if has_lspsaga then
-    lspsaga.init_lsp_saga({
+    lspsaga.setup({
         max_preview_lines = 20,
-        finder_action_keys = {
-            vsplit = 'v',
+        finder = {
             split = 's',
+            vsplit = 'v',
         },
+        definition = {
+            split = '<c-w>s',
+            vsplit = '<c-w>v',
+            tabe = '<c-w>t',
+        },
+        symbol_in_winbar = {
+            separator = '  ',
+        }
     })
 
     local lspsaga_diagnostic = require('lspsaga.diagnostic')
@@ -230,7 +238,7 @@ if has_lspsaga then
     map.set('n', '<localleader>ep', goto_prev_error, { desc = 'Jump to previous diagnostic error' })
     map.set('n', '<localleader>en', goto_next_error, { desc = 'Jump to next diagnostic error' })
     map.set('n', '<localleader>lm', '<cmd>Lspsaga rename<cr>', { desc = 'Rename under cursor' })
-    map.set('n', '<localleader>ly', '<cmd>LSoutlineToggle<cr>', { desc = 'Toggle outline of semantic elements' })
+    map.set('n', '<localleader>ly', '<cmd>Lspsaga outline<cr>', { desc = 'Toggle outline of semantic elements' })
     map.set('n', '<localleader>ls', '<cmd>Lspsaga lsp_finder<cr>', { desc = 'Trigger the lspsaga finder' })
 end
 -- }}}
