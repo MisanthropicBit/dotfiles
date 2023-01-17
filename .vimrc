@@ -1353,6 +1353,7 @@ let g:startify_custom_header_quotes = [
     \['The optimal allocation is one that never happens.', '', '- Joseph E. Hoag'],
     \['Design is, as always, the art of finding compromises.', '', '- Eric Lippert']
 \] + startify#fortune#predefined_quotes()
+let g:startify_disable_at_vimenter = 1
 " }}}
 
 " vim-surround {{{
