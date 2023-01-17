@@ -96,9 +96,7 @@ if has('nvim')
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
-    Plug 'nvim-neotest/neotest-vim-test'
     Plug 'haydenmeade/neotest-jest'
-    Plug 'adrigzr/neotest-mocha'
     Plug 'nvim-neotest/neotest-plenary'
 
     " nvim-cmp plugin and sources
