@@ -369,7 +369,7 @@ for _, language in ipairs({ 'typescript', 'javascript' }) do
 end
 
 local debugging = icons.debugging
-vim.fn.sign_define('DapBreakpoint', { text = debugging.breakpoint })
+vim.fn.sign_define('DapBreakpoint', { text = debugging.breakpoint, texthl = 'DiagnosticError', numhl = 'DiagnosticError' })
 vim.fn.sign_define('DapBreakpointCondition', { text = debugging.breakpoint_condition })
 vim.fn.sign_define('DapLogPoint', { text = debugging.log_point })
 vim.fn.sign_define('DapStopped', { text = debugging.cursor, texthl = 'ErrorMsg', culhl = 'ErrorMsg' })
