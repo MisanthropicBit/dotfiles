@@ -726,8 +726,10 @@ vnoremap <silent> K :call <SID>FoldSafeVisualMove(-1)<cr>
 " Open the 'goto file' in a new tab
 nnoremap gf <c-w>gf
 
-" Yank from cursor to the end of line instead of the entire line
-nnoremap Y y$
+if !has('nvim')
+    " Yank from cursor to the end of line instead of the entire line
+    nnoremap Y y$
+end
 
 " Quickly toggle folds
 nnoremap <leader>f za
