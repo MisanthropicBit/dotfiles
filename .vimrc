@@ -77,8 +77,6 @@ if has('nvim')
     Plug 'rmagatti/goto-preview'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'folke/trouble.nvim'
-    Plug 'mfussenegger/nvim-dap'
-    Plug 'mxsdev/nvim-dap-vscode-js'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'nvim-treesitter/playground'
@@ -118,6 +116,11 @@ if has('nvim')
     Plug 'w3barsi/barstrata.nvim'
     Plug 'projekt0n/github-nvim-theme'
     Plug 'rebelot/kanagawa.nvim'
+
+    " dap
+    Plug 'mfussenegger/nvim-dap'
+    Plug 'mxsdev/nvim-dap-vscode-js'
+    Plug 'rcarriga/nvim-dap-ui'
 
     " Local projects
     Plug '~/projects/vim/decipher.nvim'
