@@ -318,7 +318,12 @@ require('indent_blankline').setup({
 local dap = require('dap')
 local dap_widgets = require('dap.ui.widgets')
 
+local function conditional_breakpoint()
+    dap.set_breakpoint(vim.fn.input('Breakpoint condition: '))
+end
+
 map.set('n', '<localleader>db', dap.toggle_breakpoint, { desc = 'Toggle a breakpoint' })
+map.set('n', '<localleader>dB', conditional_breakpoint, { desc = 'Set a conditional breakpoint' })
 map.set('n', '<localleader>dc', dap.continue, { desc = 'Continue debugging' })
 map.set('n', '<localleader>do', dap.step_over, { desc = 'Step over' })
 map.set('n', '<localleader>di', dap.step_into, { desc = 'Step into' })
