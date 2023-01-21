@@ -86,16 +86,16 @@ cmp.setup({
         documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
+        ['<c-j>'] = cmp.mapping.select_next_item(),
+        ['<c-k>'] = cmp.mapping.select_prev_item(),
         ['<c-b>'] = cmp.mapping.scroll_docs(-4),
         ['<c-f>'] = cmp.mapping.scroll_docs(4),
-        -- ['<c-n>'] = cmp.mapping.complete(),
         ['<c-e>'] = cmp.mapping.abort(),
         ['<c-y>'] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'ultisnips' },
-    }, {
         { name = 'buffer' },
     }),
     formatting = {
