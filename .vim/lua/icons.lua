@@ -1,10 +1,10 @@
 return {
     debugging = {
-        breakpoint = '🐞',
-        breakpoint_condition = '❗',
-        log_point = '📝',
+        breakpoint = '',
+        breakpoint_condition = '',
+        log_point = '',
         cursor = '﯀',
-        rejected = '🚫',
+        rejected = '',
     },
     diagnostics = {
         error = ' ',
