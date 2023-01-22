@@ -78,7 +78,7 @@ if has('nvim')
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'folke/trouble.nvim'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-    " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+    Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'nvim-treesitter/playground'
     Plug 'rktjmp/lush.nvim'
     Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
@@ -91,6 +91,7 @@ if has('nvim')
     Plug 'jose-elias-alvarez/null-ls.nvim'
     Plug 'ckolkey/ts-node-action'
     Plug 'glepnir/dashboard-nvim'
+    Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'

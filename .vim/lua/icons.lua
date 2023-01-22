@@ -17,5 +17,18 @@ return {
         failed = '',
         skipped = 'ﮖ',
         unknown = '?',
-    }
+    },
+    git = {
+        logo = '',
+    },
+    files = {
+        files = '',
+        new = 'ﱐ',
+    },
+    misc = {
+        config = '',
+        exit = '',
+        package = '',
+        search = '',
+    },
 }
