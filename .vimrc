@@ -872,23 +872,6 @@ nnoremap <silent> <c-t><c-t> :tab Term<cr>
 let g:netrw_liststyle = 3
 " }}}
 
-" {{{ Neovim
-if has('nvim')
-    " Enable interactive command line substitution without window splitting
-    set inccommand=nosplit
-
-    let s:python3_host_prog_base_path = '~/.neovim_venvs/neovim3'
-
-    " Point neovim to its specific python virtual environments
-    let g:python_host_prog = expand('~/.neovim_venvs/neovim2/bin/python')
-    let g:python3_host_prog = expand(s:python3_host_prog_base_path . '/bin/python')
-
-    " vim supports a 'vertical'/'tab' prefix before :terminal, but neovim
-    " currently doesn't
-    command! -nargs=* Term <mods> new | startinsert | term <args>
-endif
-" }}}
-
 " Plugin configuration {{{
 
 " ALE {{{
@@ -906,8 +889,8 @@ let g:ale_virtualtext_cursor = 0
 
 if has('nvim')
     " Point to neovim python3 virtual environment for specific language servers
-    let g:ale_python_jedils_executable = expand(s:python3_host_prog_base_path . '/bin/jedi-language-server')
-    let g:ale_vim_vint_executable = expand(s:python3_host_prog_base_path . '/bin/vint')
+    " let g:ale_python_jedils_executable = expand(s:python3_host_prog_base_path . '/bin/jedi-language-server')
+    " let g:ale_vim_vint_executable = expand(s:python3_host_prog_base_path . '/bin/vint')
 endif
 
 let s:ale_js_ts_linters = ['prettier']
@@ -1251,8 +1234,21 @@ let g:yank_window#enable_mappings = 1
 
 " }}}
 
-" lua config {{{
+" neovim/lua config {{{
 if has('nvim')
+    " Enable interactive command line substitution without window splitting
+    set inccommand=nosplit
+
+    let s:python3_host_prog_base_path = '~/.neovim_venvs/neovim3'
+
+    " Point neovim to its specific python virtual environments
+    let g:python_host_prog = expand('~/.neovim_venvs/neovim2/bin/python')
+    let g:python3_host_prog = expand(s:python3_host_prog_base_path . '/bin/python')
+
+    " vim supports a 'vertical'/'tab' prefix before :terminal, but neovim
+    " currently doesn't
+    command! -nargs=* Term <mods> new | startinsert | term <args>
+
     lua require('config')
 endif
 " }}}
