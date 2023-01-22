@@ -135,30 +135,32 @@ call plug#end()
 
 " Functions {{{
 
-" Show syntax group, linked group and colors for current word
-function! <SID>SynStack() abort
-    if !exists('*synID') || !exists('*synIDtrans') || !exists('*synIDattr')
-        return
-    endif
+if !has('nvim')
+    " Show syntax group, linked group and colors for current word
+    function! <SID>SynStack() abort
+        if !exists('*synID') || !exists('*synIDtrans') || !exists('*synIDattr')
+            return
+        endif
 
-    let synID = synID(line('.'), col('.'), 0)
+        let synID = synID(line('.'), col('.'), 0)
 
-    if synID == 0
-        echo 'No syntax information for element'
-        return
-    endif
+        if synID == 0
+            echo 'No syntax information for element'
+            return
+        endif
 
-    let name = synIDattr(synID, 'name')
-    let linkedGroup = synIDtrans(synID)
+        let name = synIDattr(synID, 'name')
+        let linkedGroup = synIDtrans(synID)
 
-    if synID != linkedGroup
-        " This is not the root of the stack
-        let synID = linkedGroup
-    endif
+        if synID != linkedGroup
+            " This is not the root of the stack
+            let synID = linkedGroup
+        endif
 
-    echohl Title | echon 'Name  ' | echohl None | echo name "\n\n"
-    echohl Title | echon 'Root  ' | echohl None | execute printf(':hi %s', synIDattr(synID, 'name'))
-endfunction
+        echohl Title | echon 'Name  ' | echohl None | echo name "\n\n"
+        echohl Title | echon 'Root  ' | echohl None | execute printf(':hi %s', synIDattr(synID, 'name'))
+    endfunction
+endif
 
 " Function that deletes trailing whitespace
 function! <SID>DeleteTrailingWhitespace()
