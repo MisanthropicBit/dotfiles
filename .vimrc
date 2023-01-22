@@ -960,10 +960,6 @@ nmap <silent> <leader>ad <Plug>(ale_detail)
 let delimitMate_expand_cr = 1
 " }}}
 
-" deoplete.nvim {{{
-let g:deoplete#enable_at_startup = 0
-" }}}
-
 " fzf {{{
 " Add fzf paths for both homebrew and macports
 set rtp+=/opt/local/share/fzf/vim
@@ -1247,26 +1243,6 @@ let g:surround_{char2nr('e')}="\\begin{\1environment: \1}\r\\end{\1\1}"
 
 " Surround text with a LaTeX command using 'c'
 let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
-" }}}
-
-" vim-test {{{
-let s:vim_test_window_args = 'bo 30'
-
-if has('nvim')
-    let test#strategy = 'neovim'
-    let test#neovim#term_position = s:vim_test_window_args
-else
-    let test#vim#term_position = s:vim_test_window_args
-endif
-
-let g:test#javascript#jest#file_pattern = '\v(__tests__/.*|(it|spec|test))\.(js|jsx|coffee|ts|tsx)$'
-let g:test#javascript#mocha#file_pattern = '\v(tests?/.*|(it|test))\.(js|jsx|coffee)$'
-
-nnoremap <silent> <leader>Tn :TestNearest<cr>
-nnoremap <silent> <leader>Tf :TestFile<cr>
-nnoremap <silent> <leader>Ts :TestSuite<cr>
-nnoremap <silent> <leader>Tl :TestLast<cr>
-nnoremap <silent> <leader>Tv :TestVisit<cr>
 " }}}
 
 " vim-yank-window {{{
