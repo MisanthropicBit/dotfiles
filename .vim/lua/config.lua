@@ -4,6 +4,7 @@ require('plugins')
 require('lsp')
 
 local map_options = require('mappings').map_options
+pcall(require, 'private_plugins')
 
 -- Text yank highlight {{{
 local augroup = vim.api.nvim_create_augroup
