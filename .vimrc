@@ -806,18 +806,6 @@ if has('autocmd')
         autocmd InsertLeave * set listchars+=trail:⌴,nbsp:¬
     augroup END
 
-    augroup scons
-        " Use Python syntax for SCons build files
-        autocmd!
-        autocmd BufReadPost SCons* setlocal filetype=python
-    augroup END
-
-    augroup makefile
-        " Switch indentation to use tabs instead of spaces for makefiles
-        autocmd!
-        autocmd BufRead,BufNewFile Makefile setlocal noexpandtab
-    augroup END
-
     augroup save_edit_position
         " Remember last editing position (see ':h last-position-jump')
         " Use 'zv' to open just enough folds for the line to be visible and
@@ -832,16 +820,6 @@ if has('autocmd')
     augroup csharp
         autocmd!
         autocmd FileType cs setlocal indentkeys-=0#
-    augroup END
-
-    augroup typescript
-      autocmd!
-      autocmd BufRead,BufNewFile *.ts,*.tsx setlocal shiftwidth=2
-    augroup END
-
-    augroup jsx
-        autocmd!
-        autocmd BufRead,BufNewFile *.jsx setlocal shiftwidth=2
     augroup END
 
     augroup fsproj
