@@ -29,6 +29,7 @@ require('nvim-treesitter.configs').setup{
     textobjects = {
         select = {
             enable = true,
+            lookahead = true,
             keymaps = {
                 ['af'] = '@function.outer',
                 ['if'] = '@function.inner',
@@ -36,6 +37,8 @@ require('nvim-treesitter.configs').setup{
                 ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
                 ['aa'] = '@parameter.outer',
                 ['ia'] = '@parameter.inner',
+                ['an'] = '@number',
+                ['in'] = '@number',
             },
         },
         swap = {
