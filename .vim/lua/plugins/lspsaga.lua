@@ -23,11 +23,11 @@ if has_lspsaga then
     local error_severity = vim.diagnostic.severity.ERROR
 
     local goto_prev_error = function()
-        lspsaga_diagnostic.goto_prev({ severity = error_severity })
+        lspsaga_diagnostic:goto_prev({ severity = error_severity })
     end
 
     local goto_next_error = function()
-        lspsagaDiagnostic.goto_next({ severity = error_severity })
+        lspsaga_diagnostic:goto_next({ severity = error_severity })
     end
 
     -- Overwrite lsp defaults with lspsaga
