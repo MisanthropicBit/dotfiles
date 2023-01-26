@@ -2,7 +2,9 @@ local map = require('mappings')
 
 local goto_preview = require('goto-preview')
 
-goto_preview.setup()
+goto_preview.setup{
+    height = 28,
+}
 
 map.set('n', 'gp', goto_preview.goto_preview_definition, { desc = 'Preview definition under cursor' })
 map.leader('n', 'gt', goto_preview.goto_preview_type_definition, { desc = 'Preview type definition under cursor' })
