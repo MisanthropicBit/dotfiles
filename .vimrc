@@ -983,6 +983,20 @@ nmap <silent> <leader>hn <Plug>(GitGutterNextHunk)
 nmap <silent> <leader>hp <Plug>(GitGutterPrevHunk)
 nmap <silent> <leader>hv <Plug>(GitGutterPreviewHunk)
 nmap <silent> <leader>ht <Plug>(GitGutterBufferToogle)
+
+let g:gitgutter_floating_window_options = {
+    \'relative': 'cursor',
+    \'row': 1,
+    \'col': 0,
+    \'width': 42,
+    \'height': &previewheight,
+    \'style': 'minimal',
+    \'border': 'rounded'
+\}
+let g:gitgutter_sign_added = '┃'
+let g:gitgutter_sign_modified = '┃'
+let g:gitgutter_sign_removed = '┃'
+let g:gitgutter_sign_modified_removed = '║'
 " }}}
 
 " git-messenger.vim {{{
