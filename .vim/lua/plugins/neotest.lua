@@ -22,10 +22,15 @@ neotest.setup{
         require('neotest-jest')({
             jestCommand = 'npm test --',
             jestConfigFile = 'jest.config.ts',
-            cwd = vim.fn.getcwd,
+            cwd = function(path)
+                return vim.fn.getcwd()
+            end,
         }),
         require('neotest-plenary'),
-    }
+    },
+    quickfix = {
+        open = false,
+    },
 }
 
 map.leader('n', 'tt', neotest.run.run, { desc = 'Run the test under the cursor' })
