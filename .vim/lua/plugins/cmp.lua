@@ -2,24 +2,52 @@ local kind_icons = require('lsp_common').kind_icons
 
 local cmp = require('cmp')
 
+-- Format autocomplete items
 local function format_entry(entry, vim_item)
     local text_kind = vim_item.kind
     vim_item.kind = ' ' .. (kind_icons[vim_item.kind] or '')
 
     local type = ({
-        buffer = '[Buffer]',
-        nvim_lsp = '[LSP]',
-        latex_symbols = '[LaTeX]',
-        path = '[Path]',
+        buffer = ' ',
+        nvim_lsp = ' ',
+        latex_symbols = ' ex',
+        path = '󰙅 ',
+        ultisnips = '󰁨 ',
+        cmdline = '󰨊 '
     })[entry.source.name]
 
-    vim_item.menu = "    (" .. text_kind .. ')'
-
     if type ~= nil then
-        vim_item.menu = vim_item.menu .. ' ' .. type
+        vim_item.menu = ' ' .. type
     end
 
+    vim_item.menu = (vim_item.menu or '') .. " (" .. text_kind .. ')'
+
     return vim_item
+end
+
+-- Get buffers to autocomplete text from. Gets all visible buffers with a byte limit
+local function get_bufnrs()
+    local function buf_bytesize(buffer)
+        return vim.api.nvim_buf_get_offset(buffer, vim.api.nvim_buf_line_count(buffer))
+    end
+
+    local max_bytesize = 1024 * 1024
+    local total_bytesize = 0
+    local buffers = {}
+
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+        local buffer = vim.api.nvim_win_get_buf(win)
+        local bytesize = buf_bytesize(buffer)
+
+        if total_bytesize + bytesize < max_bytesize then
+            table.insert(buffers, vim.api.nvim_win_get_buf(win))
+            total_bytesize = total_bytesize + bytesize
+        else
+            break
+        end
+    end
+
+    return buffers
 end
 
 cmp.setup{
@@ -43,7 +71,12 @@ cmp.setup{
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'ultisnips' },
-        { name = 'buffer' },
+        {
+            name = 'buffer',
+            option = {
+                get_bufnrs = get_bufnrs
+            }
+        },
     }),
     formatting = {
         fields = { 'kind', 'abbr', 'menu' },
