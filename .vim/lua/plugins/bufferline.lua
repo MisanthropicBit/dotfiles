@@ -28,6 +28,8 @@ require('bufferline').setup{
     diagnostics_indicator = diagnostics_indicator,
     sort_by = 'tabs',
     max_name_length = 25,
+    separator_style = 'slant',
+    show_close_icon = false,
   }
 }
 
