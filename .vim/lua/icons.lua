@@ -27,8 +27,11 @@ return {
     },
     misc = {
         config = '',
-        exit = '',
-        package = '',
+        doctor = '',
+        exit = '󰩈',
+        update = '󰅢',
+        help = '󰋗',
+        package = '',
         search = '',
     },
 }

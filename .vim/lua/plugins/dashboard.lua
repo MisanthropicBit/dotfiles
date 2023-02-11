@@ -14,7 +14,7 @@ local function random_quote()
 end
 
 --- Right-pad string
-local dashboard_option_width = 42
+local dashboard_option_width = 52
 
 local function rpad(value, size, padchar)
     local npad = size - #value
@@ -26,73 +26,91 @@ local rpad_default = function(value)
     return rpad(value, dashboard_option_width, ' ')
 end
 
--- dashboard.custom_header = {
---     ' ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗',
---     ' ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║',
---     ' ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║',
---     ' ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║',
---     ' ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║',
---     ' ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝',
--- }
-
-dashboard.custom_footer = random_quote
-dashboard.header_pad = 6
-dashboard.center_pad = 6
-dashboard.footer_pad = 6
-dashboard.custom_center = {
-    {
-        icon = icons.files.new .. '  ',
-        desc = rpad_default('New file'),
-        shortcut = 'i'
-    },
-    {
-        icon = icons.files.files .. '  ',
-        desc = rpad_default('Recently opened files'),
-        shortcut = 'r'
-    },
-    {
-        icon = icons.git.logo .. '  ',
-        desc = rpad_default('Git files'),
-        action = 'GitFiles',
-        shortcut = 'g'
-    },
-    {
-        icon = icons.misc.search .. '  ',
-        desc = rpad_default('Find File'),
-        action = 'Files',
-        shortcut = 'f'
-    },
-    {
-        icon = icons.misc.package .. '  ',
-        desc = rpad_default('Plugins'),
-        shortcut = 'p'
-    },
-    {
-        icon = icons.misc.config .. '  ',
-        desc = rpad_default('Dotfiles'),
-        shortcut = 'd'
-    },
-    {
-        icon = icons.misc.exit .. '  ',
-        desc = rpad_default('Quit'),
-        shortcut = 'q'
+dashboard.setup{
+    theme = 'doom',
+    config = {
+        center = {
+            {
+                icon = icons.files.new .. '  ',
+                icon_hl = 'Title',
+                desc = rpad_default('New file'),
+                key = 'i',
+                key_hl = 'Number',
+                action = 'new | only',
+            },
+            {
+                icon = icons.files.files .. '  ',
+                icon_hl = 'Constant',
+                desc = rpad_default('Recent files'),
+                key = 'r',
+                key_hl = 'Number',
+                action = 'FzfLua oldfiles',
+            },
+            {
+                icon = icons.git.logo .. '  ',
+                icon_hl = 'DiffFile',
+                desc = rpad_default('Git files'),
+                key = 'g',
+                key_hl = 'Number',
+                action = 'FzfLua git_files',
+            },
+            {
+                icon = icons.misc.search .. '  ',
+                icon_hl = 'Special',
+                desc = rpad_default('Find File'),
+                key = 'f',
+                key_hl = 'Number',
+                action = 'FzfLua files',
+            },
+            {
+                icon = icons.misc.doctor .. '  ',
+                icon_hl = 'DiagnosticWarning',
+                desc = rpad_default('Check health'),
+                key = 't',
+                key_hl = 'Number',
+                action = 'checkhealth',
+            },
+            {
+                icon = icons.misc.package .. '  ',
+                icon_hl = 'Identifier',
+                desc = rpad_default('View plugins'),
+                key = 'p',
+                key_hl = 'Number',
+                action = 'PlugStatus | only',
+            },
+            {
+                icon = icons.misc.update .. '  ',
+                icon_hl = 'Identifier',
+                desc = rpad_default('Update plugins'),
+                key = 'u',
+                key_hl = 'Number',
+                action = 'PlugUpdate | only',
+            },
+            {
+                icon = icons.misc.config .. '  ',
+                icon_hl = 'Function',
+                desc = rpad_default('Dotfiles'),
+                key = 'd',
+                key_hl = 'Number',
+                action = "FzfLua files stdpath('config')/.vim"
+            },
+            {
+                icon = icons.misc.help .. '  ',
+                icon_hl = 'Question',
+                desc = rpad_default('Help'),
+                key = 'h',
+                key_hl = 'Number',
+                action = 'FzfLua help_tags',
+            },
+            {
+                icon = icons.misc.exit .. '  ',
+                icon_hl = 'DiagnosticError',
+                desc = rpad_default('Quit'),
+                key = 'q',
+                key_hl = 'Number',
+                action = 'quit'
+            }
+        },
+        footer = random_quote,
     }
 }
-
--- dashboard-nvim does not override keymappings (shortcuts are more like hints,
--- not actual keymaps) so set up buffer-local nowait mappings
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'dashboard',
-    callback = function(args)
-        local map_args = { buffer = args.buf, nowait = true }
-
-        map.set('n', 'i', '<cmd>new | wincmd o | startinsert<cr>', map_args)
-        map.set('n', 'r', '<cmd>History<cr>', map_args)
-        map.set('n', 'g', '<cmd>GitFiles<cr>', map_args)
-        map.set('n', 'f', '<cmd>Files<cr>', map_args)
-        map.set('n', 'p', '<cmd>PlugStatus<cr>', map_args)
-        map.set('n', 'd', '<cmd>Dotfiles<cr>', map_args)
-        map.set('n', 'q', '<cmd>q<cr>', map_args)
-    end,
-    once = true,
-})
