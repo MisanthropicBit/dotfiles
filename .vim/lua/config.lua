@@ -2,8 +2,8 @@
 
 require('plugins')
 require('lsp')
+require('notify')
 
-local map_options = require('mappings').map_options
 pcall(require, 'private_plugins')
 
 -- Text yank highlight {{{
@@ -21,12 +21,4 @@ autocmd('TextYankPost', {
         })
     end,
 })
--- }}}
-
--- Shortcuts for editing the config.lua file {{{
-local cur_path = vim.fn.expand('%:p')
-
-vim.keymap.set('n', '<localleader>cs', string.format('<cmd>sp %s<cr>', cur_path), map_options)
-vim.keymap.set('n', '<localleader>cv', string.format('<cmd>vs %s<cr>', cur_path), map_options)
-vim.keymap.set('n', '<localleader>ct', string.format('<cmd>tabe %s<cr>', cur_path), map_options)
 -- }}}
