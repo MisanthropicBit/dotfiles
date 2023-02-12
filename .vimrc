@@ -979,8 +979,8 @@ nnoremap <silent> <localleader>rg :Rg<cr>
 " }}}
 
 " vim-gitgutter {{{
-nmap <silent> <leader>hn <Plug>(GitGutterNextHunk)
-nmap <silent> <leader>hp <Plug>(GitGutterPrevHunk)
+nmap <silent> <leader>hn <Plug>(GitGutterNextHunk)zz
+nmap <silent> <leader>hp <Plug>(GitGutterPrevHunk)zz
 nmap <silent> <leader>hv <Plug>(GitGutterPreviewHunk)
 nmap <silent> <leader>ht <Plug>(GitGutterBufferToogle)
 
