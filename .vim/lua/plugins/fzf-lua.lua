@@ -9,7 +9,7 @@ fzf_lua.setup{
     },
     keymap = {
         builtin = {
-            ['<c-+>'] = "toggle-help",
+            ['<c-+>'] = 'toggle-help',
             ['<c-p>'] = 'preview-page-up',
             ['<c-n>'] = 'preview-page-down',
         },
@@ -18,7 +18,7 @@ fzf_lua.setup{
         git_icons = true,
         symbols = {
             symbol_fmt = function(s)
-                return '[' .. (kind_icons[s] or s) .. ']'
+                return (kind_icons[s] or s)
             end,
         },
     },
