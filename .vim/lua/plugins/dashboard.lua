@@ -4,7 +4,7 @@ local map = require('mappings')
 local dashboard = require('dashboard')
 
 --- Get a random quote from vim-starify if installed
----@return string
+---@return string[]
 local function random_quote()
     if vim.g.loaded_startify == 1 then
         return vim.fn['startify#fortune#quote']()
@@ -39,7 +39,7 @@ dashboard.setup{
                 action = 'new | only',
             },
             {
-                icon = icons.files.files .. '  ',
+                icon = icons.misc.clock .. '  ',
                 icon_hl = 'Constant',
                 desc = rpad_default('Recent files'),
                 key = 'r',
@@ -57,7 +57,7 @@ dashboard.setup{
             {
                 icon = icons.misc.search .. '  ',
                 icon_hl = 'Special',
-                desc = rpad_default('Find File'),
+                desc = rpad_default('Find file'),
                 key = 'f',
                 key_hl = 'Number',
                 action = 'FzfLua files',
