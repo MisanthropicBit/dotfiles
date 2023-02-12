@@ -16,7 +16,10 @@ if has_lspsaga then
         },
         symbol_in_winbar = {
             separator = '  ',
-        }
+        },
+        lightbulb = {
+            sign = false,
+        },
     }
 
     local lspsaga_diagnostic = require('lspsaga.diagnostic')
