@@ -1,3 +1,4 @@
+local icons = require('icons')
 local kind_icons = require('lsp_common').kind_icons
 
 local cmp = require('cmp')
@@ -7,14 +8,7 @@ local function format_entry(entry, vim_item)
     local text_kind = vim_item.kind
     vim_item.kind = ' ' .. (kind_icons[vim_item.kind] or '')
 
-    local type = ({
-        buffer = ' ',
-        nvim_lsp = ' ',
-        latex_symbols = ' ex',
-        path = '󰙅 ',
-        ultisnips = '󰁨 ',
-        cmdline = '󰨊 '
-    })[entry.source.name]
+    local type = icons.lsp[entry.source.name]
 
     if type ~= nil then
         vim_item.menu = ' ' .. type

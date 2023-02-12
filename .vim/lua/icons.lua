@@ -11,6 +11,14 @@ return {
         warning = ' ',
         info = ' ',
     },
+    lsp = {
+        buffer = ' ',
+        nvim_lsp = ' ',
+        latex_symbols = ' ex',
+        path = '󰙅 ',
+        ultisnips = '󰁨 ',
+        cmdline = '󰨊 ',
+    },
     test = {
         running = '●',
         passed = '',
