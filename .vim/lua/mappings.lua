@@ -20,4 +20,10 @@ function M.leader(mode, lhs, rhs, opts)
     vim.keymap.set(mode, leader_lhs, rhs, M.with_default_options(opts))
 end
 
+for _, mode in ipairs({ 'n', 'i', 'c', 'v', 'x', 's', 'o', 't', 'l' }) do
+    M[mode] = function(lhs, rhs, opts)
+        M.set(mode, lhs, rhs, opts)
+    end
+end
+
 return M
