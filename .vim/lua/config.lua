@@ -1,17 +1,12 @@
--- vim: foldenable foldmethod=marker foldlevel=0 fileencoding=utf-8
-
 require('plugins')
 require('lsp')
 require('notify')
 
 pcall(require, 'private_plugins')
 
--- Text yank highlight {{{
-local augroup = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
-local yank_group = augroup('HighlightYank', {})
+local yank_group = vim.api.nvim_create_augroup('HighlightYank', {})
 
-autocmd('TextYankPost', {
+vim.api.nvim_create_autocmd('TextYankPost', {
     group = yank_group,
     pattern = '*',
     callback = function()
@@ -21,4 +16,3 @@ autocmd('TextYankPost', {
         })
     end,
 })
--- }}}
