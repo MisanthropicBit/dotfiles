@@ -75,7 +75,10 @@ local on_attach = function(client, bufnr)
     map.set('n', '<localleader>lr', vim.lsp.buf.references, map.merge(map_options, { desc = 'Show lsp references' }))
     map.set('n', '<localleader>lf', vim.lsp.buf.format, map.merge(map_options, { desc = 'Format code under cursor' }))
     map.set('v', '<localleader>lf', vim.lsp.buf.format, map.merge(map_options, { desc = 'Format code in range' }))
-    map.set('n', '<localleader>ss', vim.lsp.buf.document_symbol, map.merge(map_options, { desc = 'Show document symbol' }))
+
+    if vim.fn.maparg('<leader>ss', 'n') == '' then
+        map.set('n', '<localleader>ss', vim.lsp.buf.document_symbol, map.merge(map_options, { desc = 'Show document symbol' }))
+    end
 
     if not has_lspsaga then
         map.set('n', '<localleader>la', vim.lsp.buf.code_action, map.merge(map_options, { desc = 'Open code action menu' }))
