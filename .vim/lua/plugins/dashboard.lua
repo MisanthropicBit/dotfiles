@@ -92,7 +92,7 @@ dashboard.setup{
                 desc = rpad_default('Dotfiles'),
                 key = 'd',
                 key_hl = 'Number',
-                action = "FzfLua files stdpath('config')/.vim"
+                action = "lua require('fzf-lua').files({ cwd = vim.fn.stdpath('config') })"
             },
             {
                 icon = icons.misc.help .. '  ',
