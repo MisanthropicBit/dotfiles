@@ -34,12 +34,13 @@ return {
         new = 'ﱐ',
     },
     misc = {
+        clock = '',
         config = '',
         doctor = '',
         exit = '󰩈',
-        update = '󰅢',
         help = '󰋗',
         package = '',
         search = '',
+        update = '',
     },
 }
