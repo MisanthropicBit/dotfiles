@@ -690,6 +690,17 @@ inoremap <expr> TODOT printf('TODO (%s): ', strftime('%Y-%m-%d, %H:%M:%S'))
 
 nnoremap <silent> <localleader>hi :His<cr>
 
+nnoremap <silent> Q @@
+
+let s:conflict_marker_regex = '\(\(\(<<<<<<<\)\|\(|||||||\)\|\(>>>>>>>\)\) .\+\|\(=======\)\)'
+
+function s:FindGitConflictMarker(dir) abort
+    call search(s:conflict_marker_regex, a:dir ==# 1 ? 'w' : 'bw')
+endfunction
+
+nnoremap <silent> >m <cmd>call <SID>FindGitConflictMarker(1)<cr>
+nnoremap <silent> <m <cmd>call <SID>FindGitConflictMarker(-1)<cr>
+
 " }}}
 
 " Searching {{{
