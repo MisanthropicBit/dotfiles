@@ -22,6 +22,9 @@ fzf_lua.setup{
             end,
         },
     },
+    fzf_opts = {
+        ['--cycle'] = '',
+    },
 }
 
 map.leader('n', 'ss', fzf_lua.lsp_document_symbols, { desc = 'LSP document symbols' })

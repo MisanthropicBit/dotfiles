@@ -20,6 +20,9 @@ if has_lspsaga then
         lightbulb = {
             sign = false,
         },
+        beacon = {
+            enable = false,
+        },
     }
 
     local lspsaga_diagnostic = require('lspsaga.diagnostic')
