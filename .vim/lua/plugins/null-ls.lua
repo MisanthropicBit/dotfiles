@@ -8,5 +8,6 @@ null_ls.setup{
                 return utils.root_has_file({ '.eslintrc' })
             end
         }),
+        null_ls.builtins.code_actions.eslint_d,
     }
 }

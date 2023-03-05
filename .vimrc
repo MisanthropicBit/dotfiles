@@ -992,7 +992,7 @@ nnoremap <silent> <localleader>rg :Rg<cr>
 " vim-gitgutter {{{
 nmap <silent> gj <Plug>(GitGutterNextHunk)zz
 nmap <silent> gk <Plug>(GitGutterPrevHunk)zz
-nmap <silent> gv <Plug>(GitGutterPreviewHunk)
+nmap <silent> <localleader>gv <Plug>(GitGutterPreviewHunk)
 nmap <silent> <leader>ht <Plug>(GitGutterBufferToogle)
 
 let g:gitgutter_floating_window_options = {
@@ -1212,9 +1212,13 @@ nnoremap <silent> <leader>gv :vert G --paginate diff --cached<cr>
 nnoremap <silent> <leader>gw :Gwrite<cr>
 nnoremap <silent> <leader>gu :GBrowse!<cr>
 xnoremap <silent> <leader>gu :GBrowse!<cr>
+nnoremap <silent> <leader>gos :Gsp origin/master:%<cr>
+nnoremap <silent> <leader>gov :Gvs origin/master:%<cr>
+nnoremap <silent> <leader>got :Gtabedit origin/master:%<cr>
 
 " Define a command and mapping for viewing staged changes
 command! Gcached :Gtabedit! diff --cached
+command! Gom :<mods> Gsp origin/master:%
 nnoremap <silent> <leader>gr :Gcached<cr>
 " }}}
 

@@ -1,6 +1,4 @@
 local icons = require('icons')
-local map = require('mappings')
-
 local dashboard = require('dashboard')
 
 --- Get a random quote from vim-starify if installed
@@ -26,24 +24,48 @@ local rpad_default = function(value)
     return rpad(value, dashboard_option_width, ' ')
 end
 
+-- Copy dashboard's default header since it isn't exported and pad the top to
+-- vertically center the dashboard
+local default_header = {
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    ' ██████╗  █████╗ ███████╗██╗  ██╗██████╗  ██████╗  █████╗ ██████╗ ██████╗  ',
+    ' ██╔══██╗██╔══██╗██╔════╝██║  ██║██╔══██╗██╔═══██╗██╔══██╗██╔══██╗██╔══██╗ ',
+    ' ██║  ██║███████║███████╗███████║██████╔╝██║   ██║███████║██████╔╝██║  ██║ ',
+    ' ██║  ██║██╔══██║╚════██║██╔══██║██╔══██╗██║   ██║██╔══██║██╔══██╗██║  ██║ ',
+    ' ██████╔╝██║  ██║███████║██║  ██║██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝ ',
+    ' ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝  ',
+    '',
+}
+
+local key_hl = 'Number'
+
 dashboard.setup{
     theme = 'doom',
     config = {
+        header = default_header,
         center = {
             {
                 icon = icons.files.new .. '  ',
                 icon_hl = 'Title',
                 desc = rpad_default('New file'),
                 key = 'i',
-                key_hl = 'Number',
+                key_hl = key_hl,
                 action = 'new | only',
             },
             {
-                icon = icons.misc.clock .. '  ',
+                icon = icons.files.files .. '  ',
                 icon_hl = 'Constant',
                 desc = rpad_default('Recent files'),
                 key = 'r',
-                key_hl = 'Number',
+                key_hl = key_hl,
                 action = 'FzfLua oldfiles',
             },
             {
@@ -51,7 +73,7 @@ dashboard.setup{
                 icon_hl = 'DiffFile',
                 desc = rpad_default('Git files'),
                 key = 'g',
-                key_hl = 'Number',
+                key_hl = key_hl,
                 action = 'FzfLua git_files',
             },
             {
@@ -59,15 +81,23 @@ dashboard.setup{
                 icon_hl = 'Special',
                 desc = rpad_default('Find file'),
                 key = 'f',
-                key_hl = 'Number',
+                key_hl = key_hl,
                 action = 'FzfLua files',
+            },
+            {
+                icon = icons.misc.search_files .. '  ',
+                icon_hl = 'Statement',
+                desc = rpad_default('Search files'),
+                key = 's',
+                key_hl = key_hl,
+                action = 'FzfLua grep_project',
             },
             {
                 icon = icons.misc.doctor .. '  ',
                 icon_hl = 'DiagnosticWarning',
                 desc = rpad_default('Check health'),
                 key = 't',
-                key_hl = 'Number',
+                key_hl = key_hl,
                 action = 'checkhealth',
             },
             {
@@ -75,7 +105,7 @@ dashboard.setup{
                 icon_hl = 'Identifier',
                 desc = rpad_default('View plugins'),
                 key = 'p',
-                key_hl = 'Number',
+                key_hl = key_hl,
                 action = 'PlugStatus | only',
             },
             {
@@ -83,7 +113,7 @@ dashboard.setup{
                 icon_hl = 'Identifier',
                 desc = rpad_default('Update plugins'),
                 key = 'u',
-                key_hl = 'Number',
+                key_hl = key_hl,
                 action = 'PlugUpdate | only',
             },
             {
@@ -91,7 +121,7 @@ dashboard.setup{
                 icon_hl = 'Function',
                 desc = rpad_default('Dotfiles'),
                 key = 'd',
-                key_hl = 'Number',
+                key_hl = key_hl,
                 action = "lua require('fzf-lua').files({ cwd = vim.fn.stdpath('config') })"
             },
             {
@@ -99,7 +129,7 @@ dashboard.setup{
                 icon_hl = 'Question',
                 desc = rpad_default('Help'),
                 key = 'h',
-                key_hl = 'Number',
+                key_hl = key_hl,
                 action = 'FzfLua help_tags',
             },
             {
@@ -107,7 +137,7 @@ dashboard.setup{
                 icon_hl = 'DiagnosticError',
                 desc = rpad_default('Quit'),
                 key = 'q',
-                key_hl = 'Number',
+                key_hl = key_hl,
                 action = 'quit'
             }
         },

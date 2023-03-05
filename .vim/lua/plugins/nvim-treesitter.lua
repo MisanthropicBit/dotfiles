@@ -33,12 +33,16 @@ require('nvim-treesitter.configs').setup{
             keymaps = {
                 ['af'] = '@function.outer',
                 ['if'] = '@function.inner',
-                ['ac'] = '@class.outer',
-                ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
+                -- ['ac'] = '@class.outer',
+                -- ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
                 ['aa'] = '@parameter.outer',
                 ['ia'] = '@parameter.inner',
                 ['an'] = '@number',
                 ['in'] = '@number',
+                ['ag'] = '@comment.outer',
+                ['ig'] = '@comment.outer',
+                ['ac'] = '@conditional.outer',
+                ['ic'] = '@conditional.inner',
             },
         },
         swap = {
@@ -62,3 +66,6 @@ require('nvim-treesitter.configs').setup{
         -- },
     },
 }
+
+-- Unmap incremental selection inside the command-line window
+vim.api.nvim_create_autocmd('CmdwinEnter', '<cmd>nunmap <buffer> <cr>')

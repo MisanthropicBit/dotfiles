@@ -31,3 +31,4 @@ map.leader('n', 'ss', fzf_lua.lsp_document_symbols, { desc = 'LSP document symbo
 map.leader('n', 'cc', fzf_lua.colorschemes, { desc = 'Pick a colorscheme' })
 map.leader('n', 'df', function() fzf_lua.files({ cwd = '~/projects/dotfiles/.vim' }) end, { desc = 'Search dotfiles' })
 map.n('<c-p>', fzf_lua.files, { desc = 'Search files in current directory' })
+map.leader('n', 'gf', fzf_lua.git_files, { desc = 'Search files in the current directory that are tracked by git' })

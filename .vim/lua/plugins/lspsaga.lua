@@ -6,8 +6,13 @@ if has_lspsaga then
     lspsaga.setup{
         max_preview_lines = 20,
         finder = {
-            split = 's',
-            vsplit = 'v',
+            keys = {
+                split = 's',
+                vsplit = 'v',
+            },
+        },
+        diagnostic = {
+            twice_into = true,
         },
         definition = {
             split = '<c-w>s',

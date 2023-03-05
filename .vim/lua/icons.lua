@@ -41,6 +41,7 @@ return {
         help = '󰋗',
         package = '',
         search = '',
+        search_files = '󰱼',
         update = '',
     },
 }
