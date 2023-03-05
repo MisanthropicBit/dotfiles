@@ -68,4 +68,4 @@ require('nvim-treesitter.configs').setup{
 }
 
 -- Unmap incremental selection inside the command-line window
-vim.api.nvim_create_autocmd('CmdwinEnter', '<cmd>nunmap <buffer> <cr>')
+vim.api.nvim_create_autocmd('CmdwinEnter', { command = 'nunmap <buffer> <cr>' })
