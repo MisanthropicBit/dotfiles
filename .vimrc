@@ -993,6 +993,7 @@ nnoremap <silent> <localleader>rg :Rg<cr>
 nmap <silent> gj <Plug>(GitGutterNextHunk)zz
 nmap <silent> gk <Plug>(GitGutterPrevHunk)zz
 nmap <silent> <localleader>gv <Plug>(GitGutterPreviewHunk)
+nmap <silent> gs <Plug>(GitGutterStageHunk)
 nmap <silent> <leader>ht <Plug>(GitGutterBufferToogle)
 
 let g:gitgutter_floating_window_options = {
