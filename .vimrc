@@ -742,7 +742,8 @@ set autoindent
 
 " Tabs (the buffer ones) {{{
 
-nnoremap <C-t> :tabnew<cr>
+nnoremap <c-t> :tabnew<cr>
+nnoremap <c-t><c-o> :tabonly<cr>
 
 " Faster tab switching using a meta-key
 nnoremap <s-l> gt
