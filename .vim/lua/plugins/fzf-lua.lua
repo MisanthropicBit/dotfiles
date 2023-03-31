@@ -1,5 +1,6 @@
+local ansi = require('ansi')
 local map = require('mappings')
-local kind_icons = require('lsp_common').kind_icons
+local lsp_common = require('lsp_common')
 
 local fzf_lua = require('fzf-lua')
 
@@ -17,8 +18,32 @@ fzf_lua.setup{
     lsp = {
         git_icons = true,
         symbols = {
-            symbol_fmt = function(s)
-                return (kind_icons[s] or s)
+            symbol_fmt = function(symbol)
+                local stripped = ansi.strip_ansi_codes(symbol)
+                local icon = lsp_common.kind_icons[stripped]
+
+                if icon ~= nil then
+                    local hl = lsp_common.kind_to_hl[stripped]
+                    local color
+
+                    -- TODO: Make color lookup into a function in lsp_common
+                    if hl ~= nil then
+                        color = ansi.highlight_to_rgb_ansi(hl)
+                    else
+                        -- NOTE: This might cause some color mismatches across the same lsp kinds
+                        color = symbol:match(ansi.pattern())
+                    end
+
+                    return string.format(
+                        '%s%s [%s]%s',
+                        color,
+                        lsp_common.kind_icons[stripped],
+                        stripped,
+                        ansi.reset_sequence()
+                    )
+                else
+                    return symbol
+                end
             end,
         },
     },
