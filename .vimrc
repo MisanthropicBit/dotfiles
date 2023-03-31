@@ -477,6 +477,8 @@ set signcolumn=yes:2
 
 set updatetime=500
 
+set noswapfile
+
 " }}}
 
 " Colors and syntax {{{
