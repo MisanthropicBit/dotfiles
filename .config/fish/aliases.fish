@@ -34,10 +34,6 @@ alias vimrc     "$EDITOR ~/.vimrc"
 set --local script_dir (dirname (status -f))
 set --local work_aliases "$script_dir/work_aliases.fish"
 
-if test -f "$work_aliases"
-    source "$work_aliases"
-end
-
 function tophist -d "Show the top 'n' most used commands"
     set -l top "$argv[1]"
 
@@ -210,3 +206,7 @@ end
 #function man -d "Open a man page with vim"
 #    command man $@ | col -b | vim -R -c "set ft=man nomod nolist" -
 #end
+
+if test -f "$work_aliases"
+    source "$work_aliases"
+end
