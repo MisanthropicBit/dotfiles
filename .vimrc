@@ -48,19 +48,14 @@ Plug 'tpope/vim-git'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
-" Plug 'vim-test/vim-test'
+Plug 'AndrewRadev/linediff.vim'
 
 " Colorschemes
-Plug 'ajmwagar/vim-deus'
-Plug 'drewtempelmeyer/palenight.vim'
 Plug 'embark-theme/vim'
 Plug 'haishanh/night-owl.vim'
-Plug 'rhysd/vim-color-spring-night'
 Plug 'sainnhe/everforest'
 Plug 'wadackel/vim-dogrun'
-Plug 'mhartington/oceanic-next'
 Plug 'savq/melange'
-Plug 'ackyshake/Spacegray.vim'
 
 if has('nvim')
     if executable('node') && executable('yarn')
@@ -88,6 +83,7 @@ if has('nvim')
     Plug 'ckolkey/ts-node-action'
     Plug 'glepnir/dashboard-nvim'
     Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+    Plug 'kevinhwang91/nvim-bqf'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
@@ -111,8 +107,13 @@ if has('nvim')
     Plug 'glepnir/zephyr-nvim'
     Plug 'kartikp10/noctis.nvim'
     Plug 'w3barsi/barstrata.nvim'
-    Plug 'projekt0n/github-nvim-theme'
     Plug 'rebelot/kanagawa.nvim'
+    Plug 'bluz71/vim-moonfly-colors'
+    Plug 'hoprr/calvera-dark.nvim'
+    Plug 'ramojus/mellifluous.nvim'
+    Plug 'lewpoly/sherbet.nvim'
+    Plug 'kvrohit/mellow.nvim'
+    Plug 'daschw/leaf.nvim'
 
     " dap
     Plug 'mfussenegger/nvim-dap'
@@ -498,19 +499,26 @@ endif
 " \'aurora',
 let s:preferred_colors = [
     \'barstrata',
+    \'calvera',
     \'catppuccin',
     \'dogrun',
     \'duskfox',
     \'embark',
     \'everforest',
     \'kanagawa',
+    \'kanagawa-dragon',
+    \'leaf',
     \'melange',
+    \'mellifluous',
+    \'mellow',
+    \'moonfly',
     \'moonlight',
     \'night-owl',
     \'nightfox',
+    \'noctis',
     \'nordfox',
-    \'OceanicNext',
-    \'spring-night',
+    \'onedark',
+    \'sherbet',
     \'spacegray',
     \'terafox',
     \'tokyonight-night',
@@ -1113,6 +1121,10 @@ let g:lightline.enable = {
     \'statusline': 1,
     \'tabline': 0
 \}
+" }}}
+
+" linediff.vim {{{
+nnoremap <leader>dv :Linediff
 " }}}
 
 " neoformat {{{
