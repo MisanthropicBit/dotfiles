@@ -57,7 +57,7 @@ for nigiri_file in $nigiri_files
 end
 
 set -x MYSQL_PS1 "mysql v\v [\U][\d]> "
-set -x BAT_THEME zenburn
+set -x BAT_THEME OneHalfDark
 set -x FZF_DEFAULT_COMMAND "fd -tf --color=never"
 set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND --search-path \$dir"
 set -x FZF_CTRL_T_OPTS '--multi --bind="ctrl-s:select,ctrl-u:deselect,ctrl-f:reload(find . -type f \$dir),ctrl-d:reload(find . -type d \$dir)" --preview="bat -n --color=always {}"'
