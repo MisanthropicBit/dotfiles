@@ -31,6 +31,9 @@ neotest.setup{
     quickfix = {
         open = false,
     },
+    output = {
+        open_on_run = false,
+    }
 }
 
 map.leader('n', 'tt', neotest.run.run, { desc = 'Run the test under the cursor' })
@@ -41,7 +44,7 @@ map.leader('n', 'tp', neotest.jump.prev, { desc = 'Jump to previous test' })
 map.leader('n', 'tn', neotest.jump.next, { desc = 'Jump to next test' })
 map.leader('n', 'tP', function() neotest.jump.prev({ status = 'failed' }) end, { desc = 'Jump to previous failed test' })
 map.leader('n', 'tN', function() neotest.jump.next({ status = 'failed' }) end, { desc = 'Jump to next failed test' })
-map.leader('n', 'to', neotest.output.open, { desc = 'Open test output' })
+map.leader('n', 'to', function() neotest.output.open({ enter = true }) end, { desc = 'Open test output' })
 map.leader('n', 'tL', function() neotest.output.open({ last_run = true }) end, { desc = 'Open test output for the last run test' })
 map.leader('n', 'tO', neotest.output_panel.toggle, { desc = 'Toggle the test output panel' })
 map.leader('n', 'td', function() neotest.run.run({ strategy = 'dap' }) end, { desc = 'Run the test under the cursor using dap' })
