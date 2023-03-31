@@ -291,7 +291,7 @@ let s:exclude_colorschemes = []
 
 " Find and choose and random user-defined colorscheme
 function! s:RandomColorscheme(bang)
-    let user_colorschemes = s:GetPluginColorschemes(!a:bang)
+    let user_colorschemes = GetPluginColorschemes(!a:bang)
 
     if &shell =~# 'bash'
         let random = system('echo -n $RANDOM')
@@ -311,7 +311,7 @@ endfunction
 
 " Return a list of colorschemes installed by plugin, excluding built-in
 " colorschemes
-function! s:GetPluginColorschemes(use_preferred, ...) abort
+function! GetPluginColorschemes(use_preferred, ...) abort
     let user_colorschemes = []
 
     if a:use_preferred && exists('s:preferred_colors')
@@ -977,7 +977,7 @@ let g:fzf_action = {
 
 " Remove the built-in colors from :Colors command
 command! -bang Colors call fzf#run(fzf#wrap({
-    \'source':  fzf#vim#_uniq(s:GetPluginColorschemes(0)),
+    \'source':  fzf#vim#_uniq(GetPluginColorschemes(0)),
     \'sink':    'colo',
     \'options': '+m --prompt="Colors> "',
 \}))
