@@ -4,6 +4,7 @@ local plugins = {
     'dashboard',
     'fzf-lua',
     'goto-preview',
+    'hex',
     'indent_blankline',
     'lsp_signature',
     'lspsaga',

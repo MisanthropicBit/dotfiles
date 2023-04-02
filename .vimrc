@@ -84,6 +84,7 @@ if has('nvim')
     Plug 'glepnir/dashboard-nvim'
     Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
     Plug 'kevinhwang91/nvim-bqf'
+    Plug 'RaafatTurki/hex.nvim'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
