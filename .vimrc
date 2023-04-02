@@ -34,7 +34,6 @@ Plug 'mhinz/vim-startify'
 " Plug 'bfrg/vim-cpp-modern'
 Plug 'MisanthropicBit/vim-numbers'
 Plug 'MisanthropicBit/vim-yank-window'
-Plug 'MisanthropicBit/decipher.nvim'
 Plug 'pangloss/vim-javascript'
 Plug 'Raimondi/delimitMate'
 Plug 'rhysd/git-messenger.vim'
@@ -124,12 +123,15 @@ if has_nvim
     Plug 'rcarriga/nvim-dap-ui'
 
     " Local projects
-    Plug '~/projects/vim/decipher.nvim'
     Plug '~/projects/vim/neotest-fuzzy'
-endif
 
-" Local plugins and active forks
-Plug '~/projects/vim/vim-warlock'
+    " NOTE: isdirectory doesn't check if the directory is readable
+    if isdirectory(expand('~/projects/vim/decipher.nvim'))
+        Plug '~/projects/vim/decipher.nvim'
+    else
+        Plug 'MisanthropicBit/decipher.nvim'
+    endif
+endif
 
 runtime private.vim
 
