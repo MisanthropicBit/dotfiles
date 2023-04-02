@@ -21,6 +21,6 @@ local plugins = {
 
 local loader = require('plugins.loader')
 
-table.foreach(plugins, function(idx, value)
-    loader.load(value)
-end)
+for _, plugin in ipairs(plugins) do
+    loader.load(plugin)
+end
