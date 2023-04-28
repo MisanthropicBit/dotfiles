@@ -7,6 +7,8 @@ let mapleader = "\<space>"
 " Set the local leader character
 let maplocalleader = "\<space>"
 
+let has_nvim = has('nvim')
+
 " Plugins {{{
 
 call plug#begin('~/.vim/plugged')
@@ -28,7 +30,6 @@ Plug 'Konfekt/FastFold'
 Plug 'mhinz/vim-startify'
 Plug 'MisanthropicBit/vim-numbers'
 Plug 'MisanthropicBit/vim-yank-window'
-Plug 'MisanthropicBit/decipher.nvim'
 Plug 'pangloss/vim-javascript'
 Plug 'Raimondi/delimitMate'
 Plug 'rhysd/git-messenger.vim'
@@ -53,7 +54,7 @@ Plug 'sainnhe/everforest'
 Plug 'wadackel/vim-dogrun'
 Plug 'savq/melange'
 
-if has('nvim')
+if has_nvim
     if executable('node') && executable('yarn')
         Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
     else
@@ -82,6 +83,7 @@ if has('nvim')
     Plug 'kevinhwang91/nvim-bqf'
     Plug 'mrjones2014/smart-splits.nvim'
     Plug 'nvim-lualine/lualine.nvim'
+    Plug 'RaafatTurki/hex.nvim'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
@@ -119,12 +121,15 @@ if has('nvim')
     Plug 'rcarriga/nvim-dap-ui'
 
     " Local projects
-    Plug '~/projects/vim/decipher.nvim'
     Plug '~/projects/vim/neotest-fuzzy'
-endif
 
-" Local plugins and active forks
-Plug '~/projects/vim/vim-warlock'
+    " NOTE: isdirectory doesn't check if the directory is readable
+    if isdirectory(expand('~/projects/vim/decipher.nvim'))
+        Plug '~/projects/vim/decipher.nvim'
+    else
+        Plug 'MisanthropicBit/decipher.nvim'
+    endif
+endif
 
 runtime private.vim
 
@@ -134,7 +139,7 @@ call plug#end()
 
 " Functions {{{
 
-if !has('nvim')
+if !has_nvim
     " Show syntax group, linked group and colors for current word
     function! <SID>SynStack() abort
         if !exists('*synID') || !exists('*synIDtrans') || !exists('*synIDattr')
@@ -483,7 +488,7 @@ set noswapfile
 
 " Attempt to use true-colors in terminal vim, otherwise fall back to 256 colors
 if !has('gui_running')
-    if has('termguicolors') || has('nvim')
+    if has('termguicolors') || has_nvim
         set termguicolors
 
         " Setting these two ANSI color escape sequences is sometimes necessary
@@ -627,7 +632,7 @@ vnoremap <silent> K :call <SID>FoldSafeVisualMove(-1)<cr>
 " Open the 'goto file' in a new tab
 nnoremap gf <c-w>gf
 
-if !has('nvim')
+if !has_nvim
     " Yank from cursor to the end of line instead of the entire line
     nnoremap Y y$
 end
@@ -912,7 +917,7 @@ let g:airline#extensions#ale#enabled = 0
 let g:ale_echo_msg_format = '[%linter%] %s (%code%:%severity%)'
 let g:ale_virtualtext_cursor = 0
 
-if has('nvim')
+if has_nvim
     " Point to neovim python3 virtual environment for specific language servers
     " let g:ale_python_jedils_executable = expand(s:python3_host_prog_base_path . '/bin/jedi-language-server')
     " let g:ale_vim_vint_executable = expand(s:python3_host_prog_base_path . '/bin/vint')
@@ -1186,7 +1191,7 @@ let g:yank_window#enable_mappings = 1
 " }}}
 
 " neovim/lua config {{{
-if has('nvim')
+if has_nvim
     " Enable interactive command line substitution without window splitting
     set inccommand=nosplit
 
