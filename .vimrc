@@ -19,17 +19,13 @@ Plug 'AndrewRadev/sideways.vim'
 Plug 'andymass/vim-matchup'
 Plug 'arthurxavierx/vim-caser'
 Plug 'dag/vim-fish'
-" Plug 'dense-analysis/ale'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
-Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/goyo.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'Konfekt/FastFold'
 Plug 'mhinz/vim-startify'
-" Plug 'bfrg/vim-cpp-modern'
 Plug 'MisanthropicBit/vim-numbers'
 Plug 'MisanthropicBit/vim-yank-window'
 Plug 'MisanthropicBit/decipher.nvim'
@@ -1031,105 +1027,6 @@ let g:gitgutter_sign_modified_removed = '║'
 
 " git-messenger.vim {{{
 let g:git_messenger_conceal_word_diff_marker = 1
-" }}}
-
-" goyo.vim {{{
-" Use the width of the textwidth option as the default width for goyo
-" Use a buffer of 5 for extra spaces in formatting or commented lines
-let g:goyo_width = max([90, &textwidth + 5])
-
-" Keep line numbers around when Goyo is enabled
-let g:goyo_linenr = 1
-
-" Function for toggling goyo mode since quitting goyo mode with 'q' puts the
-" cursor at the top of the file
-function! s:goyo_toggle() abort
-    if exists('#goyo')
-        silent Goyo!
-    else
-        " Use the width of the textwidth option as the default width for goyo
-        " Use a buffer of 5 for extra spaces in formatting or commented lines
-        let g:goyo_width = max([&textwidth, 80]) + 5
-
-        silent Goyo
-    endif
-endfunction
-
-" Quickly set up Goyo with a width of 50%
-nnoremap <silent> <localleader>gy :call <SID>goyo_toggle()<cr>
-" }}}
-
-" lightline.vim {{{
-function! CurrentColorscheme() abort
-    return '  ' . g:colors_name
-endfunction
-
-function! LightlineFileTypeSymbol()
-    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-endfunction
-
-function! LightlineFileFormatSymbol()
-    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-endfunction
-
-function! LightlineGitBranch()
-    let head = FugitiveHead()
-
-    if !empty(head)
-        return '  ' . FugitiveHead()
-    else
-        return '  -' . FugitiveHead()
-    endif
-endfunction
-
-function! LightlineFilename()
-    return '  ' . expand('%:t')
-endfunction
-
-function! LightlineReadonly()
-    let ro = &readonly
-
-    if ro
-        return ''
-    else
-        return ''
-    endif
-endfunction
-
-function! LightlineModified()
-    let modified = &modified
-
-    if modified
-        return ' '
-    else
-        return ''
-    endif
-endfunction
-
-let g:lightline = {
-    \'active': {
-        \'left': [ [ 'mode', 'paste' ],
-        \[ 'gitbranch', 'current_colorscheme', 'readonly', 'filename' ] ]
-    \},
-    \'component_function': {
-        \'gitbranch': 'LightlineGitBranch',
-        \'current_colorscheme': 'CurrentColorscheme',
-        \'filetype': 'LightlineFileTypeSymbol',
-        \'fileformat': 'LightlineFileFormatSymbol',
-        \'filename': 'LightlineFilename',
-        \'readonly': 'LightlineReadonly',
-        \'modified': 'LightlineModified',
-    \},
-    \'component_type': {
-        \'gitbranch': 'error',
-    \},
-    \'colorscheme': 'nord'
-\}
-
-let g:lightline.enable = {
-    \'statusline': 1,
-    \'tabline': 0
-\}
 " }}}
 
 " linediff.vim {{{
