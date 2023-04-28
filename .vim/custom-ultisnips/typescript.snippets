@@ -1,11 +1,19 @@
 extends typescript, typescript_react
 
+snippet im "import"
+import $1 from '$1'
+endsnippet
+
 snippet exa "export as" b
 export * as $1 from '$2'
 endsnippet
 
 snippet exf "export from" b
-export { $1 } from '$2'
+export { $1 } from '$2$1 from '$1'
+endsnippet
+
+snippet exa "export as" b
+export * as $1'
 endsnippet
 
 snippet eaf
@@ -33,4 +41,10 @@ endsnippet
 snippet expcat "expect callCount and args"
 expect($1.callCount).toEqual(${2:1})
 expect($1.args[0]$3).toEqual([$4])
+endsnippet
+
+snippet et "export type"
+export type $1 = {
+	$2
+}
 endsnippet
