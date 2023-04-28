@@ -1,5 +1,7 @@
 local M = {}
 
+local ansi = require('ansi')
+
 -- Completion kinds
 M.kind_icons = {
     Class = ' ',
@@ -49,5 +51,15 @@ M.kind_to_hl = {
     Value = 'Number',
     Variable = 'Identifier',
 }
+
+function M.lsp_kind_to_rgb_ansi(lsp_kind)
+    local hl_name = M.kind_to_hl[lsp_kind]
+
+    if hl_name == nil then
+        return nil
+    end
+
+    return ansi.highlight_to_rgb_ansi(hl_name)
+end
 
 return M
