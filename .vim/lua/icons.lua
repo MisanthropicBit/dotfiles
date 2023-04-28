@@ -1,4 +1,7 @@
 return {
+    color = {
+        scheme = '',
+    },
     debugging = {
         breakpoint = '',
         breakpoint_condition = '',
@@ -28,10 +31,14 @@ return {
     },
     git = {
         logo = '',
+        added = ' ',
+        modified = ' ',
+        removed = ' ',
     },
     files = {
         files = '',
         new = 'ﱐ',
+        readonly = '',
     },
     misc = {
         clock = '',
@@ -43,5 +50,9 @@ return {
         search = '',
         search_files = '󰱼',
         update = '',
+    },
+    lines = {
+        vertical = '┃',
+        double_vertical = '║',
     },
 }

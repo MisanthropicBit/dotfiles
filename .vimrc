@@ -84,6 +84,8 @@ if has('nvim')
     Plug 'glepnir/dashboard-nvim'
     Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
     Plug 'kevinhwang91/nvim-bqf'
+    Plug 'mrjones2014/smart-splits.nvim'
+    Plug 'nvim-lualine/lualine.nvim'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'

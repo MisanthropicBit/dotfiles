@@ -62,4 +62,20 @@ function M.lsp_kind_to_rgb_ansi(lsp_kind)
     return ansi.highlight_to_rgb_ansi(hl_name)
 end
 
+
+function M.get_active_clients_for_filetype(filetype)
+    local active_clients = vim.lsp.get_active_clients()
+    local clients = {}
+
+    for _, client in ipairs(active_clients) do
+        local filetypes = client.config.filetypes
+
+        if filetypes and vim.fn.index(filetypes, filetype) ~= 1 then
+            table.insert(clients, client)
+        end
+    end
+
+    return clients
+end
+
 return M
