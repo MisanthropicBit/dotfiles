@@ -1,4 +1,5 @@
 local map = require('mappings')
+local lsp_common = require('lsp_common')
 
 local has_lspsaga, lspsaga = pcall(require, 'lspsaga')
 
@@ -28,6 +29,14 @@ if has_lspsaga then
         beacon = {
             enable = false,
         },
+        ui = {
+            kind = {
+                ['Method'] = {
+                    lsp_common.kind_icons['Method'],
+                    lsp_common.kind_to_hl['Method'],
+                },
+            },
+        },
     }
 
     local lspsaga_diagnostic = require('lspsaga.diagnostic')
@@ -42,7 +51,7 @@ if has_lspsaga then
     end
 
     -- Overwrite lsp defaults with lspsaga
-    map.leader('n', 'll', '<cmd>Lspsaga show_line_diagnostics<cr>', { desc = 'Show line diagnostics' })
+    map.leader('n', 'll', '<cmd>Lspsaga show_line_diagnostics ++unfocus<cr>', { desc = 'Show line diagnostics' })
     map.leader('n', 'la', '<cmd>Lspsaga code_action<cr>', { desc = 'Open code action menu' })
     map.leader('v', 'la', '<cmd>Lspsaga code_action<cr>', { desc = 'Open code action menu in visual mode' })
     map.leader('n', 'lp', '<cmd>Lspsaga diagnostic_jump_prev<cr>', { desc = 'Jump to previous diagnostic' })
