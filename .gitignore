@@ -11,3 +11,4 @@ fishd.*
 .config/fish/fish_variables
 private.vim
 private_plugins.lua
+.vim/lua/plugins/work/
