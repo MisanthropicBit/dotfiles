@@ -78,10 +78,12 @@ local on_attach = function(client, bufnr)
     map.set('n', '<localleader>lf', vim.lsp.buf.format, map.merge(map_options, { desc = 'Format code under cursor' }))
     map.set('v', '<localleader>lf', vim.lsp.buf.format, map.merge(map_options, { desc = 'Format code in range' }))
 
+    -- Set up a document symbol mapping if the mapping is not already bound (by e.g. fzf-lua)
     if vim.fn.maparg('<leader>ss', 'n') == '' then
         map.set('n', '<localleader>ss', vim.lsp.buf.document_symbol, map.merge(map_options, { desc = 'Show document symbol' }))
     end
 
+    -- Set up fallback mappings if lspsaga is not installed
     if not has_lspsaga then
         map.set('n', '<localleader>la', vim.lsp.buf.code_action, map.merge(map_options, { desc = 'Open code action menu' }))
         map.set('n', '<localleader>lm', vim.lsp.buf.rename, map.merge(map_options, { desc = 'Rename under cursor' }))
@@ -153,26 +155,5 @@ if vim.fn.executable('lua-language-server') then
     }
 end
 
-lspconfig.eslint.setup{ on_attach = on_attach }
+-- lspconfig.eslint.setup{ on_attach = on_attach }
 lspconfig.tsserver.setup{ on_attach = on_attach }
--- }}}
-
--- lsp fuzzy symbols {{{
-if vim.g.loaded_fzf then
-    local fuzzy_lsp_symbols = require('fuzzy_lsp_symbols')
-
-    vim.lsp.handlers['textDocument/documentSymbol'] = fuzzy_lsp_symbols.fuzzy_symbol_handler
-
-    local function invoke_symbol_handler(arg)
-        vim.b.fuzzy_symbol_handler_command_arg = arg
-        vim.lsp.buf.document_symbol()
-    end
-
-    vim.api.nvim_create_user_command('Symbols', invoke_symbol_handler, {
-        nargs = '?',
-        complete = function()
-            return vim.tbl_map(string.lower, vim.tbl_keys(require('lsp_common').kind_icons))
-        end
-    })
-end
--- }}}

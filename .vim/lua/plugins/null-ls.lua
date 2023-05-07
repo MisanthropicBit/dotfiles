@@ -10,10 +10,9 @@ null_ls.setup{
         }),
         null_ls.builtins.code_actions.eslint_d,
         null_ls.builtins.diagnostics.eslint_d,
-    }
+    },
 }
 
----@param command_func fun(client: vim.lsp.client)
 local function null_ls_command(command_func)
     return function()
         local null_ls_client
