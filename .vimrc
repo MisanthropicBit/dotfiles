@@ -84,6 +84,7 @@ if has_nvim
     Plug 'mrjones2014/smart-splits.nvim'
     Plug 'nvim-lualine/lualine.nvim'
     Plug 'RaafatTurki/hex.nvim'
+    Plug 'Wansmer/treesj'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
