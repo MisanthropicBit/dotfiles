@@ -62,12 +62,22 @@ if not has_lspsaga then
     map.set('n', '<localleader>ll', vim.diagnostic.open_float, { desc = 'Open diagnostic float' })
 end
 
+-- We don't want tsserver to format stuff as the default formatting doesn't
+-- seem to respect project-local settings for eslint and prettier. Instead,
+-- we implicitly rely on null-ls formatting
+local lsp_format_wrapper = function()
+    vim.lsp.buf.format({ filter = function(client)
+        return client.name ~= 'tsserver'
+    end})
+end
+
 -- Use on_attach to only map the following keys after the language server
 -- attaches to the current buffer
 local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     local map_options = map.with_default_options({ buffer = bufnr })
+
     map.set('n', '<localleader>lc', vim.lsp.buf.declaration, map.merge(map_options, { desc = 'Jump to declaration under cursor' }))
     map.set('n', '<localleader>ld', vim.lsp.buf.definition, map.merge(map_options, { desc = 'Jump to definition under cursor' }))
     map.set('n', 'gd', vim.lsp.buf.definition, map.merge(map_options, { desc = 'Jump to definition under cursor' }))
@@ -75,8 +85,8 @@ local on_attach = function(client, bufnr)
     map.set('n', '<s-m>', vim.lsp.buf.hover, map.merge(map_options, { desc = 'Open lsp float' }))
     map.set('n', '<localleader>lt', vim.lsp.buf.type_definition, map.merge(map_options, { desc = 'Jump to type definition' }))
     map.set('n', '<localleader>lr', vim.lsp.buf.references, map.merge(map_options, { desc = 'Show lsp references' }))
-    map.set('n', '<localleader>lf', vim.lsp.buf.format, map.merge(map_options, { desc = 'Format code under cursor' }))
-    map.set('v', '<localleader>lf', vim.lsp.buf.format, map.merge(map_options, { desc = 'Format code in range' }))
+    map.set('n', '<localleader>lf', lsp_format_wrapper, map.merge(map_options, { desc = 'Format code in buffer' }))
+    map.set('v', '<localleader>lf', lsp_format_wrapper, map.merge(map_options, { desc = 'Format code in range' }))
 
     -- Set up a document symbol mapping if the mapping is not already bound (by e.g. fzf-lua)
     if vim.fn.maparg('<leader>ss', 'n') == '' then
