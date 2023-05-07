@@ -114,6 +114,7 @@ if has_nvim
     Plug 'lewpoly/sherbet.nvim'
     Plug 'kvrohit/mellow.nvim'
     Plug 'daschw/leaf.nvim'
+    Plug 'maxmx03/fluoromachine.nvim'
 
     " dap
     Plug 'mfussenegger/nvim-dap'
@@ -510,6 +511,7 @@ let s:preferred_colors = [
     \'duskfox',
     \'embark',
     \'everforest',
+    \'fluoromachine',
     \'kanagawa',
     \'kanagawa-dragon',
     \'leaf',
