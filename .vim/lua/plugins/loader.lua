@@ -1,6 +1,6 @@
 local loader = {}
 
-local exclude_dirs = { 'init', 'loader', 'nvim-bqf', 'other' }
+local exclude_dirs = { 'init', 'loader', 'other' }
 
 --- Load a plugin
 ---@param plugin_name string

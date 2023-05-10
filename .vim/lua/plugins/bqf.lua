@@ -1,4 +1,4 @@
-local bqf = require('nvim-bqf')
+local bqf = require('bqf')
 
 bqf.setup({
     filter = {
