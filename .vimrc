@@ -17,10 +17,9 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 
 Plug 'airblade/vim-gitgutter'
-Plug 'AndrewRadev/sideways.vim'
 Plug 'andymass/vim-matchup'
 Plug 'arthurxavierx/vim-caser'
-Plug 'dag/vim-fish'
+" Plug 'dag/vim-fish'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -28,15 +27,11 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'Konfekt/FastFold'
 Plug 'mhinz/vim-startify'
-Plug 'MisanthropicBit/vim-numbers'
 Plug 'MisanthropicBit/vim-yank-window'
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
 Plug 'Raimondi/delimitMate'
 Plug 'rhysd/git-messenger.vim'
-Plug 'ryanoasis/vim-devicons'
-Plug 'scrooloose/nerdtree'
 Plug 'sirver/UltiSnips'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
@@ -72,7 +67,7 @@ if has_nvim
     Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
     Plug 'nvim-lua/plenary.nvim'
     Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
-    Plug 'sbdchd/neoformat'
+    " Plug 'sbdchd/neoformat'
     Plug 'nat-418/boole.nvim'
     Plug 'ray-x/lsp_signature.nvim'
     Plug 'lukas-reineke/indent-blankline.nvim'
@@ -132,9 +127,9 @@ if has_nvim
     else
         Plug 'MisanthropicBit/decipher.nvim'
     endif
+else
+    Plug 'ryanoasis/vim-devicons'
 endif
-
-runtime private.vim
 
 call plug#end()
 
@@ -207,19 +202,6 @@ function! s:OpenScratchBuffer(text, height, location, leave_map) abort
     setlocal bufhidden=hide
     setlocal noswapfile
     setlocal readonly
-endfunction
-
-" Automatically close the NERDTree file explorer window
-" if it is the only window left
-" Credit: https://github.com/scrooloose/nerdtree/issues/21
-function! s:CloseNerdTreeIfOnlyWindow()
-    if exists('t:NERDTreeBufName')
-        if bufwinnr(t:NERDTreeBufName) != -1
-            if winnr('$') == 1
-                q
-            endif
-        endif
-    endif
 endfunction
 
 " Move a range of lines up or down while retaining folds
@@ -346,47 +328,6 @@ function! GetPluginColorschemes(use_preferred, ...) abort
     return uniq(sort(user_colorschemes))
 endfunction
 
-" Find the root directory of the current project
-function s:LocateProjectRoot(depth, ...) abort
-    let gitdir = system('git rev-parse --show-toplevel')
-
-    if gitdir !~# '^fatal:'
-      return gitdir
-    endif
-
-    let root_dir_markers = ['.git', '.hg', '.svn', '.bzr']
-    let root_file_markers = ['.gitignore', 'MANIFEST.in', 'tox.ini', 'setup.py']
-    let depth = a:depth
-    let cwd = getcwd()
-
-    if a:0 > 0
-        let root_dir_markers += a:1
-    endif
-
-    if a:0 > 1
-        let root_file_markers += a:2
-    endif
-
-    while depth > 0
-        for dir in root_dir_markers
-            if !empty(finddir(dir, cwd))
-                return cwd
-            endif
-        endfor
-
-        for filename in root_file_markers
-            if !empty(findfile(filename, cwd))
-                return cwd
-            endif
-        endfor
-
-        let cwd = fnamemodify(cwd, ':h')
-        let depth -= 1
-    endwhile
-
-    return ''
-endfunction
-
 " }}}
 
 " General {{{
@@ -410,11 +351,6 @@ set encoding=utf8
 
 " Set margin for the zt and zb commands
 set scrolloff=3
-
-" Allow mouse clicks to change cursor position
-if has('mouse')
-    set mouse=a
-endif
 
 " No sounds on errors
 set noerrorbells
@@ -596,8 +532,10 @@ set cinkeys-=0#
 
 " Mappings {{{
 
-" Display the syntax group(s) of the current word
-nnoremap <silent> <localleader>sg :call <SID>SynStack()<cr>
+if !has_nvim
+    " Display the syntax group(s) of the current word
+    nnoremap <silent> <localleader>sg :call <SID>SynStack()<cr>
+endif
 
 " Shortcut for disabling highlighting
 nnoremap <silent> <localleader><space> :nohl<cr>
@@ -689,12 +627,6 @@ vnoremap <PageDown> <nop>
 nnoremap <c-o> <c-o>zz
 nnoremap <c-i> <c-i>zz
 
-" Quickly look up a word in the dictionary
-if has('mac') || has('macunix')
-    nnoremap <silent> <leader>dd :Dict!<cr>
-    nnoremap <silent> <leader>DD :Dict<cr>
-endif
-
 " Use familiar cmdline binding in vim's cmdline
 cnoremap <c-a> <c-b>
 cnoremap <m-left> <c-left>
@@ -705,7 +637,6 @@ cnoremap <c-l> <c-right>
 " Prefill different branches on the command line for fugitive commands
 cnoremap <c-o> origin/master:
 cnoremap <c-b> <c-r>=printf('origin/%s', FugitiveHead())<cr>
-
 
 " Tag TODOs with a timestamp
 inoremap <expr> TODOT printf('TODO (%s): ', strftime('%Y-%m-%d, %H:%M:%S'))
@@ -808,7 +739,6 @@ set splitright
 " }}}
 
 " Folding {{{
-
 " Only close folds that are at level 3 or higher
 set foldlevel=3
 
@@ -908,70 +838,6 @@ let g:netrw_liststyle = 3
 
 " Plugin configuration {{{
 
-" ALE {{{
-let g:ale_hover_to_floating_preview = 1
-let g:ale_floating_window_border = ['│', '─', '╭', '╮', '╯', '╰']
-let g:ale_set_signs = 0
-let g:ale_sign_error = '✖ '
-let g:ale_sign_warning = '!'
-let g:ale_sign_style_error = '⚡ '
-let g:ale_sign_style_warning = '⛔  '
-let g:ale_sign_info = '💡  '
-let g:airline#extensions#ale#enabled = 0
-let g:ale_echo_msg_format = '[%linter%] %s (%code%:%severity%)'
-let g:ale_virtualtext_cursor = 0
-
-if has_nvim
-    " Point to neovim python3 virtual environment for specific language servers
-    " let g:ale_python_jedils_executable = expand(s:python3_host_prog_base_path . '/bin/jedi-language-server')
-    " let g:ale_vim_vint_executable = expand(s:python3_host_prog_base_path . '/bin/vint')
-endif
-
-let s:ale_js_ts_linters = ['prettier']
-let s:ale_js_ts_fixers = ['prettier', 'eslint']
-
-" Prefer using local .prettierrc configs. Required for prettier < v1.4.0
-let g:ale_javascript_prettier_use_local_config = 1
-
-let g:ale_linters = {
-    \'python': ['flake8', 'mypy', 'pylint', 'pyright', 'jedils'],
-\}
-
-" let g:ale_linters = {
-"     \'javascript': s:ale_js_ts_linters,
-"     \'javascriptreact': s:ale_js_ts_linters,
-"     \'typescript': s:ale_js_ts_linters,
-"     \'typescriptreact': s:ale_js_ts_linters,
-" \}
-
-let g:ale_fixers = {
-    \'*': ['remove_trailing_lines', 'trim_whitespace'],
-    \'python': ['isort'],
-    \'javascript': s:ale_js_ts_fixers,
-    \'javascriptreact': s:ale_js_ts_fixers,
-    \'typescript': s:ale_js_ts_fixers,
-    \'typescriptreact': s:ale_js_ts_fixers,
-\}
-
-set omnifunc=ale#completion#OmniFunc
-
-nmap <silent> <leader>an <Plug>(ale_next_wrap)
-nmap <silent> <leader>ap <Plug>(ale_previous_wrap)
-nmap <silent> <leader>af <Plug>(ale_fix)
-nmap <silent> <leader>at <Plug>(ale_toggle)
-nmap <silent> <leader>ao :ALEOrganizeImports<cr>
-nmap <silent> <leader>ac <Plug>(ale_documentation)
-nmap <silent> <leader>ar <Plug>(ale_find_references)
-nmap <silent> <leader>ag <Plug>(ale_go_to_definition)
-nmap <silent> <leader>as <Plug>(ale_go_to_definition_in_split)
-nmap <silent> <leader>av <Plug>(ale_go_to_definition_in_vsplit)
-nmap <silent> <leader>ab <Plug>(ale_go_to_definition_in_tab)
-nmap <silent> <leader>am :ALERename<cr>
-nmap <silent> <leader>ah <Plug>(ale_hover)
-nmap <silent> <leader>ad <Plug>(ale_detail)
-
-" }}}
-
 " delimitMate {{{
 " Expand any pair of delimiting characters when pressing enter
 let delimitMate_expand_cr = 1
@@ -996,14 +862,6 @@ command! -bang Colors call fzf#run(fzf#wrap({
     \'options': '+m --prompt="Colors> "',
 \}))
 
-" Find files within a project (marked by .git, .gitignore, setup.py etc.)
-command! -bang PFiles call fzf#vim#files(s:LocateProjectRoot(3), <bang>0)
-
-command! -bang -nargs=* GGrep
-\ call fzf#vim#grep(
-\   'git grep --line-number -- '.shellescape(<q-args>), 0,
-\   fzf#vim#with_preview({'dir': '/Users/alexb/projects/react-native/BakerFriend'}), <bang>0)
-
 command! -bang -nargs=* -complete=dir Dirs
 \ call fzf#run(fzf#wrap({'source': 'fd --type d --color=never', 'options': ['--preview', 'tree -C -L 1 {}']}))
 
@@ -1017,7 +875,6 @@ nmap <silent> gj <Plug>(GitGutterNextHunk)zz
 nmap <silent> gk <Plug>(GitGutterPrevHunk)zz
 nmap <silent> <localleader>gv <Plug>(GitGutterPreviewHunk)
 nmap <silent> gs <Plug>(GitGutterStageHunk)
-nmap <silent> <leader>ht <Plug>(GitGutterBufferToogle)
 
 let g:gitgutter_floating_window_options = {
     \'relative': 'cursor',
@@ -1042,39 +899,6 @@ let g:git_messenger_conceal_word_diff_marker = 1
 nnoremap <leader>dv :Linediff
 " }}}
 
-" neoformat {{{
-let g:neoformat_only_msg_on_error = 1
-let g:neoformat_try_node_exe = 1
-" }}}
-
-" NERDTree {{{
-" Shortcut to toggle NERDTree
-noremap <silent> <c-n> :NERDTreeToggle<cr>
-
-" Ignore python bytecode files and swap files
-let NERDTreeIgnore = ['\~$', '\.py[co]$', '\.sw[op]$']
-
-" Always show hidden files
-let NERDTreeShowHidden = 1
-
-" Show line numbers
-let NERDTreeShowLineNumbers = 1
-
-" Remap keys for opening files in splits to resemble
-" ':split' and ':vsplit'
-let g:NERDTreeMapOpenVSplit = 'v'
-let g:NERDTreeMapOpenSplit = 's'
-
-augroup NERDTree
-    autocmd WinEnter * call s:CloseNerdTreeIfOnlyWindow()
-
-    if v:version >= 703
-        " Use relative line numbering for quick navigation
-        autocmd FileType nerdtree setlocal relativenumber
-    endif
-augroup END
-" }}}
-
 " UltiSnips {{{
 " Split the :UltiSnipsEdit window horizontally or vertically depending on context
 let g:UltiSnipsEditSplit = 'context'
@@ -1091,34 +915,12 @@ let g:ultisnips_javascript = {
 nnoremap <leader>sf :UltiSnipsEdit!<cr>
 " }}}
 
-" vim-airline {{{
-" Fancy tabs!
-let g:airline#extensions#tabline#enabled = 1
-
-" Show tab numbers
-let g:airline#extensions#tabline#show_tab_nr = 1
-let g:airline#extensions#tabline#tab_nr_type = 1
-
-" Do not show buffers when only a single tab is open
-let g:airline#extensions#tabline#show_buffers = 0
-
-" Use the sweet powerline fonts
-let g:airline_powerline_fonts = 1
-
-" Enable the Syntastic plugin for vim-airline
-let g:airline#extensions#syntastic#enabled = 1
-
-" Enable Tagbar annotations in the statusline
-let g:airline#extensions#tagbar#enabled = 1
-
-" Limit the length of long branch names (appends '...')
-let g:airline#extensions#branch#displayed_head_limit = 32
-" }}}
-
 " vim-devicons {{{
-let g:DevIconsEnableFoldersOpenClose = 1
-" let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
-" let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['mysql'] = g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['sql']
+if !has_nvim
+    let g:DevIconsEnableFoldersOpenClose = 1
+    " let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+    " let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['mysql'] = g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['sql']
+endif
 " }}}
 
 " vim-easy-align {{{
@@ -1152,17 +954,16 @@ nnoremap <silent> <leader>gr :Gcached<cr>
 " }}}
 
 " vim-startify {{{
-if &encoding == 'utf-8'
-    let g:startify_fortune_use_unicode = 1
-endif
-
 let g:startify_custom_header_quotes = [
     \['The optimal allocation is one that never happens.', '', '- Joseph E. Hoag'],
     \['Design is, as always, the art of finding compromises.', '', '- Eric Lippert'],
     \['Abstract interpretation allows us to ask the question: "What information can we glean from our program before we run it, possibly sharing the answers with an interpreter or a compiler?"', '', '- Friedman and Mendhekar'],
     \['The goal of abstract interpretation is to allow the user to do program analysis with a set of values that abstract another set of values.', '', '- Friedman and Mendhekar']
 \] + startify#fortune#predefined_quotes()
-let g:startify_disable_at_vimenter = 1
+
+if has_nvim
+    let g:startify_disable_at_vimenter = 1
+endif
 " }}}
 
 " vim-surround {{{
