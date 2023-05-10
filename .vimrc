@@ -80,6 +80,7 @@ if has_nvim
     Plug 'ckolkey/ts-node-action'
     Plug 'glepnir/dashboard-nvim'
     Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+    Plug 'stevearc/oil.nvim'
     Plug 'kevinhwang91/nvim-bqf'
     Plug 'mrjones2014/smart-splits.nvim'
     Plug 'nvim-lualine/lualine.nvim'
