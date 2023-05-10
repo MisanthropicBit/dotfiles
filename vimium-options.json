@@ -1,0 +1,56 @@
+{
+  "settingsVersion": "1.67.6",
+  "exclusionRules": [
+    {
+      "pattern": "https?://github.com/*",
+      "passKeys": "/"
+    },
+    {
+      "pattern": "https?://calendar.google.com/*",
+      "passKeys": "?npjkdwmxayces/tg"
+    },
+    {
+      "pattern": "https?://www.youtube.com/*",
+      "passKeys": "hjklm"
+    },
+    ,
+    {
+      "pattern": "https?://accounts.google.com/*",
+      "passKeys": ""
+    },
+    {
+      "pattern": "https?://mail.google.com/*",
+      "passKeys": ""
+    },
+    {
+      "pattern": "https://config.qmk.fm/#/test/",
+      "passKeys": ""
+    },
+    {
+      "pattern": "https?://config.qmk.fm/*",
+      "passKeys": ""
+    },
+    ,
+    {
+      "pattern": "https?://www.vimgenius.com/*",
+      "passKeys": ""
+    }
+  ],
+  "filterLinkHints": false,
+  "waitForEnterForFilteredHints": true,
+  "hideHud": false,
+  "keyMappings": "map gp visitPreviousTab\nmap gn togglePinTab\nmap gm toggleMuteTab\nmap g1 firstTab\nmap g2 firstTab count=2\nmap g3 firstTab count=3\nmap g4 firstTab count=4\nmap g5 firstTab count=5\nmap g6 firstTab count=6\nmap g7 firstTab count=7\nmap g8 firstTab count=8\nmap g9 firstTab count=9\nmap <c-p> createTab https://github.com/pulls",
+  "linkHintCharacters": "sadfjklewcmpgh",
+  "linkHintNumbers": "0123456789",
+  "newTabUrl": "about:newtab",
+  "nextPatterns": "next,more,newer,>,›,→,»,≫,>>",
+  "previousPatterns": "prev,previous,back,older,<,‹,←,«,≪,<<",
+  "regexFindMode": false,
+  "ignoreKeyboardLayout": false,
+  "scrollStepSize": 60,
+  "smoothScroll": true,
+  "grabBackFocus": false,
+  "searchEngines": "w: https://www.wikipedia.org/w/index.php?title=Special:Search&search=%s Wikipedia\ng: https://www.google.com/search?q=%s Google\ny: https://www.youtube.com/results?search_query=%s Youtube\ngm: https://www.google.com/maps?q=%s Google maps\ntr: https://translate.google.com/?sl=auto&tl=english&text=%s&op=translate\nd: https://duckduckgo.com/?q=%s DuckDuckGo\nso: https://stackoverflow.com/search?q=%s",
+  "searchUrl": "https://www.google.com/search?q=",
+  "userDefinedLinkHintCss": "div > .vimiumHintMarker {\n/* linkhint boxes */\nbackground: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF785),\n  color-stop(100%,#FFC542));\nborder: 1px solid #E3BE23;\n}\n\ndiv > .vimiumHintMarker span {\n/* linkhint text */\ncolor: black;\nfont-weight: bold;\nfont-size: 12px;\n}\n\ndiv > .vimiumHintMarker > .matchingCharacter {\n}\n\n/* Catppuccin - Frappe palette */\n\n:root {\n  --rosewater: #f2d5cf;\n  --peach: #ef9f76;\n  --blue: #8caaee;\n  --lavender: #babbf1;\n  --green: #a6d189;\n  --text: #c6d0f5;\n  --surface2: #626880;\n  --surface0: #414559;\n  --base: #303446;\n  --mantle: #292c3c;\n}\n#vimiumHintMarkerContainer div.internalVimiumHintMarker, #vimiumHintMarkerContainer div.vimiumHintMarker {\n  padding: 3px 4px;\n  background: var(--peach);\n  border: 1;\n  border-color: var(--mantle);\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);\n}\n\n#vimiumHintMarkerContainer div span {\n  color: var(--mantle);\n  text-shadow: none;\n}\n\n#vimiumHintMarkerContainer div > .matchingCharacter {\n  opacity: 1.0;\n}\n\n#vimiumHintMarkerContainer div > .matchingCharacter ~ span {\n  color: var(--surface2);\n}\n\n#vomnibar {\n  background: var(--base);\n  border: 2px solid var(--lavender);\n  animation: show 200ms cubic-bezier(0, 0, 0.2, 1) forwards;\n  max-height: calc(100vh - 70px);\n  overflow: hidden;\n}\n\n@keyframes show {\n  0% {\n    transform: translateY(50px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateY(0);\n    opacity: 1;\n  }\n}\n\n#vomnibar input {\n  color: var(--text);\n  background: var(--base);\n  border: none;\n  height: unset;\n  padding: 16px 30px;\n}\n\n#vomnibar .vomnibarSearchArea {\n  border: none;\n  padding: unset;\n  background: var(--base)\n}\n\n#vomnibar ul {\n  padding: 0;\n  margin: 0;\n  background: var(--base);\n  border-top: 1px solid var(--surface0);\n}\n\n#vomnibar li {\n  padding: 10px;\n  border-bottom: 1px solid var(--surface0)\n}\n\n#vomnibar li .vomnibarTopHalf,\n#vomnibar li .vomnibarBottomHalf {\n  padding: 3px 0;\n}\n\n#vomnibar li .vomnibarSource {\n  color: var(--peach);\n}\n\n#vomnibar li em,\n#vomnibar li .vomnibarTitle {\n  color: var(--blue);\n  font-weight: bold;\n}\n\n#vomnibar li .vomnibarUrl {\n  color: var(--rosewater);\n}\n\n#vomnibar li .vomnibarMatch {\n  color: var(--green);\n  font-weight: bold;\n}\n\n#vomnibar li .vomnibarTitle .vomnibarMatch {\n  color: var(--blue);\n}\n\n#vomnibar li.vomnibarSelected {\n  background-color: var(--surface0);\n}\n\ndiv.vimiumHUD {\n  background: var(--base);\n  border: none;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);\n}\n\ndiv.vimiumHUD span#hud-find-input,\ndiv.vimiumHUD .vimiumHUDSearchAreaInner {\n  color: var(--text)\n}\n\ndiv.vimiumHUD .hud-find {\n  background-color: var(--base);\n  border: none;\n}\n\ndiv.vimiumHUD .vimiumHUDSearchArea {\n  background-color: var(--base);\n}"
+}
