@@ -48,6 +48,7 @@ Plug 'haishanh/night-owl.vim'
 Plug 'sainnhe/everforest'
 Plug 'wadackel/vim-dogrun'
 Plug 'savq/melange'
+Plug 'hardhackerlabs/theme-vim', { 'as': 'hardhacker' }
 
 if has_nvim
     if executable('node') && executable('yarn')
@@ -450,6 +451,7 @@ let s:preferred_colors = [
     \'embark',
     \'everforest',
     \'fluoromachine',
+    \'hardhacker',
     \'kanagawa',
     \'kanagawa-dragon',
     \'leaf',
@@ -462,7 +464,6 @@ let s:preferred_colors = [
     \'nightfox',
     \'noctis',
     \'nordfox',
-    \'onedark',
     \'sherbet',
     \'spacegray',
     \'terafox',
