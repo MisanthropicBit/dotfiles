@@ -74,3 +74,5 @@ map.n('<c-p>', fzf_lua.files, { desc = 'Search files in current directory' })
 map.leader('n', 'gf', fzf_lua.git_files, { desc = 'Search files in the current directory that are tracked by git' })
 map.leader('n', 'gs', fzf_lua.git_status, { desc = 'Git status' })
 map.leader('n', 'gh', fzf_lua.git_stash, { desc = 'Git stash' })
+
+vim.cmd('FzfLua register_ui_select')
