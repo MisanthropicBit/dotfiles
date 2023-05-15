@@ -20,8 +20,15 @@ end
 local conditions = {
     show_for_width = function()
         return vim.fn.winwidth(0) > 120
-    end
+    end,
+    ignore_terminal = function()
+        return vim.bo.buftype ~= 'terminal'
+    end,
 }
+
+conditions.all = function()
+    return conditions.show_for_width() and conditions.ignore_terminal()
+end
 
 lualine.setup({
     options = {
@@ -53,13 +60,14 @@ lualine.setup({
                     modified = icons.git.added,
                     removed = icons.git.added,
                 },
+                cond = conditions.ignore_terminal,
             },
         },
         lualine_c = {
             {
                 get_active_lsp,
                 icon = icons.lsp.nvim_lsp,
-                cond = conditions.show_for_width,
+                cond = conditions.all,
             },
             {
                 'vim.g.colors_name',
@@ -79,16 +87,16 @@ lualine.setup({
             },
             {
                 'fileformat',
-                cond = conditions.show_for_width,
+                cond = conditions.all,
             },
             'filetype',
             {
                 'filesize',
-                cond = conditions.show_for_width,
+                cond = conditions.all,
             },
             {
                 'encoding',
-                cond = conditions.show_for_width,
+                cond = conditions.all,
             },
         },
         lualine_z = {
