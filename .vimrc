@@ -638,6 +638,7 @@ cnoremap <c-l> <c-right>
 " Prefill different branches on the command line for fugitive commands
 cnoremap <c-o> origin/master:
 cnoremap <c-b> <c-r>=printf('origin/%s', FugitiveHead())<cr>
+cnoremap <c-d> <c-r>=expand('%:p:h') . '/'<cr>
 
 " Tag TODOs with a timestamp
 inoremap <expr> TODOT printf('TODO (%s): ', strftime('%Y-%m-%d, %H:%M:%S'))
