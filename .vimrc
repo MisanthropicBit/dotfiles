@@ -422,6 +422,8 @@ set updatetime=500
 
 set noswapfile
 
+set keywordprg=:DocsCursor
+
 " }}}
 
 " Colors and syntax {{{
