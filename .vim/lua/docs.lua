@@ -31,29 +31,6 @@ local docs = {}
 --- | FiletypeDocsCallbackConfig
 --- | FiletypeDocsConfigAlias
 
----@param value string
----@param sep string
----@return string[]
-local function string_split(value, sep)
-    local parts = {}
-    local prev_idx = 1
-    local idx = value:find(sep, 1, true)
-
-    while idx ~= nil do
-        table.insert(parts, value:sub(prev_idx, idx-1))
-        prev_idx = idx + 1
-        idx = value:find(sep, idx + 1, true)
-    end
-
-    if prev_idx > 1 then
-        table.insert(parts, value:sub(prev_idx))
-    else
-        return { value }
-    end
-
-    return parts
-end
-
 ---@type FiletypeDocsConfig
 local fallback = {
     config_callback = function(query, filetype)
@@ -86,7 +63,7 @@ local filetype_config = {
         ---@diagnostic disable-next-line: unused-local
         config_callback = function(query, filetype)
             if query:find('n?vim') ~= nil then
-                local parts = string_split(query, '.')
+                local parts = vim.fn.split(query, '\\.')
 
                 if parts[1] == 'vim' then
                     -- The query is to vim.api, vim.lsp etc. so grab
@@ -122,34 +99,9 @@ local function get_config(filetype)
     return config
 end
 
----@param mods table?
----@return string
-local function get_command_modifiers(mods)
-    if mods == nil then
-        return ''
-    end
-
-    local result = {}
-
-    -- TODO: Why are these mods defined like this? Can we use '<mods>' instead?
-    if mods.split ~= '' then
-        table.insert(result, mods.split)
-    end
-
-    if mods.vertical then
-        table.insert(result, 'vertical')
-    end
-
-    if mods.tab == 1 then
-        table.insert(result, 'tab')
-    end
-
-    return table.concat(result, ' ')
-end
-
 ---@param query string
 ---@param filetype string
----@param mods table?
+---@param mods string?
 ---@param config FiletypeDocsConfig
 local function open_docs_with_config(query, filetype, mods, config)
     local command
@@ -161,9 +113,8 @@ local function open_docs_with_config(query, filetype, mods, config)
     elseif config.shell ~= nil then
         command = string.format('!%s %s', config.shell, query)
     elseif config.command ~= nil then
-        local _mods = get_command_modifiers(mods)
         local _query = config.query or query
-        command = string.format('%s %s %s', _mods, config.command, _query)
+        command = string.format('%s %s %s', mods or '', config.command, _query)
     elseif type(config.config_callback) == 'function' then
         config = config.config_callback(query, filetype)
         open_docs_with_config(query, filetype, mods, config)
@@ -184,7 +135,7 @@ end
 
 ---@param query string
 ---@param filetype string
----@param mods table?
+---@param mods string?
 local function open_docs(query, filetype, mods)
     open_docs_with_config(query, filetype, mods, get_config(filetype))
 end
@@ -220,7 +171,7 @@ function docs.open_docs_from_command(options)
     local fargs = options.fargs
     local filetype = fargs[2] or vim.bo.filetype
 
-    open_docs(fargs[1], filetype, options.smods)
+    open_docs(fargs[1], filetype, options.mods)
 end
 
 vim.api.nvim_create_user_command(
