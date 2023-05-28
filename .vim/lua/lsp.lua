@@ -36,13 +36,68 @@ vim.diagnostic.config({
 -- }}}
 
 -- Mappings {{{
-local function open_in_split(split_cmd, cmd)
-  return function()
-    vim.cmd(split_cmd)
-    cmd()
-  end
+local function fzf_lua_lsp_jump_selector(locations)
+    local fzf_items = vim.tbl_map(function(item)
+        return ('%s:%d:%d'):format(item.filename, item.lnum, item.col)
+    end, locations)
+
+    require('fzf-lua').fzf_exec(
+        fzf_items,
+        {
+            prompt = 'Jump to?> ',
+            previewer = 'builtin'
+        }
+    )
 end
 
+---Jump to an lsp result in a split window or select between results if there
+---is more than one
+---@param lsp_method string
+---@param split_cmd string
+---@param selector 'fzf' | 'quickfix'
+---@return function
+local function lsp_request_jump(lsp_method, split_cmd, selector)
+    return function()
+        local params = vim.lsp.util.make_position_params(0)
+
+        -- TODO: Use buf_request_sync instead?
+        vim.lsp.buf_request_all(0, lsp_method, params, function(results)
+            local clients = vim.tbl_keys(results)
+
+            if #clients == 0 then
+                return
+            elseif #clients == 1 then
+                local client = vim.lsp.get_client_by_id(clients[1])
+
+                vim.cmd(split_cmd)
+                vim.lsp.util.jump_to_location(
+                    results[client.id].result[1],
+                    client.offset_encoding,
+                    false
+                )
+                vim.cmd('normal zz')
+            else
+                local locations = {}
+
+                for client_id, result in pairs(results) do
+                    local client = vim.lsp.get_client_by_id(client_id)
+                    local items = vim.lsp.util.locations_to_items(result.result, client.offset_encoding)
+
+                    vim.list_extend(locations, items)
+                end
+
+                if selector == 'fzf' then
+                    fzf_lua_lsp_jump_selector(locations)
+                else
+                    vim.fn.setqflist({}, ' ', { items = locations })
+                    vim.cmd('copen')
+                end
+            end
+        end)
+    end
+end
+
+---@diagnostic disable-next-line: unused-local
 local has_lspsaga, lspsaga = pcall(require, 'lspsaga')
 
 if not has_lspsaga then
@@ -73,20 +128,17 @@ end
 
 -- Use on_attach to only map the following keys after the language server
 -- attaches to the current buffer
+---@diagnostic disable-next-line: unused-local
 local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     local map_options = map.with_default_options({ buffer = bufnr })
 
-    map.set('n', '<localleader>lc', vim.lsp.buf.declaration, map.merge(map_options, { desc = 'Jump to declaration under cursor' }))
-    map.set('n', '<localleader>ld', vim.lsp.buf.definition, map.merge(map_options, { desc = 'Jump to definition under cursor' }))
+    map.leader('n', 'lc', vim.lsp.buf.declaration, map.merge(map_options, { desc = 'Jump to declaration under cursor' }))
     map.set('n', 'gd', vim.lsp.buf.definition, map.merge(map_options, { desc = 'Jump to definition under cursor' }))
-    map.set('n', '<localleader>lh', vim.lsp.buf.hover, map.merge(map_options, { desc = 'Open lsp float' }))
-    map.set('n', '<s-m>', vim.lsp.buf.hover, map.merge(map_options, { desc = 'Open lsp float' }))
-    map.set('n', '<localleader>lt', vim.lsp.buf.type_definition, map.merge(map_options, { desc = 'Jump to type definition' }))
-    map.set('n', '<localleader>lr', vim.lsp.buf.references, map.merge(map_options, { desc = 'Show lsp references' }))
-    map.set('n', '<localleader>lf', lsp_format_wrapper, map.merge(map_options, { desc = 'Format code in buffer' }))
-    map.set('v', '<localleader>lf', lsp_format_wrapper, map.merge(map_options, { desc = 'Format code in range' }))
+    map.leader('n', 'lt', vim.lsp.buf.type_definition, map.merge(map_options, { desc = 'Jump to type definition' }))
+    map.leader('n', 'lf', lsp_format_wrapper, map.merge(map_options, { desc = 'Format code in buffer' }))
+    map.leader('v', 'lf', lsp_format_wrapper, map.merge(map_options, { desc = 'Format code in range' }))
 
     -- Set up a document symbol mapping if the mapping is not already bound (by e.g. fzf-lua)
     if vim.fn.maparg('<leader>ss', 'n') == '' then
@@ -95,29 +147,21 @@ local on_attach = function(client, bufnr)
 
     -- Set up fallback mappings if lspsaga is not installed
     if not has_lspsaga then
-        map.set('n', '<localleader>la', vim.lsp.buf.code_action, map.merge(map_options, { desc = 'Open code action menu' }))
-        map.set('n', '<localleader>lm', vim.lsp.buf.rename, map.merge(map_options, { desc = 'Rename under cursor' }))
+        map.set('n', '<s-m>', vim.lsp.buf.hover, map.merge(map_options, { desc = 'Open lsp float' }))
+        map.leader('n', 'la', vim.lsp.buf.code_action, { desc = 'Open code action menu' })
+        map.leader('v', 'la', vim.lsp.buf.code_action, { desc = 'Open code action menu in visual mode' })
+        map.leader('n', 'la', vim.lsp.buf.code_action, map.merge(map_options, { desc = 'Open code action menu' }))
+        map.leader('n', 'lm', vim.lsp.buf.rename, map.merge(map_options, { desc = 'Rename under cursor' }))
+        map.leader('n', 'lr', vim.lsp.buf.references, map.merge(map_options, { desc = 'Show lsp references' }))
     end
 
-    map.set('n', '<localleader>lig', vim.lsp.buf.implementation, map.merge(map_options, { desc = 'Jump to implementation under cursor' }))
-    map.set(
-        'n',
-        '<localleader>lis',
-        open_in_split('split', vim.lsp.buf.implementation),
-        map.merge(map_options, { desc = 'Open implementation in a split' })
-    )
-    map.set(
-        'n',
-        '<localleader>liv',
-        open_in_split('vsplit', vim.lsp.buf.implementation),
-        map.merge(map_options, { desc = 'Open implementation in a vertical split' })
-    )
-    map.set(
-        'n',
-        '<localleader>lit',
-        open_in_split('tab split', vim.lsp.buf.implementation),
-        map.merge(map_options, { desc = 'Open implementation in a tab' })
-    )
+    local lsp_method = 'textDocument/definition'
+    local selector = 'quickfix'
+
+    -- Use the good old ALE mappings :)
+    map.leader('n', 'as', lsp_request_jump(lsp_method, 'split', selector), map.merge(map_options, { desc = 'Jump to definition in a horizontal split' }))
+    map.leader('n', 'av', lsp_request_jump(lsp_method, 'vsplit', selector), map.merge(map_options, { desc = 'Jump to definition in a vertical split' }))
+    map.set('n', 'at', lsp_request_jump(lsp_method, 'tabe', selector), map.merge(map_options, { desc = 'Jump to definition in a tab' }))
 end
 -- }}}
 

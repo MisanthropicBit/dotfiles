@@ -51,6 +51,7 @@ if has_lspsaga then
     end
 
     -- Overwrite lsp defaults with lspsaga
+    map.set('n', '<s-m>', '<cmd>Lspsaga hover_doc<cr>', { desc = 'Open lsp float' })
     map.leader('n', 'll', '<cmd>Lspsaga show_line_diagnostics ++unfocus<cr>', { desc = 'Show line diagnostics' })
     map.leader('n', 'la', '<cmd>Lspsaga code_action<cr>', { desc = 'Open code action menu' })
     map.leader('v', 'la', '<cmd>Lspsaga code_action<cr>', { desc = 'Open code action menu in visual mode' })
@@ -61,4 +62,5 @@ if has_lspsaga then
     map.leader('n', 'lm', '<cmd>Lspsaga rename<cr>', { desc = 'Rename under cursor' })
     map.leader('n', 'ly', '<cmd>Lspsaga outline<cr>', { desc = 'Toggle outline of semantic elements' })
     map.leader('n', 'ls', '<cmd>Lspsaga lsp_finder<cr>', { desc = 'Trigger the lspsaga finder' })
+    map.leader('n', 'lr', '<cmd>Lspsaga lsp_references<cr>', { desc = 'See all references for the node under the cursor' })
 end
