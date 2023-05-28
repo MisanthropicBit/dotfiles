@@ -143,12 +143,13 @@ end
 -- Open docs for a filetype with a query
 ---@param query string
 ---@param filetype string
-function docs.open(query, filetype)
-    open_docs(query, filetype, nil)
+---@param mods string?
+function docs.open(query, filetype, mods)
+    open_docs(query, filetype, mods)
 end
 
 -- Open docs for the word under the cursor
-function docs.open_at_cursor()
+function docs.open_at_cursor(options)
     local filetype = vim.bo.filetype
     local config = get_config(filetype)
 
@@ -162,7 +163,7 @@ function docs.open_at_cursor()
         vim.opt_local.iskeyword:remove(config.iskeyword)
     end
 
-    docs.open(cword, filetype)
+    docs.open(cword, filetype, options.mods)
 end
 
 -- Open docs from a command invocation
