@@ -99,7 +99,6 @@ if has_nvim
     " nvim colorschemes
     Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
     Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-    Plug 'EdenEast/nightfox.nvim'
     Plug 'shaunsingh/moonlight.nvim'
     Plug 'navarasu/onedark.nvim'
     Plug 'glepnir/zephyr-nvim'
@@ -462,17 +461,11 @@ let s:preferred_colors = [
     \'mellow',
     \'moonfly',
     \'moonlight',
-    \'night-owl',
-    \'nightfox',
     \'noctis',
-    \'nordfox',
     \'sherbet',
-    \'spacegray',
-    \'terafox',
     \'tokyonight-night',
     \'tokyonight-storm',
-    \'warlock',
-    \'zephyr',
+    \'warlock'
 \]
 
 let g:default_colorscheme_override = ''
