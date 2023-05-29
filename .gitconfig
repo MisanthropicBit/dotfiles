@@ -63,6 +63,7 @@
     last = log -1 HEAD
     m = checkout master
     mergetest = !git merge-tree `git merge-base $1 $2` $1 $2 | diff-so-fancy
+    mp = !git checkout master && git pull
     p = pull
     pr = '!f() { git fetch ${2:-upstream}refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f'
     pt = stash push -m "temp"
