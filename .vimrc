@@ -68,7 +68,6 @@ if has_nvim
     Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
     Plug 'nvim-lua/plenary.nvim'
     Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
-    " Plug 'sbdchd/neoformat'
     Plug 'nat-418/boole.nvim'
     Plug 'ray-x/lsp_signature.nvim'
     Plug 'lukas-reineke/indent-blankline.nvim'
@@ -120,6 +119,7 @@ if has_nvim
 
     " Local projects
     Plug '~/projects/vim/neotest-fuzzy'
+    Plug '~/projects/vim/vim-warlock'
 
     " NOTE: isdirectory doesn't check if the directory is readable
     if isdirectory(expand('~/projects/vim/decipher.nvim'))
