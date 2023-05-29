@@ -651,6 +651,9 @@ endfunction
 nnoremap <silent> >m <cmd>call <SID>FindGitConflictMarker(1)<cr>
 nnoremap <silent> <m <cmd>call <SID>FindGitConflictMarker(-1)<cr>
 
+nnoremap <silent> <localleader>ct :let @+ = expand('%:t')<cr>
+nnoremap <silent> <localleader>ch :let @+ = expand('%:h')<cr>
+nnoremap <silent> <localleader>cp :let @+ = expand('%')<cr>
 " }}}
 
 " Searching {{{
