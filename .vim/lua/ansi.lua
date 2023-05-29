@@ -24,12 +24,11 @@ function ansi.rgb_to_ansi(encoded_color, is_bg)
 end
 
 -- Convert a vim highlight group to an RGB ANSI escape code
----@type string hl_name
+---@param hl_name string
 function ansi.highlight_to_rgb_ansi(hl_name)
-    local colors = vim.api.nvim_get_hl_by_name(hl_name, true)
-    -- local colors = { foreground = 16394340 }
-    local _ansi = ansi.rgb_to_ansi(colors.foreground, false)
-    _ansi = _ansi .. ansi.rgb_to_ansi(colors.background, true)
+    local colors = vim.api.nvim_get_hl(0, { name = hl_name, link = false })
+    local _ansi = ansi.rgb_to_ansi(colors.fg, false)
+    _ansi = _ansi .. ansi.rgb_to_ansi(colors.bg, true)
 
     return _ansi
 end
