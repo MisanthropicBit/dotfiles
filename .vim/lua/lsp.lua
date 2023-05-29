@@ -110,11 +110,11 @@ if not has_lspsaga then
     local goto_prev_error = goto_diagnostic_wrapper(vim.diagnostic.goto_prev, vim.diagnostic.severity.ERROR)
     local goto_next_error = goto_diagnostic_wrapper(vim.diagnostic.goto_next, vim.diagnostic.severity.ERROR)
 
-    map.set('n', '<localleader>lp', vim.diagnostic.goto_prev, { desc = 'Jump to previous diagnostic' })
-    map.set('n', '<localleader>ln', vim.diagnostic.goto_next, { desc = 'Jump to next diagnostic' })
-    map.set('n', '<localleader>ep', goto_prev_error, { desc = 'Jump to previous diagnostic error' })
-    map.set('n', '<localleader>en', goto_next_error, { desc = 'Jump to next diagnostic error' })
-    map.set('n', '<localleader>ll', vim.diagnostic.open_float, { desc = 'Open diagnostic float' })
+    map.leader('n', 'lp', vim.diagnostic.goto_prev, { desc = 'Jump to previous diagnostic' })
+    map.leader('n', 'ln', vim.diagnostic.goto_next, { desc = 'Jump to next diagnostic' })
+    map.leader('n', 'ep', goto_prev_error, { desc = 'Jump to previous diagnostic error' })
+    map.leader('n', 'en', goto_next_error, { desc = 'Jump to next diagnostic error' })
+    map.leader('n', 'll', vim.diagnostic.open_float, { desc = 'Open diagnostic float' })
 end
 
 -- We don't want tsserver to format stuff as the default formatting doesn't
@@ -134,25 +134,29 @@ local on_attach = function(client, bufnr)
 
     local map_options = map.with_default_options({ buffer = bufnr })
 
-    map.leader('n', 'lc', vim.lsp.buf.declaration, map.merge(map_options, { desc = 'Jump to declaration under cursor' }))
-    map.set('n', 'gd', vim.lsp.buf.definition, map.merge(map_options, { desc = 'Jump to definition under cursor' }))
-    map.leader('n', 'lt', vim.lsp.buf.type_definition, map.merge(map_options, { desc = 'Jump to type definition' }))
-    map.leader('n', 'lf', lsp_format_wrapper, map.merge(map_options, { desc = 'Format code in buffer' }))
-    map.leader('v', 'lf', lsp_format_wrapper, map.merge(map_options, { desc = 'Format code in range' }))
+    local function with_desc(desc)
+        return map.merge(map_options, { desc = desc })
+    end
+
+    map.set('n', 'gd', vim.lsp.buf.definition, with_desc('Jump to definition under cursor'))
+    map.leader('n', 'lc', vim.lsp.buf.declaration, with_desc('Jump to declaration under cursor'))
+    map.leader('n', 'lt', vim.lsp.buf.type_definition, with_desc('Jump to type definition'))
+    map.leader('n', 'lf', lsp_format_wrapper, with_desc('Format code in buffer'))
+    map.leader('v', 'lf', lsp_format_wrapper, with_desc('Format code in range'))
+    map.leader('n', 'lh', vim.lsp.buf.signature_help, with_desc('Lsp signature help'))
 
     -- Set up a document symbol mapping if the mapping is not already bound (by e.g. fzf-lua)
     if vim.fn.maparg('<leader>ss', 'n') == '' then
-        map.set('n', '<localleader>ss', vim.lsp.buf.document_symbol, map.merge(map_options, { desc = 'Show document symbol' }))
+        map.leader('n', 'ss', vim.lsp.buf.document_symbol, with_desc('Show document symbol'))
     end
 
     -- Set up fallback mappings if lspsaga is not installed
     if not has_lspsaga then
-        map.set('n', '<s-m>', vim.lsp.buf.hover, map.merge(map_options, { desc = 'Open lsp float' }))
-        map.leader('n', 'la', vim.lsp.buf.code_action, { desc = 'Open code action menu' })
-        map.leader('v', 'la', vim.lsp.buf.code_action, { desc = 'Open code action menu in visual mode' })
-        map.leader('n', 'la', vim.lsp.buf.code_action, map.merge(map_options, { desc = 'Open code action menu' }))
-        map.leader('n', 'lm', vim.lsp.buf.rename, map.merge(map_options, { desc = 'Rename under cursor' }))
-        map.leader('n', 'lr', vim.lsp.buf.references, map.merge(map_options, { desc = 'Show lsp references' }))
+        map.set('n', '<s-m>', vim.lsp.buf.hover, with_desc('Open lsp float'))
+        map.leader('n', 'la', vim.lsp.buf.code_action, with_desc('Open code action menu'))
+        map.leader('v', 'la', vim.lsp.buf.code_action, with_desc('Open code action menu in visual mode'))
+        map.leader('n', 'lm', vim.lsp.buf.rename, with_desc('Rename under cursor'))
+        map.leader('n', 'lr', vim.lsp.buf.references, with_desc('Show lsp references'))
     end
 
     local lsp_method = 'textDocument/definition'
@@ -209,5 +213,4 @@ if vim.fn.executable('lua-language-server') then
     }
 end
 
--- lspconfig.eslint.setup{ on_attach = on_attach }
 lspconfig.tsserver.setup{ on_attach = on_attach }
