@@ -15,9 +15,21 @@ oil.setup({
         ['g?'] = 'actions.show_help',
         ['<cr>'] = 'actions.select',
         ['<c-s>'] = 'actions.select_split',
-        ['<c-v>'] = 'actions.select_vsplit',
-        ['<C-t>'] = 'actions.select_tab',
-        ['<C-p>'] = 'actions.preview',
+        ['<localleader>v'] = {
+            callback = function()
+                oil.select({ vertical = true })
+            end,
+            nowait = true,
+            desc = 'Open entry under cursor in a vertical split',
+        },
+        ['<c-t>'] = 'actions.select_tab',
+        ['<c-p>'] = 'actions.preview',
+        ['<localleader>ps'] = {
+            callback = function()
+                oil.select({ horizontal = true, preview = true })
+            end,
+            desc = 'Open entry under cursor in a horizontal split',
+        },
         ['<c-r>'] = 'actions.refresh',
         ['<c-e>'] = 'actions.close',
         ['<c-x>'] = 'actions.copy_entry_path',
