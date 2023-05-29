@@ -642,7 +642,7 @@ nnoremap <silent> <localleader>hi :His<cr>
 
 nnoremap <silent> Q @@
 
-let s:conflict_marker_regex = '\(\(\(<<<<<<<\)\|\(|||||||\)\|\(>>>>>>>\)\) .\+\|\(=======\)\)'
+let s:conflict_marker_regex = '^\(\(\(<<<<<<<\)\|\(|||||||\)\|\(>>>>>>>\)\) .\+\|\(=======\)\)'
 
 function s:FindGitConflictMarker(dir) abort
     call search(s:conflict_marker_regex, a:dir ==# 1 ? 'w' : 'bw')
