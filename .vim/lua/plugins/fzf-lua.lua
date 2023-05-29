@@ -1,8 +1,39 @@
+local fzf_lua_setup = {}
+
 local ansi = require('ansi')
 local map = require('mappings')
 local lsp_common = require('lsp_common')
 
 local fzf_lua = require('fzf-lua')
+
+-- Returns a function for selecting a specific directory and then search it afterwards
+---@param directory string
+---@return fun()
+function fzf_lua_setup.project_files(directory)
+    local file_selector = function(selector)
+        return function(selected)
+            selector({ cwd = selected[1] })
+        end
+    end
+
+    return function()
+        fzf_lua.fzf_exec(
+        'fd --type directory --maxdepth 1 . ' .. directory,
+        {
+            cwd = directory,
+            prompt = 'Search directory> ',
+            actions = {
+                ['ctrl-s'] = file_selector(fzf_lua.files),
+                ['enter'] = file_selector(fzf_lua.files),
+                ['ctrl-g'] = file_selector(fzf_lua.git_files),
+            },
+            fzf_opts = {
+                ['--preview'] = vim.fn.shellescape('tree -C -L 1 {}'),
+            },
+        }
+        )
+    end
+end
 
 --- Custom symbol formatter for fzf-lua's lsp 
 ---@param symbol string
@@ -74,5 +105,8 @@ map.n('<c-p>', fzf_lua.files, { desc = 'Search files in current directory' })
 map.leader('n', 'gf', fzf_lua.git_files, { desc = 'Search files in the current directory that are tracked by git' })
 map.leader('n', 'gs', fzf_lua.git_status, { desc = 'Git status' })
 map.leader('n', 'gh', fzf_lua.git_stash, { desc = 'Git stash' })
+map.leader('n', 'bp', fzf_lua.dap_breakpoints, { desc = 'List dap breakpoints' })
 
 vim.cmd('FzfLua register_ui_select')
+
+return fzf_lua_setup
