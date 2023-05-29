@@ -894,6 +894,8 @@ let g:git_messenger_conceal_word_diff_marker = 1
 
 " linediff.vim {{{
 nnoremap <leader>dv :Linediff
+xmap <silent> gl <Plug>(linediff-operator) 
+nmap <silent> gl <Plug>(linediff-operator) 
 " }}}
 
 " UltiSnips {{{
