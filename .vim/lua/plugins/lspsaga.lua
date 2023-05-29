@@ -4,7 +4,7 @@ local lsp_common = require('lsp_common')
 local has_lspsaga, lspsaga = pcall(require, 'lspsaga')
 
 if has_lspsaga then
-    lspsaga.setup{
+    lspsaga.setup({
         max_preview_lines = 20,
         finder = {
             keys = {
@@ -37,7 +37,7 @@ if has_lspsaga then
                 },
             },
         },
-    }
+    })
 
     local lspsaga_diagnostic = require('lspsaga.diagnostic')
     local error_severity = vim.diagnostic.severity.ERROR

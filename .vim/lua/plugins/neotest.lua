@@ -22,6 +22,7 @@ neotest.setup{
         require('neotest-jest')({
             jestCommand = 'npm test --',
             jestConfigFile = 'jest.config.ts',
+            ---@diagnostic disable-next-line:unused-local
             cwd = function(path)
                 return vim.fn.getcwd()
             end,
