@@ -17,6 +17,12 @@ describe('$2', () => {
 })
 endsnippet
 
+snippet it "it('should do', () => { ... })" b
+it('${1:}', () => {
+	${0:${VISUAL}}
+})
+endsnippet
+
 snippet ita "it('should do', () => { ... })" b
 it('${1:}', async () => {
 	${0:${VISUAL}}
