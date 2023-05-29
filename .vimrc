@@ -873,8 +873,8 @@ nnoremap <silent> <localleader>rg :Rg<cr>
 " vim-gitgutter {{{
 nmap <silent> gj <Plug>(GitGutterNextHunk)zz
 nmap <silent> gk <Plug>(GitGutterPrevHunk)zz
-nmap <silent> <localleader>gv <Plug>(GitGutterPreviewHunk)
-nmap <silent> gs <Plug>(GitGutterStageHunk)
+nmap <silent> <localleader>hv <Plug>(GitGutterPreviewHunk)
+nmap <silent> <localleader>hs <Plug>(GitGutterStageHunk)
 
 let g:gitgutter_floating_window_options = {
     \'relative': 'cursor',
