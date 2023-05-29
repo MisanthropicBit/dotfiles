@@ -99,11 +99,18 @@ lualine.setup({
                 cond = conditions.all,
             },
         },
+        lualine_y = {
+            {
+                'progress',
+                cond = conditions.ignore_terminal,
+            }
+        },
         lualine_z = {
             'location',
             {
                 separator = { right = '' },
-                left_padding = 2
+                left_padding = 2,
+                cond = conditions.ignore_terminal,
             }
         },
     },
