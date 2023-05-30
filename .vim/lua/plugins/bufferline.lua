@@ -11,7 +11,7 @@ local function diagnostics_indicator(count, level, diagnostics_dict, context)
     if e == 'error' then
         sym = icons.diagnostics.error
     elseif e == 'warning' then
-        sym = icons.diagnostics.warning
+        sym = icons.diagnostics.warn
     end
 
     s = s .. n .. sym

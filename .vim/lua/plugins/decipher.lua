@@ -12,6 +12,6 @@ decipher.setup({
     },
 })
 
-map.set('n', 'gr', function()
+map.n('gr', function()
     decipher.decode_motion('base64-url', { preview = true })
 end)

@@ -11,8 +11,9 @@ return {
     },
     diagnostics = {
         error = ' ',
-        warning = ' ',
+        warn = ' ',
         info = ' ',
+        hint = ' ',
     },
     lsp = {
         buffer = ' ',

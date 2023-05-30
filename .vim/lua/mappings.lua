@@ -16,7 +16,7 @@ function map.with_default_options(opts)
     return map.merge(map.default_options, opts)
 end
 
----@param mode Mode
+---@param mode Mode | Mode[]
 ---@param lhs string
 ---@param rhs string | fun()
 ---@param opts table?
@@ -24,7 +24,7 @@ function map.set(mode, lhs, rhs, opts)
     vim.keymap.set(mode, lhs, rhs, map.with_default_options(opts))
 end
 
----@param mode Mode
+---@param mode Mode | Mode[]
 ---@param lhs string
 ---@param rhs string | fun()
 ---@param opts table?
