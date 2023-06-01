@@ -1,10 +1,7 @@
 " Author: Alexander Asp Bock
 " Source: https://github.com/MisanthropicBit/dotfiles
 
-" Set leader character
 let mapleader = "\<space>"
-
-" Set the local leader character
 let maplocalleader = "\<space>"
 
 let has_nvim = has('nvim')
@@ -19,7 +16,6 @@ Plug 'junegunn/vim-plug'
 Plug 'airblade/vim-gitgutter'
 Plug 'andymass/vim-matchup'
 Plug 'arthurxavierx/vim-caser'
-" Plug 'dag/vim-fish'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -28,7 +24,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'Konfekt/FastFold'
 Plug 'mhinz/vim-startify'
 Plug 'MisanthropicBit/vim-yank-window'
-" Plug 'pangloss/vim-javascript'
 Plug 'Raimondi/delimitMate'
 Plug 'rhysd/git-messenger.vim'
 Plug 'sirver/UltiSnips'
@@ -99,8 +94,6 @@ if has_nvim
     Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
     Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
     Plug 'shaunsingh/moonlight.nvim'
-    Plug 'navarasu/onedark.nvim'
-    Plug 'glepnir/zephyr-nvim'
     Plug 'kartikp10/noctis.nvim'
     Plug 'w3barsi/barstrata.nvim'
     Plug 'rebelot/kanagawa.nvim'
@@ -177,31 +170,6 @@ function! <SID>DeleteTrailingWhitespace()
     " Restore previous search history and position
     let @/ = s
     call cursor(line, col)
-endfunction
-
-function! s:OpenScratchBuffer(text, height, location, leave_map) abort
-    let loc = a:location
-
-    if a:location == 'auto'
-        let loc = 'bel'
-    endif
-
-    " Open the new window
-    execute printf('%s %dnew', loc, a:height)
-
-    if len(a:leave_map)
-        " Useful mapping for leaving the scratch-buffer
-        execute printf('nnoremap <buffer> <silent> %s :q<cr>', a:leave_map)
-    endif
-
-    " Set text of the buffer
-    call setline(1, split(a:text, '\n'))
-
-    " Make this a scratch-buffer
-    setlocal buftype=nofile
-    setlocal bufhidden=hide
-    setlocal noswapfile
-    setlocal readonly
 endfunction
 
 " Move a range of lines up or down while retaining folds
@@ -335,9 +303,6 @@ endfunction
 " Ignore backwards compatibility to vi
 set nocompatible
 
-" Always display current mode
-set showmode
-
 " Show line numbers
 set number
 
@@ -346,14 +311,8 @@ if v:version >= 703
     set relativenumber
 endif
 
-" Prefer utf-8
-set encoding=utf8
-
 " Set margin for the zt and zb commands
 set scrolloff=3
-
-" No sounds on errors
-set noerrorbells
 
 " Display current line and column in the bottom-right corner
 set ruler
@@ -370,11 +329,6 @@ filetype plugin on
 " Allow yank and put between vim sessions without specifying
 " the clipboard ("*) register
 set clipboard+=unnamed
-
-" Make sure gvim and mvim use a powerline font
-if has('gui_running')
-    set guifont=Monaco\ For\ Powerline
-endif
 
 " Prefer wildmenu
 set wildmenu
@@ -416,11 +370,8 @@ let g:markdown_fenced_languages = [
 \]
 
 set signcolumn=yes:2
-
 set updatetime=500
-
 set noswapfile
-
 set keywordprg=:DocsCursor
 
 " }}}
@@ -447,6 +398,7 @@ let s:preferred_colors = [
     \'barstrata',
     \'calvera',
     \'catppuccin',
+    \'catppuccin-macchiato',
     \'dogrun',
     \'duskfox',
     \'embark',
@@ -464,8 +416,7 @@ let s:preferred_colors = [
     \'noctis',
     \'sherbet',
     \'tokyonight-night',
-    \'tokyonight-storm',
-    \'warlock'
+    \'tokyonight-storm'
 \]
 
 let g:default_colorscheme_override = ''
@@ -494,28 +445,6 @@ let g:is_bash = 1
 " Highlight git merge conflict markers
 match ErrorMsg '\v^(\<|\=|\>){7}([^\=].+)?$'
 
-if has('autocmd')
-    augroup Seoul256TerminalColors
-        autocmd!
-        autocmd ColorScheme seoul256 let g:terminal_color_0 = '#4e4e4e'
-            \| let g:terminal_color_1 = '#d68787'
-            \| let g:terminal_color_2 = '#5f865f'
-            \| let g:terminal_color_3 = '#d8af5f'
-            \| let g:terminal_color_4 = '#85add4'
-            \| let g:terminal_color_5 = '#d7afaf'
-            \| let g:terminal_color_6 = '#87afaf'
-            \| let g:terminal_color_7 = '#d0d0d0'
-            \| let g:terminal_color_8 = '#626262'
-            \| let g:terminal_color_9 = '#d75f87'
-            \| let g:terminal_color_10 = '#87af87'
-            \| let g:terminal_color_11 = '#ffd787'
-            \| let g:terminal_color_12 = '#add4fb'
-            \| let g:terminal_color_13 = '#ffafaf'
-            \| let g:terminal_color_14 = '#87d7d7'
-            \| let g:terminal_color_15 = '#e4e4e4'
-    augroup END
-endif
-
 " }}}
 
 " Indentation {{{
@@ -536,29 +465,26 @@ endif
 " Shortcut for disabling highlighting
 nnoremap <silent> <localleader><space> :nohl<cr>
 
-" Quickly toggle paste mode
-nnoremap <silent> <localleader>pp :setlocal paste!<cr>
-
 " Quickly save the current buffer
-nnoremap <leader>w :w<cr>
+nnoremap <localleader>w :w<cr>
 
 " Quickly close the current buffer
-nnoremap <leader>q :q<cr>
+nnoremap <localleader>q :q<cr>
 
 " Shortcut for correcting a misspelled word with its first suggestion
-nnoremap <leader>1 1z=
+nnoremap <localleader>1 1z=
 
 " Move vertically while ignoring true lines
 nnoremap j gj
 nnoremap k gk
 
 " Shortcut for editing the vimrc file
-nnoremap <leader>vs :sp $MYVIMRC<cr>
-nnoremap <leader>vv :vsp $MYVIMRC<cr>
-nnoremap <leader>vt :tabe $MYVIMRC<cr>
+nnoremap <localleader>vs :sp $MYVIMRC<cr>
+nnoremap <localleader>vv :vsp $MYVIMRC<cr>
+nnoremap <localleader>vt :tabe $MYVIMRC<cr>
 
 " Shortcut to reload the vimrc file
-nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <localleader>sv :source $MYVIMRC<cr>
 
 " Easily swap the current line up and down
 " Based on: https://github.com/vim/vim/issues/536
@@ -576,22 +502,17 @@ if !has_nvim
 end
 
 " Quickly toggle folds
-nnoremap <leader>f za
-
-" Quickly toggle relative line numbering
-if v:version >= 703
-    nnoremap <silent> <leader>n :set relativenumber!<cr>
-endif
+nnoremap <localleader>f za
 
 " Quicker way to exit insert mode
 inoremap <expr> jk "<esc>"
 
 " Delete trailing whitespace (should this be an autocommand on saving/exiting?)
-nnoremap <silent> <leader>rw :call <SID>DeleteTrailingWhitespace()<cr>
+nnoremap <silent> <localleader>rw :call <SID>DeleteTrailingWhitespace()<cr>
 
 " Open manpage (default) for the word under the cursor (since K is remapped to
 " moving lines upwards)
-nnoremap <silent> <leader>k K
+nnoremap <silent> <localleader>k K
 
 " Automatically reselect the visual block when indenting or dedenting
 vnoremap <silent> > :call <SID>VisualIndentReselect(1)<cr>
@@ -638,8 +559,6 @@ cnoremap <c-d> <c-r>=expand('%:p:h') . '/'<cr>
 " Tag TODOs with a timestamp
 inoremap <expr> TODOT printf('TODO (%s): ', strftime('%Y-%m-%d, %H:%M:%S'))
 
-nnoremap <silent> <localleader>hi :His<cr>
-
 nnoremap <silent> Q @@
 
 let s:conflict_marker_regex = '^\(\(\(<<<<<<<\)\|\(|||||||\)\|\(>>>>>>>\)\) .\+\|\(=======\)\)'
@@ -653,7 +572,8 @@ nnoremap <silent> <m <cmd>call <SID>FindGitConflictMarker(-1)<cr>
 
 nnoremap <silent> <localleader>ct :let @+ = expand('%:t')<cr>
 nnoremap <silent> <localleader>ch :let @+ = expand('%:h')<cr>
-nnoremap <silent> <localleader>cp :let @+ = expand('%')<cr>
+nnoremap <silent> <localleader>cp :let @+ = expand('%:p')<cr>
+
 " }}}
 
 " Searching {{{
@@ -676,31 +596,25 @@ if executable('rg')
     set grepformat=%f:%l:%c:%m
 endif
 
-command! -nargs=+ Grep execute 'silent grep! <args> | copen'
-
 " }}}
 
 " Tabs, spaces and indentation {{{
 
-" Always use spaces instead of tabs
 set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-
-" Always use autoindenting
 set autoindent
 
 " }}}
 
 " Tabs (the buffer ones) {{{
 
-nnoremap <c-t> :tabnew<cr>
 nnoremap <c-t><c-o> :tabonly<cr>
 
 " Faster tab switching using a meta-key
-nnoremap <s-l> gt
-nnoremap <s-h> gT
+nnoremap L gt
+nnoremap H gT
 
 " Tab navigation inspired by vimium
 nnoremap g0 :tabnext 1<cr>
@@ -739,6 +653,7 @@ set splitright
 " }}}
 
 " Folding {{{
+
 " Only close folds that are at level 3 or higher
 set foldlevel=3
 
@@ -751,7 +666,11 @@ set foldnestmax=3
 " }}}
 
 " Commands {{{
+
+command! -nargs=+ Grep execute 'silent grep! <args> | copen'
+
 command! -bang RandomColorscheme :echo printf("Selected: %s", <SID>RandomColorscheme(<bang>0))
+
 " }}}
 
 " Autocommands {{{
@@ -811,39 +730,47 @@ endif
 " }}}
 
 " Databases {{{
+
 let g:sql_type_default = 'mysql'
+
 " }}}
 
 " Shell {{{
-" Allow external bash commands inside vim to use aliases etc.
+
 set shell=fish
+
 " }}}
 
 " Terminal {{{
+
 if exists(':tnoremap') == 2
-    " Use escape or 'jk' to exit terminal mode
-    tnoremap <esc> <c-\><c-n>
     tnoremap jk <c-\><c-n>
 endif
 
 nnoremap <silent> <c-t><c-s> :Term<cr>
 nnoremap <silent> <c-t><c-v> :vert Term<cr>
 nnoremap <silent> <c-t><c-t> :tab Term<cr>
+
 " }}}
 
 " Explorer {{{
+
 " Show stats in :Explorer mode
 let g:netrw_liststyle = 3
+
 " }}}
 
 " Plugin configuration {{{
 
 " delimitMate {{{
+
 " Expand any pair of delimiting characters when pressing enter
 let delimitMate_expand_cr = 1
+
 " }}}
 
 " fzf {{{
+
 " Add fzf paths for both homebrew and macports
 set rtp+=/opt/local/share/fzf/vim
 set rtp+=/usr/local/opt/fzf
@@ -866,11 +793,13 @@ command! -bang -nargs=* -complete=dir Dirs
 \ call fzf#run(fzf#wrap({'source': 'fd --type d --color=never', 'options': ['--preview', 'tree -C -L 1 {}']}))
 
 nnoremap <silent> <localleader>gf :GFiles<cr>
-
+nnoremap <silent> <localleader>hi :His<cr>
 nnoremap <silent> <localleader>rg :Rg<cr>
+
 " }}}
 
 " vim-gitgutter {{{
+
 nmap <silent> gj <Plug>(GitGutterNextHunk)zz
 nmap <silent> gk <Plug>(GitGutterPrevHunk)zz
 nmap <silent> <localleader>hv <Plug>(GitGutterPreviewHunk)
@@ -889,19 +818,25 @@ let g:gitgutter_sign_added = '┃'
 let g:gitgutter_sign_modified = '┃'
 let g:gitgutter_sign_removed = '┃'
 let g:gitgutter_sign_modified_removed = '║'
+
 " }}}
 
 " git-messenger.vim {{{
+
 let g:git_messenger_conceal_word_diff_marker = 1
+
 " }}}
 
 " linediff.vim {{{
-nnoremap <leader>dv :Linediff
+
+nnoremap <localleader>dv :Linediff
 xmap <silent> gl <Plug>(linediff-operator) 
 nmap <silent> gl <Plug>(linediff-operator) 
+
 " }}}
 
 " UltiSnips {{{
+
 " Split the :UltiSnipsEdit window horizontally or vertically depending on context
 let g:UltiSnipsEditSplit = 'context'
 
@@ -914,48 +849,56 @@ let g:ultisnips_javascript = {
 \}
 
 " Open the snippets file for the current file type
-nnoremap <leader>sf :UltiSnipsEdit!<cr>
+nnoremap <localleader>sf :UltiSnipsEdit!<cr>
+
 " }}}
 
 " vim-devicons {{{
+
 if !has_nvim
     let g:DevIconsEnableFoldersOpenClose = 1
     " let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
     " let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['mysql'] = g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['sql']
 endif
+
 " }}}
 
 " vim-easy-align {{{
+
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
 " }}}
 
 " vim-fugitive {{{
+
 " Useful git mappings based on the spf13-vim distribution
-nnoremap <silent> <leader>gs :G<cr>
-nnoremap <silent> <leader>gd :Gdiffsplit<cr>
-nnoremap <silent> <leader>gc :G commit<cr>
-nnoremap <silent> <leader>gb :G blame<cr>
-nnoremap <silent> <leader>gl :Term git log<cr>
-nnoremap <silent> <leader>gp :G push<cr>
-nnoremap <silent> <leader>gv :vert G --paginate diff --cached<cr>
-nnoremap <silent> <leader>gw :Gwrite<cr>
-nnoremap <silent> <leader>gu :GBrowse!<cr>
-xnoremap <silent> <leader>gu :GBrowse!<cr>
-nnoremap <silent> <leader>gos :Gsp origin/master:%<cr>
-nnoremap <silent> <leader>gov :Gvs origin/master:%<cr>
-nnoremap <silent> <leader>got :Gtabedit origin/master:%<cr>
+nnoremap <silent> <localleader>gs :G<cr>
+nnoremap <silent> <localleader>gd :Gdiffsplit<cr>
+nnoremap <silent> <localleader>gc :G commit<cr>
+nnoremap <silent> <localleader>gb :G blame<cr>
+nnoremap <silent> <localleader>gl :Term git log<cr>
+nnoremap <silent> <localleader>gp :G push<cr>
+nnoremap <silent> <localleader>gv :vert G --paginate diff --cached<cr>
+nnoremap <silent> <localleader>gw :Gwrite<cr>
+nnoremap <silent> <localleader>gu :GBrowse!<cr>
+xnoremap <silent> <localleader>gu :GBrowse!<cr>
+nnoremap <silent> <localleader>gos :Gsp origin/master:%<cr>
+nnoremap <silent> <localleader>gov :Gvs origin/master:%<cr>
+nnoremap <silent> <localleader>got :Gtabedit origin/master:%<cr>
 
 " Define a command and mapping for viewing staged changes
 command! Gcached :Gtabedit! diff --cached
 command! Gom :<mods> Gsp origin/master:%
-nnoremap <silent> <leader>gr :Gcached<cr>
+nnoremap <silent> <localleader>gr :Gcached<cr>
+
 " }}}
 
 " vim-startify {{{
+
 let g:startify_custom_header_quotes = [
     \['The optimal allocation is one that never happens.', '', '- Joseph E. Hoag'],
     \['Design is, as always, the art of finding compromises.', '', '- Eric Lippert'],
@@ -966,9 +909,11 @@ let g:startify_custom_header_quotes = [
 if has_nvim
     let g:startify_disable_at_vimenter = 1
 endif
+
 " }}}
 
 " vim-surround {{{
+
 " Quickly surround text with LaTeX (e)nvironments
 "
 " For example, typing 'ySwe' followed by 'center' when prompted on the text '|hello'
@@ -989,15 +934,19 @@ let g:surround_{char2nr('e')}="\\begin{\1environment: \1}\r\\end{\1\1}"
 
 " Surround text with a LaTeX command using 'c'
 let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
+
 " }}}
 
 " vim-yank-window {{{
+
 let g:yank_window#enable_mappings = 1
+
 " }}}
 
 " }}}
 
 " neovim/lua config {{{
+
 if has_nvim
     " Enable interactive command line substitution without window splitting
     set inccommand=nosplit
@@ -1014,6 +963,7 @@ if has_nvim
 
     lua require('config')
 endif
+
 " }}}
 
 " vim: foldenable foldmethod=marker foldlevel=0 fileencoding=utf-8
