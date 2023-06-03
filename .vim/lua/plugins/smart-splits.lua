@@ -3,8 +3,9 @@ local smart_splits = require('smart-splits')
 
 smart_splits.setup({
     resize_mode = {
-        quit_key = 'q'
-    }
+        quit_key = 'q',
+    },
+    cursor_follows_swapped_bufs = true,
 })
 
 map.n('<c-h>', smart_splits.move_cursor_left)
