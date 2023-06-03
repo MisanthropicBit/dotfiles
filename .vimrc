@@ -433,7 +433,8 @@ try
 catch
     try
         colorscheme duskfox
-    catch
+    catch /^Vim\%((\a\+)\)\=:E/
+        echoerr v:exception
         colorscheme default
     endtry
 endtry
