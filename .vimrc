@@ -105,6 +105,7 @@ if has_nvim
     Plug 'daschw/leaf.nvim'
     Plug 'maxmx03/fluoromachine.nvim'
     Plug 'ribru17/bamboo.nvim'
+    Plug 'lmburns/kimbox'
 
     " dap
     Plug 'mfussenegger/nvim-dap'
@@ -409,6 +410,7 @@ let s:preferred_colors = [
     \'hardhacker',
     \'kanagawa',
     \'kanagawa-dragon',
+    \'kimbox',
     \'leaf',
     \'melange',
     \'mellifluous',
