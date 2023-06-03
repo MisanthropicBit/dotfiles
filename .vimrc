@@ -104,6 +104,7 @@ if has_nvim
     Plug 'kvrohit/mellow.nvim'
     Plug 'daschw/leaf.nvim'
     Plug 'maxmx03/fluoromachine.nvim'
+    Plug 'ribru17/bamboo.nvim'
 
     " dap
     Plug 'mfussenegger/nvim-dap'
@@ -395,6 +396,7 @@ endif
 " Disable until treesitter hl groups are fixed
 " \'aurora',
 let s:preferred_colors = [
+    \'bamboo',
     \'barstrata',
     \'calvera',
     \'catppuccin',
