@@ -93,6 +93,7 @@ if has_nvim
     " nvim colorschemes
     Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
     Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+    Plug 'EdenEast/nightfox.nvim'
     Plug 'shaunsingh/moonlight.nvim'
     Plug 'kartikp10/noctis.nvim'
     Plug 'w3barsi/barstrata.nvim'
