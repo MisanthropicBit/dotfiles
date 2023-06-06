@@ -508,7 +508,7 @@ if !has_nvim
 end
 
 " Quickly toggle folds
-nnoremap <localleader>f za
+nnoremap <localleader>fl za
 
 " Quicker way to exit insert mode
 inoremap <expr> jk "<esc>"

@@ -33,8 +33,6 @@ require('nvim-treesitter.configs').setup{
             keymaps = {
                 ['af'] = '@function.outer',
                 ['if'] = '@function.inner',
-                -- ['ac'] = '@class.outer',
-                -- ['ic'] = { query = '@class.inner', desc = 'Select inner part of a class region' },
                 ['aa'] = '@parameter.outer',
                 ['ia'] = '@parameter.inner',
                 ['an'] = '@number',
@@ -43,6 +41,8 @@ require('nvim-treesitter.configs').setup{
                 ['ig'] = '@comment.outer',
                 ['ac'] = '@conditional.outer',
                 ['ic'] = '@conditional.inner',
+                ['al'] = '@loop.outer',
+                ['il'] = '@loop.inner',
             },
         },
         swap = {
@@ -54,16 +54,16 @@ require('nvim-treesitter.configs').setup{
                 ['<localleader>ah'] = '@parameter.inner',
             },
         },
-        -- move = {
-        --     enable = true,
-        --     set_jumps = true,
-        --     goto_next_start = {
-        --         ['<f'] = '@function.outer',
-        --     },
-        --     goto_previous_start = {
-        --         ['>f'] = '@function.outer',
-        --     },
-        -- },
+        move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+                ['<localleader>fn'] = '@function.outer',
+            },
+            goto_previous_start = {
+                ['<localleader>fp'] = '@function.outer',
+            },
+        },
     },
 }
 
