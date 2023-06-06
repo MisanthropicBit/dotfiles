@@ -3,6 +3,7 @@ local smart_splits = require('smart-splits')
 
 smart_splits.setup({
     resize_mode = {
+        silent = true,
         quit_key = 'q',
     },
     cursor_follows_swapped_bufs = true,
