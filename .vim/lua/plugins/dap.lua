@@ -18,13 +18,6 @@ map.leader('n', 'dr', dap.repl.open, { desc = 'Open the REPL for debugging' })
 map.leader('n', 'dd', dap_widgets.hover, { desc = 'Inspect value of expression under cursor when debugging' })
 map.leader('n', 'dt', dap.terminate, { desc = 'Terminate/stop debugging' })
 
-dap.defaults.fallback.terminal_win_cmd = 'tabnew'
-dap.defaults.fallback.external_terminal = {
-    command = vim.fn.expand('$SHELL'),
-    args = { '-c' },
-}
-dap.defaults.fallback.force_external_terminal = true
-
 require('dap-vscode-js').setup{
     debugger_path = vim.fn.expand('~/vscode-js-debug'),
     adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
