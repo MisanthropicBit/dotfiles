@@ -23,8 +23,8 @@ function loader.load(plugin_name)
             local msg = string.format("Failed to run plugin setup for '%s': %s", plugin_name, maybe_error)
             vim.api.nvim_echo({{ msg, 'ErrorMsg' }}, true, {})
         else
-            -- Silently attempt to load a work-related plugin setup
-            load_plugin('work.' .. plugin_name)
+            -- Silently attempt to load a local plugin setup
+            load_plugin('local.' .. plugin_name)
         end
     else
         local msg = string.format("Failed to load plugin '%s'", plugin_name)
