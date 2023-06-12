@@ -2,6 +2,7 @@ require('plugins')
 require('lsp')
 require('notify')
 require('docs')
+require('fold')
 
 pcall(require, 'private_plugins')
 
