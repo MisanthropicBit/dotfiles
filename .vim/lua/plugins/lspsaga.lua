@@ -37,5 +37,5 @@ lspsaga.setup({
     },
 })
 
-map.leader('n', 'ly', '<cmd>Lspsaga outline<cr>', { desc = 'Toggle outline of semantic elements' })
-map.leader('n', 'ls', '<cmd>Lspsaga lsp_finder<cr>', { desc = 'Trigger the lspsaga finder' })
+map.leader('n', 'ly', '<cmd>Lspsaga outline<cr>', 'Toggle outline of semantic elements')
+map.leader('n', 'ls', '<cmd>Lspsaga lsp_finder<cr>', 'Trigger the lspsaga finder')

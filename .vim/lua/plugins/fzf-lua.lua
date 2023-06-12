@@ -98,14 +98,14 @@ local function custom_colorschemes()
   fzf_lua.colorschemes({ colors = colors })
 end
 
-map.leader('n', 'ss', fzf_lua.lsp_document_symbols, { desc = 'LSP document symbols' })
-map.leader('n', 'cc', custom_colorschemes, { desc = 'Pick a colorscheme' })
-map.leader('n', 'df', function() fzf_lua.files({ cwd = '~/projects/dotfiles/.vim' }) end, { desc = 'Search dotfiles' })
-map.n('<c-p>', fzf_lua.files, { desc = 'Search files in current directory' })
-map.leader('n', 'gf', fzf_lua.git_files, { desc = 'Search files in the current directory that are tracked by git' })
-map.leader('n', 'gs', fzf_lua.git_status, { desc = 'Git status' })
-map.leader('n', 'gh', fzf_lua.git_stash, { desc = 'Git stash' })
-map.leader('n', 'bp', fzf_lua.dap_breakpoints, { desc = 'List dap breakpoints' })
+map.leader('n', 'ss', fzf_lua.lsp_document_symbols, 'LSP document symbols')
+map.leader('n', 'cc', custom_colorschemes, 'Pick a colorscheme')
+map.leader('n', 'df', function() fzf_lua.files({ cwd = '~/projects/dotfiles/.vim' }) end, 'Search dotfiles')
+map.n('<c-p>', fzf_lua.files, 'Search files in current directory')
+map.leader('n', 'gf', fzf_lua.git_files, 'Search files in the current directory that are tracked by git')
+map.leader('n', 'gs', fzf_lua.git_status, 'Git status')
+map.leader('n', 'gh', fzf_lua.git_stash, 'Git stash')
+map.leader('n', 'bp', fzf_lua.dap_breakpoints, 'List dap breakpoints')
 
 vim.cmd('FzfLua register_ui_select')
 

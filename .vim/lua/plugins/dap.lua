@@ -8,15 +8,15 @@ local function conditional_breakpoint()
     dap.set_breakpoint(vim.fn.input('Breakpoint condition: '))
 end
 
-map.leader('n', 'db', dap.toggle_breakpoint, { desc = 'Toggle a breakpoint' })
-map.leader('n', 'dB', conditional_breakpoint, { desc = 'Set a conditional breakpoint' })
-map.leader('n', 'dc', dap.continue, { desc = 'Continue debugging' })
-map.leader('n', 'do', dap.step_over, { desc = 'Step over' })
-map.leader('n', 'di', dap.step_into, { desc = 'Step into' })
-map.leader('n', 'du', dap.step_out, { desc = 'Step out of' })
-map.leader('n', 'dr', dap.repl.open, { desc = 'Open the REPL for debugging' })
-map.leader('n', 'dd', dap_widgets.hover, { desc = 'Inspect value of expression under cursor when debugging' })
-map.leader('n', 'dt', dap.terminate, { desc = 'Terminate/stop debugging' })
+map.leader('n', 'db', dap.toggle_breakpoint, 'Toggle a breakpoint')
+map.leader('n', 'dB', conditional_breakpoint, 'Set a conditional breakpoint')
+map.leader('n', 'dc', dap.continue, 'Continue debugging')
+map.leader('n', 'do', dap.step_over, 'Step over')
+map.leader('n', 'di', dap.step_into, 'Step into')
+map.leader('n', 'du', dap.step_out, 'Step out of')
+map.leader('n', 'dr', dap.repl.open, 'Open the REPL for debugging')
+map.leader('n', 'dd', dap_widgets.hover, 'Inspect value of expression under cursor when debugging')
+map.leader('n', 'dt', dap.terminate, 'Terminate/stop debugging')
 
 require('dap-vscode-js').setup{
     debugger_path = vim.fn.expand('~/vscode-js-debug'),

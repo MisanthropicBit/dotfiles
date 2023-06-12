@@ -6,5 +6,5 @@ map.leader(
     'n',
     'sg',
     '<cmd>TSHighlightCapturesUnderCursor<cr>',
-    { desc = 'Highlight treesitter or syntax group under cursor' }
+    'Highlight treesitter or syntax group under cursor'
 )

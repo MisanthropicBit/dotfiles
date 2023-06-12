@@ -33,4 +33,4 @@ require('bufferline').setup{
   }
 }
 
-map.n('gb', '<cmd>BufferLinePick<cr>', { desc = 'Interactively pick a tab' })
+map.n('gb', '<cmd>BufferLinePick<cr>', 'Interactively pick a tab')

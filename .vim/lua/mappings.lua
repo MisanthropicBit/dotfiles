@@ -11,15 +11,19 @@ function map.merge(opts1, opts2)
     return vim.tbl_extend('force', opts1, opts2 or {})
 end
 
----@param opts table?
+---@param opts (table | string)?
 function map.with_default_options(opts)
+    if type(opts) == 'string' then
+        return map.merge(map.default_options, { desc = opts })
+    end
+
     return map.merge(map.default_options, opts)
 end
 
 ---@param mode Mode | Mode[]
 ---@param lhs string
 ---@param rhs string | fun()
----@param opts table?
+---@param opts (table | string)?
 function map.set(mode, lhs, rhs, opts)
     vim.keymap.set(mode, lhs, rhs, map.with_default_options(opts))
 end
@@ -27,7 +31,7 @@ end
 ---@param mode Mode | Mode[]
 ---@param lhs string
 ---@param rhs string | fun()
----@param opts table?
+---@param opts (table | string)?
 function map.leader(mode, lhs, rhs, opts)
     local leader_lhs = '<localleader>' .. lhs
 

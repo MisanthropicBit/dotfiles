@@ -174,11 +174,11 @@ local function lsp_request_jump(lsp_method, split_cmd, selector)
 end
 
 -- Diagnostic mappings
-map.leader('n', 'lp', diagnostics_methods.goto_prev, { desc = 'Jump to previous diagnostic' })
-map.leader('n', 'ln', diagnostics_methods.goto_next, { desc = 'Jump to next diagnostic' })
-map.leader('n', 'ep', diagnostics_methods.goto_prev_error, { desc = 'Jump to previous diagnostic error' })
-map.leader('n', 'en', diagnostics_methods.goto_next_error, { desc = 'Jump to next diagnostic error' })
-map.leader('n', 'll', diagnostics_methods.open_float, { desc = 'Open diagnostic float' })
+map.leader('n', 'lp', diagnostics_methods.goto_prev, 'Jump to previous diagnostic')
+map.leader('n', 'ln', diagnostics_methods.goto_next, 'Jump to next diagnostic')
+map.leader('n', 'ep', diagnostics_methods.goto_prev_error, 'Jump to previous diagnostic error')
+map.leader('n', 'en', diagnostics_methods.goto_next_error, 'Jump to next diagnostic error')
+map.leader('n', 'll', diagnostics_methods.open_float, 'Open diagnostic float')
 
 -- Use on_attach to only map the following keys after the language server
 -- attaches to the current buffer
@@ -188,7 +188,7 @@ local on_attach = function(client, bufnr)
     end
 
     local function with_desc(desc)
-        return map.merge(map.with_default_options({ buffer = bufnr }), { desc = desc })
+        return map.with_default_options({ buffer = bufnr, desc = desc })
     end
 
     -- We don't guard against server capabilities because we want neovim to
