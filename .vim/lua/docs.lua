@@ -85,6 +85,9 @@ local filetype_config = {
     vim = {
         command = 'help',
     },
+    fish = {
+        url = 'https://fishshell.com/docs/current/search.html?q=%s',
+    },
 }
 
 ---@param filetype string
