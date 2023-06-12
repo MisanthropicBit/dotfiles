@@ -4,6 +4,9 @@ local goto_preview = require('goto-preview')
 
 goto_preview.setup{
     height = 28,
+    post_open_hook = function()
+        vim.cmd.normal('zt')
+    end,
 }
 
 map.n('gp', goto_preview.goto_preview_definition, 'Preview definition under cursor')
