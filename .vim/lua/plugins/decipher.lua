@@ -14,4 +14,4 @@ decipher.setup({
 
 map.n('gr', function()
     decipher.decode_motion('base64-url', { preview = true })
-end)
+end, 'Decode a base64-url encoded text object')
