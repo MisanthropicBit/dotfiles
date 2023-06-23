@@ -22,7 +22,7 @@ function fzf_lua_setup.project_files(directory)
         'fd --type directory --maxdepth 1 . ' .. directory,
         {
             cwd = directory,
-            prompt = 'Search directory> ',
+            prompt = 'Search directory❯ ',
             actions = {
                 ['ctrl-s'] = file_selector(fzf_lua.files),
                 ['enter'] = file_selector(fzf_lua.files),
