@@ -761,8 +761,8 @@ nnoremap <silent> <c-t><c-t> :tab Term<cr>
 
 " Explorer {{{
 
-" Show stats in :Explorer mode
-let g:netrw_liststyle = 3
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
 
 " }}}
 
