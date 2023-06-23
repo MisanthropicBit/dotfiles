@@ -5,6 +5,7 @@ local map = require('mappings')
 local lsp_common = require('lsp_common')
 
 local fzf_lua = require('fzf-lua')
+local actions = require('fzf-lua.actions')
 
 -- Returns a function for selecting a specific directory and then search it afterwards
 ---@param directory string
@@ -82,6 +83,17 @@ fzf_lua.setup{
     symbols = {
       symbol_fmt = symbol_fmt,
     },
+  },
+  git = {
+      status = {
+          actions = {
+              ['ctrl-h'] = { actions.git_stage, actions.resume },
+              ['ctrl-l'] = { actions.git_unstage, actions.resume },
+              ['right']   = false,
+              ['left']    = false,
+              ['ctrl-x']  = false,
+          }
+      },
   },
   fzf_opts = {
     ['--cycle'] = '',
