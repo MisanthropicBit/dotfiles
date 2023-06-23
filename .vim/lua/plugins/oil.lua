@@ -32,7 +32,7 @@ oil.setup({
         },
         ['<c-r>'] = 'actions.refresh',
         ['<c-e>'] = 'actions.close',
-        ['<c-x>'] = 'actions.copy_entry_path',
+        ['<c-y>'] = 'actions.copy_entry_path',
         -- c-m for '[m]ore info'
         ['<c-m>'] = { callback = toggle_columns, desc = 'Toggle expanded columns' },
         ['-'] = 'actions.parent',
@@ -40,5 +40,8 @@ oil.setup({
         ['`'] = 'actions.cd',
         ['~'] = 'actions.tcd',
         ['g.'] = 'actions.toggle_hidden',
+    },
+    win_options = {
+        concealcursor = "nvi",
     },
 })
