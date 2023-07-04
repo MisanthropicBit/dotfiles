@@ -204,8 +204,8 @@ local on_attach = function(client, bufnr)
     map.leader({ 'n', 'v' }, 'la', lsp_methods.code_action, with_desc('Open code action menu at cursor or in a range'))
 
     -- Set up a document symbol mapping if the mapping is not already bound (by e.g. fzf-lua)
-    if vim.fn.maparg('<leader>ss', 'n') == '' then
-        map.leader('n', 'ss', lsp_methods.document_symbol, with_desc('Show document symbol'))
+    if vim.fn.maparg('<c-s>', 'n') == '' then
+        map.n('<c-s>', lsp_methods.document_symbol, with_desc('Show document symbol'))
     end
 
     local lsp_method = 'textDocument/definition'
