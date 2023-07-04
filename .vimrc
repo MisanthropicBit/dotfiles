@@ -26,7 +26,6 @@ Plug 'mhinz/vim-startify'
 Plug 'MisanthropicBit/vim-yank-window'
 Plug 'Raimondi/delimitMate'
 Plug 'rhysd/git-messenger.vim'
-Plug 'sirver/UltiSnips'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
@@ -76,6 +75,8 @@ if has_nvim
     Plug 'nvim-lualine/lualine.nvim'
     Plug 'RaafatTurki/hex.nvim'
     Plug 'Wansmer/treesj'
+    Plug 'L3MON4D3/LuaSnip', { 'tag': 'v1.*', 'do': 'make install_jsregexp' }
+    Plug 'rafamadriz/friendly-snippets'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
@@ -88,7 +89,7 @@ if has_nvim
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/cmp-cmdline'
-    Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+    Plug 'saadparwaiz1/cmp_luasnip'
 
     " nvim colorschemes
     Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
@@ -838,24 +839,6 @@ let g:git_messenger_conceal_word_diff_marker = 1
 nnoremap <localleader>dv :Linediff
 xmap <silent> gl <Plug>(linediff-operator) 
 nmap <silent> gl <Plug>(linediff-operator) 
-
-" }}}
-
-" UltiSnips {{{
-
-" Split the :UltiSnipsEdit window horizontally or vertically depending on context
-let g:UltiSnipsEditSplit = 'context'
-
-let g:UltiSnipsSnippetDirectories = ['UltiSnips', 'custom-ultisnips']
-
-let g:ultisnips_javascript = {
-    \'keyword-spacing': 'always',
-    \'semi': 'never',
-    \'space-before-function-paren': 'never',
-\}
-
-" Open the snippets file for the current file type
-nnoremap <localleader>sf :UltiSnipsEdit!<cr>
 
 " }}}
 

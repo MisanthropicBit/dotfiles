@@ -1,5 +1,6 @@
 local icons = require('icons')
 local kind_icons = require('lsp_common').kind_icons
+local luasnip = require('luasnip')
 
 local cmp = require('cmp')
 
@@ -47,7 +48,7 @@ end
 cmp.setup{
     snippet = {
         expand = function(args)
-            vim.fn['UltiSnips#Anon'](args.body)
+            luasnip.lsp_expand(args.body)
         end,
     },
     window = {
@@ -55,8 +56,24 @@ cmp.setup{
         documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
-        ['<c-j>'] = cmp.mapping.select_next_item(),
-        ['<c-k>'] = cmp.mapping.select_prev_item(),
+        ['<c-j>'] = cmp.mapping(function(fallback)
+            if luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            elseif cmp.visible() then
+                cmp.select_next_item()
+            else
+                fallback()
+            end
+        end, { 'i', 's' }),
+        ['<c-k>'] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            elseif cmp.visible() then
+                cmp.select_prev_item()
+            else
+                fallback()
+            end
+        end),
         ['<c-b>'] = cmp.mapping.scroll_docs(-4),
         ['<c-f>'] = cmp.mapping.scroll_docs(4),
         ['<c-e>'] = cmp.mapping.abort(),
@@ -64,7 +81,7 @@ cmp.setup{
     }),
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
-        { name = 'ultisnips' },
+        { name = 'luasnip' },
         {
             name = 'buffer',
             option = {
