@@ -67,6 +67,7 @@ set -x FZF_DEFAULT_OPTS "--color='pointer:bright-blue,marker:bright-green' --hei
 bind \cb git_fzf_branches
 bind \cg git_fzf_log
 bind \co git_fzf_commits
+bind \cz 'fg 2>/dev/null; commandline -f repaint'
 
 if test -e "/opt/local/share/fzf/shell/key-bindings.fish"
     source "/opt/local/share/fzf/shell/key-bindings.fish"
