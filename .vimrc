@@ -99,12 +99,9 @@ if has_nvim
     Plug 'kartikp10/noctis.nvim'
     Plug 'w3barsi/barstrata.nvim'
     Plug 'rebelot/kanagawa.nvim'
-    Plug 'bluz71/vim-moonfly-colors'
     Plug 'hoprr/calvera-dark.nvim'
     Plug 'ramojus/mellifluous.nvim'
-    Plug 'lewpoly/sherbet.nvim'
     Plug 'kvrohit/mellow.nvim'
-    Plug 'daschw/leaf.nvim'
     Plug 'maxmx03/fluoromachine.nvim'
     Plug 'ribru17/bamboo.nvim'
     Plug 'lmburns/kimbox'
@@ -413,14 +410,11 @@ let s:preferred_colors = [
     \'kanagawa',
     \'kanagawa-dragon',
     \'kimbox',
-    \'leaf',
     \'melange',
     \'mellifluous',
     \'mellow',
-    \'moonfly',
     \'moonlight',
     \'noctis',
-    \'sherbet',
     \'tokyonight-night',
     \'tokyonight-storm'
 \]
