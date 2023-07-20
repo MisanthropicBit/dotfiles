@@ -10,12 +10,13 @@ end
 
 map.leader('n', 'db', dap.toggle_breakpoint, 'Toggle a breakpoint')
 map.leader('n', 'dB', conditional_breakpoint, 'Set a conditional breakpoint')
+map.leader('n', 'dd', dap.clear_breakpoints, 'Clear all breakpoints')
 map.leader('n', 'dc', dap.continue, 'Continue debugging')
 map.leader('n', 'do', dap.step_over, 'Step over')
 map.leader('n', 'di', dap.step_into, 'Step into')
 map.leader('n', 'du', dap.step_out, 'Step out of')
 map.leader('n', 'dr', dap.repl.open, 'Open the REPL for debugging')
-map.leader('n', 'dd', dap_widgets.hover, 'Inspect value of expression under cursor when debugging')
+map.leader('n', 'dh', dap_widgets.hover, 'Inspect value of expression under cursor when debugging')
 map.leader('n', 'dt', dap.terminate, 'Terminate/stop debugging')
 
 require('dap-vscode-js').setup{
