@@ -1,4 +1,5 @@
 require('plugins')
+require('diagnostic')
 require('lsp')
 require('notify')
 require('docs')
