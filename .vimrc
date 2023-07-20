@@ -36,8 +36,6 @@ Plug 'tpope/vim-surround'
 Plug 'AndrewRadev/linediff.vim'
 
 " Colorschemes
-Plug 'embark-theme/vim'
-Plug 'haishanh/night-owl.vim'
 Plug 'sainnhe/everforest'
 Plug 'wadackel/vim-dogrun'
 Plug 'savq/melange'
@@ -45,7 +43,7 @@ Plug 'hardhackerlabs/theme-vim', { 'as': 'hardhacker' }
 
 if has_nvim
     if executable('node') && executable('yarn')
-        Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+        Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install', 'for': ['markdown', 'vim-plug'] }
     else
         Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
     endif
@@ -54,7 +52,7 @@ if has_nvim
     Plug 'rmagatti/goto-preview'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'folke/trouble.nvim'
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'nvim-treesitter/playground'
     Plug 'rktjmp/lush.nvim'
@@ -67,12 +65,11 @@ if has_nvim
     Plug 'jose-elias-alvarez/null-ls.nvim'
     Plug 'ckolkey/ts-node-action'
     Plug 'glepnir/dashboard-nvim'
-    Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+    Plug 'ibhagwan/fzf-lua', { 'branch': 'main' }
     Plug 'stevearc/oil.nvim'
     Plug 'kevinhwang91/nvim-bqf'
     Plug 'mrjones2014/smart-splits.nvim'
     Plug 'nvim-lualine/lualine.nvim'
-    Plug 'RaafatTurki/hex.nvim'
     Plug 'Wansmer/treesj'
     Plug 'L3MON4D3/LuaSnip', { 'tag': 'v1.*', 'do': 'make install_jsregexp' }
     Plug 'rafamadriz/friendly-snippets'
@@ -104,6 +101,8 @@ if has_nvim
     Plug 'maxmx03/fluoromachine.nvim'
     Plug 'ribru17/bamboo.nvim'
     Plug 'lmburns/kimbox'
+    Plug 'AstroNvim/astrotheme'
+    Plug 'AlexvZyl/nordic.nvim'
 
     " dap
     Plug 'mfussenegger/nvim-dap'
@@ -121,6 +120,7 @@ if has_nvim
         Plug 'MisanthropicBit/decipher.nvim'
     endif
 else
+    Plug 'editorconfig/editorconfig-vim'
     Plug 'ryanoasis/vim-devicons'
 endif
 
@@ -300,13 +300,14 @@ endfunction
 
 " General {{{
 
-" Ignore backwards compatibility to vi
 set nocompatible
-
-" Show line numbers
 set number
+set laststatus=2
+set wildmenu
+set cursorline
 
-" Start out in combined number and relativenumber mode if possible
+filetype plugin on
+
 if v:version >= 703
     set relativenumber
 endif
@@ -317,23 +318,13 @@ set scrolloff=3
 " Display current line and column in the bottom-right corner
 set ruler
 
-" Always show vim-airline
-set laststatus=2
-
 " Unrestricted use of the backspace key in insert mode
 set backspace=indent,eol,start
-
-" Use the filetype plugin
-filetype plugin on
 
 " Allow yank and put between vim sessions without specifying
 " the clipboard ("*) register
 set clipboard+=unnamed
 
-" Prefer wildmenu
-set wildmenu
-
-" Set file patterns to ignore in the wildmenu
 set wildignore+=.hg,.git,.svn                                 " Version control files
 set wildignore+=*.aux,*.bbl,*.bcf,*.blg,*.run.xml,*.toc,*.xdv " LaTeX files
 set wildignore+=*.acn,*.glo,*.ist,*.pag,*.synctex.gz          " More LaTeX files
@@ -355,11 +346,12 @@ set linebreak
 set formatoptions=croqlnt
 set ignorecase
 set smartcase
-nnoremap / /\v
-vnoremap / /\v
 
-" Highlight the line which the cursor is on
-set cursorline
+" Very magic modifier does not work in vscode
+if !exists('g:vscode')
+    nnoremap / /\v
+    vnoremap / /\v
+endif
 
 " Highlight select languages in markdown code blocks
 let g:markdown_fenced_languages = [
@@ -367,6 +359,7 @@ let g:markdown_fenced_languages = [
     \'python',
     \'bash=sh',
     \'vim',
+    \'lua',
 \]
 
 set signcolumn=yes:2
@@ -400,12 +393,8 @@ let s:preferred_colors = [
     \'calvera',
     \'catppuccin',
     \'catppuccin-macchiato',
-    \'dogrun',
     \'duskfox',
-    \'embark',
     \'everforest',
-    \'fluoromachine',
-    \'hardhacker',
     \'kanagawa',
     \'kanagawa-dragon',
     \'kimbox',
@@ -413,7 +402,7 @@ let s:preferred_colors = [
     \'mellifluous',
     \'mellow',
     \'moonlight',
-    \'noctis',
+    \'tokyonight-moon',
     \'tokyonight-night',
     \'tokyonight-storm'
 \]
@@ -462,14 +451,19 @@ if !has_nvim
     nnoremap <silent> <localleader>sg :call <SID>SynStack()<cr>
 endif
 
-" Shortcut for disabling highlighting
 nnoremap <silent> <localleader><space> :nohl<cr>
-
-" Quickly save the current buffer
 nnoremap <localleader>w :w<cr>
-
-" Quickly close the current buffer
 nnoremap <localleader>q :q<cr>
+nnoremap <localleader>Q :qa!<cr>
+nnoremap <localleader>vs :sp $MYVIMRC<cr>
+nnoremap <localleader>vv :vsp $MYVIMRC<cr>
+nnoremap <localleader>vt :tabe $MYVIMRC<cr>
+nnoremap <localleader>sv :source $MYVIMRC<cr>
+inoremap <expr> jk "<esc>"
+nnoremap <c-o> <c-o>zz
+nnoremap <c-i> <c-i>zz
+inoremap <expr> TODOT printf('TODO (%s): ', strftime('%Y-%m-%d, %H:%M:%S'))
+nnoremap <silent> Q @@
 
 " Shortcut for correcting a misspelled word with its first suggestion
 nnoremap <localleader>1 1z=
@@ -477,14 +471,6 @@ nnoremap <localleader>1 1z=
 " Move vertically while ignoring true lines
 nnoremap j gj
 nnoremap k gk
-
-" Shortcut for editing the vimrc file
-nnoremap <localleader>vs :sp $MYVIMRC<cr>
-nnoremap <localleader>vv :vsp $MYVIMRC<cr>
-nnoremap <localleader>vt :tabe $MYVIMRC<cr>
-
-" Shortcut to reload the vimrc file
-nnoremap <localleader>sv :source $MYVIMRC<cr>
 
 " Easily swap the current line up and down
 " Based on: https://github.com/vim/vim/issues/536
@@ -497,15 +483,11 @@ vnoremap <silent> K :call <SID>FoldSafeVisualMove(-1)<cr>
 nnoremap gf <c-w>gf
 
 if !has_nvim
-    " Yank from cursor to the end of line instead of the entire line
     nnoremap Y y$
 end
 
 " Quickly toggle folds
 nnoremap <localleader>fl za
-
-" Quicker way to exit insert mode
-inoremap <expr> jk "<esc>"
 
 " Delete trailing whitespace (should this be an autocommand on saving/exiting?)
 nnoremap <silent> <localleader>rw :call <SID>DeleteTrailingWhitespace()<cr>
@@ -540,10 +522,6 @@ vnoremap <Right>    <nop>
 vnoremap <PageUp>   <nop>
 vnoremap <PageDown> <nop>
 
-" Always center jumps
-nnoremap <c-o> <c-o>zz
-nnoremap <c-i> <c-i>zz
-
 " Use familiar cmdline binding in vim's cmdline
 cnoremap <c-a> <c-b>
 cnoremap <m-left> <c-left>
@@ -555,11 +533,6 @@ cnoremap <c-l> <c-right>
 cnoremap <c-o> origin/master:
 cnoremap <c-b> <c-r>=printf('origin/%s', FugitiveHead())<cr>
 cnoremap <c-d> <c-r>=expand('%:p:h') . '/'<cr>
-
-" Tag TODOs with a timestamp
-inoremap <expr> TODOT printf('TODO (%s): ', strftime('%Y-%m-%d, %H:%M:%S'))
-
-nnoremap <silent> Q @@
 
 let s:conflict_marker_regex = '^\(\(\(<<<<<<<\)\|\(|||||||\)\|\(>>>>>>>\)\) .\+\|\(=======\)\)'
 
@@ -611,8 +584,6 @@ set autoindent
 " Tabs (the buffer ones) {{{
 
 nnoremap <c-t><c-o> :tabonly<cr>
-
-" Faster tab switching using a meta-key
 nnoremap L gt
 nnoremap H gT
 
@@ -641,13 +612,10 @@ augroup END
 
 " Windows {{{
 
-" Shortcuts for vim window navigation
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-
-" Open vsplits on the right side
 set splitright
 
 " }}}
@@ -668,7 +636,6 @@ set foldnestmax=3
 " Commands {{{
 
 command! -nargs=+ Grep execute 'silent grep! <args> | copen'
-
 command! -bang RandomColorscheme :echo printf("Selected: %s", <SID>RandomColorscheme(<bang>0))
 
 " }}}
@@ -676,8 +643,8 @@ command! -bang RandomColorscheme :echo printf("Selected: %s", <SID>RandomColorsc
 " Autocommands {{{
 
 if has('autocmd')
-    " Automatically resize windows when vim is resized
     augroup vimresize
+        " Automatically resize windows when vim is resized
         autocmd!
         autocmd VimResized * tabdo :wincmd =
     augroup END
@@ -700,11 +667,6 @@ if has('autocmd')
             \ endif
     augroup END
 
-    augroup csharp
-        autocmd!
-        autocmd FileType cs setlocal indentkeys-=0#
-    augroup END
-
     augroup fsproj
         autocmd!
         autocmd BufRead,BufNewFile *.fsproj setlocal ft=xml
@@ -724,6 +686,11 @@ if has('autocmd')
     augroup jslintrc
         autocmd!
         autocmd BufRead,BufNewFile .eslintrc setlocal filetype=json
+    augroup END
+
+    augroup terminal
+        autocmd!
+        autocmd TermOpen set signcolumn=no
     augroup END
 endif
 
