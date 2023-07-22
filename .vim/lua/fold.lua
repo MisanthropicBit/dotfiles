@@ -1,5 +1,4 @@
-local foldmarker = ''
-local foldchar = '─'
+local icons = require('icons')
 
 local has_ts_utils, ts_utils = pcall(require, 'nvim-treesitter.ts_utils')
 
@@ -19,7 +18,7 @@ function _G.custom_fold_text()
     local line = vim.fn.trim(vim.fn.getline(vim.v.foldstart))
     local lines_count = vim.v.foldend - vim.v.foldstart + 1
     local format = '%s%s %d lines: %s '
-    local level = foldchar:rep(vim.fn.foldlevel(vim.v.foldstart))
+    local level = icons.folds.char:rep(vim.fn.foldlevel(vim.v.foldstart))
 
     if has_ts_utils then
         local enclosing_function_node = get_enclosing_function_node(ts_utils.get_node_at_cursor())
@@ -32,8 +31,8 @@ function _G.custom_fold_text()
         end
     end
 
-    return format:format(foldmarker .. '  ', level, lines_count, line)
+    return format:format(icons.folds.marker .. '  ', level, lines_count, line)
 end
 
-vim.opt.fillchars = { fold = foldchar }
+vim.opt.fillchars = { fold = icons.folds.char }
 vim.o.foldtext = 'v:lua.custom_fold_text()'

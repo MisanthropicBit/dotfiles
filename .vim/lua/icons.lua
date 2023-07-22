@@ -15,6 +15,10 @@ return {
         info = ' ',
         hint = ' ',
     },
+    folds = {
+        marker = '',
+        char = '─',
+    },
     lsp = {
         buffer = ' ',
         nvim_lsp = ' ',
