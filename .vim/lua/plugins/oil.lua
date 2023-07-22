@@ -22,7 +22,13 @@ oil.setup({
             nowait = true,
             desc = 'Open entry under cursor in a vertical split',
         },
-        ['<c-t>'] = 'actions.select_tab',
+        ['<c-t>'] = {
+            callback = function()
+                oil.select({ tab = true })
+            end,
+            nowait = true,
+            desc = 'Open entry under cursor in a tab'
+        },
         ['<c-p>'] = 'actions.preview',
         ['<localleader>ps'] = {
             callback = function()
