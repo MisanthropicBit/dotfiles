@@ -87,13 +87,15 @@ local function lsp_request_jump(lsp_method, split_cmd, selector)
             elseif #clients == 1 then
                 local client = vim.lsp.get_client_by_id(clients[1])
 
-                vim.cmd(split_cmd)
-                vim.lsp.util.jump_to_location(
-                    results[client.id].result[1],
-                    client.offset_encoding,
-                    false
-                )
-                vim.cmd('normal zz')
+                if results[client.id] and results[client.id].result and #results[client.id].result > 0 then
+                    vim.cmd(split_cmd)
+                    vim.lsp.util.jump_to_location(
+                        results[client.id].result[1],
+                        client.offset_encoding,
+                        false
+                    )
+                    vim.cmd('normal zz')
+                end
             else
                 local locations = {}
 
