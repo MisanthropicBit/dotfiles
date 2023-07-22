@@ -55,6 +55,7 @@ return {
         search = '',
         search_files = '󰱼',
         update = '',
+        prompt = '❯',
     },
     lines = {
         vertical = '┃',
