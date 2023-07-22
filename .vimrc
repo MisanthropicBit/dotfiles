@@ -103,6 +103,7 @@ if has_nvim
     Plug 'lmburns/kimbox'
     Plug 'AstroNvim/astrotheme'
     Plug 'AlexvZyl/nordic.nvim'
+    Plug 'xero/miasma.nvim'
 
     " dap
     Plug 'mfussenegger/nvim-dap'
@@ -401,6 +402,8 @@ let s:preferred_colors = [
     \'melange',
     \'mellifluous',
     \'mellow',
+    \'miasma',
+    \'moonfly',
     \'moonlight',
     \'tokyonight-moon',
     \'tokyonight-night',
