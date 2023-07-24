@@ -47,10 +47,7 @@ local filetype_config = {
         url = 'https://duckduckgo.com/?sites=cppreference.com&q=%s&atb=v314-1&ia=web',
         iskeyword = { ':' },
     },
-    cpp = {
-        url = 'https://duckduckgo.com/?sites=cppreference.com&q=%s&atb=v314-1&ia=web',
-        iskeyword = { ':' },
-    },
+    cpp = 'c',
     javascript = {
         url = 'https://developer.mozilla.org/en/search?topic=api&topic=js&q=%s',
     },
