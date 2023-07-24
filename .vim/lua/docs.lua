@@ -73,9 +73,15 @@ local filetype_config = {
                 end
 
                 return { command = 'help' }
+            elseif query:find([[uv.]]) then
+                return {
+                    command = 'help ',
+                    query = query
+                }
             end
 
-            return fallback.config_callback(query, filetype)
+            -- Use fallback with lua v5.1 documentation
+            return fallback.config_callback(query, filetype .. "5.1")
         end,
         iskeyword = { '.' },
     },
