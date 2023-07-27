@@ -98,6 +98,7 @@ lualine.setup({
                 'encoding',
                 cond = conditions.all,
             },
+            '%b/0x%B',
         },
         lualine_y = {
             {
