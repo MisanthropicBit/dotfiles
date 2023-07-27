@@ -116,6 +116,7 @@ map.leader('n', 'gs', fzf_lua.git_status, 'Git status')
 map.leader('n', 'gh', fzf_lua.git_stash, 'Git stash')
 map.leader('n', 'bp', fzf_lua.dap_breakpoints, 'List dap breakpoints')
 map.leader('n', 'hl', fzf_lua.highlights)
+map.leader('n', 'fb', fzf_lua.blines, 'Find lines in current buffer')
 
 vim.cmd('FzfLua register_ui_select')
 
