@@ -578,6 +578,11 @@ if has('autocmd')
         autocmd!
         autocmd TermOpen set signcolumn=no
     augroup END
+
+    augroup gitconfig
+        autocmd!
+        autocmd BufRead,BufNewFile .*gitconfig setlocal filetype=gitconfig
+    augroup END
 endif
 
 " }}}
