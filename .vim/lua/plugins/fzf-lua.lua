@@ -1,6 +1,7 @@
 local fzf_lua_setup = {}
 
 local ansi = require('ansi')
+local colorschemes = require('colorschemes')
 local map = require('mappings')
 local lsp_common = require('lsp_common')
 
@@ -101,11 +102,7 @@ fzf_lua.setup{
 }
 
 local function custom_colorschemes()
-  local colors = nil
-
-  if vim.fn.GetPluginColorschemes ~= nil then
-    colors = vim.fn.GetPluginColorschemes(true)
-  end
+  local colors = colorschemes.get_preferred_colorschemes()
 
   fzf_lua.colorschemes({ colors = colors })
 end

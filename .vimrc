@@ -221,82 +221,6 @@ function! s:VisualIndentReselect(dir)
     normal! gv
 endfunction
 
-let s:builtin_colorschemes = [
-    \'blue',
-    \'darkblue',
-    \'default',
-    \'delek',
-    \'desert',
-    \'elflord',
-    \'evening',
-    \'industry',
-    \'koehler',
-    \'morning',
-    \'murphy',
-    \'pablo',
-    \'peachpuff',
-    \'ron',
-    \'shine',
-    \'slate',
-    \'torte',
-    \'zellner',
-\]
-
-" For use in s:RandomColorscheme. Lists colorschemes that are broken or do not
-" support true-color
-let s:exclude_colorschemes = []
-
-" Find and choose and random user-defined colorscheme
-function! s:RandomColorscheme(bang)
-    let user_colorschemes = GetPluginColorschemes(!a:bang)
-
-    if &shell =~# 'bash'
-        let random = system('echo -n $RANDOM')
-    elseif &shell =~# 'fish'
-        let random = system('echo -n (random)')
-    else
-        let random = 0
-    endif
-
-    let irandom = str2nr(random)
-    let chosen = get(user_colorschemes, irandom % len(user_colorschemes))
-
-    execute ':colorscheme ' . chosen
-
-    return chosen
-endfunction
-
-" Return a list of colorschemes installed by plugin, excluding built-in
-" colorschemes
-function! GetPluginColorschemes(use_preferred, ...) abort
-    let user_colorschemes = []
-
-    if a:use_preferred && exists('s:preferred_colors')
-        let user_colorschemes = s:preferred_colors
-    else
-        let colors = map(split(globpath(&runtimepath, 'colors/*.vim'), '\n'),
-                        \'fnamemodify(v:val, ":t:r")')
-
-        if has('packages')
-            let colors += split(globpath(&packpath, 'pack/*/opt/*/colors/*.vim'), '\n')
-        endif
-
-        let exclude = []
-
-        if exists('s:builtin_colorschemes')
-            let exclude += s:builtin_colorschemes
-        endif
-
-        if a:0 > 0 && !empty(a:1)
-            let exclude += a:1
-        endif
-
-        let user_colorschemes = filter(colors, 'index(exclude, v:val) == -1')
-    endif
-
-    return uniq(sort(user_colorschemes))
-endfunction
-
 " }}}
 
 " General {{{
@@ -385,48 +309,6 @@ if !has('gui_running')
         set t_Co=256
     endif
 endif
-
-" Disable until treesitter hl groups are fixed
-" \'aurora',
-let s:preferred_colors = [
-    \'bamboo',
-    \'barstrata',
-    \'calvera',
-    \'catppuccin',
-    \'catppuccin-macchiato',
-    \'duskfox',
-    \'everforest',
-    \'kanagawa',
-    \'kanagawa-dragon',
-    \'kimbox',
-    \'melange',
-    \'mellifluous',
-    \'mellow',
-    \'miasma',
-    \'moonfly',
-    \'moonlight',
-    \'tokyonight-moon',
-    \'tokyonight-night',
-    \'tokyonight-storm'
-\]
-
-let g:default_colorscheme_override = ''
-
-" Set the default colorscheme
-try
-    if exists('g:default_colorscheme_override') && !empty(g:default_colorscheme_override)
-        execute printf('colorscheme %s', g:default_colorscheme_override)
-    else
-        call s:RandomColorscheme(0)
-    endif
-catch
-    try
-        colorscheme duskfox
-    catch /^Vim\%((\a\+)\)\=:E/
-        echoerr v:exception
-        colorscheme default
-    endtry
-endtry
 
 " Enable syntax highlighting
 syntax on
@@ -639,7 +521,6 @@ set foldnestmax=3
 " Commands {{{
 
 command! -nargs=+ Grep execute 'silent grep! <args> | copen'
-command! -bang RandomColorscheme :echo printf("Selected: %s", <SID>RandomColorscheme(<bang>0))
 
 " }}}
 
@@ -751,13 +632,6 @@ let g:fzf_action = {
     \'ctrl-s': 'split',
     \'ctrl-v': 'vsplit',
 \}
-
-" Remove the built-in colors from :Colors command
-command! -bang Colors call fzf#run(fzf#wrap({
-    \'source':  fzf#vim#_uniq(GetPluginColorschemes(0)),
-    \'sink':    'colo',
-    \'options': '+m --prompt="Colors> "',
-\}))
 
 command! -bang -nargs=* -complete=dir Dirs
 \ call fzf#run(fzf#wrap({'source': 'fd --type d --color=never', 'options': ['--preview', 'tree -C -L 1 {}']}))
