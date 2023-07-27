@@ -56,7 +56,7 @@ if has_nvim
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'nvim-treesitter/playground'
     Plug 'rktjmp/lush.nvim'
-    Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
+    Plug 'nvimdev/lspsaga.nvim', { 'branch': 'main' }
     Plug 'nvim-lua/plenary.nvim'
     Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
     Plug 'nat-418/boole.nvim'
@@ -64,7 +64,7 @@ if has_nvim
     Plug 'lukas-reineke/indent-blankline.nvim'
     Plug 'jose-elias-alvarez/null-ls.nvim'
     Plug 'ckolkey/ts-node-action'
-    Plug 'glepnir/dashboard-nvim'
+    Plug 'nvimdev/dashboard-nvim'
     Plug 'ibhagwan/fzf-lua', { 'branch': 'main' }
     Plug 'stevearc/oil.nvim'
     Plug 'kevinhwang91/nvim-bqf'
@@ -104,6 +104,8 @@ if has_nvim
     Plug 'AstroNvim/astrotheme'
     Plug 'AlexvZyl/nordic.nvim'
     Plug 'xero/miasma.nvim'
+    Plug 'Shatur/neovim-ayu'
+    Plug 'tiagovla/tokyodark.nvim'
 
     " dap
     Plug 'mfussenegger/nvim-dap'
