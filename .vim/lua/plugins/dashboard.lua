@@ -24,6 +24,10 @@ local rpad_default = function(value)
     return rpad(value, dashboard_option_width, ' ')
 end
 
+local function installed_plugin_count()
+    return vim.tbl_count(vim.g.plugs or {})
+end
+
 -- Copy dashboard's default header since it isn't exported and pad the top to
 -- vertically center the dashboard
 local default_header = {
@@ -42,6 +46,12 @@ local default_header = {
     ' ██║  ██║██╔══██║╚════██║██╔══██║██╔══██╗██║   ██║██╔══██║██╔══██╗██║  ██║ ',
     ' ██████╔╝██║  ██║███████║██║  ██║██████╔╝╚██████╔╝██║  ██║██║  ██║██████╔╝ ',
     ' ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝  ',
+    '',
+    '',
+    ('%s  %d plugins installed'):format(icons.misc.package, installed_plugin_count()),
+    '',
+    ('%s  %s'):format(icons.color.scheme, vim.g.colors_name),
+    '',
     '',
 }
 
