@@ -42,6 +42,7 @@
     br = branch
     bs = !git br --list -vv $(git br --show-current)
     browse = !~/projects/dotfiles/git-browse.py
+    browse = !nvim --headless -c 'GBrowse | quit' > /dev/null 2>&1
     cf = !git show --pretty="format:" --name-status
     cm = commit -m
     cnv = commit --no-verify -m
