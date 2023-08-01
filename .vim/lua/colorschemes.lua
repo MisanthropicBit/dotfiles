@@ -96,7 +96,6 @@ local preferred_colorschemes = normalize_weights({
     { 'mellifluous', weight = 0.05 },
     { 'mellow', weight = 0.05 },
     'miasma',
-    'moonfly',
     { 'moonlight', weight = 0.2 },
     'tokyodark',
     'tokyonight-moon',
