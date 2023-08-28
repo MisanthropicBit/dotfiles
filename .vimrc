@@ -289,6 +289,8 @@ let g:markdown_fenced_languages = [
     \'bash=sh',
     \'vim',
     \'lua',
+    \'mysql',
+    \'sql'
 \]
 
 set signcolumn=yes:2
