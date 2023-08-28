@@ -667,6 +667,7 @@ let g:gitgutter_floating_window_options = {
     \'style': 'minimal',
     \'border': 'rounded'
 \}
+let g:gitgutter_set_sign_backgrounds = 1
 let g:gitgutter_sign_added = '┃'
 let g:gitgutter_sign_modified = '┃'
 let g:gitgutter_sign_removed = '┃'
