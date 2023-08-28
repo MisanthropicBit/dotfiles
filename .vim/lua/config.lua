@@ -19,6 +19,7 @@ require('diagnostic')
 require('lsp')
 require('docs')
 require('fold')
+require('diagnostics_levels')
 
 pcall(require, 'private_plugins')
 
