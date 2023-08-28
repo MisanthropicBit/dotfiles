@@ -73,6 +73,8 @@ if has_nvim
     Plug 'Wansmer/treesj'
     Plug 'L3MON4D3/LuaSnip', { 'tag': 'v1.*', 'do': 'make install_jsregexp' }
     Plug 'rafamadriz/friendly-snippets'
+    Plug 'folke/todo-comments.nvim'
+    Plug 'sindrets/diffview.nvim'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
