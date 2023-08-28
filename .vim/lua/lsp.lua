@@ -2,7 +2,6 @@
 
 local map = require('mappings')
 
-
 -- Globally override lsp border settings
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 
@@ -94,7 +93,7 @@ local function lsp_request_jump(lsp_method, split_cmd, selector)
                         client.offset_encoding,
                         false
                     )
-                    vim.cmd('normal zz')
+                    vim.cmd('normal zt')
                 end
             else
                 local locations = {}
