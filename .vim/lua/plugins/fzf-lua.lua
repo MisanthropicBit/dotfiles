@@ -114,6 +114,7 @@ map.leader('n', 'df', function() fzf_lua.files({ cwd = '~/projects/dotfiles/.vim
 map.leader('n', 'gf', fzf_lua.git_files, 'Search files in the current directory that are tracked by git')
 map.leader('n', 'gs', fzf_lua.git_status, 'Git status')
 map.leader('n', 'gh', fzf_lua.git_stash, 'Git stash')
+map.leader('n', 'gr', fzf_lua.git_branches, 'Git branches')
 map.leader('n', 'bp', fzf_lua.dap_breakpoints, 'List dap breakpoints')
 map.leader('n', 'hl', fzf_lua.highlights)
 map.leader('n', 'fb', fzf_lua.blines, 'Find lines in current buffer')
