@@ -1,0 +1,8 @@
+// Shared java- and typescript snippets
+{
+  "sinon.stub": {
+    "prefix": "ss",
+    "body": ["sinon.stub($0)"],
+    "scope": ["javascript", "javascriptreact", "vue", "svelte", "typescript", "typescriptreact"]
+  }
+}
