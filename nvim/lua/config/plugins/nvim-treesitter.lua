@@ -14,6 +14,11 @@ require("nvim-treesitter.configs").setup({
         "markdown",
         "markdown_inline",
     },
+    query_linter = {
+        enable = true,
+        use_virtual_text = true,
+        lint_events = { "BufWrite" },
+    },
     sync_install = false,
     auto_install = true,
     ignore_install = {},

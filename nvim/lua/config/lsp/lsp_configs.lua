@@ -1,5 +1,9 @@
 local runtime_path = vim.split(package.path, ";")
 
+require("neodev").setup({
+    lspconfig = false,
+})
+
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
@@ -21,6 +25,7 @@ vim.g.lsp_configs = {
         end,
         name = "lua_ls",
         config = {
+            before_init = require("neodev.lsp").before_init,
             settings = {
                 Lua = {
                     runtime = {

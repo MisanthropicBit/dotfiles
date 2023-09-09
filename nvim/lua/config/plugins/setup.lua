@@ -68,8 +68,10 @@ vim.cmd([[
     Plug 'Wansmer/sibling-swap.nvim'
     Plug 'Wansmer/treesj'
     Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
+    Plug 'axelvc/template-string.nvim'
     Plug 'ckolkey/ts-node-action'
     Plug 'echasnovski/mini.move', { 'branch': 'stable' }
+    Plug 'folke/neodev.nvim'
     Plug 'folke/todo-comments.nvim'
     Plug 'folke/trouble.nvim'
     Plug 'ibhagwan/fzf-lua', { 'branch': 'main' }
@@ -96,7 +98,6 @@ vim.cmd([[
     Plug 'sindrets/diffview.nvim'
     Plug 'stefanlogue/hydrate.nvim'
     Plug 'stevearc/oil.nvim'
-    Plug 'axelvc/template-string.nvim'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
