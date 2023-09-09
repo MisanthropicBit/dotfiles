@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-files=".agignore .aliases .bashrc .config .gitconfig .inputrc .latexmkrc .profile .vimrc .vim"
+files=".aliases .config .gitconfig .inputrc .latexmkrc .vimrc .vim"
 
 # Check for pre-exisiting files
 for file in $files; do
@@ -36,7 +36,7 @@ script_dir="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo "Symlinking files from $script_dir..."
 
-for e in ".agignore" ".aliases" ".bashrc" ".gitconfig" ".profile" ".vimrc" ".vim"; do
+for e in ".aliases" ".gitconfig" ".vimrc" ".vim"; do
     __symlink_install "$e" "$script_dir" "$HOME"
 done
 
