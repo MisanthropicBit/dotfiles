@@ -62,6 +62,7 @@
     issue = "!__git_issue_2945() { git branch -a | grep --color=always "issue-$1"; }; __git_issue_2945"
     last = log -1 HEAD
     m = checkout master
+    md = log origin/master...HEAD
     mergetest = !git merge-tree `git merge-base $1 $2` $1 $2 | diff-so-fancy
     mp = !git checkout master && git pull
     p = pull
