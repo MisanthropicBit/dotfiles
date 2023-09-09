@@ -2,6 +2,11 @@ local notify = {}
 
 local notifier = nil
 
+---@param level integer
+local function should_notify(level)
+    return type(vim.g.notify_log) ~= "number" and level >= vim.g.notify_log_level
+end
+
 if vim.g.custom_notifier == 'terminal-notifier' then
     -- Use neovide logo if installed since -appIcon does not appear to work on
     -- my machine
@@ -38,6 +43,10 @@ if notifier then
     ---@diagnostic disable-next-line: duplicate-set-field
     vim.notify = function(msg, level, options)
         if vim.g.use_custom_notifier or (type(options) == 'table' and options.mac == true) then
+            if not should_notify(vim.g.notify_log_level) then
+                return
+            end
+
             notifier(msg, level, options)
         else
             old_vim_notify(msg, level, options)

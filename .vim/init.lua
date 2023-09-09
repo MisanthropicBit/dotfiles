@@ -6,17 +6,19 @@ if vim.fn.has("nvim-0.9.0") == 1 then
     vim.loader.enable()
 end
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = vim.g.mapleader
-vim.g.is_bash = true
-vim.g.sql_type_default = "mysql"
-vim.g.python_host_prog = vim.fn.expand("~/.neovim_venvs/neovim2/bin/python")
-vim.g.python3_host_prog = vim.fn.expand("~/.neovim_venvs/neovim3/bin/python")
-vim.g.custom_notifier = "terminal-notifier"
-vim.g.use_custom_notifier = true
-
+local g = vim.g
 local o = vim.o
 local opt = vim.opt
+
+g.mapleader = " "
+g.maplocalleader = vim.g.mapleader
+g.is_bash = true
+g.sql_type_default = "mysql"
+g.python_host_prog = vim.fn.expand("~/.neovim_venvs/neovim2/bin/python")
+g.python3_host_prog = vim.fn.expand("~/.neovim_venvs/neovim3/bin/python")
+g.custom_notifier = "terminal-notifier"
+g.use_custom_notifier = true
+g.notify_log_level = vim.log.levels.WARN
 
 o.compatible = false
 o.number = true
