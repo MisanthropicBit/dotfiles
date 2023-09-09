@@ -19,15 +19,6 @@ set -x PATH /opt/local/bin $PATH
 set -x PATH /usr/local/bin $PATH
 set -x PATH /usr/local/texlive/2019/bin/x86_64-darwin/ $PATH
 set -x PATH ~/.npm-global/bin $PATH
-set -x PATH /Library/Frameworks/Mono.framework/Versions/Current/bin $PATH
-set -x PATH /usr/local/share/dotnet/ $PATH
-
-# Android
-set -x ANDROID_HOME $HOME/Library/Android/sdk
-set -a PATH $ANDROID_HOME/emulator
-set -a PATH $ANDROID_HOME/tools
-set -a PATH $ANDROID_HOME/tools/bin
-set -a PATH $ANDROID_HOME/platform-tools
 
 # Opt out of Microsoft's CLI telemetry
 set -x DOTNET_CLI_TELEMETRY_OPTOUT 1
@@ -37,7 +28,7 @@ set --universal PYENV_ROOT "$HOME/.pyenv"
 set PATH "$PYENV_ROOT/bin" $PATH
 
 # Add terminal blocks game to path
-set -a PATH ~/projects/c/terminal_blocks
+fish_add_path ~/projects/c/terminal_blocks
 
 # Use neovim as a pager for manpages
 if type nvim &> /dev/null
