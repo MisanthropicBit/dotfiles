@@ -51,9 +51,9 @@ set -x MYSQL_PS1 "mysql v\v [\U][\d]> "
 set -x BAT_THEME OneHalfDark
 set -x FZF_DEFAULT_COMMAND "fd -tf --color=never"
 set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND --search-path \$dir"
-set -x FZF_CTRL_T_OPTS '--multi --bind="ctrl-s:select,ctrl-u:deselect,ctrl-f:reload(find . -type f \$dir),ctrl-d:reload(find . -type d \$dir)" --preview="bat -n --color=always {}"'
+set -x FZF_CTRL_T_OPTS '--multi --bind="ctrl-s:select,ctrl-u:deselect,ctrl-f:reload(find . -type f \$dir),ctrl-d:reload(find . -type d \$dir)" --preview="bat -n --color=always {}" --cycle'
 set -x FZF_ALT_C_COMMAND 'fd -td --color=never'
-set -x FZF_DEFAULT_OPTS "--color='pointer:bright-blue,marker:bright-green' --height=50% --pointer='⇨ ' --marker='✓' --bind='ctrl-n:preview-page-down,ctrl-p:preview-page-up'"
+set -x FZF_DEFAULT_OPTS "--color='pointer:bright-blue,marker:bright-green' --height=50% --pointer='⇨ ' --marker='✓' --bind='ctrl-n:preview-page-down,ctrl-p:preview-page-up' --cycle"
 
 bind \cb git_fzf_branches
 bind \cg git_fzf_log
