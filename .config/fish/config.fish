@@ -5,7 +5,35 @@ set --export FISH_POWERPROMPT_THEME "random"
 
 # Colors
 set --universal fish_color_command 00c5d7 darkcyan
-set -gx LSCOLORS FxfxxxxxBx
+
+# Change directory color to cyan
+# a = black
+# b = red
+# c = green
+# d = brown
+# e = blue
+# f = magenta
+# g = cyan
+# h = light grey (white in iTerm2)
+# x = Default fore- or background color
+#
+# Use uppercase letters for bold colors
+#
+# Ordering:
+# 1.  Directories
+# 2.  Symbolic links
+# 3.  Sockets
+# 4.  Pipes
+# 5.  Executables
+# 6.  Block special
+# 7.  Character special
+# 8.  Executables with setuid bit set
+# 9.  Executables with setgid bit set
+# 10. Directories writable to others, with sticky bit set
+# 11. Directories writable to others, without sticky bit set
+#
+# Also see http://osxdaily.com/2012/02/21/add-color-to-the-terminal-in-mac-os-x/
+set -gx LSCOLORS gxfxxxxxBx
 
 set --local script_dir (dirname (status -f))
 
