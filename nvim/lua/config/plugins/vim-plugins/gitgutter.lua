@@ -7,13 +7,13 @@ vim.g.gitgutter_floating_window_options = {
     width = 42,
     height = vim.o.previewheight,
     style = "minimal",
-    border = "rounded"
+    border = "rounded",
 }
 vim.g.gitgutter_set_sign_backgrounds = 1
-vim.g.gitgutter_sign_added = '┃'
-vim.g.gitgutter_sign_modified = '┃'
-vim.g.gitgutter_sign_removed = '┃'
-vim.g.gitgutter_sign_modified_removed = '║'
+vim.g.gitgutter_sign_added = "┃"
+vim.g.gitgutter_sign_modified = "┃"
+vim.g.gitgutter_sign_removed = "┃"
+vim.g.gitgutter_sign_modified_removed = "║"
 
 map.n("gj", "<Plug>(GitGutterNextHunk)zz", { noremap = false, desc = "" })
 map.n("gk", "<Plug>(GitGutterPrevHunk)zz", { noremap = false, desc = "" })

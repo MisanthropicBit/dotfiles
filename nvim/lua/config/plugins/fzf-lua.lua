@@ -19,26 +19,23 @@ function fzf_lua_setup.project_files(directory)
     end
 
     return function()
-        fzf_lua.fzf_exec(
-        'fd --type directory --maxdepth 1 . ' .. directory,
-        {
+        fzf_lua.fzf_exec("fd --type directory --maxdepth 1 . " .. directory, {
             cwd = directory,
-            prompt = 'Search directory❯ ',
+            prompt = "Search directory❯ ",
             actions = {
-                ['ctrl-s'] = file_selector(fzf_lua.files),
-                ['enter'] = file_selector(fzf_lua.files),
-                ['ctrl-g'] = file_selector(fzf_lua.git_files),
-                ['ctrl-r'] = file_selector(fzf_lua.grep_project),
+                ["ctrl-s"] = file_selector(fzf_lua.files),
+                ["enter"] = file_selector(fzf_lua.files),
+                ["ctrl-g"] = file_selector(fzf_lua.git_files),
+                ["ctrl-r"] = file_selector(fzf_lua.grep_project),
             },
             fzf_opts = {
-                ['--preview'] = vim.fn.shellescape('tree -C -L 1 {}'),
+                ["--preview"] = vim.fn.shellescape("tree -C -L 1 {}"),
             },
-        }
-        )
+        })
     end
 end
 
---- Custom symbol formatter for fzf-lua's lsp 
+--- Custom symbol formatter for fzf-lua's lsp
 ---@param symbol string
 ---@return string
 local function symbol_fmt(symbol)
@@ -57,77 +54,73 @@ local function symbol_fmt(symbol)
         end
 
         -- Format as '  [Constant]'
-        return string.format(
-            '%s%s [%s]%s',
-            color,
-            lsp_utils.kind_icons[stripped],
-            stripped,
-            ansi.reset_sequence()
-        )
+        return string.format("%s%s [%s]%s", color, lsp_utils.kind_icons[stripped], stripped, ansi.reset_sequence())
     else
         return symbol
     end
 end
 
-fzf_lua.setup{
-  winopts = {
-    height = 0.75,
-  },
-  keymap = {
-    builtin = {
-      ['<c-+>'] = 'toggle-help',
-      ['<c-p>'] = 'preview-page-up',
-      ['<c-n>'] = 'preview-page-down',
+fzf_lua.setup({
+    winopts = {
+        height = 0.75,
     },
-  },
-  lsp = {
-    git_icons = true,
-    symbols = {
-      symbol_fmt = symbol_fmt,
+    keymap = {
+        builtin = {
+            ["<c-+>"] = "toggle-help",
+            ["<c-p>"] = "preview-page-up",
+            ["<c-n>"] = "preview-page-down",
+        },
     },
-  },
-  git = {
-      status = {
-          actions = {
-              ['ctrl-h'] = { actions.git_stage, actions.resume },
-              ['ctrl-l'] = { actions.git_unstage, actions.resume },
-              ['right']   = false,
-              ['left']    = false,
-              ['ctrl-x']  = false,
-          }
-      },
-  },
-  fzf_opts = {
-    ['--cycle'] = '',
-  },
-  oldfiles = {
-      -- Make oldfiles behave like fzf-vim's :History command
-      include_current_session = true,
-  },
-}
+    lsp = {
+        git_icons = true,
+        symbols = {
+            symbol_fmt = symbol_fmt,
+        },
+    },
+    git = {
+        status = {
+            actions = {
+                ["ctrl-h"] = { actions.git_stage, actions.resume },
+                ["ctrl-l"] = { actions.git_unstage, actions.resume },
+                ["right"] = false,
+                ["left"] = false,
+                ["ctrl-x"] = false,
+            },
+        },
+    },
+    fzf_opts = {
+        ["--cycle"] = "",
+    },
+    oldfiles = {
+        -- Make oldfiles behave like fzf-vim's :History command
+        include_current_session = true,
+    },
+})
 
 local function custom_colorschemes()
-  local colors = colorschemes.get_preferred_colorschemes()
+    local colors = colorschemes.get_preferred_colorschemes()
 
-  fzf_lua.colorschemes({ colors = colors })
+    fzf_lua.colorschemes({ colors = colors })
 end
 
 -- TODO: Do 'norm zt' after jumping
-map.n('<c-s>', fzf_lua.lsp_document_symbols, 'LSP document symbols')
+map.n("<c-s>", fzf_lua.lsp_document_symbols, "LSP document symbols")
 
-map.n('<c-p>', fzf_lua.files, 'Search files in current directory')
-map.leader('n', 'cc', custom_colorschemes, 'Pick a colorscheme')
-map.leader('n', 'df', function() fzf_lua.files({ cwd = '~/projects/dotfiles/.vim' }) end, 'Search dotfiles')
-map.leader('n', 'gf', fzf_lua.git_files, 'Search files in the current directory that are tracked by git')
-map.leader('n', 'gs', fzf_lua.git_status, 'Git status')
-map.leader('n', 'gh', fzf_lua.git_stash, 'Git stash')
-map.leader('n', 'gr', fzf_lua.git_branches, 'Git branches')
-map.leader('n', 'bp', fzf_lua.dap_breakpoints, 'List dap breakpoints')
-map.leader('n', 'hl', fzf_lua.highlights)
-map.leader('n', 'fb', fzf_lua.blines, 'Find lines in current buffer')
-map.leader('n', 'hi', fzf_lua.oldfiles, 'Search recent files')
+map.n("<c-p>", fzf_lua.files, "Search files in current directory")
+map.leader("n", "cc", custom_colorschemes, "Pick a colorscheme")
+map.leader("n", "df", function()
+    fzf_lua.files({ cwd = "~/projects/dotfiles/.vim" })
+end, "Search dotfiles")
+map.leader("n", "gf", fzf_lua.git_files, "Search files in the current directory that are tracked by git")
+map.leader("n", "gs", fzf_lua.git_status, "Git status")
+map.leader("n", "gh", fzf_lua.git_stash, "Git stash")
+map.leader("n", "gr", fzf_lua.git_branches, "Git branches")
+map.leader("n", "bp", fzf_lua.dap_breakpoints, "List dap breakpoints")
+map.leader("n", "hl", fzf_lua.highlights)
+map.leader("n", "fb", fzf_lua.blines, "Find lines in current buffer")
+map.leader("n", "hi", fzf_lua.oldfiles, "Search recent files")
 map.leader("n", "rg", fzf_lua.grep_project, "Search all project files")
 
-vim.cmd('FzfLua register_ui_select')
+vim.cmd("FzfLua register_ui_select")
 
 return fzf_lua_setup

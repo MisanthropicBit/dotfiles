@@ -1,35 +1,35 @@
-local dap = require('dap')
-local dapui = require('dapui')
+local dap = require("dap")
+local dapui = require("dapui")
 
-dapui.setup{
+dapui.setup({
     layouts = {
         {
             elements = {
-                'breakpoints',
-                'stacks',
-                'watches',
-                'scopes',
+                "breakpoints",
+                "stacks",
+                "watches",
+                "scopes",
             },
             size = 40,
-            position = 'left',
+            position = "left",
         },
         {
             elements = {
-                'repl',
-                'console',
+                "repl",
+                "console",
             },
             size = 0.25,
-            position = 'bottom'
-        }
+            position = "bottom",
+        },
     },
     controls = {
         enabled = false,
     },
     floating = {
-        border = 'rounded',
+        border = "rounded",
     },
-}
+})
 
-dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-dap.listeners.before.event_exited['dapui_config'] = dapui.close
+dap.listeners.after.event_initialized["dapui_config"] = dapui.open
+dap.listeners.before.event_terminated["dapui_config"] = dapui.close
+dap.listeners.before.event_exited["dapui_config"] = dapui.close

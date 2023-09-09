@@ -1,6 +1,6 @@
-require('boole').setup{
+require("boole").setup({
     mappings = {
-        increment = '<c-a>',
-        decrement = '<c-x>',
+        increment = "<c-a>",
+        decrement = "<c-x>",
     },
-}
+})

@@ -1,18 +1,21 @@
-local lualine = require('lualine')
+local lualine = require("lualine")
 
-local icons = require('config.icons')
-local lsp_utils = require('config.lsp.utils')
+local icons = require("config.icons")
+local lsp_utils = require("config.lsp.utils")
 
 ---@return string
 local function get_active_lsp()
-    local msg = 'No active lsp'
-    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+    local msg = "No active lsp"
+    local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
     local clients = lsp_utils.get_active_clients_for_filetype(buf_ft)
 
     if #clients > 0 then
-        return table.concat(vim.tbl_map(function(client)
-            return client.name
-        end, clients), ', ')
+        return table.concat(
+            vim.tbl_map(function(client)
+                return client.name
+            end, clients),
+            ", "
+        )
     end
 
     return msg
@@ -23,7 +26,7 @@ local conditions = {
         return vim.fn.winwidth(0) > 120
     end,
     ignore_terminal = function()
-        return vim.bo.buftype ~= 'terminal'
+        return vim.bo.buftype ~= "terminal"
     end,
 }
 
@@ -33,28 +36,28 @@ end
 
 lualine.setup({
     options = {
-        theme = 'auto',
+        theme = "auto",
         section_separators = {
-            left = '',
-            right = '',
+            left = "",
+            right = "",
         },
-        extensions = { 'fugitive', 'nvim-dap-ui' }
+        extensions = { "fugitive", "nvim-dap-ui" },
     },
     sections = {
         lualine_a = {
             {
-                'mode',
-                separator = { left = '' },
-                right_padding = 3
+                "mode",
+                separator = { left = "" },
+                right_padding = 3,
             },
         },
         lualine_b = {
             {
-                'branch',
-                icon = { icons.git.logo, align = 'left' },
+                "branch",
+                icon = { icons.git.logo, align = "left" },
             },
             {
-                'diff',
+                "diff",
                 colored = true,
                 symbols = {
                     added = icons.git.added,
@@ -71,49 +74,49 @@ lualine.setup({
                 cond = conditions.all,
             },
             {
-                'vim.g.colors_name',
-                icon = { icons.color.scheme .. ' ', align = 'left' },
+                "vim.g.colors_name",
+                icon = { icons.color.scheme .. " ", align = "left" },
                 cond = conditions.show_for_width,
-            }
+            },
         },
         lualine_x = {
             {
-                'filename',
+                "filename",
                 file_status = true,
                 icon = { icons.files.files },
                 symbols = {
                     modified = icons.git.added,
                     readonly = icons.files.readonly,
-                }
+                },
             },
             {
-                'fileformat',
+                "fileformat",
                 cond = conditions.all,
             },
-            'filetype',
+            "filetype",
             {
-                'filesize',
+                "filesize",
                 cond = conditions.all,
             },
             {
-                'encoding',
+                "encoding",
                 cond = conditions.all,
             },
-            '%b/0x%B',
+            "%b/0x%B",
         },
         lualine_y = {
             {
-                'progress',
+                "progress",
                 cond = conditions.ignore_terminal,
-            }
+            },
         },
         lualine_z = {
-            'location',
+            "location",
             {
-                separator = { right = '' },
+                separator = { right = "" },
                 left_padding = 2,
                 cond = conditions.ignore_terminal,
-            }
+            },
         },
     },
 })

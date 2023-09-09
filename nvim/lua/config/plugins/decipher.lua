@@ -1,11 +1,11 @@
-local decipher = require('decipher')
+local decipher = require("decipher")
 
-local map = require('config.map')
+local map = require("config.map")
 
 decipher.setup({
     active_codecs = {
-        'base64',
-        'base64-url',
+        "base64",
+        "base64-url",
     },
     float = {
         padding = 1,
@@ -13,6 +13,6 @@ decipher.setup({
     },
 })
 
-map.n('gr', function()
-    decipher.decode_motion('base64-url', { preview = true })
-end, 'Decode a base64-url encoded text object')
+map.n("gr", function()
+    decipher.decode_motion("base64-url", { preview = true })
+end, "Decode a base64-url encoded text object")

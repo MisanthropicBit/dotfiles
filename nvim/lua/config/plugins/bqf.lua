@@ -1,12 +1,12 @@
-local bqf = require('bqf')
+local bqf = require("bqf")
 
 bqf.setup({
     filter = {
         fzf = {
-            ['ctrl-s'] = {
+            ["ctrl-s"] = {
                 description = [[Open item in a new horizontal split]],
-                default = 'split'
-            }
-        }
-    }
+                default = "split",
+            },
+        },
+    },
 })
