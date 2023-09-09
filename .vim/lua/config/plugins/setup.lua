@@ -96,6 +96,7 @@ vim.cmd([[
     Plug 'sindrets/diffview.nvim'
     Plug 'stefanlogue/hydrate.nvim'
     Plug 'stevearc/oil.nvim'
+    Plug 'axelvc/template-string.nvim'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
