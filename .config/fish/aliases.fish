@@ -99,7 +99,7 @@ end
 
 function git_fzf_branches -d "Select a git branch"
     set -l branch (
-        git --no-pager branch -v --color=always |
+        git --no-pager branch -v --color=always --sort=-committerdate |
         fzf --ansi --no-multi --preview='git log -5 {1} | bat --color=always --style=plain' |
         string trim |
         string split -f1 ' '
@@ -147,7 +147,7 @@ function git_fzf_commits -d "Search commit history"
         fzf --ansi --no-sort --no-multi --reverse --tiebreak=index \
             --prompt 'Git commit> ' \
             --bind "ctrl-y:execute-silent(echo {} | $extract_commit_sha_cmd | pbcopy)" \
-            --preview "git show --color=always --shortstat --patch (echo {} | $extract_commit_sha_cmd)" |
+            --preview "git show --color=always --stat --patch (echo {} | $extract_commit_sha_cmd)" |
         grep -o "[a-f0-9]\{8\}"
     )
 
