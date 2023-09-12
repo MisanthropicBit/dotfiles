@@ -4,9 +4,9 @@ if vim.fn.exists("g:last_tab") == 0 then
     vim.g.last_tab = vim.fn.tabpagenr()
 end
 
-local nvim_create_autocmd = vim.api.nvim_create_autocmd
+local create_autocmd = vim.api.nvim_create_autocmd
 
-nvim_create_autocmd("TabLeave", {
+create_autocmd("TabLeave", {
     group = augroup,
     pattern = "*",
     callback = function()
@@ -14,10 +14,10 @@ nvim_create_autocmd("TabLeave", {
     end,
 })
 
-nvim_create_autocmd("VimResized", {
+create_autocmd("VimResized", {
     group = augroup,
     pattern = "*",
-    command = "tabdo <cmd>wincmd =",
+    command = "tabdo wincmd =",
 })
 
 -- nvim_create_autocmd("InsertEnter", {
@@ -36,48 +36,25 @@ nvim_create_autocmd("VimResized", {
 --     end,
 -- })
 
-nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+create_autocmd({ "BufRead", "BufNewFile" }, {
     group = augroup,
     pattern = "*.fsproj",
     command = "setlocal ft=xml",
 })
 
--- nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
---     group = augroup,
---     pattern = "*.fsproj",
---     command = "setlocal ft=xml",
--- })
-
-nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+create_autocmd({ "BufRead", "BufNewFile" }, {
     group = augroup,
     pattern = { "*.html", "*.yml", "*.json" },
     command = "setlocal sw=2",
 })
 
--- nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
---     group = augroup,
---     pattern = "Dockerfile.*",
---     command = "setlocal ft=dockerfile",
--- })
-
-nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+create_autocmd({ "BufRead", "BufNewFile" }, {
     group = augroup,
     pattern = ".eslintrc",
     command = "setlocal ft=json",
 })
 
--- nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
---     group = augroup,
---     pattern = ".*gitconfig",
---     command = "setlocal ft=gitconfig",
--- })
-
-nvim_create_autocmd("TermOpen", {
-    group = augroup,
-    command = "setlocal signcolumn=no",
-})
-
-nvim_create_autocmd("TextYankPost", {
+create_autocmd("TextYankPost", {
     group = augroup,
     pattern = "*",
     callback = function()
@@ -85,5 +62,19 @@ nvim_create_autocmd("TextYankPost", {
             higroup = "IncSearch",
             timeout = 40,
         })
+    end,
+})
+
+create_autocmd("TermOpen", {
+    group = augroup,
+    command = "setlocal signcolumn=no",
+})
+
+create_autocmd("TermClose", {
+    group = augroup,
+    callback = function()
+        if vim.v.event.status == 0 then
+            vim.api.nvim_buf_delete(0, {})
+        end
     end,
 })
