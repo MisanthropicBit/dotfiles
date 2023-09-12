@@ -141,6 +141,7 @@ function lsp_on_attach.on_attach(event)
     -- Use the good old ALE mappings :)
     map.leader("n", "as", lsp_request_jump(lsp_method, "split", selector), with_desc("Jump to definition in a horizontal split"))
     map.leader("n", "av", lsp_request_jump(lsp_method, "vsplit", selector), with_desc("Jump to definition in a vertical split"))
+    map.leader("n", "at", lsp_request_jump(lsp_method, "tabe", selector), with_desc("Jump to definition in a tab"))
 end
 
 return lsp_on_attach
