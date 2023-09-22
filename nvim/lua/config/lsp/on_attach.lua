@@ -118,9 +118,14 @@ function lsp_on_attach.on_attach(event)
         return map.with_default_options({ buffer = buffer, desc = desc })
     end
 
+    local function lsp_definition()
+        lsp_methods.definition()
+        vim.cmd('normal zt')
+    end
+
     -- We don't guard against server capabilities because we want neovim to
     -- inform us if the lsp server doesn't support a method
-    map.n("gd", lsp_methods.definition, with_desc("Jump to definition under cursor"))
+    map.n("gd", lsp_definition, with_desc("Jump to definition under cursor"))
     map.n("<s-m>", lsp_methods.hover, with_desc("Open lsp float"))
     map.leader("n", "lc", lsp_methods.declaration, with_desc("Jump to declaration under cursor"))
     map.leader("n", "lt", lsp_methods.type_definition, with_desc("Jump to type definition"))
