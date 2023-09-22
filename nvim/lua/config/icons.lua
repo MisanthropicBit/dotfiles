@@ -9,8 +9,8 @@ return {
         breakpoint = '',
         breakpoint_condition = '',
         log_point = '',
-        cursor = '﯀',
-        rejected = '',
+        cursor = '󰛂',
+        rejected = '󰂭',
     },
     diagnostics = {
         error = ' ',
@@ -25,7 +25,7 @@ return {
     lsp = {
         buffer = ' ',
         nvim_lsp = ' ',
-        latex_symbols = ' ex',
+        latex_symbols = 'ex',
         path = '󰙅 ',
         ultisnips = '󰁨 ',
         cmdline = '󰨊 ',
@@ -34,18 +34,18 @@ return {
         running = '●',
         passed = '',
         failed = '',
-        skipped = 'ﮖ',
+        skipped = '',
         unknown = '?',
     },
     git = {
-        logo = '',
+        logo = '󰊢',
         added = ' ',
         modified = ' ',
         removed = ' ',
     },
     files = {
-        files = '',
-        new = 'ﱐ',
+        files = '󰈢',
+        new = '󰝒',
         readonly = '',
     },
     misc = {
