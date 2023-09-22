@@ -1,4 +1,3 @@
--- TODO: Works?
 vim.filetype.add({
     extension = {
         fsproj = "xml",
