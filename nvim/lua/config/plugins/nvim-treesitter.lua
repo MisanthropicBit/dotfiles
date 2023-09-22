@@ -3,16 +3,19 @@ require("nvim-treesitter.install").prefer_git = true
 
 require("nvim-treesitter.configs").setup({
     ensure_installed = {
+        "bash",
         "cpp",
         "fish",
+        "gitcommit",
         "javascript",
         "json",
-        "python",
-        "typescript",
-        "vim",
         "lua",
         "markdown",
         "markdown_inline",
+        "mysql",
+        "python",
+        "typescript",
+        "vim",
     },
     query_linter = {
         enable = true,
