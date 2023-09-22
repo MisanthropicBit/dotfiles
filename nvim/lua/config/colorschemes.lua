@@ -79,11 +79,8 @@ local builtin_colorschemes = {
     'zellner',
 }
 
--- Disable aurora until treesitter hl groups are fixed
 local preferred_colorschemes = normalize_weights({
-    -- aurora
     'bamboo',
-    -- 'barstrata',
     { 'calvera', weight = 0.2 },
     'catppuccin',
     'catppuccin-macchiato',
@@ -100,7 +97,6 @@ local preferred_colorschemes = normalize_weights({
     'tokyodark',
     'tokyonight-moon',
     'tokyonight-night',
-    'tokyonight-storm',
     'visual_studio_code',
 })
 
