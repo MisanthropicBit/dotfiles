@@ -13,7 +13,6 @@
       "pattern": "https?://www.youtube.com/*",
       "passKeys": "hjklm"
     },
-    ,
     {
       "pattern": "https?://accounts.google.com/*",
       "passKeys": ""
@@ -30,7 +29,6 @@
       "pattern": "https?://config.qmk.fm/*",
       "passKeys": ""
     },
-    ,
     {
       "pattern": "https?://www.vimgenius.com/*",
       "passKeys": ""
