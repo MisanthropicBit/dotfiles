@@ -1,11 +1,22 @@
 local map = require("config.map")
 
+local sharedJsTsTestTargets = {
+    {
+        target = "%1/%2.js",
+        context = "js main file",
+    },
+    {
+        target = "%1/%2.ts",
+        context = "ts main file",
+    }
+}
+
 require("other-nvim").setup({
     rememberBuffers = false,
     mappings = {
         {
             -- Javascript main file => test files
-            pattern = "(.*)/(.*)%.js$",
+            pattern = "(.*)/([^.]+).js$",
             target = {
                 {
                     target = "%1/%2.test.js",
@@ -15,11 +26,19 @@ require("other-nvim").setup({
                     target = "%1/%2.it.js",
                     context = "js integration test",
                 },
+                {
+                    target = "%1/%2.test.ts",
+                    context = "ts test",
+                },
+                {
+                    target = "%1/%2.it.ts",
+                    context = "ts integration test",
+                },
             },
         },
         {
             -- Typescript main file => test files
-            pattern = "(.*)/(.*).ts$",
+            pattern = "(.*)/([^.]+).ts$",
             target = {
                 {
                     target = "%1/%2.test.ts",
@@ -33,37 +52,44 @@ require("other-nvim").setup({
                     target = "%1/%2.it.test.ts",
                     context = "ts integration test (backend)",
                 },
+                {
+                    target = "%1/%2.test.js",
+                    context = "js test",
+                },
+                {
+                    target = "%1/%2.it.js",
+                    context = "js integration test",
+                },
+                {
+                    target = "%1/%2.it.test.js",
+                    context = "js integration test (backend)",
+                },
             },
         },
         {
             -- Javascript test file => main file
             pattern = "(.*)/(.*).test.js$",
-            target = "%1/%2.js",
-            context = "js main file",
+            target = sharedJsTsTestTargets,
         },
         {
             -- Javascript integration test file => main file
             pattern = "(.*)/(.*).it.js$",
-            target = "%1/%2.js",
-            context = "js main file",
+            target = sharedJsTsTestTargets,
         },
         {
             -- Typescript test file => main file
             pattern = "(.*)/(.*).test.ts$",
-            target = "%1/%2.ts",
-            context = "ts main file",
+            target = sharedJsTsTestTargets,
         },
         {
             -- Typescript integration test file => main file
             pattern = "(.*)/(.*).it.ts$",
-            target = "%1/%2.ts",
-            context = "ts main file",
+            target = sharedJsTsTestTargets,
         },
         {
             -- Typescript integration test file (backend) => main file
             pattern = "(.*)/(.*).it.test.ts$",
-            target = "%1/%2.ts",
-            context = "ts main file",
+            target = sharedJsTsTestTargets,
         },
         {
             -- Lua main file => test file
