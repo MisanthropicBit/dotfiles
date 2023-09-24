@@ -30,6 +30,8 @@
     prompt = cyan
 [push]
     default = simple
+[pull]
+    ff = only
 [alias]
     sw = switch -
     l = log -1
@@ -95,3 +97,5 @@
 	browser = google-chrome
 [init]
 	defaultBranch = master
+[credential]
+    helper = osxkeychain
