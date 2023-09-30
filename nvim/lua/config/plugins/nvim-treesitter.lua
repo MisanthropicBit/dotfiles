@@ -1,5 +1,9 @@
+local map = require("config.map")
+
 -- Temporary fix for https://github.com/nvim-treesitter/nvim-treesitter/issues/3232
 require("nvim-treesitter.install").prefer_git = true
+
+local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
 
 require("nvim-treesitter.configs").setup({
     ensure_installed = {
@@ -83,6 +87,16 @@ require("nvim-treesitter.configs").setup({
         },
     },
 })
+
+local function run_and_center(func)
+    return function()
+        func()
+        vim.cmd.normal("zz")
+    end
+end
+
+map.set({ "n", "x", "o" }, "-", run_and_center(ts_repeat_move.repeat_last_move_next))
+map.set({ "n", "x", "o" }, "_", run_and_center(ts_repeat_move.repeat_last_move_previous))
 
 -- Unmap incremental selection inside the command-line window
 vim.api.nvim_create_autocmd("CmdwinEnter", { command = "nunmap <buffer> <cr>" })
