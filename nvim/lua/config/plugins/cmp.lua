@@ -4,18 +4,54 @@ local luasnip = require("luasnip")
 local icons = require("config.icons")
 local kind_icons = require("config.lsp.utils").kind_icons
 
+-- Set cmp higlights
+vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { link = "@DiagnosticDeprecated" })
+vim.api.nvim_set_hl(0, "CmpItemKindField", { link = "@field" })
+vim.api.nvim_set_hl(0, "CmpItemKindProperty", { link = "@property" })
+-- vim.api.nvim_set_hl(0, "CmpItemKindEvent", { fg = "#EED8DA", bg = "#B5585F" })
+-- vim.api.nvim_set_hl(0, "CmpItemKindText", { link = "@text" })
+vim.api.nvim_set_hl(0, "CmpItemKindEnum", { link = "@lsp.type.enum" })
+vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { link = "@keyword" })
+vim.api.nvim_set_hl(0, "CmpItemKindConstant", { link = "@constant" })
+vim.api.nvim_set_hl(0, "CmpItemKindConstructor", { link = "@constructor" })
+vim.api.nvim_set_hl(0, "CmpItemKindReference", { link = "@text.reference" })
+vim.api.nvim_set_hl(0, "CmpItemKindFunction", { link = "@function" })
+vim.api.nvim_set_hl(0, "CmpItemKindStruct", { link = "@lsp.type.struct" })
+vim.api.nvim_set_hl(0, "CmpItemKindClass", { link = "@lsp.type.class" })
+vim.api.nvim_set_hl(0, "CmpItemKindModule", { link = "@namespace" })
+vim.api.nvim_set_hl(0, "CmpItemKindOperator", { link = "@operator" })
+vim.api.nvim_set_hl(0, "CmpItemKindVariable", { link = "@variable" })
+vim.api.nvim_set_hl(0, "CmpItemKindFile", { link = "@text.uri" })
+-- vim.api.nvim_set_hl(0, "CmpItemKindUnit", { link = "@" })
+-- vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { link = "@" })
+-- vim.api.nvim_set_hl(0, "CmpItemKindFolder", { link = "Directory" })
+vim.api.nvim_set_hl(0, "CmpItemKindMethod", { link = "@method" })
+-- vim.api.nvim_set_hl(0, "CmpItemKindValue", { fg = "#DDE5F5", bg = "#6C8ED4" })
+vim.api.nvim_set_hl(0, "CmpItemKindEnumMember", { link = "@lsp.type.enumMember" })
+vim.api.nvim_set_hl(0, "CmpItemKindInterface", { link = "@lsp.type.interface" })
+-- vim.api.nvim_set_hl(0, "CmpItemKindColor", { fg = "#D8EEEB", bg = "#58B5A8" })
+vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { link = "@lsp.type.typeParameter" })
+
+local menu_hl_groups = {
+    nvim_lsp = "@function",
+    buffer = "@tag",
+    cmdline = "@number",
+    luasnip = "@keyword",
+    path = "@character.special",
+}
+
 -- Format autocomplete items
 local function format_entry(entry, vim_item)
-    local text_kind = vim_item.kind
     vim_item.kind = " " .. (kind_icons[vim_item.kind] or "")
 
-    local type = icons.lsp[entry.source.name]
+    local source_type = icons.lsp[entry.source.name]
 
-    if type ~= nil then
-        vim_item.menu = " " .. type
+    if source_type ~= nil then
+        vim_item.menu = source_type
     end
 
-    vim_item.menu = (vim_item.menu or "") .. " (" .. text_kind .. ")"
+    vim_item.menu = (vim_item.menu or "")
+    vim_item.menu_hl_group = menu_hl_groups[entry.source.name] or ""
 
     return vim_item
 end
@@ -135,26 +171,3 @@ cmp.setup.cmdline(":", {
         { name = "cmdline" },
     }),
 })
-
--- local function inverse_hl(name, fg_color)
---     local color = vim.api.nvim_get_hl_by_name(name, true)
-
---     if color ~= nil then
---         vim.api.nvim_set_hl(0, name, { fg = fg_color or color.background or "black", bg = color.foreground })
---     end
--- end
-
--- function inverse_cmp_item_kinds()
---     inverse_hl("CmpItemKindFunction")
--- end
-
--- vim.cmd([[
---     augroup InvertCmpItemKinds
---         autocmd!
---         autocmd ColorScheme * lua inverse_cmp_item_kinds()
---     augroup END
--- ]])
-
--- inverse_hl("CmpItemKindFunction")
-
--- vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = "#EADFF0", bg = "#A377BF" })
