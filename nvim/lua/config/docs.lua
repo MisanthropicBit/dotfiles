@@ -69,7 +69,7 @@ local docs_config = {
                 if query:find('n?vim') ~= nil then
                     local parts = vim.fn.split(query, '\\.')
 
-                    if parts[1] == 'vim' then
+                    if parts[1] == 'vim' or parts[1] == 'api' then
                         -- The query is to vim.api, vim.lsp etc. so grab
                         -- the last part of the word, otherwise the help
                         -- lookup won't succeed
@@ -192,7 +192,6 @@ function docs.open_at_cursor(options)
         vim.opt_local.iskeyword:remove(config.iskeyword)
     end
 
-    vim.print(options.fargs)
     docs.open(cword, filetype, options.mods)
 end
 
