@@ -45,6 +45,7 @@ local fallback = {
     end
 }
 
+-- TODO:Allow multiple targets (url, help, etc.)
 ---@type Config
 local docs_config = {
     filetype = {
@@ -204,12 +205,27 @@ function docs.open_docs_from_command(options)
     open_docs(fargs[1], filetype, options.mods)
 end
 
+local function complete(_, cmdline)
+    local result = vim.api.nvim_parse_cmd(cmdline, {})
+
+    -- If there is one argument (the topic) and the 
+    if #result.args == 1 and cmdline:match("%s+$") then
+        return vim.list_extend(
+            vim.tbl_keys(docs_config.filetype),
+            vim.tbl_keys(docs_config.custom)
+        )
+    end
+
+    return {}
+end
+
 vim.api.nvim_create_user_command(
-    'Docs',
+    "Docs",
     docs.open_docs_from_command,
     {
-        desc = 'Query documentation',
+        desc = "Query documentation. Find argument is a topic, the second is an optional supported filetype. If not given, takes the filetype of the current file",
         nargs = '+',
+        complete = complete,
     }
 )
 
