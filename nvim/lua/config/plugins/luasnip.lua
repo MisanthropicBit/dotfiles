@@ -20,8 +20,8 @@ luasnip.filetype_extend("javascript", { "javascript-typescript-shared", "javascr
 luasnip.filetype_extend("typescript", { "javascript-typescript-shared", "javascript-typescript-shared-work" })
 
 vscode.lazy_load()
-vscode.lazy_load({ paths = { snippets_path("custom-snippets") } })
-from_lua.lazy_load({ paths = snippets_path("custom-snippets", "luasnippets") })
+vscode.lazy_load({ paths = { snippets_path("snippets", "vscode") } })
+from_lua.lazy_load({ paths = { snippets_path("snippets", "lua") } })
 
 map.set({ "i", "s" }, "<c-i>", function()
     if luasnip.expandable() then

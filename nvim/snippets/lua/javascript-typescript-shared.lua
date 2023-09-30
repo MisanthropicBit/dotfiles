@@ -1,6 +1,5 @@
 local ls = require("luasnip")
 local c = ls.choice_node
-local d = ls.dynamic_node
 local f = ls.function_node
 local s = ls.snippet
 local i = ls.insert_node
@@ -81,6 +80,7 @@ return {
     s("rn", t("return null")),
     s("ru", t("return undefined")),
     s("ud", t("undefined")),
+    s("pe", t("process.env")),
 
     -- Eslint
     s("elnl", fmt([[// eslint-disable-next-line {}]], i(1))),
