@@ -1,7 +1,6 @@
 local luasnip = require("luasnip")
 local loaders = require("luasnip.loaders")
 local from_lua = require("luasnip.loaders.from_lua")
-local vscode = require("luasnip.loaders.from_vscode")
 
 local map = require("config.map")
 
@@ -19,8 +18,6 @@ luasnip.filetype_extend("all", { "_" })
 luasnip.filetype_extend("javascript", { "javascript-typescript-shared", "javascript-typescript-shared-work" })
 luasnip.filetype_extend("typescript", { "javascript-typescript-shared", "javascript-typescript-shared-work" })
 
-vscode.lazy_load()
-vscode.lazy_load({ paths = { snippets_path("snippets", "vscode") } })
 from_lua.lazy_load({ paths = { snippets_path("snippets", "lua") } })
 
 map.set({ "i", "s" }, "<c-i>", function()
@@ -45,7 +42,13 @@ map.set({ "i", "s" }, "<c-l>", function()
     if luasnip.choice_active() then
         luasnip.change_choice(1)
     end
-end, "Go through snippet choices")
+end, "Next snippet choice")
+
+map.set({ "i", "s" }, "<c-h>", function()
+    if luasnip.choice_active() then
+        luasnip.change_choice(-1)
+    end
+end, "Previous snippet choice")
 
 map.leader("n", "sf", function()
     loaders.edit_snippet_files({
