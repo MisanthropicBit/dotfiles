@@ -38,8 +38,8 @@ vim.g.lsp_configs = {
                     workspace = {
                         library = {
                             vim.env.VIMRUNTIME,
-                            "~/.vim/plugged/neotest",
-                            "~/.vim/plugged/plenary.nvim",
+                            "~/.vim-plug/neotest",
+                            "~/.vim-plug/plenary.nvim",
                         },
                         maxPreload = 2000,
                         preloadFileSize = 50000,
