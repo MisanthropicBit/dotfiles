@@ -1,5 +1,3 @@
--- TODO: Escape '%' into '%%' in url query strings
-
 local docs = {}
 
 ---@class Config
@@ -45,7 +43,34 @@ local fallback = {
     end
 }
 
--- TODO:Allow multiple targets (url, help, etc.)
+local function is_supported_nvim_prefix(parts)
+    if parts[1] == 'vim' then
+        if parts[2] == 'keymap' or parts[2] == "fs" then
+            return {
+                command = 'help ',
+                query = table.concat(parts, ".")
+            }
+        else
+            return {
+                command = 'help ',
+                query = parts[#parts]
+            }
+        end
+    end
+
+    if parts[1] == 'api' then
+        return {
+            command = 'help ',
+            query = parts[#parts]
+        }
+    end
+
+    return nil
+end
+
+-- TODO: Allow multiple targets (url, help, etc.)
+-- NOTE: Select config based on count with e.g. different iskeyword settings?
+-- NOTE: Use shellescape (cppman) and expandcmd
 ---@type Config
 local docs_config = {
     filetype = {
@@ -69,15 +94,10 @@ local docs_config = {
             config_callback = function(query, filetype)
                 if query:find('n?vim') ~= nil then
                     local parts = vim.fn.split(query, '\\.')
+                    local result = is_supported_nvim_prefix(parts)
 
-                    if parts[1] == 'vim' or parts[1] == 'api' then
-                        -- The query is to vim.api, vim.lsp etc. so grab
-                        -- the last part of the word, otherwise the help
-                        -- lookup won't succeed
-                        return {
-                            command = 'help ',
-                            query = parts[#parts]
-                        }
+                    if result ~= nil then
+                        return result
                     end
 
                     return { command = 'help' }
