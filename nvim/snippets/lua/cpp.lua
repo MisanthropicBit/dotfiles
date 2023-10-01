@@ -53,11 +53,11 @@ class <> {
 #define <>
 
 #endif // <>
-]], i(1))
+]], { i(1), rep(1), rep(1) })
     ),
-    s("inc", fmt('#include "{}".h')),
-    s("pinc", fmt('#include "{}".hpp')),
-    s("sinc", fmt('#include <{}>')),
+    s("inc", fmt('#include "{}".h', i(1))),
+    s("pinc", fmt('#include "{}".hpp', i(1))),
+    s("sinc", fmt('#include <{}>', i(1))),
     s(
         "tc",
         fmta([[TEST_CASE(<>, <>) {
