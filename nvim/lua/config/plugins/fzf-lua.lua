@@ -120,7 +120,9 @@ map.leader("n", "hl", fzf_lua.highlights)
 map.leader("n", "fb", fzf_lua.blines, "Find lines in current buffer")
 map.leader("n", "hi", fzf_lua.oldfiles, "Search recent files")
 map.leader("n", "rg", fzf_lua.grep_project, "Search all project files")
-map.leader("n", "pp", fzf_lua_setup.project_files("~/.vim-plug/"), "Search plugin directories")
+map.leader("n", "pf", project_files("~/repos"), "Search all local repository files")
+map.leader("n", "pp", project_files("~/.vim-plug/"), "Search plugin directories")
+map.leader("n", "rr", fzf_lua.resume, "Resume last search")
 
 vim.cmd("FzfLua register_ui_select")
 
