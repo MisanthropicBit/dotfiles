@@ -14,14 +14,12 @@ vim.cmd([[
 
     " Colorschemes
     Plug 'AlexvZyl/nordic.nvim'
-    Plug 'AstroNvim/astrotheme'
     Plug 'EdenEast/nightfox.nvim'
     Plug 'Shatur/neovim-ayu'
     Plug 'askfiy/visual_studio_code'
     Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
     Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
     Plug 'hoprr/calvera-dark.nvim'
-    Plug 'kartikp10/noctis.nvim'
     Plug 'kvrohit/mellow.nvim'
     Plug 'lmburns/kimbox'
     Plug 'maxmx03/fluoromachine.nvim'
@@ -33,8 +31,6 @@ vim.cmd([[
     Plug 'savq/melange'
     Plug 'shaunsingh/moonlight.nvim'
     Plug 'tiagovla/tokyodark.nvim'
-    Plug 'w3barsi/barstrata.nvim'
-    Plug 'xero/miasma.nvim'
 
     if executable('node') && executable('yarn')
         Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install', 'for': ['markdown', 'vim-plug'] }
