@@ -1,4 +1,4 @@
-return {
+local icons = {
     animation = {
         updating = {'⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'},
     },
@@ -68,3 +68,7 @@ return {
         linebreak = "↪ ",
     },
 }
+
+icons.text.bullet = icons.test.running
+
+return icons

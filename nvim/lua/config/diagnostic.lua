@@ -5,8 +5,8 @@ local has_lspsaga, _ = pcall(require, "lspsaga")
 
 vim.diagnostic.config({
     virtual_text = {
-        prefix = '●',
-        source = 'always',
+        prefix = icons.text.bullet,
+        source = "always",
         spacing = 1,
     },
     float = {
