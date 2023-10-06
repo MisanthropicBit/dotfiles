@@ -38,29 +38,29 @@ local docs = {}
 local fallback = {
     config_callback = function(query, filetype)
         return {
-            url = ('https://devdocs.io/#q=%s%%%%20%s'):format(filetype, query)
+            url = ("https://devdocs.io/#q=%s%%%%20%s"):format(filetype, query)
         }
     end
 }
 
 local function is_supported_nvim_prefix(parts)
-    if parts[1] == 'vim' then
-        if parts[2] == 'keymap' or parts[2] == "fs" then
+    if parts[1] == "vim" then
+        if parts[2] == "keymap" or parts[2] == "fs" then
             return {
-                command = 'help ',
+                command = "help ",
                 query = table.concat(parts, ".")
             }
         else
             return {
-                command = 'help ',
+                command = "help ",
                 query = parts[#parts]
             }
         end
     end
 
-    if parts[1] == 'api' then
+    if parts[1] == "api" then
         return {
-            command = 'help ',
+            command = "help ",
             query = parts[#parts]
         }
     end
@@ -76,53 +76,53 @@ local docs_config = {
     filetype = {
         -- TODO: Fix cppman
         c = {
-            url = 'https://duckduckgo.com/?sites=cppreference.com&q=%s&atb=v314-1&ia=web',
-            iskeyword = { ':' },
+            url = "https://duckduckgo.com/?sites=cppreference.com&q=%s&atb=v314-1&ia=web",
+            iskeyword = { ":" },
         },
-        cpp = 'c',
+        cpp = "c",
         javascript = {
-            url = 'https://developer.mozilla.org/en/search?topic=api&topic=js&q=%s',
-            iskeyword = { '.' },
+            url = "https://developer.mozilla.org/en/search?topic=api&topic=js&q=%s",
+            iskeyword = { "." },
         },
-        js = 'javascript',
+        js = "javascript",
         typescript = {
-            url = 'https://developer.mozilla.org/en/search?topic=api&topic=ts&q=%s',
+            url = "https://developer.mozilla.org/en/search?topic=api&topic=ts&q=%s",
         },
-        ts = 'typescript',
+        ts = "typescript",
         lua = {
             ---@diagnostic disable-next-line: unused-local
             config_callback = function(query, filetype)
-                if query:find('n?vim') ~= nil then
-                    local parts = vim.fn.split(query, '\\.')
+                if query:find("n?vim") ~= nil then
+                    local parts = vim.fn.split(query, "\\.")
                     local result = is_supported_nvim_prefix(parts)
 
                     if result ~= nil then
                         return result
                     end
 
-                    return { command = 'help' }
+                    return { command = "help" }
                 elseif query:find([[uv.]]) then
                     return {
-                        command = 'help ',
+                        command = "help ",
                         query = query
                     }
                 end
 
                 -- Use fallback with lua v5.1 documentation
-                return fallback.config_callback(query, filetype .. '5.1')
+                return fallback.config_callback(query, filetype .. "5.1")
             end,
-            iskeyword = { '.' },
+            iskeyword = { "." },
         },
         vim = {
-            command = 'help',
+            command = "help",
         },
         fish = {
-            url = 'https://fishshell.com/docs/current/search.html?q=%s',
+            url = "https://fishshell.com/docs/current/search.html?q=%s",
         },
     },
     custom = {
         cc = {
-            url = 'https://github.com/search?q=org%%3Aconnectedcars%%20%s&type=code'
+            url = "https://github.com/search?q=org%%3Aconnectedcars%%20%s&type=code"
         }
     }
 }
@@ -139,7 +139,7 @@ local function get_config(filetype)
     local ft_config = docs_config.filetype[filetype]
 
     if ft_config then
-        if type(ft_config) == 'string' then
+        if type(ft_config) == "string" then
             ft_config = docs_config.filetype[ft_config]
         end
 
@@ -161,26 +161,27 @@ local function open_docs_with_config(query, filetype, mods, config)
         vim.fn.system(('open "%s"'):format(url))
         return
     elseif config.shell ~= nil then
-        command = ('!%s %s'):format(config.shell, query)
+        command = ("!%s %s"):format(config.shell, query)
     elseif config.command ~= nil then
         local _query = config.query or query
-        command = ('%s %s %s'):format(mods or '', config.command, _query)
-    elseif type(config.config_callback) == 'function' then
+        command = ("%s %s %s"):format(mods or "", config.command, _query)
+    elseif type(config.config_callback) == "function" then
         config = config.config_callback(query, filetype)
         open_docs_with_config(query, filetype, mods, config)
         return
-    elseif type(config.callback) == 'function' then
+    elseif type(config.callback) == "function" then
         config.callback(query, filetype)
         return
     else
         vim.api.nvim_echo({
-            { '[config]:', 'WarningMsg' },
+            { "[config]:", "WarningMsg" },
             { ("Invalid format for filetype '%s'"):format(filetype) },
-        })
+        }, true, {})
+
         return
     end
 
-    vim.cmd('silent ' .. command)
+    vim.cmd("silent " .. command)
 end
 
 ---@param query string
@@ -207,7 +208,7 @@ function docs.open_at_cursor(options)
         vim.opt_local.iskeyword:append(config.iskeyword)
     end
 
-    local cword = vim.fn.expand('<cword>')
+    local cword = vim.fn.expand("<cword>")
 
     if config.iskeyword ~= nil then
         vim.opt_local.iskeyword:remove(config.iskeyword)
@@ -244,17 +245,17 @@ vim.api.nvim_create_user_command(
     docs.open_docs_from_command,
     {
         desc = "Query documentation. Find argument is a topic, the second is an optional supported filetype. If not given, takes the filetype of the current file",
-        nargs = '+',
+        nargs = "+",
         complete = complete,
     }
 )
 
 vim.api.nvim_create_user_command(
-    'DocsCursor',
+    "DocsCursor",
     docs.open_at_cursor,
     {
-        desc = 'Query documentation for the word under the cursor',
-        nargs = '?',
+        desc = "Query documentation for the word under the cursor",
+        nargs = "?",
     }
 )
 

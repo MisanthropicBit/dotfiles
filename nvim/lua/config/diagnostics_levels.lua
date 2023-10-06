@@ -19,7 +19,7 @@ map.leader(
     'n',
     'dm',
     buf_toggle_diagnostics_messages,
-    { desc = 'Toggle diagnostic messages in the current buffer' }
+    { desc = "Toggle diagnostic messages in the current buffer" }
 )
 
 -- vim diagnostics filtering
@@ -28,13 +28,13 @@ map.leader(
 -- Save the original virtual text handler
 local orig_diag_virt_handler = vim.diagnostic.handlers.virtual_text
 
-local namespace = vim.api.nvim_create_namespace('filtered_diagnostics')
+local namespace = vim.api.nvim_create_namespace("filtered_diagnostics")
 local levels = {
-    ['Off'] = 0,
-    ['Error'] = vim.diagnostic.severity.ERROR,
-    ['Warn'] = vim.diagnostic.severity.WARN,
-    ['Info'] = vim.diagnostic.severity.INFO,
-    ['Hint'] = vim.diagnostic.severity.HINT,
+    ["Off"] = 0,
+    ["Error"] = vim.diagnostic.severity.ERROR,
+    ["Warn"] = vim.diagnostic.severity.WARN,
+    ["Info"] = vim.diagnostic.severity.INFO,
+    ["Hint"] = vim.diagnostic.severity.HINT,
 }
 local diagnostics_visible = true
 
@@ -82,7 +82,7 @@ end
 local function prompt_level()
     local selected_level = nil
 
-    vim.ui.select(vim.tbl_keys(levels), { prompt = 'Set level to? ' }, function(item)
+    vim.ui.select(vim.tbl_keys(levels), { prompt = "Set level to? " }, function(item)
         selected_level = item
     end)
 
@@ -94,17 +94,19 @@ end
 local function toggle_diagnostics()
     diagnostics_visible = not diagnostics_visible
 
-    vim.diagnostic[diagnostics_visible and 'show' or 'hide']()
+    vim.diagnostic[diagnostics_visible and "show" or "hide"]()
 end
 
-map.leader('n', 'dl', prompt_level, { desc = 'Set diagnostics level via a prompt' })
-map.leader('n', 'dt', toggle_diagnostics, { desc = 'Toggle global diagnostics' })
+map.leader("n", "dl", prompt_level, { desc = "Set diagnostics level via a prompt" })
+map.leader("n", "dt", toggle_diagnostics, { desc = "Toggle global diagnostics" })
 
 vim.api.nvim_create_user_command(
-    'SetDiagnosticsLevel',
+    "SetDiagnosticsLevel",
     prompt_level,
     {
-        nargs = '?',
-        complete = function(_, _, _) return vim.tbl_keys(levels) end,
+        nargs = "?",
+        complete = function(_, _, _)
+            return vim.tbl_keys(levels)
+        end,
     }
 )

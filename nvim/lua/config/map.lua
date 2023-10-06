@@ -1,8 +1,9 @@
 local map = {}
 
----@alias Mode 'n' | 'v' | 'x' | 's' | 'o' | 'i' | 'l' | 'c' | 't'
+---@alias Mode "n" | "v" | "x" | "s" | "o" | "i" | "l" | "c" | "t"
 
-local modes = { 'n', 'i', 'c', 'v', 'x', 's', 'o', 't', 'l' }
+---@type Mode[]
+local modes = { "n", "i", "c", "v", "x", "s", "o", "t", "l" }
 
 ---@type table
 map.default_options = { noremap = true, silent = true }
@@ -10,12 +11,12 @@ map.default_options = { noremap = true, silent = true }
 ---@param opts1 table
 ---@param opts2 table?
 function map.merge(opts1, opts2)
-    return vim.tbl_extend('force', opts1, opts2 or {})
+    return vim.tbl_extend("force", opts1, opts2 or {})
 end
 
 ---@param opts (table | string)?
 function map.with_default_options(opts)
-    if type(opts) == 'string' then
+    if type(opts) == "string" then
         return map.merge(map.default_options, { desc = opts })
     end
 

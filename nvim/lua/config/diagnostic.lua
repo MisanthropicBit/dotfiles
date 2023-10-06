@@ -1,7 +1,7 @@
-local icons = require('config.icons')
-local map = require('config.map')
+local icons = require("config.icons")
+local map = require("config.map")
 
-local has_lspsaga, _ = pcall(require, 'lspsaga')
+local has_lspsaga, _ = pcall(require, "lspsaga")
 
 vim.diagnostic.config({
     virtual_text = {
@@ -10,7 +10,7 @@ vim.diagnostic.config({
         spacing = 1,
     },
     float = {
-        source = 'always',
+        source = "always",
     },
     signs = true,
     underline = true,
@@ -18,7 +18,7 @@ vim.diagnostic.config({
 })
 
 for type, icon in pairs(icons.diagnostics) do
-    local hl = 'DiagnosticSign' .. type:sub(1, 1):upper() .. type:sub(2)
+    local hl = "DiagnosticSign" .. type:sub(1, 1):upper() .. type:sub(2)
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
@@ -46,10 +46,10 @@ local diagnostics_methods = {
 -- Override select lsp methods and diagnostics functionality with lspsaga
 if has_lspsaga then
     local function lspsaga_cmd(command)
-        return ('<cmd>Lspsaga %s<cr>'):format(command)
+        return ("<cmd>Lspsaga %s<cr>"):format(command)
     end
 
-    local lspsaga_diagnostic = require('lspsaga.diagnostic')
+    local lspsaga_diagnostic = require("lspsaga.diagnostic")
 
     local lspsaga_goto_prev_error = function()
         lspsaga_diagnostic:goto_prev({ severity = error_severity })
@@ -59,16 +59,16 @@ if has_lspsaga then
         lspsaga_diagnostic:goto_next({ severity = error_severity })
     end
 
-    diagnostics_methods.goto_prev = lspsaga_cmd('diagnostic_jump_prev')
-    diagnostics_methods.goto_next = lspsaga_cmd('diagnostic_jump_next')
+    diagnostics_methods.goto_prev = lspsaga_cmd("diagnostic_jump_prev")
+    diagnostics_methods.goto_next = lspsaga_cmd("diagnostic_jump_next")
     diagnostics_methods.goto_prev_error = lspsaga_goto_prev_error
     diagnostics_methods.goto_next_error = lspsaga_goto_next_error
-    diagnostics_methods.open_float = lspsaga_cmd('show_line_diagnostics ++unfocus')
+    diagnostics_methods.open_float = lspsaga_cmd("show_line_diagnostics ++unfocus")
 end
 
 -- Diagnostic mappings
-map.leader('n', 'lp', diagnostics_methods.goto_prev, 'Jump to previous diagnostic')
-map.leader('n', 'ln', diagnostics_methods.goto_next, 'Jump to next diagnostic')
-map.leader('n', 'ep', diagnostics_methods.goto_prev_error, 'Jump to previous diagnostic error')
-map.leader('n', 'en', diagnostics_methods.goto_next_error, 'Jump to next diagnostic error')
-map.leader('n', 'll', diagnostics_methods.open_float, 'Open diagnostic float')
+map.leader("n", "lp", diagnostics_methods.goto_prev, "Jump to previous diagnostic")
+map.leader("n", "ln", diagnostics_methods.goto_next, "Jump to next diagnostic")
+map.leader("n", "ep", diagnostics_methods.goto_prev_error, "Jump to previous diagnostic error")
+map.leader("n", "en", diagnostics_methods.goto_next_error, "Jump to next diagnostic error")
+map.leader("n", "ll", diagnostics_methods.open_float, "Open diagnostic float")

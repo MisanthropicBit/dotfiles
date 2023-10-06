@@ -3,14 +3,14 @@ local lsp_on_attach = {}
 local map = require("config.map")
 
 ---@diagnostic disable-next-line: unused-local
-local has_lspsaga, lspsaga = pcall(require, 'lspsaga')
+local has_lspsaga, lspsaga = pcall(require, "lspsaga")
 
 -- We don't want tsserver to format stuff as the default formatting doesn't
 -- seem to respect project-local settings for eslint and prettier. Instead, we
 -- implicitly rely on null-ls formatting
 local function lsp_format_wrapper()
     vim.lsp.buf.format({ filter = function(client)
-        return client.name ~= 'tsserver'
+        return client.name ~= "tsserver"
     end})
 end
 
@@ -30,27 +30,27 @@ local lsp_methods = {
 -- Override select lsp methods and diagnostics functionality with lspsaga
 if has_lspsaga then
     local function lspsaga_cmd(command)
-        return ('<cmd>Lspsaga %s<cr>'):format(command)
+        return ("<cmd>Lspsaga %s<cr>"):format(command)
     end
 
-    lsp_methods.hover = lspsaga_cmd('hover_doc')
-    lsp_methods.code_action = lspsaga_cmd('code_action')
-    lsp_methods.rename = lspsaga_cmd('rename')
-    lsp_methods.references = lspsaga_cmd('lsp_references')
+    lsp_methods.hover = lspsaga_cmd("hover_doc")
+    lsp_methods.code_action = lspsaga_cmd("code_action")
+    lsp_methods.rename = lspsaga_cmd("rename")
+    lsp_methods.references = lspsaga_cmd("lsp_references")
 end
 
 ---Use fzf-lua as a lsp result selector in case of multiple results
 ---@param locations any
 local function fzf_lua_lsp_jump_selector(locations)
     local fzf_items = vim.tbl_map(function(item)
-        return ('%s:%d:%d'):format(item.filename, item.lnum, item.col)
+        return ("%s:%d:%d"):format(item.filename, item.lnum, item.col)
     end, locations)
 
-    require('fzf-lua').fzf_exec(
+    require("fzf-lua").fzf_exec(
         fzf_items,
         {
-            prompt = 'Jump to?> ',
-            previewer = 'builtin'
+            prompt = "Jump to?> ",
+            previewer = "builtin"
         }
     )
 end
@@ -59,7 +59,7 @@ end
 ---is more than one
 ---@param lsp_method string
 ---@param split_cmd string
----@param selector 'fzf' | 'quickfix'
+---@param selector "fzf" | "quickfix"
 ---@return function
 local function lsp_request_jump(lsp_method, split_cmd, selector)
     return function()
@@ -81,7 +81,7 @@ local function lsp_request_jump(lsp_method, split_cmd, selector)
                         client.offset_encoding,
                         false
                     )
-                    vim.cmd('normal zt')
+                    vim.cmd("normal zt")
                 end
             else
                 local locations = {}
@@ -93,13 +93,13 @@ local function lsp_request_jump(lsp_method, split_cmd, selector)
                     vim.list_extend(locations, items)
                 end
 
-                local has_fzf_lua, _ = pcall(require, 'fzf-lua')
+                local has_fzf_lua, _ = pcall(require, "fzf-lua")
 
-                if selector == 'fzf' and has_fzf_lua then
+                if selector == "fzf" and has_fzf_lua then
                     fzf_lua_lsp_jump_selector(locations)
                 else
-                    vim.fn.setqflist({}, ' ', { items = locations })
-                    vim.cmd('copen')
+                    vim.fn.setqflist({}, " ", { items = locations })
+                    vim.cmd("copen")
                 end
             end
         end)
@@ -120,7 +120,7 @@ function lsp_on_attach.on_attach(event)
 
     local function lsp_definition()
         lsp_methods.definition()
-        vim.cmd('normal zt')
+        vim.cmd("normal zt")
     end
 
     -- We don't guard against server capabilities because we want neovim to
