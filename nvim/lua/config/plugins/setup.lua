@@ -1,3 +1,4 @@
+require("config.plugins.vim-plugins.delimiteMate")
 require("config.plugins.vim-plugins.git-messenger")
 require("config.plugins.vim-plugins.gitgutter")
 require("config.plugins.vim-plugins.linediff")
