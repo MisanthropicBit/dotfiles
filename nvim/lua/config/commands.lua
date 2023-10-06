@@ -1,4 +1,6 @@
-vim.api.nvim_create_user_command("Grep", "<cmd>execute 'silent grep! <args> | copen'", {})
+vim.api.nvim_create_user_command("Grep", [[execute 'silent grep! <args> | copen']], {
+    nargs = "+",
+})
 
 -- vim supports a 'vertical'/'tab' prefix before :terminal, but neovim
 -- currently doesn't
