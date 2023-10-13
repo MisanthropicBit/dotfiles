@@ -53,8 +53,35 @@ local function snake_case(args)
     end
 end
 
+local function get_mocha_choices(idx)
+    return c(
+        idx, {
+            t('to equal'),
+            t('to satisfy'),
+            t('to be null'),
+            t('to be true'),
+            t('to be false'),
+            t('to have graphql response'),
+            t('to have graphql error'),
+            t('to match'),
+        }
+    )
+end
+
+local function get_jest_choices(idx)
+    return c(
+        idx, {
+            t('toEqual'),
+            t('toBe'),
+            t('toMatchObject'),
+            t('toMatchSnapshot'),
+        }
+    )
+end
+
 return {
     -- General
+    s("cv", fmta("const <> = <>", { i(1), i(2) })),
     s("ds", fmta("const { <> } = <>", { i(2), i(1) })),
     s("cl", fmt([[console.log({})]], i(1))),
     s("cs", fmt([[console.{}({})]], {
@@ -77,6 +104,7 @@ return {
         i(2)
     })),
     s("lj", fmt([[console.log(JSON.stringify({}))]], i(1))),
+    s("rt", t("return ")),
     s("rn", t("return null")),
     s("ru", t("return undefined")),
     s("ud", t("undefined")),
@@ -172,6 +200,8 @@ expect(fields.{}.name, 'to be', '{}')]], {
     -- Testing
     s("ss", fmt("sinon.stub({})", i(1))),
     s("sr", t("sinon.restore()")),
+    s("ep", fmt([[expect({}, '{}', {})]], { i(1), get_mocha_choices(2), i(3) })),
+    s("ept", fmt([[expect({}).{}({})]], { i(1), get_jest_choices(2), i(3) })),
     s("epct", fmt([[expect({}.callCount).toEqual({})]], range(1, 2))),
     s("epat", fmt([[expect({}.args[0]{}).toEqual([{}])]], range(1, 3))),
     s("epcat", fmt([[expect({}.callCount).toEqual({})
