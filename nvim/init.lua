@@ -90,8 +90,7 @@ if vim.fn.has("gui_running") == 0 then
 end
 
 if vim.fn.executable("rg") then
-    o.grepprg = "rg --vimgrep --smart-case --hidden"
-    -- o.grepprg = [[rg\ --vimgrep\ --smart-case\ --hidden]]
+    o.grepprg = "rg --vimgrep --smart-case"
     o.grepformat = [[%f:%l:%c:%m]]
 else
     o.grepprg = "grep --line-number --recursive"
