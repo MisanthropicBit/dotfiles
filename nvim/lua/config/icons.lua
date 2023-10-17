@@ -29,6 +29,7 @@ local icons = {
         path = '󰙅 ',
         ultisnips = '󰁨 ',
         cmdline = '󰨊 ',
+        natdat = '',
     },
     test = {
         running = '●',

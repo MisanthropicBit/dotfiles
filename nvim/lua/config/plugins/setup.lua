@@ -59,6 +59,7 @@ vim.cmd([[
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-rhubarb'
 
+    Plug 'Gelio/cmp-natdat/'
     Plug 'L3MON4D3/LuaSnip', { 'tag': 'v1.*', 'do': 'make install_jsregexp' }
     Plug 'MisanthropicBit/decipher.nvim'
     Plug 'MisanthropicBit/vim-yank-window'

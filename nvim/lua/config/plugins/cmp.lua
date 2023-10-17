@@ -38,6 +38,7 @@ local menu_hl_groups = {
     cmdline = "@number",
     luasnip = "@keyword",
     path = "@character.special",
+    natdata = "@conditional",
 }
 
 -- Format autocomplete items
@@ -124,6 +125,7 @@ cmp.setup({
                 get_bufnrs = get_bufnrs,
             },
         },
+        { name = "natdat" },
     }),
     formatting = {
         fields = { "kind", "abbr", "menu" },
