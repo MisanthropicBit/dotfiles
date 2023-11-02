@@ -25,6 +25,8 @@ from_lua.lazy_load({ paths = { snippets_path("snippets", "lua") } })
 map.set({ "i", "s" }, "<c-i>", function()
     if luasnip.expandable() then
         luasnip.expand()
+    else
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<tab>", true, false, true), 'n', false)
     end
 end, "Expand snippet")
 
