@@ -123,7 +123,10 @@ local docs_config = {
     custom = {
         cc = {
             url = "https://github.com/search?q=org%%3Aconnectedcars%%20%s&type=code"
-        }
+        },
+        jest = {
+            url = "https://duckduckgo.com/?q=site%%3Ahttps%%3A%%2F%%2Fjestjs.io%%2F+%s"
+        },
     }
 }
 
