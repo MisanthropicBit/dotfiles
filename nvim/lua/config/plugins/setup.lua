@@ -32,6 +32,7 @@ vim.cmd([[
     Plug 'savq/melange'
     Plug 'shaunsingh/moonlight.nvim'
     Plug 'tiagovla/tokyodark.nvim'
+    Plug 'LunarVim/horizon.nvim'
 
     if executable('node') && executable('yarn')
         Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install', 'for': ['markdown', 'vim-plug'] }
