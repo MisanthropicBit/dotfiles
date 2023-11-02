@@ -67,7 +67,7 @@ create_autocmd("TextYankPost", {
 
 create_autocmd("TermOpen", {
     group = augroup,
-    command = "setlocal signcolumn=no",
+    command = "setlocal signcolumn=no nospell",
 })
 
 create_autocmd("TermClose", {
