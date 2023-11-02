@@ -1,18 +1,7 @@
-local icons = require('config.icons')
+local icons = require("config.icons")
+local ts = require("config.treesitter")
 
-local has_ts_utils, ts_utils = pcall(require, 'nvim-treesitter.ts_utils')
-
-local function get_enclosing_function_node(node)
-    while node ~= nil do
-        if node:type() == 'function_declaration' then
-            break
-        end
-
-        node = node:parent()
-    end
-
-    return node
-end
+local has_ts_utils, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
 
 function _G.custom_fold_text()
     local line = vim.fn.trim(vim.fn.getline(vim.v.foldstart))
@@ -21,7 +10,7 @@ function _G.custom_fold_text()
     local level = icons.folds.char:rep(vim.fn.foldlevel(vim.v.foldstart))
 
     if has_ts_utils then
-        local enclosing_function_node = get_enclosing_function_node(ts_utils.get_node_at_cursor())
+        local enclosing_function_node = ts.get_enclosing_function_node(ts_utils.get_node_at_cursor())
 
         if enclosing_function_node ~= nil then
             local lnum = enclosing_function_node:start()

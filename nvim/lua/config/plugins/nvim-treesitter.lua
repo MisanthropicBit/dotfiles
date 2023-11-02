@@ -1,8 +1,10 @@
 local map = require("config.map")
+local ts = require("config.treesitter")
 
 -- Temporary fix for https://github.com/nvim-treesitter/nvim-treesitter/issues/3232
 require("nvim-treesitter.install").prefer_git = true
 
+local ts_utils = require("nvim-treesitter.ts_utils")
 local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
 
 require("nvim-treesitter.configs").setup({
@@ -97,6 +99,18 @@ end
 
 map.set({ "n", "x", "o" }, "-", run_and_center(ts_repeat_move.repeat_last_move_next))
 map.set({ "n", "x", "o" }, "_", run_and_center(ts_repeat_move.repeat_last_move_previous))
+
+map.leader("n", "ff", function()
+    local node = ts.get_enclosing_top_level_function(ts_utils.get_node_at_cursor())
+
+    if node ~= nil then
+        -- Assume that the "name" child node is the function identifier/name
+        local nodes = node:field("name")
+        local function_name = #nodes > 0 and nodes[1] or node
+
+        ts_utils.goto_node(function_name, false, false)
+    end
+end, "Navigate to the enclosing top-level function")
 
 -- Unmap incremental selection inside the command-line window
 vim.api.nvim_create_autocmd("CmdwinEnter", { command = "nunmap <buffer> <cr>" })
