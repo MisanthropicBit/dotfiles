@@ -1,18 +1,10 @@
-local map = require('config.map')
-
-local buf_diagnostic_map = {}
+local map = require("config.map")
 
 local function buf_toggle_diagnostics_messages()
     local bufnr = vim.api.nvim_get_current_buf()
-    local visible = buf_diagnostic_map[bufnr]
+    local disabled = not vim.diagnostic.is_disabled(bufnr)
 
-    if visible == nil then
-        buf_diagnostic_map[bufnr] = false
-    else
-        buf_diagnostic_map[bufnr] = not visible
-    end
-
-    vim.diagnostic[buf_diagnostic_map[bufnr] and 'show' or 'hide'](nil, bufnr)
+    vim.diagnostic[disabled and "disable" or "enable"](bufnr)
 end
 
 map.leader(
