@@ -61,6 +61,8 @@ local function get_mocha_choices(idx)
             t('to be null'),
             t('to be true'),
             t('to be false'),
+            t('to throw'),
+            t('to be rejected with'),
             t('to have graphql response'),
             t('to have graphql error'),
             t('to match'),
