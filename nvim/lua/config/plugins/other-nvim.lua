@@ -127,6 +127,30 @@ require("other-nvim").setup({
             target = "%1/%2.lua",
             context = "lua main file",
         },
+        {
+            -- C/C++ header (.h) file => implementation (.c) file
+            pattern = "(.*)/(.*).h",
+            target = "%1/%2.c",
+            context = "c/c++ implementation (.c) file",
+        },
+        {
+            -- C/C++ header (.hpp) file => implementation (.cpp) file
+            pattern = "(.*)/(.*).hpp",
+            target = "%1/%2.cpp",
+            context = "c/c++ implementation (.cpp) file",
+        },
+        {
+            -- C/C++ implementation (.c) file => header (.h) file
+            pattern = "(.*)/(.*).c",
+            target = "%1/%2.h",
+            context = "c/c++ header (.h) file",
+        },
+        {
+            -- C/C++ implementation (.cpp) file => header (.hpp) file
+            pattern = "(.*)/(.*).cpp",
+            target = "%1/%2.hpp",
+            context = "c/c++ header (.hpp) file",
+        }
     },
 })
 
