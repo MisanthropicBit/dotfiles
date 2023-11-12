@@ -21,22 +21,7 @@ neotest.setup({
     adapters = {
         require("neotest-jest")({
             jestCommand = "npm test --",
-            jestConfigFile = function()
-                local configs = {
-                    "jest.config.ts",
-                    "jest.config.js",
-                }
-
-                for _, config in ipairs(configs) do
-                    if vim.fn.filereadable(config) then
-                        return config
-                    end
-                end
-
-                return nil
-            end,
-            ---@diagnostic disable-next-line:unused-local
-            cwd = function(path)
+            cwd = function()
                 return vim.fn.getcwd()
             end,
         }),
