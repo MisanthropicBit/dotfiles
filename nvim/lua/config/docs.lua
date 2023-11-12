@@ -45,7 +45,7 @@ local fallback = {
 
 local function is_supported_nvim_prefix(parts)
     if parts[1] == "vim" then
-        if parts[2] == "keymap" or parts[2] == "fs" then
+        if parts[2] == "keymap" or parts[2] == "fs" or parts[2] == "ui" then
             return {
                 command = "help ",
                 query = table.concat(parts, ".")
@@ -56,9 +56,7 @@ local function is_supported_nvim_prefix(parts)
                 query = parts[#parts]
             }
         end
-    end
-
-    if parts[1] == "api" then
+    elseif parts[1] == "api" then
         return {
             command = "help ",
             query = parts[#parts]
@@ -167,8 +165,16 @@ local function open_docs_with_config(query, filetype, mods, config)
         command = ("!%s %s"):format(config.shell, query)
     elseif config.command ~= nil then
         local _query = config.query or query
-        command = ("%s %s %s"):format(mods or "", config.command, _query)
-    elseif type(config.config_callback) == "function" then
+        local _command = config.command
+
+        if type(_query) == "string" then
+            _command = _command .. " " .. _query
+        else
+            _command = table.concat(vim.list_extend({ _command }, _query), " ")
+        end
+
+        command = ("%s %s"):format(mods or "", _command)
+    elseif type(config.config_callback) == 'function' then
         config = config.config_callback(query, filetype)
         open_docs_with_config(query, filetype, mods, config)
         return
