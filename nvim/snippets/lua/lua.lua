@@ -4,9 +4,20 @@ return {
     s("lf", fmt([[local function {}({})
     {}
 end]], { i(1), i(2), i(3) })),
-    s("mf", fmt([[function {}.{}({})
+    s("mf", fmt([[function {}{}{}({})
     {}
-end]], { i(1), i(2), i(3), i(4) })),
+end]], {
+    i(1),
+    c(
+        2, {
+            sn(nil, { t(".") }),
+            sn(nil, { t(":") }),
+        }
+    ),
+    i(3),
+    i(4),
+    i(5),
+})),
     s("mod", fmt([[local {} = {{}}
 
 {}
