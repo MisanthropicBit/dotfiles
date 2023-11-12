@@ -55,8 +55,8 @@ class <> {
 #endif // <>
 ]], { i(1), rep(1), rep(1) })
     ),
-    s("inc", fmt('#include "{}".h', i(1))),
-    s("pinc", fmt('#include "{}".hpp', i(1))),
+    s("inc", fmt('#include "{}.h"', i(1))),
+    s("pinc", fmt('#include "{}.hpp"', i(1))),
     s("sinc", fmt('#include <{}>', i(1))),
     s(
         "tc",
