@@ -65,6 +65,8 @@ end)
 map.n("<m", function()
     find_git_conflict_marker(-1)
 end)
+map.n("<c-b><c-n>", "<cmd>bnext<cr>")
+map.n("<c-b><c-p>", "<cmd>bprevious<cr>")
 
 map.i("jk", [["<esc>"]], { expr = true })
 map.i("<c-a>", "<c-o>^", "Move to start of line in insert mode")
