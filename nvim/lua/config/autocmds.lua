@@ -4,20 +4,24 @@ if vim.fn.exists("g:last_tab") == 0 then
     vim.g.last_tab = vim.fn.tabpagenr()
 end
 
-local create_autocmd = vim.api.nvim_create_autocmd
+---@param event string | string[]
+---@param options table
+local create_config_autocmd = function(event, options)
+    vim.api.nvim_create_autocmd(event, vim.tbl_extend("force", { group = augroup }, options))
+end
 
-create_autocmd("TabLeave", {
-    group = augroup,
+create_config_autocmd("TabNew", {
     pattern = "*",
     callback = function()
         vim.g.last_tab = vim.fn.tabpagenr()
     end,
 })
 
-create_autocmd("VimResized", {
-    group = augroup,
+create_config_autocmd("TabLeave", {
     pattern = "*",
-    command = "tabdo wincmd =",
+    callback = function()
+        vim.g.last_tab = vim.fn.tabpagenr()
+    end,
 })
 
 -- nvim_create_autocmd("InsertEnter", {
@@ -29,33 +33,28 @@ create_autocmd("VimResized", {
 -- })
 
 -- nvim_create_autocmd("InsertLeave", {
---     group = augroup,
 --     pattern = "*",
 --     callback = function()
 --         vim.opt.listchars:remove({ "trail:⌴", "nbsp:¬" })
 --     end,
 -- })
 
-create_autocmd({ "BufRead", "BufNewFile" }, {
-    group = augroup,
+create_config_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = "*.fsproj",
     command = "setlocal ft=xml",
 })
 
-create_autocmd({ "BufRead", "BufNewFile" }, {
-    group = augroup,
+create_config_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.html", "*.yml", "*.json" },
     command = "setlocal sw=2",
 })
 
-create_autocmd({ "BufRead", "BufNewFile" }, {
-    group = augroup,
+create_config_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = ".eslintrc",
     command = "setlocal ft=json",
 })
 
-create_autocmd("TextYankPost", {
-    group = augroup,
+create_config_autocmd("TextYankPost", {
     pattern = "*",
     callback = function()
         vim.highlight.on_yank({
@@ -65,13 +64,11 @@ create_autocmd("TextYankPost", {
     end,
 })
 
-create_autocmd("TermOpen", {
-    group = augroup,
+create_config_autocmd("TermOpen", {
     command = "setlocal signcolumn=no nospell",
 })
 
-create_autocmd("TermClose", {
-    group = augroup,
+create_config_autocmd("TermClose", {
     callback = function()
         if vim.v.event.status == 0 then
             vim.api.nvim_buf_delete(0, {})
