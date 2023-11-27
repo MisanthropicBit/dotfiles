@@ -4,7 +4,7 @@ null_ls.setup({
     sources = {
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.eslint_d.with({
-            timeout = 5000,
+            timeout = 10000,
         }),
         null_ls.builtins.code_actions.eslint_d,
         null_ls.builtins.diagnostics.eslint_d,
