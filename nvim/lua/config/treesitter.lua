@@ -7,8 +7,6 @@ function ts.get_enclosing_top_level_function(node)
 
     while node ~= nil do
         if node:type() == "function_declaration" then
-            local row, col, _ = node:start()
-            vim.print({ row, col })
             result = node
         end
 
