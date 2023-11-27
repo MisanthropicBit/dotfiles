@@ -3,4 +3,8 @@ require("boole").setup({
         increment = "<c-a>",
         decrement = "<c-x>",
     },
+    additions = {
+        { "asc", "desc" },
+        { "ASC", "DESC" },
+    },
 })
