@@ -20,6 +20,7 @@ lspsaga.setup({
         tabe = "<c-w>t",
     },
     symbol_in_winbar = {
+        enable = false,
         separator = "  ",
     },
     lightbulb = {
