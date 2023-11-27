@@ -66,6 +66,8 @@ local function get_mocha_choices(idx)
             t('to have graphql response'),
             t('to have graphql error'),
             t('to match'),
+            t('to be undefined'),
+            t('to have length'),
         }
     )
 end
