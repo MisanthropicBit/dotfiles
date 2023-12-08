@@ -139,6 +139,7 @@ map.leader("n", "rg", fzf_lua.grep_project, "Search all project files")
 map.leader("n", "pf", project_files("~/repos"), "Search all local repository files")
 map.leader("n", "pp", project_files("~/.vim-plug/"), "Search plugin directories")
 map.leader("n", "rr", fzf_lua.resume, "Resume last search")
+map.n("<c-b><c-b>", fzf_lua.tabs, "List all buffers in all tabs")
 
 vim.cmd("FzfLua register_ui_select")
 
