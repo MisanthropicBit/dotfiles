@@ -63,6 +63,22 @@ end
 fzf_lua.setup({
     winopts = {
         height = 0.75,
+        preview = {
+            title_pos = "left",
+        },
+    },
+    previewers = {
+        builtin = {
+            title_fnamemodify = function(value)
+                local dirprefix = vim.fn.fnamemodify(value, ":h:t")
+                local filename = vim.fn.fnamemodify(value, ":t")
+
+                return table.concat({ dirprefix, filename }, "/")
+            end,
+        },
+    },
+    hls = {
+        preview_title = "Title",
     },
     keymap = {
         builtin = {
