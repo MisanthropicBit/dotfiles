@@ -50,4 +50,7 @@ oil.setup({
     win_options = {
         concealcursor = "nvi",
     },
+    view_options = {
+      show_hidden = true,
+    },
 })
