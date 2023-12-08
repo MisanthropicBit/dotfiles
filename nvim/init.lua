@@ -17,7 +17,6 @@ g.sql_type_default = "mysql"
 g.python_host_prog = vim.fn.expand("~/.neovim_venvs/neovim2/bin/python")
 g.python3_host_prog = vim.fn.expand("~/.neovim_venvs/neovim3/bin/python")
 g.custom_notifier = "terminal-notifier"
-g.use_custom_notifier = true
 g.notify_log_level = vim.log.levels.WARN
 
 o.compatible = false
