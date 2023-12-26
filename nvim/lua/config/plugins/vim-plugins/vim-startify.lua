@@ -24,6 +24,11 @@ vim.g.startify_custom_header_quotes = {
         "",
         "- Friedman and Mendhekar",
     },
+    {
+        "The world needs creative destruction and playful failures",
+        "",
+        "- Justin M. Keyes",
+    },
 }
 
 vim.list_extend(vim.g.startify_custom_header_quotes, vim.fn["startify#fortune#predefined_quotes"]())
