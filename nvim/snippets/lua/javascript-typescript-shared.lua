@@ -113,6 +113,18 @@ return {
     s("ru", t("return undefined")),
     s("ud", t("undefined")),
     s("pe", t("process.env")),
+    s("ef", fmta([[export function <>()<> {
+  <>
+}]],
+        {
+            i(1),
+            c(2, {
+                sn(nil, { t(": "), i(1) }),
+                t(""),
+            }),
+            i(3),
+        })
+    ),
 
     -- Eslint
     s("elnl", fmt([[// eslint-disable-next-line {}]], i(1))),
@@ -138,7 +150,7 @@ return {
 )),
     s(
         { trig = "qot", dscr = "New GraphQLObjectType" },
-        fmta([[import { GraphQLObjectType } from "graphql"
+        fmta([[import { GraphQLObjectType } from 'graphql'
 
 import { GraphQLField } from '../extensions/wrappers'
 
@@ -215,8 +227,16 @@ expect({}.args[0]{}).toEqual([{}])]], { i(1), i(2), rep(1), i(3), i(4) })),
     s("epca", fmt([[expect({}.callCount, 'to equal', {})
 expect({}.args[0]{}, 'to equal', [{}])]], { i(1), i(2), rep(1), i(3), i(4) })),
     s("fss", fmta([[this.<3> = sinon.stub(<1>, '<2>')]], { i(1), i(2), rep(2) })),
-    s("des", fmta(
-        [[describe('<>', () =>> {
+    s("it", fmta([[it('<>', <>() =>> {
+  <>
+})]],
+        {
+            i(1),
+            c(2, { t('async '), t('') }),
+            i(3)
+        }
+    )),
+    s("des", fmta([[describe('<>', () =>> {
   <>
 })]],
         range(1, 2)
@@ -254,9 +274,9 @@ describe('types/<>-type', () =>> {
 			expect(fields.<>.name, 'to be', '<>')
 		})
 
-		it('has custom resolvers', async () =>> {
-			<>
-		})
+		describe('custom resolvers', async () =>> {
+            <>
+        })
 	})
 })]],
             {
@@ -362,6 +382,21 @@ describe('types/enums/<>-type', function () {
 }]], i(1))),
     s("req", fmt([[const {} = require('{}')]], { i(2), i(1) })),
     s("im", fmt([[import {} from {}]], {
+        i(2),
+        c(1, {
+            sn(1, {
+                t("{"),
+                i(1),
+                t("}"),
+            }),
+            sn(1, {
+                t("* as "),
+                i(1),
+                t("}"),
+            }),
+        }),
+    })),
+    s("imc", fmt([[import {} from '@connectedcars/{}']], {
         i(2),
         c(1, {
             sn(1, {
