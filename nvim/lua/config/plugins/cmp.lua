@@ -126,6 +126,7 @@ cmp.setup({
             },
         },
         { name = "natdat" },
+        { name = "emoji" },
     }),
     formatting = {
         fields = { "kind", "abbr", "menu" },

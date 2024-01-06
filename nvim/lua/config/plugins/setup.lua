@@ -60,7 +60,6 @@ vim.cmd([[
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-rhubarb'
 
-    Plug 'Gelio/cmp-natdat/'
     Plug 'L3MON4D3/LuaSnip', { 'tag': 'v1.*', 'do': 'make install_jsregexp' }
     Plug 'MisanthropicBit/decipher.nvim'
     Plug 'MisanthropicBit/vim-yank-window'
@@ -103,11 +102,13 @@ vim.cmd([[
     Plug 'haydenmeade/neotest-jest'
 
     " nvim-cmp plugin and sources
-    Plug 'hrsh7th/nvim-cmp'
-    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'Gelio/cmp-natdat/'
     Plug 'hrsh7th/cmp-buffer'
-    Plug 'hrsh7th/cmp-path'
     Plug 'hrsh7th/cmp-cmdline'
+    Plug 'hrsh7th/cmp-emoji'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/nvim-cmp'
     Plug 'saadparwaiz1/cmp_luasnip'
 
     " dap
