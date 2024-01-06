@@ -47,8 +47,6 @@ vim.cmd([[
     Plug 'andymass/vim-matchup'
     Plug 'arthurxavierx/vim-caser'
     Plug 'honza/vim-snippets'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
     Plug 'junegunn/vim-easy-align'
     Plug 'mhinz/vim-startify'
     Plug 'rhysd/git-messenger.vim'
