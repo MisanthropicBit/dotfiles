@@ -11,11 +11,15 @@ local actions = require("fzf-lua.actions")
 -- Returns a function for selecting a specific directory and then search it afterwards
 ---@param directory string
 ---@return fun()
-function fzf_lua_setup.project_files(directory)
+local function project_files(directory)
     local file_selector = function(selector)
-        return function(selected)
-            selector({ cwd = selected[1] })
-        end
+        -- Return a table ending with a resume action to avoid opening/closing the fzf-lua window
+        return {
+            function(selected)
+                selector({ cwd = selected[1] })
+            end,
+            actions.resume,
+        }
     end
 
     return function()
