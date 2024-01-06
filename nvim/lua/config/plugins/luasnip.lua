@@ -15,6 +15,7 @@ luasnip.setup({
     update_events = "TextChanged,TextChangedI",
 })
 
+luasnip.filetype_extend("all", { "all" })
 luasnip.filetype_extend("all", { "_" })
 luasnip.filetype_extend("javascript", { "javascript-typescript-shared", "javascript-typescript-shared-work" })
 luasnip.filetype_extend("typescript", { "javascript-typescript-shared", "javascript-typescript-shared-work" })
