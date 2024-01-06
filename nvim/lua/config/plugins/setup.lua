@@ -78,6 +78,7 @@ vim.cmd([[
     Plug 'kevinhwang91/nvim-bqf'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'kylechui/nvim-surround'
+    Plug 'lukas-reineke/headlines.nvim'
     Plug 'lukas-reineke/indent-blankline.nvim'
     Plug 'nat-418/boole.nvim'
     Plug 'neovim/nvim-lspconfig'
