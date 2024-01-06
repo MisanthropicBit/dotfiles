@@ -123,6 +123,26 @@ local function custom_colorschemes()
     fzf_lua.colorschemes({ colors = colors })
 end
 
+local function directories()
+    fzf_lua.fzf_exec("fd --type directory", {
+        prompt = "Search directories> ",
+        actions = {
+            ["default"] = function(selected)
+                vim.cmd.edit(selected[1])
+            end,
+            ["ctrl-s"] = function(selected)
+                vim.cmd.split(selected[1])
+            end,
+            ["ctrl-v"] = function(selected)
+                vim.cmd.vsplit(selected[1])
+            end,
+            ["ctrl-t"] = function(selected)
+                vim.cmd.tabedit(selected[1])
+            end,
+        },
+    })
+end
+
 -- TODO: Do 'norm zt' after jumping
 map.n("<c-s>", fzf_lua.lsp_document_symbols, "LSP document symbols")
 
@@ -143,6 +163,7 @@ map.leader("n", "rg", fzf_lua.grep_project, "Search all project files")
 map.leader("n", "pf", project_files("~/repos"), "Search all local repository files")
 map.leader("n", "pp", project_files("~/.vim-plug/"), "Search plugin directories")
 map.leader("n", "rr", fzf_lua.resume, "Resume last search")
+map.leader("n", "fd", directories, "Search directories")
 map.n("<c-b><c-b>", fzf_lua.tabs, "List all buffers in all tabs")
 
 vim.cmd("FzfLua register_ui_select")
