@@ -22,9 +22,9 @@ local function get_import_export_fmt_args()
 end
 
 return {
-    s("eaf", fmta([[export async function <>(): <> {
+    s("eaf", fmta([[export async function <>(<>): <> {
   <>
-}]], { i(1), i(2), i(3) })),
+}]], { i(1), i(2), i(3), i(4) })),
     s("et", fmt("export type {} = {}", { i(1), i(2) })),
     s("im", fmta("import <> from '<>'", get_import_export_fmt_args())),
     s("ex", fmta("export <> from '<>'", get_import_export_fmt_args()))
