@@ -111,3 +111,5 @@ require("config.diagnostics_levels")
 require("config.lsp")
 require("config.docs")
 require("config.fold")
+
+require("config.ui").input.register_default()

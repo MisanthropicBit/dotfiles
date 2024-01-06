@@ -88,7 +88,6 @@ vim.cmd([[
     Plug 'nvim-treesitter/nvim-treesitter-textobjects'
     Plug 'nvim-treesitter/playground'
     Plug 'nvimdev/dashboard-nvim'
-    Plug 'nvimdev/lspsaga.nvim', { 'branch': 'main' }
     Plug 'rafamadriz/friendly-snippets'
     Plug 'ray-x/lsp_signature.nvim'
     Plug 'rgroli/other.nvim'

@@ -3,14 +3,28 @@ local map = require("config.map")
 
 local has_lspsaga, _ = pcall(require, "lspsaga")
 
+local severity_to_name = {
+    "error",
+    "warn",
+    "info",
+    "hint",
+}
+
 vim.diagnostic.config({
     virtual_text = {
         prefix = icons.text.bullet,
-        source = "always",
+        source = "if_many",
         spacing = 1,
     },
     float = {
-        source = "always",
+        source = "if_many",
+        header = "",
+        prefix = function(diagnostic)
+            local name = severity_to_name[diagnostic.severity]
+            local icon = icons.diagnostics[name]
+
+            return icon .. " ", "DiagnosticSign" .. name:sub(1, 1):upper() .. name:sub(2)
+        end,
     },
     signs = true,
     underline = true,

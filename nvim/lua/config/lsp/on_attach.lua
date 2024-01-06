@@ -1,13 +1,10 @@
 local lsp_on_attach = {}
 
+local icons = require("config.icons")
 local map = require("config.map")
 
----@diagnostic disable-next-line: unused-local
-local has_lspsaga, lspsaga = pcall(require, "lspsaga")
-
 -- We don't want tsserver to format stuff as the default formatting doesn't
--- seem to respect project-local settings for eslint and prettier. Instead, we
--- implicitly rely on null-ls formatting
+-- seem to respect project-local settings for eslint and prettier.
 local function lsp_format_wrapper()
     vim.lsp.buf.format({ filter = function(client)
         return client.name ~= "tsserver"
@@ -15,29 +12,27 @@ local function lsp_format_wrapper()
 end
 
 local lsp_methods = {
-    definition = vim.lsp.buf.definition,
-    declaration = vim.lsp.buf.declaration,
-    hover = vim.lsp.buf.hover,
-    type_definition = vim.lsp.buf.type_definition,
+    "code_action",
+    "declaration",
+    "definition",
+    "document_symbol",
+    "hover",
+    "references",
+    "rename",
+    "signature_help",
+    "type_definition",
     formatting = lsp_format_wrapper,
-    signature_help = vim.lsp.buf.signature_help,
-    document_symbol = vim.lsp.buf.document_symbol,
-    code_action = vim.lsp.buf.code_action,
-    rename = vim.lsp.buf.rename,
-    references = vim.lsp.buf.references,
 }
 
--- Override select lsp methods and diagnostics functionality with lspsaga
-if has_lspsaga then
-    local function lspsaga_cmd(command)
-        return ("<cmd>Lspsaga %s<cr>"):format(command)
-    end
+setmetatable(lsp_methods, {
+    __index = function(_, key)
+        if type(key) == "string" then
+            return vim.lsp.buf[key]
+        end
 
-    lsp_methods.hover = lspsaga_cmd("hover_doc")
-    lsp_methods.code_action = lspsaga_cmd("code_action")
-    lsp_methods.rename = lspsaga_cmd("rename")
-    lsp_methods.references = lspsaga_cmd("lsp_references")
-end
+        return key
+    end,
+})
 
 ---Use fzf-lua as a lsp result selector in case of multiple results
 ---@param locations any
@@ -49,7 +44,7 @@ local function fzf_lua_lsp_jump_selector(locations)
     require("fzf-lua").fzf_exec(
         fzf_items,
         {
-            prompt = "Jump to?> ",
+            prompt = "Jump to " .. icons.misc.prompt .. " ",
             previewer = "builtin"
         }
     )
@@ -127,6 +122,7 @@ function lsp_on_attach.on_attach(event)
     -- inform us if the lsp server doesn't support a method
     map.n("gd", lsp_definition, with_desc("Jump to definition under cursor"))
     map.n("<s-m>", lsp_methods.hover, with_desc("Open lsp float"))
+    map.n("<c-s>", lsp_methods.document_symbol, with_desc("Show document symbol"))
     map.leader("n", "lc", lsp_methods.declaration, with_desc("Jump to declaration under cursor"))
     map.leader("n", "lt", lsp_methods.type_definition, with_desc("Jump to type definition"))
     map.leader("n", "lh", lsp_methods.signature_help, with_desc("Lsp signature help"))
@@ -135,13 +131,8 @@ function lsp_on_attach.on_attach(event)
     map.leader({ "n", "v" }, "lf", lsp_methods.formatting, with_desc("Format code in a buffer or in a range"))
     map.leader({ "n", "v" }, "la", lsp_methods.code_action, with_desc("Open code action menu at cursor or in a range"))
 
-    -- Set up a document symbol mapping if the mapping is not already bound (by e.g. fzf-lua)
-    if vim.fn.maparg("<c-s>", "n") == "" then
-        map.n("<c-s>", lsp_methods.document_symbol, with_desc("Show document symbol"))
-    end
-
     local lsp_method = "textDocument/definition"
-    local selector = "quickfix"
+    local selector = "fzf"
 
     -- Use the good old ALE mappings :)
     map.leader("n", "as", lsp_request_jump(lsp_method, "split", selector), with_desc("Jump to definition in a horizontal split"))
