@@ -1,8 +1,6 @@
 local icons = require("config.icons")
 local map = require("config.map")
 
-local has_lspsaga, _ = pcall(require, "lspsaga")
-
 local severity_to_name = {
     "error",
     "warn",
@@ -48,41 +46,19 @@ end
 
 local error_severity = vim.diagnostic.severity.ERROR
 
--- Diagnostic methods for the right-hand side of lsp mappings
-local diagnostics_methods = {
-    goto_prev = vim.diagnostic.goto_prev,
-    goto_next = vim.diagnostic.goto_next,
-    goto_prev_error = goto_diagnostic_wrapper(vim.diagnostic.goto_prev, error_severity),
-    goto_next_error = goto_diagnostic_wrapper(vim.diagnostic.goto_next, error_severity),
-    open_float = vim.diagnostic.open_float,
-}
-
--- Override select lsp methods and diagnostics functionality with lspsaga
-if has_lspsaga then
-    local function lspsaga_cmd(command)
-        return ("<cmd>Lspsaga %s<cr>"):format(command)
-    end
-
-    local lspsaga_diagnostic = require("lspsaga.diagnostic")
-
-    local lspsaga_goto_prev_error = function()
-        lspsaga_diagnostic:goto_prev({ severity = error_severity })
-    end
-
-    local lspsaga_goto_next_error = function()
-        lspsaga_diagnostic:goto_next({ severity = error_severity })
-    end
-
-    diagnostics_methods.goto_prev = lspsaga_cmd("diagnostic_jump_prev")
-    diagnostics_methods.goto_next = lspsaga_cmd("diagnostic_jump_next")
-    diagnostics_methods.goto_prev_error = lspsaga_goto_prev_error
-    diagnostics_methods.goto_next_error = lspsaga_goto_next_error
-    diagnostics_methods.open_float = lspsaga_cmd("show_line_diagnostics ++unfocus")
-end
-
 -- Diagnostic mappings
-map.leader("n", "lp", diagnostics_methods.goto_prev, "Jump to previous diagnostic")
-map.leader("n", "ln", diagnostics_methods.goto_next, "Jump to next diagnostic")
-map.leader("n", "ep", diagnostics_methods.goto_prev_error, "Jump to previous diagnostic error")
-map.leader("n", "en", diagnostics_methods.goto_next_error, "Jump to next diagnostic error")
-map.leader("n", "ll", diagnostics_methods.open_float, "Open diagnostic float")
+map.leader("n", "lp", vim.diagnostic.goto_prev, "Jump to previous diagnostic")
+map.leader("n", "ln", vim.diagnostic.goto_next, "Jump to next diagnostic")
+map.leader(
+    "n",
+    "ep",
+    goto_diagnostic_wrapper(vim.diagnostic.goto_prev, error_severity),
+    "Jump to previous diagnostic error"
+)
+map.leader(
+    "n",
+    "en",
+    goto_diagnostic_wrapper(vim.diagnostic.goto_next, error_severity),
+    "Jump to next diagnostic error"
+)
+map.leader("n", "ll", vim.diagnostic.open_float, "Open diagnostic float")

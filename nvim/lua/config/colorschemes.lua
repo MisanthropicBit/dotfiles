@@ -86,7 +86,6 @@ local preferred_colorschemes = normalize_weights({
     'catppuccin',
     'catppuccin-macchiato',
     { 'duskfox', weight = 0.1 },
-    'everforest',
     'kanagawa',
     { 'kanagawa-dragon', weight = 0.1 },
     { 'kimbox', weight = 0.05 },

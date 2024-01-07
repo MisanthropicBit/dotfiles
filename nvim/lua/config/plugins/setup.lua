@@ -16,7 +16,6 @@ vim.cmd([[
     " Colorschemes
     Plug 'AlexvZyl/nordic.nvim'
     Plug 'EdenEast/nightfox.nvim'
-    Plug 'Shatur/neovim-ayu'
     Plug 'askfiy/visual_studio_code'
     Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
     Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
@@ -28,7 +27,6 @@ vim.cmd([[
     Plug 'ramojus/mellifluous.nvim'
     Plug 'rebelot/kanagawa.nvim'
     Plug 'ribru17/bamboo.nvim'
-    Plug 'sainnhe/everforest'
     Plug 'savq/melange'
     Plug 'shaunsingh/moonlight.nvim'
     Plug 'tiagovla/tokyodark.nvim'
@@ -70,7 +68,6 @@ vim.cmd([[
     Plug 'echasnovski/mini.move', { 'branch': 'stable' }
     Plug 'folke/neodev.nvim'
     Plug 'folke/todo-comments.nvim'
-    Plug 'folke/trouble.nvim'
     Plug 'ibhagwan/fzf-lua', { 'branch': 'main' }
     Plug 'jose-elias-alvarez/null-ls.nvim'
     Plug 'kevinhwang91/nvim-bqf'
