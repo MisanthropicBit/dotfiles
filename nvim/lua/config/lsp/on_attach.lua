@@ -122,7 +122,6 @@ function lsp_on_attach.on_attach(event)
     -- inform us if the lsp server doesn't support a method
     map.n("gd", lsp_definition, with_desc("Jump to definition under cursor"))
     map.n("<s-m>", lsp_methods.hover, with_desc("Open lsp float"))
-    map.n("<c-s>", lsp_methods.document_symbol, with_desc("Show document symbol"))
     map.leader("n", "lc", lsp_methods.declaration, with_desc("Jump to declaration under cursor"))
     map.leader("n", "lt", lsp_methods.type_definition, with_desc("Jump to type definition"))
     map.leader("n", "lh", lsp_methods.signature_help, with_desc("Lsp signature help"))
@@ -130,6 +129,10 @@ function lsp_on_attach.on_attach(event)
     map.leader("n", "lr", lsp_methods.references, with_desc("Show lsp references"))
     map.leader({ "n", "v" }, "lf", lsp_methods.formatting, with_desc("Format code in a buffer or in a range"))
     map.leader({ "n", "v" }, "la", lsp_methods.code_action, with_desc("Open code action menu at cursor or in a range"))
+
+    if vim.fn.maparg("<c-s>", "n") == "" then
+        map.n("<c-s>", lsp_methods.document_symbol, with_desc("Show document symbol"))
+    end
 
     local lsp_method = "textDocument/definition"
     local selector = "fzf"
