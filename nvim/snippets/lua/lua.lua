@@ -1,6 +1,8 @@
 return {
     -- General
     s("req", fmt('local {} = require("{}")', { i(1), i(2) })),
+    s("pc", fmt('local ok, {} = pcall({})', { i(1), i(2) })),
+    s("pr", fmt('local has_{}, {} = pcall(require, "{}")', { i(1), rep(1), i(2) })),
     s("lf", fmt([[local function {}({})
     {}
 end]], { i(1), i(2), i(3) })),
