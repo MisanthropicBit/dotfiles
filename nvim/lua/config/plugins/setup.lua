@@ -20,7 +20,7 @@ vim.cmd([[
     Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
     Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
     Plug 'hoprr/calvera-dark.nvim'
-    Plug 'kvrohit/mellow.nvim'
+    Plug 'mellow-theme/mellow.nvim'
     Plug 'lmburns/kimbox'
     Plug 'maxmx03/fluoromachine.nvim'
     Plug 'projekt0n/caret.nvim'
