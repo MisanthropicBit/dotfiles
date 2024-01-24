@@ -139,6 +139,9 @@ local function directories()
             ["ctrl-t"] = function(selected)
                 vim.cmd.tabedit(selected[1])
             end,
+            ["ctrl-d"] = function(selected)
+                vim.cmd.tcd(selected[1])
+            end,
         },
     })
 end
