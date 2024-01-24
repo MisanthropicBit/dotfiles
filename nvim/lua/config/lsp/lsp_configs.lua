@@ -38,10 +38,10 @@ vim.g.lsp_configs = {
                     workspace = {
                         library = {
                             vim.env.VIMRUNTIME,
-                            "~/.vim-plug/neotest",
-                            "~/.vim-plug/plenary.nvim",
+                            vim.fn.expand("~/.vim-plug/neotest/lua"),
+                            vim.fn.expand("~/.vim-plug/plenary.nvim/lua"),
                         },
-                        maxPreload = 2000,
+                        maxPreload = 3000,
                         preloadFileSize = 50000,
                         checkThirdParty = false,
                     },
