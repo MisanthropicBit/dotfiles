@@ -82,9 +82,11 @@ require("nvim-treesitter.configs").setup({
             set_jumps = true,
             goto_next_start = {
                 ["<localleader>fn"] = "@function.outer",
+                ["<localleader>an"] = "@parameter.inner",
             },
             goto_previous_start = {
                 ["<localleader>fp"] = "@function.outer",
+                ["<localleader>ap"] = "@parameter.inner",
             },
         },
     },
