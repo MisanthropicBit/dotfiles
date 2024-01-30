@@ -13,13 +13,10 @@ local actions = require("fzf-lua.actions")
 ---@return fun()
 local function project_files(directory)
     local file_selector = function(selector)
-        -- Return a table ending with a resume action to avoid opening/closing the fzf-lua window
-        return {
-            function(selected)
-                selector({ cwd = selected[1] })
-            end,
-            actions.resume,
-        }
+        return  function(selected)
+            selector({ cwd = selected[1] })
+        end
+
     end
 
     return function()
@@ -115,6 +112,9 @@ fzf_lua.setup({
         -- Make oldfiles behave like fzf-vim's :History command
         include_current_session = true,
     },
+    code_actions = {
+        previewer = "codeaction_native",
+    }
 })
 
 local function custom_colorschemes()
@@ -148,6 +148,7 @@ end
 
 -- TODO: Do 'norm zt' after jumping
 map.n("<c-s>", fzf_lua.lsp_document_symbols, "LSP document symbols")
+map.leader("n", "lr", fzf_lua.lsp_references, "Show lsp references")
 
 map.n("<c-p>", fzf_lua.files, "Search files in current directory")
 map.leader("n", "cc", custom_colorschemes, "Pick a colorscheme")
