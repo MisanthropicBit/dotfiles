@@ -95,7 +95,7 @@ dashboard.setup({
                 desc = rpad_default("Recent files"),
                 key = "r",
                 key_hl = key_hl,
-                action = "FzfLua oldfiles",
+                action = "FzfLua oldfiles cwd_only=true",
             },
             {
                 icon = icons.git.logo .. "  ",
@@ -104,6 +104,14 @@ dashboard.setup({
                 key = "g",
                 key_hl = key_hl,
                 action = "FzfLua git_files",
+            },
+            {
+                icon = " " .. " ",
+                icon_hl = "Keyword",
+                desc = rpad_default("Git status"),
+                key = "G",
+                key_hl = key_hl,
+                action = "FzfLua git_status",
             },
             {
                 icon = icons.misc.search .. "  ",
