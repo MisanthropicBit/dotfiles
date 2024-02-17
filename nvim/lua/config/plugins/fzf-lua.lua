@@ -93,6 +93,10 @@ fzf_lua.setup({
             ["<c-p>"] = "preview-page-up",
             ["<c-n>"] = "preview-page-down",
         },
+        fzf = {
+            ["ctrl-h"] = "previous-history",
+            ["ctrl-l"] = "next-history",
+        },
     },
     lsp = {
         git_icons = true,
@@ -113,6 +117,7 @@ fzf_lua.setup({
     },
     fzf_opts = {
         ["--cycle"] = "",
+        ["--history"] = vim.fn.stdpath("data") .. "/fzf-lua-history",
     },
     oldfiles = {
         -- Make oldfiles behave like fzf-vim's :History command
