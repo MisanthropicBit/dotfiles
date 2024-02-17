@@ -2,6 +2,7 @@ local fzf_lua_setup = {}
 
 local ansi = require("config.ansi")
 local colorschemes = require("config.colorschemes")
+local icons = require("config.icons")
 local map = require("config.map")
 local lsp_utils = require("config.lsp.utils")
 
@@ -11,23 +12,28 @@ local actions = require("fzf-lua.actions")
 -- Returns a function for selecting a specific directory and then search it afterwards
 ---@param directory string
 ---@return fun()
-local function project_files(directory)
+local function project_files(directory, options)
     local file_selector = function(selector)
         return  function(selected)
             selector({ cwd = selected[1] })
         end
-
     end
 
+    local _options = options or {}
+    local command = ("fd --type directory --maxdepth %d . "):format(_options.maxdepth or 1)
+
     return function()
-        fzf_lua.fzf_exec("fd --type directory --maxdepth 1 . " .. directory, {
+        fzf_lua.fzf_exec(command .. directory, {
             cwd = directory,
-            prompt = "Search directory❯ ",
+            prompt = "Search project " .. icons.misc.prompt .. " ",
             actions = {
                 ["ctrl-s"] = file_selector(fzf_lua.files),
                 ["enter"] = file_selector(fzf_lua.files),
                 ["ctrl-g"] = file_selector(fzf_lua.git_files),
                 ["ctrl-r"] = file_selector(fzf_lua.grep_project),
+                ["ctrl-d"] = function(selected)
+                    vim.cmd.tcd(selected[1])
+                end,
             },
             fzf_opts = {
                 ["--preview"] = vim.fn.shellescape("tree -C -L 1 {}"),
@@ -164,11 +170,15 @@ map.leader("n", "hl", fzf_lua.highlights)
 map.leader("n", "fb", fzf_lua.blines, "Find lines in current buffer")
 map.leader("n", "hi", fzf_lua.oldfiles, "Search recent files")
 map.leader("n", "rg", fzf_lua.grep_project, "Search all project files")
-map.leader("n", "pf", project_files("~/repos"), "Search all local repository files")
 map.leader("n", "pp", project_files("~/.vim-plug/"), "Search plugin directories")
 map.leader("n", "rr", fzf_lua.resume, "Resume last search")
 map.leader("n", "fd", directories, "Search directories")
 map.n("<c-b><c-b>", fzf_lua.tabs, "List all buffers in all tabs")
+
+local project_dir = vim.fn.isdirectory(vim.fn.expand("~/projects")) and "~/projects" or "~/repos"
+local depth = project_dir == "~/projects" and 2 or 1
+
+map.leader("n", "pf", project_files(project_dir, { maxdepth = depth }), "Search all local repository files")
 
 vim.cmd("FzfLua register_ui_select")
 
