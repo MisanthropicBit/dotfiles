@@ -13,7 +13,6 @@ local old_vim_ui_input
 
 ---@class config.ui.InputOptions
 ---@field relative "editor" | "win" | "cursor" | "mouse"
----@field prompt string?
 ---@field default string?
 ---@field filetype string?
 ---@field enter boolean?
@@ -28,7 +27,6 @@ local default_win_config = {
     title = {{ " Input", "Title" }},
     title_pos = "left",
     noautocmd = true,
-    prompt = icons.misc.prompt .. "_ ",
     default = nil,
     filetype = vim.bo.filetype,
     enter = true,
@@ -193,10 +191,6 @@ function input.open(options, on_confirm)
     -- Set buffer contents
     local lines = {}
 
-    if resolved_options.prompt then
-        table.insert(lines, resolved_options.prompt)
-    end
-
     if resolved_options.default then
         table.insert(lines, resolved_options.default)
     end
@@ -211,6 +205,8 @@ function input.open(options, on_confirm)
     -- Keymaps
     local function close_window()
         pcall(vim.api.nvim_win_close, win_id, true)
+        pcall(vim.keymap.del, { "n", "i" }, resolved_options.keymaps.confirm, { buffer = buffer })
+        pcall(vim.keymap.del, "n", resolved_options.keymaps.quit, { buffer = buffer })
 
         if resolved_options.enter and resolved_options.enter_insert then
             vim.cmd([[stopinsert]])
@@ -221,18 +217,13 @@ function input.open(options, on_confirm)
         map_mode(resolved_options.keymaps.confirm, function()
             local submit_lines = vim.api.nvim_buf_get_lines(buffer, 0, -1, true)
 
-            -- Strip prompt from input (only works if the user doesn't edit the prompt)
-            if resolved_options.prompt then
-                submit_lines[1] = submit_lines[1]:sub(#resolved_options.prompt + 1)
-            end
-
             close_window()
             on_confirm(table.concat(submit_lines, "\n"))
-        end, "")
+        end, { buffer = buffer })
     end
 
     submit(map.n)
-    map.n(resolved_options.keymaps.quit, close_window, "")
+    map.n(resolved_options.keymaps.quit, close_window, { buffer = buffer })
 
     if not resolved_options.multiline then
         -- If the prompt is not multiline, the user can also submit via insert-mode enter
@@ -297,7 +288,6 @@ function input.register_default()
         if options and options.prompt == "New Name: " then
             -- This is an lsp rename, open at cursor instead
             input.open_default_at_cursor(vim.tbl_extend("force", options, {
-                prompt = "",
                 title = "New name"
             }), on_confirm)
         else
