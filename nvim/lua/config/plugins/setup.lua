@@ -96,6 +96,7 @@ vim.cmd([[
     Plug 'nvim-neotest/neotest'
     Plug 'nvim-neotest/neotest-plenary'
     Plug 'haydenmeade/neotest-jest'
+    Plug '~/projects/vim/neotest-busted'
 
     " nvim-cmp plugin and sources
     Plug 'Gelio/cmp-natdat/'

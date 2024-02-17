@@ -25,7 +25,7 @@ neotest.setup({
                 return vim.fn.getcwd()
             end,
         }),
-        require("neotest-plenary"),
+        require("neotest-busted"),
     },
     quickfix = {
         open = false,
