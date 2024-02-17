@@ -16,7 +16,7 @@ local icons = {
         error = " ",
         warn = " ",
         info = " ",
-        hint = " ",
+        hint = "󰌵 ",
     },
     folds = {
         marker = "",
@@ -37,7 +37,7 @@ local icons = {
         passed = "",
         failed = "",
         skipped = "",
-        unknown = "?",
+        unknown = "",
     },
     git = {
         logo = "󰊢",
@@ -65,6 +65,10 @@ local icons = {
     lines = {
         vertical = "┃",
         double_vertical = "║",
+    },
+    separators = {
+        high_slant_lower_right = "",
+        high_slant_upper_left = "",
     },
     text = {
         linebreak = "↪ ",
