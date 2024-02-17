@@ -68,6 +68,23 @@ dap.adapters.codelldb = {
     },
 }
 
+dap.adapters["local-lua"] = {
+    type = "executable",
+    command = "node",
+    args = {
+        vim.fs.normalize("~/projects/typescript/local-lua-debugger-vscode/extension/debugAdapter.js"),
+    },
+    enrich_config = function(config, on_config)
+        if not config["extensionPath"] then
+            local _config = vim.deepcopy(config)
+            _config.extensionPath = vim.fs.normalize("~/projects/typescript/local-lua-debugger-vscode")
+            on_config(_config)
+        else
+            on_config(config)
+        end
+    end,
+}
+
 -- Configurations
 for _, language in ipairs({ "typescript", "javascript" }) do
     dap.configurations[language] = {
@@ -112,6 +129,19 @@ dap.configurations.cpp = {
     },
 }
 
+dap.configurations.lua = {
+  {
+    name = "Current file (local-lua-dbg, lua)",
+    type = "local-lua",
+    request = "launch",
+    cwd = "${workspaceFolder}",
+    program = {
+      lua = "lua5.1",
+      file = "${file}",
+    },
+    args = {},
+  },
+}
 -- Signs
 vim.fn.sign_define(
     "DapBreakpoint",
