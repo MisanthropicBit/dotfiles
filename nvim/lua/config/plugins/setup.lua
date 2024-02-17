@@ -31,6 +31,7 @@ vim.cmd([[
     Plug 'shaunsingh/moonlight.nvim'
     Plug 'tiagovla/tokyodark.nvim'
     Plug 'LunarVim/horizon.nvim'
+    Plug '~/projects/vim/warlock.nvim'
 
     if executable('node') && executable('yarn')
         Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install', 'for': ['markdown', 'vim-plug'] }
@@ -57,9 +58,8 @@ vim.cmd([[
     Plug 'tpope/vim-rhubarb'
 
     Plug 'L3MON4D3/LuaSnip', { 'tag': 'v1.*', 'do': 'make install_jsregexp' }
-    Plug 'MisanthropicBit/decipher.nvim'
     Plug 'MisanthropicBit/vim-yank-window'
-    Plug 'MisanthropicBit/winmove.nvim'
+    Plug 'RRethy/nvim-treesitter-endwise'
     Plug 'Wansmer/sibling-swap.nvim'
     Plug 'Wansmer/treesj'
     Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
@@ -77,6 +77,7 @@ vim.cmd([[
     Plug 'lukas-reineke/indent-blankline.nvim'
     Plug 'nat-418/boole.nvim'
     Plug 'neovim/nvim-lspconfig'
+    Plug 'norcalli/nvim-colorizer.lua'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-lualine/lualine.nvim'
     Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
@@ -91,6 +92,8 @@ vim.cmd([[
     Plug 'sindrets/diffview.nvim'
     Plug 'stefanlogue/hydrate.nvim'
     Plug 'stevearc/oil.nvim'
+    Plug '~/projects/vim/decipher.nvim'
+    Plug '~/projects/vim/winmove.nvim'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
@@ -112,6 +115,8 @@ vim.cmd([[
     Plug 'mfussenegger/nvim-dap'
     Plug 'mxsdev/nvim-dap-vscode-js'
     Plug 'rcarriga/nvim-dap-ui'
+
+    Plug '~/projects/vim/docs.nvim'
 
     call plug#end()
 ]])
