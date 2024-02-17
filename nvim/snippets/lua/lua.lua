@@ -26,6 +26,8 @@ end]], {
 
 return {}]], { i(1, "M"), i(2), rep(1) })),
     s("vp", fmt("vim.print({})", i(1))),
+    s("vi", fmt("vim.inspect({})", i(1))),
+    s("vpi", fmt("vim.print(vim.inspect({}))", i(1))),
 
     -- Busted
     s("des", fmt([[describe("{}", function()
