@@ -47,12 +47,10 @@ local function installed_plugin_count()
     return vim.tbl_count(vim.g.plugs or {})
 end
 
+local plugins_installed = ("%s  %d plugins installed"):format(icons.misc.package, installed_plugin_count())
+local current_colorsceme = ("%s  %s"):format(icons.color.scheme, vim.g.colors_name)
+
 local default_header = {
-    "",
-    "",
-    "",
-    "",
-    "",
     "",
     "",
     "",
@@ -67,9 +65,7 @@ local default_header = {
     "████████▀    ███    █▀   ▄████████▀    ███    █▀    ▄█████████▀   ▀██████▀    ███    █▀    ███    ███ ████████▀",
     "",
     "",
-    ("%s  %d plugins installed"):format(icons.misc.package, installed_plugin_count()),
-    "",
-    ("%s  %s"):format(icons.color.scheme, vim.g.colors_name),
+    ("%s / %s"):format(plugins_installed, current_colorsceme),
     "",
     "",
 }
