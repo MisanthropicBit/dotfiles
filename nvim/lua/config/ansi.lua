@@ -1,6 +1,6 @@
 local ansi = {}
 
-local bit = require('bit')
+local bit = require("bit")
 
 -- Extract the RGB components from a color number
 function ansi.extract_rgb(color)
@@ -14,13 +14,13 @@ end
 -- Convert a color number to an ANSI escape code
 function ansi.rgb_to_ansi(encoded_color, is_bg)
     if encoded_color == nil then
-        return ''
+        return ""
     end
 
     local r, g, b = ansi.extract_rgb(encoded_color)
-    local ansi_code = is_bg and '48' or '38'
+    local ansi_code = is_bg and "48" or "38"
 
-    return string.format('\x1b[%s;2;%s;%s;%sm', ansi_code, r, g, b)
+    return string.format("\x1b[%s;2;%s;%s;%sm", ansi_code, r, g, b)
 end
 
 -- Convert a vim highlight group to an RGB ANSI escape code
@@ -37,20 +37,20 @@ end
 --- Return a pattern for matching ansi escape sequences
 ---@return string
 function ansi.pattern()
-    return '\x1b%[[0-9;K]+m'
+    return "\x1b%[[0-9;K]+m"
 end
 
 --- Return the ansi escape sequence for resetting escape sequences
 ---@return string
 function ansi.reset_sequence()
-    return '\x1b[0m'
+    return "\x1b[0m"
 end
 
 --- Strip ansi escape sequences from a string
 ---@param value string
 ---@return string
 function ansi.strip_ansi_codes(value)
-    local stripped, _ = value:gsub(ansi.pattern(), '')
+    local stripped, _ = value:gsub(ansi.pattern(), "")
 
     return stripped
 end
