@@ -62,6 +62,32 @@ vim.g.lsp_configs = {
             snippets = true,
         },
     },
+    {
+        condition = function()
+            return vim.fn.executable("yaml-language-server") == 1
+        end,
+        -- See: https://www.arthurkoziel.com/json-schemas-in-neovim/
+        name = "yamlls",
+        config = {
+            yaml = {
+                validate = true,
+                schemaStore = {
+                    enable = false,
+                    url = "",
+                },
+                schemas = {
+                    ["https://json.schemastore.org/github-workflow.json"] = ".github/workflows/**/*.ya?ml",
+                    ["https://json.schemastore.org/cloudbuild.json"] = "cloudbuild.ya?ml",
+                    ["https://json.schemastore.org/kustomization.json"] = "kustomization.ya?ml",
+                }
+            },
+            redhat = {
+                telemetry = {
+                    enabled = false
+                }
+            },
+        },
+    }
 }
 
 local function setup_lsp_server(server_config)
