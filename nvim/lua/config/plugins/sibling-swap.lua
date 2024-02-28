@@ -6,5 +6,5 @@ sibling_swap.setup({
     use_default_keymaps = false,
 })
 
-map.leader("n", "sh", sibling_swap.swap_with_left)
-map.leader("n", "sl", sibling_swap.swap_with_right)
+map.n("<c-9>", sibling_swap.swap_with_left)
+map.n("<c-0>", sibling_swap.swap_with_right)
