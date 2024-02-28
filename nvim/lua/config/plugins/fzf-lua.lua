@@ -159,25 +159,25 @@ end
 
 -- TODO: Do 'norm zt' after jumping
 map.n("<c-s>", fzf_lua.lsp_document_symbols, "LSP document symbols")
-map.leader("n", "lr", fzf_lua.lsp_references, "Show lsp references")
+map.n.leader("lr", fzf_lua.lsp_references, "Show lsp references")
 
 map.n("<c-p>", fzf_lua.files, "Search files in current directory")
-map.leader("n", "cc", custom_colorschemes, "Pick a colorscheme")
-map.leader("n", "df", function()
+map.n.leader("cc", custom_colorschemes, "Pick a colorscheme")
+map.n.leader("df", function()
     fzf_lua.files({ cwd = "~/projects/dotfiles/nvim" })
 end, "Search dotfiles")
-map.leader("n", "gf", fzf_lua.git_files, "Search files in the current directory that are tracked by git")
-map.leader("n", "gs", fzf_lua.git_status, "Git status")
-map.leader("n", "gh", fzf_lua.git_stash, "Git stash")
-map.leader("n", "gr", fzf_lua.git_branches, "Git branches")
-map.leader("n", "bp", fzf_lua.dap_breakpoints, "List dap breakpoints")
-map.leader("n", "hl", fzf_lua.highlights)
-map.leader("n", "fb", fzf_lua.blines, "Find lines in current buffer")
-map.leader("n", "hi", fzf_lua.oldfiles, "Search recent files")
-map.leader("n", "rg", fzf_lua.grep_project, "Search all project files")
-map.leader("n", "pp", project_files("~/.vim-plug/"), "Search plugin directories")
-map.leader("n", "rr", fzf_lua.resume, "Resume last search")
-map.leader("n", "fd", directories, "Search directories")
+map.n.leader("gf", fzf_lua.git_files, "Search files in the current directory that are tracked by git")
+map.n.leader("gs", fzf_lua.git_status, "Git status")
+map.n.leader("gh", fzf_lua.git_stash, "Git stash")
+map.n.leader("gb", fzf_lua.git_branches, "Git branches")
+map.n.leader("bp", fzf_lua.dap_breakpoints, "List dap breakpoints")
+map.n.leader("hl", fzf_lua.highlights)
+map.n.leader("fb", fzf_lua.blines, "Find lines in current buffer")
+map.n.leader("hi", fzf_lua.oldfiles, "Search recent files")
+map.n.leader("rg", fzf_lua.grep_project, "Search all project files")
+map.n.leader("pp", project_files("~/.vim-plug/"), "Search plugin directories")
+map.n.leader("rr", fzf_lua.resume, "Resume last search")
+map.n.leader("fd", directories, "Search directories")
 map.n("<c-b><c-b>", fzf_lua.tabs, "List all buffers in all tabs")
 
 local project_dir = vim.fn.isdirectory(vim.fn.expand("~/projects")) and "~/projects" or "~/repos"
@@ -186,5 +186,6 @@ local depth = project_dir == "~/projects" and 2 or 1
 map.leader("n", "pf", project_files(project_dir, { maxdepth = depth }), "Search all local repository files")
 
 vim.cmd("FzfLua register_ui_select")
+map.leader({ "n", "v" }, "la", function() fzf_lua.lsp_code_actions({ winopts = { height = 0.2, width = 0.33, preview = { layout = "vertical" } } }) end)
 
 return fzf_lua_setup

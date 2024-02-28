@@ -55,7 +55,7 @@ map.set({ "i", "s" }, "<c-h>", function()
     end
 end, "Previous snippet choice")
 
-map.leader("n", "sf", function()
+map.n.leader("sf", function()
     loaders.edit_snippet_files({
         edit = function(file)
             vim.cmd("tabe " .. file)

@@ -122,13 +122,11 @@ function lsp_on_attach.on_attach(event)
     -- inform us if the lsp server doesn't support a method
     map.n("gd", lsp_definition, with_desc("Jump to definition under cursor"))
     map.n("<s-m>", lsp_methods.hover, with_desc("Open lsp float"))
-    map.leader("n", "lc", lsp_methods.declaration, with_desc("Jump to declaration under cursor"))
-    map.leader("n", "lt", lsp_methods.type_definition, with_desc("Jump to type definition"))
-    map.leader("n", "lh", lsp_methods.signature_help, with_desc("Lsp signature help"))
-    map.leader("n", "lm", lsp_methods.rename, with_desc("Rename under cursor"))
-    map.leader("n", "lr", lsp_methods.references, with_desc("Show lsp references"))
+    map.n.leader("lc", lsp_methods.declaration, with_desc("Jump to declaration under cursor"))
+    map.n.leader("lt", lsp_methods.type_definition, with_desc("Jump to type definition"))
+    map.n.leader("lh", lsp_methods.signature_help, with_desc("Lsp signature help"))
+    map.n.leader("lm", lsp_methods.rename, with_desc("Rename under cursor"))
     map.leader({ "n", "v" }, "lf", lsp_methods.formatting, with_desc("Format code in a buffer or in a range"))
-    map.leader({ "n", "v" }, "la", lsp_methods.code_action, with_desc("Open code action menu at cursor or in a range"))
 
     if vim.fn.maparg("<c-s>", "n") == "" then
         map.n("<c-s>", lsp_methods.document_symbol, with_desc("Show document symbol"))
@@ -138,9 +136,9 @@ function lsp_on_attach.on_attach(event)
     local selector = "fzf"
 
     -- Use the good old ALE mappings :)
-    map.leader("n", "as", lsp_request_jump(lsp_method, "split", selector), with_desc("Jump to definition in a horizontal split"))
-    map.leader("n", "av", lsp_request_jump(lsp_method, "vsplit", selector), with_desc("Jump to definition in a vertical split"))
-    map.leader("n", "at", lsp_request_jump(lsp_method, "tabe", selector), with_desc("Jump to definition in a tab"))
+    map.n.leader("as", lsp_request_jump(lsp_method, "split", selector), with_desc("Jump to definition in a horizontal split"))
+    map.n.leader("av", lsp_request_jump(lsp_method, "vsplit", selector), with_desc("Jump to definition in a vertical split"))
+    map.n.leader("at", lsp_request_jump(lsp_method, "tabe", selector), with_desc("Jump to definition in a tab"))
 end
 
 return lsp_on_attach

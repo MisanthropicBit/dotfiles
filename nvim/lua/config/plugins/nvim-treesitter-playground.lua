@@ -7,4 +7,4 @@ require("nvim-treesitter.configs").setup({
 })
 
 -- TODO: Update with neovim 0.9.0
-map.leader("n", "sg", "<cmd>TSHighlightCapturesUnderCursor<cr>", "Highlight treesitter or syntax group under cursor")
+map.n.leader("sg", "<cmd>TSHighlightCapturesUnderCursor<cr>", "Highlight treesitter or syntax group under cursor")

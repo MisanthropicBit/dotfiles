@@ -47,18 +47,16 @@ end
 local error_severity = vim.diagnostic.severity.ERROR
 
 -- Diagnostic mappings
-map.leader("n", "lp", vim.diagnostic.goto_prev, "Jump to previous diagnostic")
-map.leader("n", "ln", vim.diagnostic.goto_next, "Jump to next diagnostic")
-map.leader(
-    "n",
+map.n.leader("lp", vim.diagnostic.goto_prev, "Jump to previous diagnostic")
+map.n.leader("ln", vim.diagnostic.goto_next, "Jump to next diagnostic")
+map.n.leader(
     "ep",
     goto_diagnostic_wrapper(vim.diagnostic.goto_prev, error_severity),
     "Jump to previous diagnostic error"
 )
-map.leader(
-    "n",
+map.n.leader(
     "en",
     goto_diagnostic_wrapper(vim.diagnostic.goto_next, error_severity),
     "Jump to next diagnostic error"
 )
-map.leader("n", "ll", vim.diagnostic.open_float, "Open diagnostic float")
+map.n.leader("ll", vim.diagnostic.open_float, "Open diagnostic float")

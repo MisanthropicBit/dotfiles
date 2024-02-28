@@ -42,9 +42,20 @@ function map.leader(mode, lhs, rhs, opts)
 end
 
 for _, mode in ipairs(modes) do
-    map[mode] = function(lhs, rhs, opts)
-        map.set(mode, lhs, rhs, opts)
-    end
+    map[mode] = setmetatable({}, {
+        __call = function(_, lhs, rhs, opts)
+            map.set(mode, lhs, rhs, opts)
+        end,
+        __index = function(_, key)
+            if key == "leader" then
+                return function(lhs, rhs, opts)
+                    map.leader(mode, lhs, rhs, opts)
+                end
+            end
+
+            error(("Invalid map index key: '%s'"):format(key))
+        end
+    })
 end
 
 return map

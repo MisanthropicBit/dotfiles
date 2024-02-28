@@ -19,5 +19,5 @@ local function jump_and_center(func)
     end
 end
 
-map.leader("n", "dn", jump_and_center(todo_comments.jump_next), "Jump to next todo comment")
-map.leader("n", "dp", jump_and_center(todo_comments.jump_prev), "Jump to previous todo comment")
+map.n.leader("dn", jump_and_center(todo_comments.jump_next), "Jump to next todo comment")
+map.n.leader("dp", jump_and_center(todo_comments.jump_prev), "Jump to previous todo comment")

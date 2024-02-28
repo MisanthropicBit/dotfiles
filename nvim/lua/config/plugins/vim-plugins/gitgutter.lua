@@ -17,8 +17,8 @@ vim.g.gitgutter_sign_modified_removed = "║"
 
 map.n("gj", "<Plug>(GitGutterNextHunk)zz", { noremap = false, desc = "" })
 map.n("gk", "<Plug>(GitGutterPrevHunk)zz", { noremap = false, desc = "" })
-map.leader("n", "hv", "<Plug>(GitGutterPreviewHunk)", { noremap = false, desc = "" })
-map.leader("n", "hs", "<Plug>(GitGutterStageHunk)", { noremap = false, desc = "" })
+map.n.leader("hv", "<Plug>(GitGutterPreviewHunk)", { noremap = false, desc = "" })
+map.n.leader("hs", "<Plug>(GitGutterStageHunk)", { noremap = false, desc = "" })
 
 map.o("ih", "<Plug>(GitGutterTextObjectInnerPending)", { desc = "Select inner git hunk", noremap = false })
 map.o("ah", "<Plug>(GitGutterTextObjectOuterPending)", { desc = "Select a git hunk", noremap = false })

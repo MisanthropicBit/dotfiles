@@ -102,7 +102,7 @@ end
 map.set({ "n", "x", "o" }, "-", run_and_center(ts_repeat_move.repeat_last_move_next))
 map.set({ "n", "x", "o" }, "_", run_and_center(ts_repeat_move.repeat_last_move_previous))
 
-map.leader("n", "ff", function()
+map.n.leader("ff", function()
     local node = ts.get_enclosing_top_level_function(ts_utils.get_node_at_cursor())
 
     if node ~= nil then

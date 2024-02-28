@@ -7,12 +7,7 @@ local function buf_toggle_diagnostics_messages()
     vim.diagnostic[disabled and "disable" or "enable"](bufnr)
 end
 
-map.leader(
-    'n',
-    'dm',
-    buf_toggle_diagnostics_messages,
-    { desc = "Toggle diagnostic messages in the current buffer" }
-)
+map.n.leader("dm", buf_toggle_diagnostics_messages, { desc = "Toggle diagnostic messages in the current buffer" })
 
 -- vim diagnostics filtering
 -- Inspired by https://blob42.xyz/blog/neovim-diagnostic-filtering/
@@ -89,8 +84,8 @@ local function toggle_diagnostics()
     vim.diagnostic[diagnostics_visible and "show" or "hide"]()
 end
 
-map.leader("n", "dl", prompt_level, { desc = "Set diagnostics level via a prompt" })
-map.leader("n", "dt", toggle_diagnostics, { desc = "Toggle global diagnostics" })
+map.n.leader("dl", prompt_level, { desc = "Set diagnostics level via a prompt" })
+map.n.leader("dt", toggle_diagnostics, { desc = "Toggle global diagnostics" })
 
 vim.api.nvim_create_user_command(
     "SetDiagnosticsLevel",
