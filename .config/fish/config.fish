@@ -31,6 +31,7 @@ set -x FZF_ALT_C_COMMAND 'fd -td --color=never'
 set -x FZF_DEFAULT_OPTS "--color='pointer:bright-blue,marker:bright-green' --height=50% --pointer='⇨ ' --marker='✓' --bind='ctrl-n:preview-page-down,ctrl-p:preview-page-up' --cycle"
 set -x LUA_PATH '/opt/local/share/lua/5.1/?.lua;/opt/local/share/lua/5.1/?/init.lua;/opt/local/lib/lua/5.1/?.lua;/opt/local/lib/lua/5.1/?/init.lua;./?.lua;./?/init.lua;~/.luarocks/share/lua/5.1/?.lua;~/.luarocks/share/lua/5.1/?/init.lua;/opt/local/share/luarocks/share/lua/5.1/?.lua;/opt/local/share/luarocks/share/lua/5.1/?/init.lua'
 set -x LUA_CPATH '/opt/local/lib/lua/5.1/?.so;/opt/local/lib/lua/5.1/loadall.so;./?.so;~/.luarocks/lib/lua/5.1/?.so;/opt/local/share/luarocks/lib/lua/5.1/?.so'
+set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
 
 fish_add_path /opt/local/bin /usr/local/bin /opt/homebrew/bin
 fish_add_path ~/.npm-global/bin "$PYENV_ROOT/bin" ~/projects/c/terminal_blocks
