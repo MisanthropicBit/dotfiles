@@ -5,11 +5,12 @@ vim.list_extend(default_exclude_filetypes, { "dashboard", "fugitive" })
 require("ibl").setup({
     enabled = true,
     indent = {
-        char = "│",
+        char = "┆",
     },
     scope = {
         enabled = true,
         show_start = true,
+        char = "│",
     },
     exclude = {
         filetypes = default_exclude_filetypes,
