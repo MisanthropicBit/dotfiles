@@ -26,6 +26,7 @@
     navigate = true
 [merge]
     conflictstyle = diff3
+    tool = nvimdiff3
 [color.interactive]
     prompt = cyan
 [push]
@@ -33,7 +34,7 @@
 [pull]
     ff = only
 [alias]
-    sw = switch -
+    s = switch -
     l = log -1
     lp = log -p
     alias = config --get-regexp "^alias\\."
@@ -62,7 +63,6 @@
     getfile = !git archive --remote=~$1 HEAD:~$2 ~$3 | tar -x
     graph = !git log --graph --color --abbrev-commit --decorate --date=relative
     issue = "!__git_issue_2945() { git branch -a | grep --color=always "issue-$1"; }; __git_issue_2945"
-    last = log -1 HEAD
     m = checkout master
     md = log origin/master...HEAD
     mergetest = !git merge-tree `git merge-base $1 $2` $1 $2 | diff-so-fancy
