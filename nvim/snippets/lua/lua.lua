@@ -1,3 +1,10 @@
+-- TODO: Use for 'has' snippet
+local function snake_to_kebab_case(args)
+    if args then
+        return args[1][1]:gsub("_", "-")
+    end
+end
+
 return {
     -- General
     s("req", fmt('local {} = require("{}")', { i(1), i(2) })),
@@ -28,6 +35,7 @@ return {}]], { i(1, "M"), i(2), rep(1) })),
     s("vp", fmt("vim.print({})", i(1))),
     s("vi", fmt("vim.inspect({})", i(1))),
     s("vpi", fmt("vim.print(vim.inspect({}))", i(1))),
+    s("has", fmt("local has_{}, {} = pcall(require, \"{}\")", { i(1), rep(1), f(snake_to_kebab_case, 1) })),
 
     -- Busted
     s("des", fmt([[describe("{}", function()

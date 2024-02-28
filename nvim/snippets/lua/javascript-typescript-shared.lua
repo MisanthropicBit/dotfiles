@@ -79,6 +79,7 @@ local function get_jest_choices(idx)
             t('toBe'),
             t('toMatchObject'),
             t('toMatchSnapshot'),
+            t('toMatch'),
         }
     )
 end
@@ -125,6 +126,25 @@ return {
             i(3),
         })
     ),
+    s("doc", fmt([[/**
+ * {}
+ */
+]], i(1))),
+    s("=>", fmta([[const <> = <>(<>)<>=>> {
+  <>
+}]], {
+  i(1),
+  c(2, {
+    t("async "),
+    t(""),
+  }),
+  i(3),
+  c(4, {
+    t(": "),
+    t(" "),
+  }),
+  i(5),
+})),
 
     -- Eslint
     s("elnl", fmt([[// eslint-disable-next-line {}]], i(1))),
@@ -139,7 +159,7 @@ return {
     s("qi", t("GraphQLInt")),
     s("qid", t("GraphQLID")),
     s("ql", t("GraphQLList")),
-    s("qn", t("GraphQLNonNull")),
+    s("qn", fmt("GraphQLNonNull({})", i(1))),
     s({ trig = "qfi", dscr = "GraphQLField snippet" }, fmta([[GraphQLField({
 	type: <>,
 	description: '<>',
@@ -227,6 +247,8 @@ expect({}.args[0]{}).toEqual([{}])]], { i(1), i(2), rep(1), i(3), i(4) })),
     s("epca", fmt([[expect({}.callCount, 'to equal', {})
 expect({}.args[0]{}, 'to equal', [{}])]], { i(1), i(2), rep(1), i(3), i(4) })),
     s("fss", fmta([[this.<3> = sinon.stub(<1>, '<2>')]], { i(1), i(2), rep(2) })),
+    s("qr", t("'to have graphql response'")),
+    s("qe", t("'to have graphql error'")),
     s("it", fmta([[it('<>', <>() =>> {
   <>
 })]],
