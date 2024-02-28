@@ -18,10 +18,12 @@ require("nvim-treesitter.configs").setup({
         "lua",
         "markdown",
         "markdown_inline",
-        "sql",
         "python",
+        "sql",
         "typescript",
         "vim",
+        "vimdoc",
+        "yaml",
     },
     query_linter = {
         enable = true,
