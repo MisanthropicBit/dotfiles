@@ -10,7 +10,7 @@ table.insert(runtime_path, "lua/?/init.lua")
 vim.g.lsp_configs = {
     {
         condition = function()
-            return vim.fn.executable("clangd-mp-11")
+            return vim.fn.executable("clangd-mp-11") == 1
         end,
         name = "clangd",
         config = {
@@ -21,7 +21,7 @@ vim.g.lsp_configs = {
     { name = "sqlls" },
     {
         condition = function()
-            return vim.fn.executable("lua-language-server")
+            return vim.fn.executable("lua-language-server") == 1
         end,
         name = "lua_ls",
         config = {
