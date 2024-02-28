@@ -128,6 +128,19 @@ function lsp_on_attach.on_attach(event)
     map.n.leader("lm", lsp_methods.rename, with_desc("Rename under cursor"))
     map.leader({ "n", "v" }, "lf", lsp_methods.formatting, with_desc("Format code in a buffer or in a range"))
 
+    -- Set up document symbol and lsp references mappings if they are not already bound (by e.g. fzf-lua)
+    if vim.fn.maparg("<c-s>", "n") == "" then
+        map.n("<c-s>", lsp_methods.document_symbol, with_desc("Show document symbol"))
+    end
+
+    if vim.fn.maparg("<localleader>lr", "n") == "" then
+        map.n.leader("lr", lsp_methods.references, with_desc("Show lsp references"))
+    end
+
+    if vim.fn.maparg("<localleader>la", "n") == "" then
+        map.leader({ "n", "v" }, "la", lsp_methods.code_action, with_desc("Open code action menu at cursor or in a range"))
+    end
+
     if vim.fn.maparg("<c-s>", "n") == "" then
         map.n("<c-s>", lsp_methods.document_symbol, with_desc("Show document symbol"))
     end
