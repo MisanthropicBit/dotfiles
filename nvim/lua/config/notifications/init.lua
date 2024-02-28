@@ -19,8 +19,8 @@ if vim.g.custom_notifier then
         error(("Unknown custom notifier '%s'"):format(vim.g.custom_notifier))
     end
 
-    notifier = _notifier
-    local old_vim_notify = vim.notify
+    local builtin_vim_notify = vim.notify
+    notifier = _notifier(builtin_vim_notify)
 
     ---@diagnostic disable-next-line: duplicate-set-field
     vim.notify = function(msg, level, options)
@@ -34,7 +34,7 @@ if vim.g.custom_notifier then
 
             notifier(msg, level, options)
         else
-            old_vim_notify(msg, level, options)
+            builtin_vim_notify(msg, level, options)
         end
     end
 end
