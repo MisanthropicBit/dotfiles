@@ -1,4 +1,3 @@
-local map = require("config.map")
 local icons = require("config.icons")
 
 ---@diagnostic disable-next-line:unused-local
@@ -32,5 +31,3 @@ require("bufferline").setup({
         show_close_icon = false,
     },
 })
-
-map.n("gb", "<cmd>BufferLinePick<cr>", "Interactively pick a tab")
