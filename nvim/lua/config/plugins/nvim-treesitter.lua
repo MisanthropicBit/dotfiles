@@ -92,6 +92,9 @@ require("nvim-treesitter.configs").setup({
             },
         },
     },
+    endwise = {
+        enable = true,
+    },
 })
 
 local function run_and_center(func)
