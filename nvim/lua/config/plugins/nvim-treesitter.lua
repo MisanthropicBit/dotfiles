@@ -117,4 +117,4 @@ map.n.leader("ff", function()
 end, "Navigate to the enclosing top-level function")
 
 -- Unmap incremental selection inside the command-line window
-vim.api.nvim_create_autocmd("CmdwinEnter", { command = "nunmap <buffer> <cr>" })
+vim.api.nvim_create_autocmd("CmdwinEnter", { command = "silent! nunmap <buffer> <cr>" })
