@@ -39,21 +39,6 @@ fish_add_path ~/google-cloud-sdk/bin ~/repos/cloud-sql-proxy/
 fish_add_path -p "$N_PREFIX/bin"
 fish_add_path ~/.luarocks/bin /opt/local/share/luarocks/bin
 
-bind \cb git_fzf_branches
-bind \cg git_fzf_log
-bind \co git_fzf_commits
-bind \cz 'fg 2>/dev/null; commandline -f repaint'
-
-if test -e "/opt/local/share/fzf/shell/key-bindings.fish"
-    source "/opt/local/share/fzf/shell/key-bindings.fish"
-    fzf_key_bindings
-end
-
-if test -e "/opt/homebrew/opt/fzf/shell/key-bindings.fish"
-    source "/opt/homebrew/opt/fzf/shell/key-bindings.fish"
-    fzf_key_bindings
-end
-
 if test -e "~/.work-config.fish"
     source ~/.work-config.fish
 end
