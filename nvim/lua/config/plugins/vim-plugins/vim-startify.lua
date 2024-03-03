@@ -3,7 +3,7 @@
 
 vim.g.startify_disable_at_vimenter = true
 
-vim.g.startify_custom_header_quotes = {
+local extra_quotes = {
     {
         "The optimal allocation is one that never happens.",
         "",
@@ -31,4 +31,4 @@ vim.g.startify_custom_header_quotes = {
     },
 }
 
-vim.list_extend(vim.g.startify_custom_header_quotes, vim.fn["startify#fortune#predefined_quotes"]())
+vim.g.startify_custom_header_quotes = vim.list_extend(extra_quotes, vim.fn["startify#fortune#predefined_quotes"]())
