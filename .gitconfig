@@ -49,6 +49,7 @@
     cm = commit -m
     cnv = commit --no-verify -m
     co = checkout
+    cob = checkout -b
     count = rev-list --count HEAD
     cp = checkout --patch
     ct = commit
