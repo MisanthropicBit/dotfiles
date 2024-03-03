@@ -60,3 +60,9 @@ map.n.leader(
     "Jump to next diagnostic error"
 )
 map.n.leader("ll", vim.diagnostic.open_float, "Open diagnostic float")
+map.n.leader("dq", vim.diagnostic.setqflist, "Open diagnostics in location list")
+map.n.leader("dQ", function()
+    vim.diagnostic.setqflist({
+        severity = vim.diagnostic.severity.ERROR,
+    })
+end, "Open only error-level diagnostics in location list")
