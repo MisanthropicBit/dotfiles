@@ -1,35 +1,27 @@
 # A bunch of useful fish aliases ported from my bash config
 
-#alias tree      "tree -C"
 alias ..        "cd .."
 alias ..2       "cd ../.."
 alias ..3       "cd ../../.."
 alias ..4       "cd ../../../.."
-alias ag        "ag --color-line-number\"\" --color-path=\"1;34\" --color-match=\"1;31\" --path-to-ignore ~/.agignore"
 alias aliases   "$EDITOR ~/.config/fish/aliases.fish"
 alias c         "pbcopy"
-alias ccat      "pygmentize -g -f terminal16m -O linenos=1,style=monokai"
 alias dbox      "~/Dropbox/"
 alias fucking   "sudo"
 alias gitconfig "$EDITOR ~/.gitconfig"
 alias gofish    "source ~/.config/fish/config.fish"
-alias gstatus   "nvim -c 'G | only'"
 alias l         "ls -laGh"
 alias ll        "clear; l"
 alias lz        "ls -laGhS"
 alias nv        "nvim"
-alias nvd       "nvim -d"
 alias nvc       "nvim (git diff --name-only --diff-filter=U --relative)"
+alias nvd       "nvim -d"
 alias nvm       "nvim (git diff --name-only --diff-filter=M --relative)"
 alias nvrc      "$EDITOR ~/.config/nvim/init.vim"
 alias path      "echo $PATH | tr ':' '\n'"
-alias projects  "cd ~/Dropbox/projects"
-alias research  "cd ~/research"
 alias todo      "rg -Hni ' todo:'"
+alias tree      "tree -C"
 alias v         "pbpaste"
-alias vbundle   "cd ~/.vim/bundle"
-alias vh        "vimhelp"
-alias vimrc     "$EDITOR ~/.vimrc"
 
 set --local script_dir (dirname (status -f))
 set --local work_aliases "$script_dir/work_aliases.fish"
@@ -94,6 +86,14 @@ function dh -d "Fuzzy search directory history"
         dirh |
         fzf --ansi --with-nth=2 --tiebreak=end --preview='tree -C -L 1 -hp --dirsfirst {1}' |
         string split -f2 ') '
+    ); and cd "$result"
+end
+
+function proj -d "Fuzzy search projects directory"
+    # alias projects  "fd --type d . ~/projects --maxdepth 2 | fzf"
+    set -l result (
+        fd --type d . ~/projects --maxdepth 2 |
+        fzf --ansi --tiebreak=end --preview='tree -C -L 1 -hp --dirsfirst {1}'
     ); and cd "$result"
 end
 
