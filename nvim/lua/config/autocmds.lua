@@ -12,13 +12,6 @@ autocmds.create_config_autocmd = function(event, options)
     vim.api.nvim_create_autocmd(event, vim.tbl_extend("force", { group = augroup }, options))
 end
 
-autocmds.create_config_autocmd("TabNew", {
-    pattern = "*",
-    callback = function()
-        vim.cmd([[BufferLineSortByTabs]])
-    end,
-})
-
 autocmds.create_config_autocmd("TabLeave", {
     pattern = "*",
     callback = function()
