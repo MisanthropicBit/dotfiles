@@ -14,7 +14,7 @@ local actions = require("fzf-lua.actions")
 ---@return fun()
 local function project_files(directory, options)
     local file_selector = function(selector)
-        return  function(selected)
+        return function(selected)
             selector({ cwd = selected[1] })
         end
     end
@@ -36,7 +36,7 @@ local function project_files(directory, options)
                 end,
             },
             fzf_opts = {
-                ["--preview"] = vim.fn.shellescape("tree -C -L 1 {}"),
+                ["--preview"] = "tree -C -L 1 {}",
             },
         })
     end
@@ -133,7 +133,7 @@ fzf_lua.setup({
     },
     code_actions = {
         previewer = "codeaction_native",
-    }
+    },
 })
 
 local function custom_colorschemes()
@@ -173,7 +173,7 @@ map.n.leader("rr", fzf_lua.resume, "Resume last search")
 map.n.leader("fd", directories, "Search directories")
 map.leader({ "n", "v" }, "la", function() fzf_lua.lsp_code_actions({ winopts = { height = 0.2, width = 0.33, preview = { layout = "vertical" } } }) end)
 
-local project_dir = vim.fn.isdirectory(vim.fn.expand("~/projects")) and "~/projects" or "~/repos"
+local project_dir = vim.fn.isdirectory(vim.fs.normalize("~/repos")) and "~/repos" or "~/projects"
 local depth = project_dir == "~/projects" and 2 or 1
 
 map.leader("n", "pf", project_files(project_dir, { maxdepth = depth }), "Search all local repository files")
