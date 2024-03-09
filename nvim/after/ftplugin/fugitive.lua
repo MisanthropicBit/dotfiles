@@ -4,7 +4,7 @@ local function normal_cmd_with_restore_window(cmd)
     return function()
         local winview = vim.fn.winsaveview()
 
-        vim.cmd(('<cmd>silent execute "normal %s"'):format(cmd))
+        vim.cmd(('silent execute "normal %s"'):format(cmd))
 
         vim.fn.winrestview(winview)
     end
