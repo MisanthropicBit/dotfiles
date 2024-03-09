@@ -85,7 +85,7 @@ local function toggle_diagnostics()
 end
 
 map.n.leader("dl", prompt_level, { desc = "Set diagnostics level via a prompt" })
-map.n.leader("dt", toggle_diagnostics, { desc = "Toggle global diagnostics" })
+map.n.leader("dg", toggle_diagnostics, { desc = "Toggle global diagnostics" })
 
 vim.api.nvim_create_user_command(
     "SetDiagnosticsLevel",
