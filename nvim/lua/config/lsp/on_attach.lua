@@ -6,9 +6,11 @@ local map = require("config.map")
 -- We don't want tsserver to format stuff as the default formatting doesn't
 -- seem to respect project-local settings for eslint and prettier.
 local function lsp_format_wrapper()
-    vim.lsp.buf.format({ filter = function(client)
-        return client.name ~= "tsserver"
-    end})
+    vim.lsp.buf.format({
+        filter = function(client)
+            return client.name ~= "tsserver"
+        end,
+    })
 end
 
 local lsp_methods = {
@@ -41,13 +43,10 @@ local function fzf_lua_lsp_jump_selector(locations)
         return ("%s:%d:%d"):format(item.filename, item.lnum, item.col)
     end, locations)
 
-    require("fzf-lua").fzf_exec(
-        fzf_items,
-        {
-            prompt = "Jump to " .. icons.misc.prompt .. " ",
-            previewer = "builtin"
-        }
-    )
+    require("fzf-lua").fzf_exec(fzf_items, {
+        prompt = "Jump to " .. icons.misc.prompt .. " ",
+        previewer = "builtin",
+    })
 end
 
 ---Jump to an lsp result in a split window or select between results if there
@@ -71,11 +70,7 @@ local function lsp_request_jump(lsp_method, split_cmd, selector)
 
                 if results[client.id] and results[client.id].result and #results[client.id].result > 0 then
                     vim.cmd(split_cmd)
-                    vim.lsp.util.jump_to_location(
-                        results[client.id].result[1],
-                        client.offset_encoding,
-                        false
-                    )
+                    vim.lsp.util.jump_to_location(results[client.id].result[1], client.offset_encoding, false)
                     vim.cmd("normal zt")
                 end
             else
@@ -149,8 +144,16 @@ function lsp_on_attach.on_attach(event)
     local selector = "fzf"
 
     -- Use the good old ALE mappings :)
-    map.n.leader("as", lsp_request_jump(lsp_method, "split", selector), with_desc("Jump to definition in a horizontal split"))
-    map.n.leader("av", lsp_request_jump(lsp_method, "vsplit", selector), with_desc("Jump to definition in a vertical split"))
+    map.n.leader(
+        "as",
+        lsp_request_jump(lsp_method, "split", selector),
+        with_desc("Jump to definition in a horizontal split")
+    )
+    map.n.leader(
+        "av",
+        lsp_request_jump(lsp_method, "vsplit", selector),
+        with_desc("Jump to definition in a vertical split")
+    )
     map.n.leader("at", lsp_request_jump(lsp_method, "tabe", selector), with_desc("Jump to definition in a tab"))
 end
 
