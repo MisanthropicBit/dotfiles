@@ -1,6 +1,5 @@
 require("config.plugins.vim-plugins.delimiteMate")
 require("config.plugins.vim-plugins.git-messenger")
-require("config.plugins.vim-plugins.gitgutter")
 require("config.plugins.vim-plugins.linediff")
 require("config.plugins.vim-plugins.vim-easy-align")
 require("config.plugins.vim-plugins.vim-fugitive")
@@ -42,7 +41,6 @@ vim.cmd([[
     Plug 'AndrewRadev/linediff.vim'
     Plug 'Konfekt/FastFold'
     Plug 'Raimondi/delimitMate'
-    Plug 'airblade/vim-gitgutter'
     Plug 'andymass/vim-matchup'
     Plug 'arthurxavierx/vim-caser'
     Plug 'honza/vim-snippets'
@@ -99,6 +97,7 @@ vim.cmd([[
     Plug 'pmizio/typescript-tools.nvim'
     Plug 'MisanthropicBit/vim-yank-window'
     Plug 'MisanthropicBit/winmove.nvim'
+    Plug 'lewis6991/gitsigns.nvim'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
