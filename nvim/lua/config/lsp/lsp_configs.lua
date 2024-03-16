@@ -87,6 +87,12 @@ vim.g.lsp_configs = {
                 }
             },
         },
+    },
+    {
+        name = "marksman",
+        condition = function()
+            return vim.fn.executable("marksman")
+        end,
     }
 }
 
