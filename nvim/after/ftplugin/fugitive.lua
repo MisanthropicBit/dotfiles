@@ -10,12 +10,16 @@ local function normal_cmd_with_restore_window(cmd)
     end
 end
 
-map.n("cvv", function()
-    vim.cmd("vert G commit")
-    vim.cmd("norm! O")
-    vim.cmd.startinsert()
-end, { buffer = true })
+local function prepare_git_commit_message(mods)
+    return function()
+        vim.cmd(mods .. " G commit")
+        vim.cmd("norm! O")
+        vim.cmd.startinsert()
+    end
+end
 
+map.n("cc", prepare_git_commit_message(), { buffer = true })
+map.n("cvv", prepare_git_commit_message("vert"), { buffer = true })
 map.n("-", normal_cmd_with_restore_window([[\<Plug>fugitive:-zz]]), { buffer = true })
 
 -- I go to unstaged files way more often than untracked files
