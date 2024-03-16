@@ -1,10 +1,5 @@
 local map = require("config.map")
 
-local function visual_indent_reselect(dir)
-    vim.cmd("normal! " .. dir .. "")
-    vim.cmd([[normal! gv]])
-end
-
 local conflict_marker_regex = [[^\(\(\(<<<<<<<\)\|\(|||||||\)\|\(>>>>>>>\)\) .\+\|\(=======\)\)]]
 
 local function find_git_conflict_marker(dir)
@@ -77,13 +72,6 @@ map.n("<c-s-l>", "zL")
 map.i("jk", [["<esc>"]], { expr = true })
 map.i("<c-a>", "<c-o>^", "Move to start of line in insert mode")
 map.i("<c-e>", "<c-o>$", "Move to end of line in insert mode")
-
-map.v(">", function()
-    visual_indent_reselect(">")
-end)
-map.v("<", function()
-    visual_indent_reselect("<")
-end)
 
 -- Otherwise, nothing will be echoed on the commandline initially
 local cmap_options = { silent = false }
