@@ -107,8 +107,8 @@ fzf_lua.setup({
     git = {
         status = {
             actions = {
-                ["ctrl-h"] = { actions.git_stage, actions.resume },
-                ["ctrl-l"] = { actions.git_unstage, actions.resume },
+                ["ctrl-h"] = { actions.git_unstage, actions.resume },
+                ["ctrl-l"] = { actions.git_stage, actions.resume },
                 ["right"] = false,
                 ["left"] = false,
                 ["ctrl-x"] = false,
