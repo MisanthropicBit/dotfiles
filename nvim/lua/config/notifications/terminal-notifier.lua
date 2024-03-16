@@ -29,14 +29,17 @@ return setmetatable({}, {
             end
 
             if level and not _options.muted then
-                local sound = sounds.get_sound_by_level(level)
+                local sound = _options.sound or sounds.get_sound_by_level(level)
 
                 if sound ~= nil and #sound > 0 then
                     vim.list_extend(command, { "-sound", '"' .. sound .. '"' })
                 end
             end
 
-            builtin_notify(msg, level, options)
+            if _options.echo_message == true then
+                builtin_notify(msg, level, options)
+            end
+
             vim.fn.system(table.concat(command, " "))
         end
     end
