@@ -11,11 +11,11 @@ local severity_to_name = {
 vim.diagnostic.config({
     virtual_text = {
         prefix = icons.text.bullet,
-        source = "if_many",
+        source = true,
         spacing = 1,
     },
     float = {
-        source = "if_many",
+        source = true,
         header = "",
         prefix = function(diagnostic)
             local name = severity_to_name[diagnostic.severity]
