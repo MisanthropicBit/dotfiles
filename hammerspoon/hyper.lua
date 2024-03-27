@@ -1,6 +1,21 @@
 ---@param src_code integer
 ---@param dst_code integer
-local function remapKey(src_code, dst_code)
+---@param devices table<string, integer>[]?
+local function remapKey(src_code, dst_code, devices)
+    local handle = io.popen("hidutil property --get 'UserKeyMapping'")
+
+    if handle then
+        local result = handle:read("*a")
+
+        if result ~= "(null)\n" then
+            handle:close()
+            return
+        end
+
+        handle:close()
+    end
+
+    -- Credit: https://github.com/Hammerspoon/hammerspoon/issues/3512#issuecomment-1661977782
     local mapping = hs.json.encode({
         UserKeyMapping = {
             {
@@ -10,17 +25,20 @@ local function remapKey(src_code, dst_code)
         },
     })
 
-    local status = os.execute(table.concat({
+    local command = {
         "/usr/bin/env",
         "hidutil",
         "property",
-        -- "--match",
-        -- '{"VendorID": 0x0, "ProductId": 0x0}',
-        -- "--match",
-        -- '{"VendorID": 0x4c, "ProductId": 0x26c}',
         "--set",
         "'" .. mapping .. "'",
-    }, " "))
+    }
+
+    for _, device in ipairs(devices or {}) do
+        table.insert(command, "--matching")
+        table.insert(command, "'" .. hs.json.encode(device) .. "'")
+    end
+
+    local status = os.execute(table.concat(command, " "))
 
     if not status then
         hs.dialog.blockAlert("Remapping failed", "Check with:\nhidutil property --get UserKeyMapping")
