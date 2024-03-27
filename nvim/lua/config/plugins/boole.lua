@@ -6,5 +6,6 @@ require("boole").setup({
     additions = {
         { "asc", "desc" },
         { "ASC", "DESC" },
+        { "negative", "positive" },
     },
 })
