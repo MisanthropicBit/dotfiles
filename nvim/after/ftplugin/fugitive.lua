@@ -12,7 +12,7 @@ end
 
 local function prepare_git_commit_message(mods)
     return function()
-        vim.cmd(mods .. " G commit")
+        vim.cmd((mods and (mods .. " ") or "") .. "G commit")
         vim.cmd("norm! O")
         vim.cmd.startinsert()
     end
