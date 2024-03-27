@@ -173,6 +173,36 @@ map.n.leader("rr", fzf_lua.resume, "Resume last search")
 map.n.leader("fd", directories, "Search directories")
 map.leader({ "n", "v" }, "la", function() fzf_lua.lsp_code_actions({ winopts = { height = 0.2, width = 0.33, preview = { layout = "vertical" } } }) end)
 
+map.n("gf", function()
+    fzf_lua.fzf_exec({ "horizontal split", "vertical split", "tab" }, {
+        prompt = "Open in " .. icons.misc.prompt .. " ",
+        winopts = {
+            width = 0.12,
+            height = 0.10,
+        },
+        actions = {
+            ["default"] = function(selected)
+                local cfile = vim.fn.expand("<cfile>")
+
+                if #cfile == 0 then
+                    vim.notify("Found no filename under cursor", vim.log.levels.WARN, {})
+                    return
+                end
+
+                local action = actions.file_split
+
+                if selected[1] == "vertical split" then
+                    action = actions.file_vsplit
+                elseif selected[1] == "tab" then
+                    action = actions.file_tabedit
+                end
+
+                action({ cfile }, {})
+            end,
+        }
+    })
+end)
+
 local project_dir = vim.fn.isdirectory(vim.fs.normalize("~/repos")) and "~/repos" or "~/projects"
 local depth = project_dir == "~/projects" and 2 or 1
 
