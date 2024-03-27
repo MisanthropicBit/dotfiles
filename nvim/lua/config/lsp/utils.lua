@@ -85,4 +85,10 @@ function M.get_active_clients_for_filetype(filetype)
     return clients
 end
 
+---@param buffer number
+---@return table<any>
+function M.get_active_clients_for_buffer(buffer)
+    return vim.lsp.get_active_clients({ bufnr = buffer })
+end
+
 return M

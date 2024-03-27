@@ -3,11 +3,12 @@ local lualine = require("lualine")
 local icons = require("config.icons")
 local lsp_utils = require("config.lsp.utils")
 
+local cached_formatted_branch = nil
+
 ---@return string
-local function get_active_lsp()
-    local msg = "No active lsp"
-    local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-    local clients = lsp_utils.get_active_clients_for_filetype(buf_ft)
+local function get_active_lsps_for_buffer()
+    local msg = "No active LSPs"
+    local clients = lsp_utils.get_active_clients_for_buffer(vim.api.nvim_get_current_buf())
 
     if #clients > 0 then
         return table.concat(
@@ -19,6 +20,30 @@ local function get_active_lsp()
     end
 
     return msg
+end
+
+local function format_git_branch(branch)
+    -- No need to continuously format the git branch
+    if cached_formatted_branch then
+        return cached_formatted_branch
+    end
+
+    local parts = vim.fn.split(branch, [[\/]], false)
+    local head = parts[1]
+
+    local icon = ({
+        feature = "",
+        bug = "",
+        chore = "󰱶"
+    })[head]
+
+    if icon then
+        cached_formatted_branch = ("%s %s"):format(icon, table.concat(vim.list_slice(parts, 2), "/"))
+    else
+        cached_formatted_branch = branch
+    end
+
+    return cached_formatted_branch
 end
 
 local conditions = {
@@ -46,15 +71,9 @@ lualine.setup({
     sections = {
         lualine_a = {
             {
-                "mode",
-                separator = { left = "" },
-                right_padding = 3,
-            },
-        },
-        lualine_b = {
-            {
                 "branch",
-                icon = { icons.git.logo, align = "left" },
+                icon = nil, -- { icons.git.logo, align = "left" },
+                fmt = format_git_branch,
             },
             {
                 "diff",
@@ -67,12 +86,14 @@ lualine.setup({
                 cond = conditions.ignore_terminal,
             },
         },
-        lualine_c = {
+        lualine_b = {
             {
-                get_active_lsp,
+                get_active_lsps_for_buffer,
                 icon = icons.lsp.nvim_lsp,
                 cond = conditions.all,
             },
+        },
+        lualine_c = {
             {
                 "vim.g.colors_name",
                 icon = { icons.color.scheme .. " ", align = "left" },
