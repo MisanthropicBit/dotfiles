@@ -5,14 +5,24 @@ local map = require("config.map")
 
 vim.diagnostic.config({}, vim.api.nvim_create_namespace("neotest"))
 
+---@return string
+local function get_cwd()
+    return vim.fn.getcwd()
+end
+
+---@param path string
+---@return boolean
+local function is_integration_test(path)
+    return path:match(".it.[tj]s$")
+end
+
+---@diagnostic disable-next-line: missing-fields
 neotest.setup({
     icons = {
-        running = icons.test.running,
         running_animated = icons.animation.updating,
-        passed = icons.test.passed,
-        failed = icons.test.failed,
-        skipped = icons.test.skipped,
-        unknown = icons.test.unknown,
+    },
+    summary = {
+        jumpto = "g",
     },
     ---@diagnostic disable-next-line:unused-local
     filter_dir = function(name, rel_path, root)
@@ -20,12 +30,59 @@ neotest.setup({
     end,
     adapters = {
         require("neotest-jest")({
-            jestCommand = "npm test --",
-            cwd = function()
-                return vim.fn.getcwd()
+            jestCommand = function(path)
+                local cwd = get_cwd()
+
+                if vim.endswith(cwd, 'mailman') then
+                    local project = is_integration_test(path) and [[\"integration tests\"]] or [[\"unit tests\"]]
+
+                    return "npm test -- --selectProjects " .. project
+                end
+
+                return "npm test --"
             end,
+            cwd = get_cwd,
         }),
-        require("neotest-busted"),
+        require("neotest-mocha")({
+            command_args = function(context)
+                local args = {
+                    "-r",
+                    "./test/babel-register",
+                    "--reporter=" .. vim.fs.normalize(
+                        "~/repos/mocha-multi-reporter/build/dist/src/mocha-multi-reporter.js"
+                    ),
+                    "--reporter-options=reporters=spec:json",
+                    "--reporter-options=json:output=" .. context.results_path,
+                    "--grep=" .. context.testNamePattern,
+                    "--colors",
+                }
+
+                if is_integration_test(context.path) then
+                    vim.list_extend(args, {
+                        "--exit",
+                        "--no-deprecation",
+                        "--file",
+                        "./test/integration/global-setup.js",
+                        "--file",
+                        "./test/integration/global-teardown.js",
+                    })
+                end
+
+                table.insert(args, context.path)
+
+                return args
+            end,
+            env = {
+                TRANSLATIONS_PATH = "./src/utils/locale/translations.json",
+                NODE_ENV = "test",
+                TZ = "UTC",
+            },
+            is_test_file = require("neotest-mocha.util").create_test_file_extensions_matcher(
+                { "test", "it" },
+                { "js", "ts" }
+            ),
+            cwd = get_cwd,
+        }),
     },
     quickfix = {
         open = false,
