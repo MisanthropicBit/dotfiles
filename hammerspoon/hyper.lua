@@ -89,6 +89,8 @@ for _, config in ipairs(hyper_config.keymaps) do
 
     if config.launch then
         action = hs.application.launchOrFocus
+    elseif config.bundleId then
+        action = hs.application.launchOrFocusByBundleID
     elseif config.caffeinate then
         action = hs.caffeinate
     else
