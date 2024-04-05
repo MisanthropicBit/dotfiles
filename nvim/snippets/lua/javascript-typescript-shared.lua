@@ -54,34 +54,31 @@ local function snake_case(args)
 end
 
 local function get_mocha_choices(idx)
-    return c(
-        idx, {
-            t('to equal'),
-            t('to satisfy'),
-            t('to be null'),
-            t('to be true'),
-            t('to be false'),
-            t('to throw'),
-            t('to be rejected with'),
-            t('to have graphql response'),
-            t('to have graphql error'),
-            t('to match'),
-            t('to be undefined'),
-            t('to have length'),
-        }
-    )
+    return c(idx, {
+        t("to equal"),
+        t("to satisfy"),
+        t("to be null"),
+        t("to be true"),
+        t("to be false"),
+        t("to throw"),
+        t("to be rejected with"),
+        t("to have graphql response"),
+        t("to have graphql error"),
+        t("to match"),
+        t("to be undefined"),
+        t("to have length"),
+    })
 end
 
 local function get_jest_choices(idx)
-    return c(
-        idx, {
-            t('toEqual'),
-            t('toBe'),
-            t('toMatchObject'),
-            t('toMatchSnapshot'),
-            t('toMatch'),
-        }
-    )
+    return c(idx, {
+        t("toEqual"),
+        t("toBe"),
+        t("toMatchObject"),
+        t("toMatchSnapshot"),
+        t("toMatch"),
+    })
+end
 end
 
 return {
@@ -89,10 +86,10 @@ return {
     s("cv", fmta("const <> = <>", { i(1), i(2) })),
     s("ds", fmta("const { <> } = <>", { i(2), i(1) })),
     s("cl", fmt([[console.log({})]], i(1))),
-    s("cs", fmt([[console.{}({})]], {
-        c(
-            1,
-            {
+    s(
+        "cs",
+        fmt([[console.{}({})]], {
+            c(1, {
                 t("log"),
                 t("warn"),
                 t("error"),
@@ -104,47 +101,66 @@ return {
                 t("time"),
                 t("timeEnd"),
                 t("timeLog"),
-            }
-        ),
-        i(2)
-    })),
+            }),
+            i(2),
+        })
+    ),
     s("lj", fmt([[console.log(JSON.stringify({}))]], i(1))),
     s("rt", t("return ")),
     s("rn", t("return null")),
     s("ru", t("return undefined")),
     s("ud", t("undefined")),
     s("pe", t("process.env")),
-    s("ef", fmta([[export function <>()<> {
+    s(
+        "ef",
+        fmta(
+            [[export function <>(<>)<> {
   <>
 }]],
-        {
-            i(1),
-            c(2, {
-                sn(nil, { t(": "), i(1) }),
-                t(""),
-            }),
-            i(3),
-        })
+            {
+                i(1),
+                i(2),
+                c(3, {
+                    sn(nil, { t(": "), i(1) }),
+                    t(""),
+                }),
+                i(4),
+            }
+        )
     ),
-    s("doc", fmt([[/**
+    s(
+        "doc",
+        fmt(
+            [[/**
  * {}
  */
-]], i(1))),
-    s("=>", fmta([[const <> = <>(<>)<>=>> {
+]],
+            i(1)
+        )
+    ),
+    s(
+        "=>",
+        fmta(
+            [[const <> = <>(<>)<>=>> {
   <>
-}]], {
-  i(1),
-  c(2, {
-    t("async "),
-    t(""),
-  }),
-  i(3),
-  c(4, {
-    t(": "),
-    t(" "),
-  }),
-  i(5),
-})),
+}]],
+            {
+                i(1),
+                c(2, {
+                    t("async "),
+                    t(""),
+                }),
+                i(3),
+                c(4, {
+                    t(": "),
+                    t(" "),
+                }),
+                i(5),
+            }
+        )
+    ),
+    s("?", fmt("{} ? {} : {}", range(1, 3))),
+    s("pa", fmt("Promise.all([{}])", { i(1) })),
 
     -- Eslint
     s("elnl", fmt([[// eslint-disable-next-line {}]], i(1))),
@@ -158,19 +174,24 @@ return {
     s("qf", t("GraphQLFloat")),
     s("qi", t("GraphQLInt")),
     s("qid", t("GraphQLID")),
-    s("ql", t("GraphQLList")),
+    s("ql", fmt("GraphQLList({})", i(1))),
     s("qn", fmt("GraphQLNonNull({})", i(1))),
-    s({ trig = "qfi", dscr = "GraphQLField snippet" }, fmta([[GraphQLField({
+    s(
+        { trig = "qfi", dscr = "GraphQLField snippet" },
+        fmta(
+            [[GraphQLField({
 	type: <>,
 	description: '<>',
 	args: <>,
 	resolve: <>
 })]],
-    range(1, 4)
-)),
+            range(1, 4)
+        )
+    ),
     s(
         { trig = "qot", dscr = "New GraphQLObjectType" },
-        fmta([[import { GraphQLObjectType } from 'graphql'
+        fmta(
+            [[import { GraphQLObjectType } from 'graphql'
 
 import { GraphQLField } from '../extensions/wrappers'
 
@@ -188,7 +209,8 @@ export const <> = new GraphQLObjectType({
     ),
     s(
         { trig = "qiot", dscr = "New GraphQLInputObjectType" },
-        fmta([[import { GraphQLInputObjectType } from 'graphql'
+        fmta(
+            [[import { GraphQLInputObjectType } from 'graphql'
 
 export const <>InputType = new GraphQLInputObjectType({
 	name: '<>Input',
@@ -198,12 +220,13 @@ export const <>InputType = new GraphQLInputObjectType({
 		}
 	})
 })]],
-        { i(1), rep(1), i(2), i(3) }
+            { i(1), rep(1), i(2), i(3) }
         )
     ),
     s(
         { trig = "qet", dscr = "GraphQLEnum type" },
-        fmta([[import { GraphQLEnumType } from 'graphql'
+        fmta(
+            [[import { GraphQLEnumType } from 'graphql'
 
 export const <>Type = new GraphQLEnumType({
   name: '<>',
@@ -221,14 +244,16 @@ export const <>Type = new GraphQLEnumType({
     ),
     s(
         { trig = "qef", dscr = "GraphQL expected field test" },
-        fmt([[expect(fields, 'to have key', '{}')
+        fmt(
+            [[expect(fields, 'to have key', '{}')
 expect(fields.{}.type.toString(), 'to be', '{}')
-expect(fields.{}.name, 'to be', '{}')]], {
+expect(fields.{}.name, 'to be', '{}')]],
+            {
                 i(1),
                 rep(1),
                 i(2),
                 rep(1),
-                rep(1)
+                rep(1),
             }
         )
     ),
@@ -240,37 +265,60 @@ expect(fields.{}.name, 'to be', '{}')]], {
     s("ept", fmt([[expect({}).{}({})]], { i(1), get_jest_choices(2), i(3) })),
     s("epct", fmt([[expect({}.callCount).toEqual({})]], range(1, 2))),
     s("epat", fmt([[expect({}.args[0]{}).toEqual([{}])]], range(1, 3))),
-    s("epcat", fmt([[expect({}.callCount).toEqual({})
-expect({}.args[0]{}).toEqual([{}])]], { i(1), i(2), rep(1), i(3), i(4) })),
+    s(
+        "epcat",
+        fmt(
+            [[expect({}.callCount).toEqual({})
+expect({}.args[0]{}).toEqual([{}])]],
+            { i(1), i(2), rep(1), i(3), i(4) }
+        )
+    ),
     s("epc", fmt([[expect({}.callCount, 'to equal', {})]], range(1, 2))),
     s("epa", fmt([[expect({}.args[0]{}, 'to equal', [{}])]], range(1, 3))),
-    s("epca", fmt([[expect({}.callCount, 'to equal', {})
-expect({}.args[0]{}, 'to equal', [{}])]], { i(1), i(2), rep(1), i(3), i(4) })),
+    s(
+        "epca",
+        fmt(
+            [[expect({}.callCount, 'to equal', {})
+expect({}.args[0]{}, 'to equal', [{}])]],
+            { i(1), i(2), rep(1), i(3), i(4) }
+        )
+    ),
     s("fss", fmta([[this.<3> = sinon.stub(<1>, '<2>')]], { i(1), i(2), rep(2) })),
     s("qr", t("'to have graphql response'")),
     s("qe", t("'to have graphql error'")),
-    s("it", fmta([[it('<>', <>() =>> {
+    s(
+        "it",
+        fmta(
+            [[it('<>', <>() =>> {
   <>
 })]],
-        {
-            i(1),
-            c(2, { t('async '), t('') }),
-            i(3)
-        }
-    )),
-    s("des", fmta([[describe('<>', () =>> {
+            {
+                i(1),
+                c(2, { t("async "), t("") }),
+                i(3),
+            }
+        )
+    ),
+    s(
+        "des",
+        fmta(
+            [[describe('<>', () =>> {
   <>
 })]],
-        range(1, 2)
-    )),
+            range(1, 2)
+        )
+    ),
     s("tss", fmt([[TypedSinonStub<typeof {}>]], i(1))),
     s("ftss", fmt([[{}: TypedSinonStub<typeof {}>]], { i(1), i(2) })),
     s("tsp", fmt([[TypedSinonSpy<typeof {}>]], i(1))),
     s("ftsp", fmt([[{}: TypedSinonSpy<typeof {}>]], { i(1), i(2) })),
+    s("tsa", fmt([[TypedSinonAccessStub<'{}'>]], i(1))),
+    s("ftsa", fmt([[{}: TypedSinonAccessStub<'{}'>]], { i(1), rep(1) })),
     s("es", fmt([[envStub = new EnvStub(['{}'])]], i(1))),
     s(
         { trig = "qott", dscr = "New GraphQLObjectType test" },
-        fmta([[import { GraphQLObjectType } from 'graphql'
+        fmta(
+            [[import { GraphQLObjectType } from 'graphql'
 
 import expect from '../../test/unexpected'
 import { <>Type } from './<>-type'
@@ -324,7 +372,8 @@ describe('types/<>-type', () =>> {
     ),
     s(
         { trig = "qiott", dscr = "" },
-        fmta([[import { GraphQLInputObjectType } from 'graphql'
+        fmta(
+            [[import { GraphQLInputObjectType } from 'graphql'
 
 import expect from '../../test/unexpected'
 import { <>InputType } from './<>-input-type'
@@ -367,13 +416,14 @@ describe('types/<>-input-type', function () {
                 rep(4),
                 i(5),
                 rep(4),
-                rep(4)
+                rep(4),
             }
         )
     ),
     s(
         { trig = "qett", dscr = "GraphQLEnumType test" },
-        fmta([[import expect from '../../../test/unexpected'
+        fmta(
+            [[import expect from '../../../test/unexpected'
 import { <>Type } from './<>-type'
 
 describe('types/enums/<>-type', function () {
@@ -399,61 +449,74 @@ describe('types/enums/<>-type', function () {
     ),
 
     -- Miscellaneous
-    s("ar", fmta([[async (obj, args, context) =>> {
+    s(
+        "ar",
+        fmta(
+            [[async (obj, args, context) =>> {
 	<>
-}]], i(1))),
+}]],
+            i(1)
+        )
+    ),
     s("req", fmt([[const {} = require('{}')]], { i(2), i(1) })),
-    s("im", fmt([[import {} from {}]], {
-        i(2),
-        c(1, {
-            sn(1, {
-                t("{"),
-                i(1),
-                t("}"),
+    s(
+        "im",
+        fmt([[import {} from {}]], {
+            i(2),
+            c(1, {
+                sn(1, {
+                    t("{"),
+                    i(1),
+                    t("}"),
+                }),
+                sn(1, {
+                    t("* as "),
+                    i(1),
+                    t("}"),
+                }),
             }),
-            sn(1, {
-                t("* as "),
-                i(1),
-                t("}"),
+        })
+    ),
+    s(
+        "imc",
+        fmt([[import {} from '@connectedcars/{}']], {
+            i(2),
+            c(1, {
+                sn(1, {
+                    t("{"),
+                    i(1),
+                    t("}"),
+                }),
+                sn(1, {
+                    t("* as "),
+                    i(1),
+                    t("}"),
+                }),
             }),
-        }),
-    })),
-    s("imc", fmt([[import {} from '@connectedcars/{}']], {
-        i(2),
-        c(1, {
-            sn(1, {
-                t("{"),
-                i(1),
-                t("}"),
-            }),
-            sn(1, {
-                t("* as "),
-                i(1),
-                t("}"),
-            }),
-        }),
-    })),
+        })
+    ),
     s("rcc", fmt([[const {} = require('@connectedcars/{}')]], range(1, 2))),
     s("cc", fmt([[import {} from '@connectedcars/{}']], range(1, 2))),
     s("li", fmt([[log.info({})]], i(1))),
     s("lw", fmt([[log.warn({})]], i(1))),
     s("le", fmt([[log.error({})]], i(1))),
     s("lc", fmt([[log.critical({})]], i(1))),
-    s("lg", fmt(
-        [[log.{}({})]],
-        {
+    s(
+        "lg",
+        fmt([[log.{}({})]], {
             c(1, {
-                t('info'),
-                t('warn'),
-                t('error'),
-                t('critical'),
+                t("info"),
+                t("warn"),
+                t("error"),
+                t("critical"),
             }),
             i(2),
-        }
-    )),
+        })
+    ),
     s(
         { trig = "testfile", dscr = "Javascript test file" },
-        fmta([[
+        fmta(
+            [[
 const expect = require('../../test/unexpected')
 const sinon = require('sinon')
 
@@ -475,7 +538,8 @@ describe('<>', () =>> {
     ),
     s(
         { trig = "itts", dscr = "Typescript database integration test" },
-        fmta([[import { database, testUtils } from '@connectedcars/backend'
+        fmta(
+            [[import { database, testUtils } from '@connectedcars/backend'
 import { TypedSinonSpy } from '@connectedcars/test'
 import sinon from 'sinon'
 <>
@@ -508,7 +572,7 @@ describe('it - db/<>', () =>> {
 })]],
             {
                 c(1, {
-                    t({ "", "import expect from '../../../test/unexpected'", '' }),
+                    t({ "", "import expect from '../../../test/unexpected'", "" }),
                     t(""),
                 }),
                 unpack(range(2, 9)),
@@ -516,8 +580,73 @@ describe('it - db/<>', () =>> {
         )
     ),
     s(
+        { trig = "qit", dscr = "GraphQL query integration test" },
+        fmta(
+            [[import { database, testUtils } from '@connectedcars/backend'
+import { EnvStub, TypedSinonSpy } from '@connectedcars/test'
+import sinon from 'sinon'
+
+import { createQueryRunner } from '../../test/helpers'
+import { createServer, stopServer } from '../../test/http-server'
+import expect from '../../test/unexpected'
+import { Server } from '../http-server'
+import { <> } from './<>'
+
+const { knex, query } = database
+const { IntegrationDatabaseWrapper } = testUtils
+
+describe('it - db/<>', () =>> {
+	const db = new IntegrationDatabaseWrapper('api')
+   	const { generateRandomRows } = randomRowsRunner(db)
+    const query = createQueryRunner({ <> }, [
+        `<>`
+    ])
+    let envStub: EnvStub
+    let server: Server
+    let querySpy: TypedSinonSpy<<typeof query.knexQuery>>
+
+	beforeEach(async () =>> {
+        envStub = new EnvStub(['REGION'])
+        process.env.REGION = 'eu1'
+
+		await db.checkoutDatabase('<>', { truncateTables: ['<>'] })
+
+        server = await createServer()
+		querySpy = sinon.spy(query, 'knexQuery')
+	})
+
+	afterEach(async () =>> {
+		sinon.restore()
+        envStub.restore()
+        await stopServer(server)
+		await db.cleanup()
+	})
+
+    it('<>', async () =>> {
+        <>
+
+        expect(querySpy.callCount, 'to equal', 1)
+        expect(querySpy.args[0][1].toString(), 'to equal', '<>')
+    })
+})]],
+            {
+                i(1),
+                i(2),
+                rep(2),
+                rep(1),
+                i(3),
+                i(4),
+                i(5),
+                i(6),
+                i(7),
+                i(8),
+            }
+        )
+    ),
+    s(
         { trig = "testfilets", dscr = "Typescript test file" },
-        fmta([[import sinon from 'sinon'
+        fmta(
+            [[import sinon from 'sinon'
 
 describe('<>', () =>> {
 	beforeEach(() =>> {
@@ -537,7 +666,8 @@ describe('<>', () =>> {
     ),
     s(
         { trig = "qq", dscr = "A typescript GraphQL query" },
-        fmta([[import { GraphQLQuery } from '../extensions/wrappers'
+        fmta(
+            [[import { GraphQLQuery } from '../extensions/wrappers'
 import <> from '../types/<>'
 
 export const <> = GraphQLQuery({
