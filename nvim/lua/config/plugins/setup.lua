@@ -56,7 +56,6 @@ vim.cmd([[
     Plug 'tpope/vim-rhubarb'
 
     Plug 'nat-418/boole.nvim'
-    Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
     Plug 'nvimdev/dashboard-nvim'
     Plug 'MisanthropicBit/decipher.nvim'
     Plug 'sindrets/diffview.nvim'
@@ -98,6 +97,7 @@ vim.cmd([[
     Plug 'MisanthropicBit/vim-yank-window'
     Plug 'MisanthropicBit/winmove.nvim'
     Plug 'lewis6991/gitsigns.nvim'
+    Plug 'rafcamlet/tabline-framework.nvim'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
