@@ -154,6 +154,7 @@ require("other-nvim").setup({
     },
 })
 
+map.n.leader("oe", "<cmd>Other<cr>", "Edit other files")
 map.n.leader("os", "<cmd>OtherSplit<cr>", "Open other files in a split")
 map.n.leader("ov", "<cmd>OtherVSplit<cr>", "Open other files in a vertical split")
 map.n.leader("ot", "<cmd>OtherTabNew<cr>", "Open other files in a tab")
