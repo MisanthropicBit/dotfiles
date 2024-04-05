@@ -27,6 +27,7 @@ local default_win_config = {
     title = {{ " Input", "Title" }},
     title_pos = "left",
     noautocmd = true,
+    prompt = icons.misc.prompt .. "_ ",
     default = nil,
     filetype = vim.bo.filetype,
     enter = true,
@@ -63,7 +64,6 @@ local default_win_config = {
         buflisted = false,
     }
 }
-
 
 local function get_percentage(value)
     local match = value:match("(%d+)%%")
@@ -208,26 +208,30 @@ function input.open(options, on_confirm)
         pcall(vim.keymap.del, { "n", "i" }, resolved_options.keymaps.confirm, { buffer = buffer })
         pcall(vim.keymap.del, "n", resolved_options.keymaps.quit, { buffer = buffer })
 
+        pcall(vim.keymap.del, { "n", "i" }, "<cr>", { buffer = buffer })
+        pcall(vim.keymap.del, { "n", "i" }, "<cr>", { buffer = buffer })
+        pcall(vim.keymap.del, { "n", "i" }, resolved_options.keymaps.quit, { buffer = buffer })
+
         if resolved_options.enter and resolved_options.enter_insert then
             vim.cmd([[stopinsert]])
         end
     end
 
-    local function submit(map_mode)
+    local function submit(map_mode, mapped_buffer)
         map_mode(resolved_options.keymaps.confirm, function()
-            local submit_lines = vim.api.nvim_buf_get_lines(buffer, 0, -1, true)
+            local submit_lines = vim.api.nvim_buf_get_lines(mapped_buffer, 0, -1, true)
 
             close_window()
             on_confirm(table.concat(submit_lines, "\n"))
-        end, { buffer = buffer })
+        end, { buffer = mapped_buffer })
     end
 
-    submit(map.n)
+    submit(map.n, buffer)
     map.n(resolved_options.keymaps.quit, close_window, { buffer = buffer })
 
     if not resolved_options.multiline then
         -- If the prompt is not multiline, the user can also submit via insert-mode enter
-        submit(map.i)
+        submit(map.i, buffer)
     else
         map.i("<cr>", function()
             local key = vim.api.nvim_replace_termcodes("<cr>", true, false, true)
