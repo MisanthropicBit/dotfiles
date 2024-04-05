@@ -38,7 +38,7 @@ local menu_hl_groups = {
     cmdline = "@number",
     luasnip = "@keyword",
     path = "@character.special",
-    natdata = "@conditional",
+    natdat = "@conditional",
 }
 
 -- Format autocomplete items
