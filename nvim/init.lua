@@ -18,6 +18,7 @@ g.python_host_prog = vim.fn.expand("~/.neovim_venvs/neovim2/bin/python")
 g.python3_host_prog = vim.fn.expand("~/.neovim_venvs/neovim3/bin/python")
 g.custom_notifier = "terminal-notifier"
 g.notify_log_level = vim.log.levels.WARN
+g.netrw_nogx = 1
 
 o.compatible = false
 o.number = true

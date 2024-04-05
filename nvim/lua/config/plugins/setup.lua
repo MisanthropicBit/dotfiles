@@ -98,6 +98,7 @@ vim.cmd([[
     Plug 'MisanthropicBit/winmove.nvim'
     Plug 'lewis6991/gitsigns.nvim'
     Plug 'rafcamlet/tabline-framework.nvim'
+    Plug 'chrishrb/gx.nvim'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
