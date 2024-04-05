@@ -1,6 +1,6 @@
 local loader = {}
 
-local exclude_dirs = { "init", "loader", "setup", "bufferline", "docs" }
+local exclude_dirs = { "init", "loader", "setup", "docs", "hydrate" }
 
 --- Load a plugin
 ---@param plugin_name string
