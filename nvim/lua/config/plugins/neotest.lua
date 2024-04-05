@@ -53,7 +53,7 @@ neotest.setup({
                     ),
                     "--reporter-options=reporters=spec:json",
                     "--reporter-options=json:output=" .. context.results_path,
-                    "--grep=" .. context.testNamePattern,
+                    "--grep=" .. context.test_name_pattern,
                     "--colors",
                 }
 
@@ -62,9 +62,9 @@ neotest.setup({
                         "--exit",
                         "--no-deprecation",
                         "--file",
-                        "./test/integration/global-setup.js",
+                        "./test/integration/global-setup.ts",
                         "--file",
-                        "./test/integration/global-teardown.js",
+                        "./test/integration/global-teardown.ts",
                     })
                 end
 
