@@ -12,3 +12,4 @@ fishd.*
 private.vim
 private_plugins.lua
 .vim/lua/config/plugins/local/
+hammerspoon/*.local.json
