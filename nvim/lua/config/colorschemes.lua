@@ -84,14 +84,14 @@ local preferred_colorschemes = normalize_weights({
     { "bamboo", weight = 0.05 },
     { "calvera", weight = 0.1 },
     "caret",
-    "catppuccin",
+    { "catppuccin", weight = 0.05 },
     "carbonfox",
     "catppuccin-macchiato",
     { "duskfox", weight = 0.1 },
     "kanagawa",
     { "kanagawa-dragon", weight = 0.1 },
-    { "kimbox", weight = 0.05 },
-    { "melange", weight = 0.05 },
+    { "kimbox", weight = 0.1 },
+    "melange",
     { "mellifluous", weight = 0.1 },
     { "mellow", weight = 0.05 },
     { "moonlight", weight = 0.15 },
@@ -100,7 +100,7 @@ local preferred_colorschemes = normalize_weights({
     "tokyonight-moon",
     "tokyonight-night",
     "visual_studio_code",
-    { "habamax", weight = 0.1 },
+    { "habamax", weight = 0.05 },
 })
 
 ---@param weighted_choices table<string | table>
