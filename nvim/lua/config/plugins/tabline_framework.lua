@@ -11,16 +11,22 @@ local render = function(f)
 
     f.make_tabs(function(info)
         f.add({ icons.lines.vertical .. " " })
+        f.add(info.modified and icons.git.modified)
 
         if info.filename then
-            f.add(info.modified and icons.git.modified)
             f.add(info.filename)
             f.add({
                 " " .. f.icon(info.filename),
                 fg = info.current and f.icon_color(info.filename) or nil
             })
         else
-            f.add(info.modified and icons.git.modified)
+            if vim.startswith(info.buf_name, "fugitive://") then
+                f.add("git status")
+                f.add({
+                    " " .. f.icon("git"),
+                    fg = info.current and f.icon_color("git") or nil
+                })
+            end
         end
 
         f.add({ "  " })
