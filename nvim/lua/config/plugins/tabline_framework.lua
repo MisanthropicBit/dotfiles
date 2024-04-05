@@ -1,6 +1,14 @@
 local icons = require("config.icons")
 
 local render = function(f)
+    local errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+    local warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+
+    f.add(" ")
+    f.add({ " " .. icons.diagnostics.error .. errors, fg = "#e86671" })
+    f.add({ " " .. icons.diagnostics.warn .. warnings, fg = "#e5c07b"})
+    f.add("   ")
+
     f.make_tabs(function(info)
         f.add({ icons.lines.vertical .. " " })
 
@@ -17,15 +25,6 @@ local render = function(f)
 
         f.add({ "  " })
     end)
-
-    f.add_spacer()
-
-    local errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-    local warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-
-    f.add({ " " .. icons.diagnostics.error .. " " .. errors, fg = "#e86671" })
-    f.add({ " " .. icons.diagnostics.warn .. " " .. warnings, fg = "#e5c07b"})
-    f.add(" ")
 end
 
 require("tabline_framework").setup({ render = render })
