@@ -166,6 +166,7 @@ end
 
 -- TODO: Do 'norm zt' after jumping
 map.n("<c-s>", fzf_lua.lsp_document_symbols, "LSP document symbols")
+map.n("<c-w><c-s>", fzf_lua.lsp_workspace_symbols, "LSP workspace symbols")
 map.n("gb", fzf_lua.git_branches, "Git branches")
 map.n("<c-p>", fzf_lua.files, "Search files in current directory")
 map.n("<c-b><c-b>", fzf_lua.tabs, "List all buffers in all tabs")
