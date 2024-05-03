@@ -1,13 +1,14 @@
 local todo_comments = require("todo-comments")
 
 local map = require("config.map")
+local icons = require("config.icons")
 
 todo_comments.setup({
     sign_priority = (vim.g.gitgutter_sign_priority or 10) + 1,
     keywords = {
         IMPORTANT = "WARN",
         FIX = {
-            icon = "󰢫 ",
+            icon = icons.misc.alarm .. " ",
         },
     },
 })
