@@ -102,6 +102,7 @@ vim.cmd([[
     Plug 'b0o/incline.nvim'
 
     " neotest + adapters
+    Plug 'nvim-neotest/nvim-nio'
     Plug 'nvim-neotest/neotest'
     Plug 'nvim-neotest/neotest-plenary'
     Plug 'haydenmeade/neotest-jest'
