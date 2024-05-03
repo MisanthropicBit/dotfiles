@@ -20,13 +20,13 @@ local function normalize_weights(weighted_choices)
     end
 
     if total_percentage_weight > 1.0 then
-        error(('Total percentage weights exceed 100%% (> %d%%)'):format(total_percentage_weight * 100))
+        vim.notify(('Total percentage weights exceed 100%% (> %d%%)'):format(total_percentage_weight * 100), vim.log.levels.ERROR)
     end
 
     if total_unweighted > 0 and total_percentage_weight == 1 then
         -- There are unweighted choices but all weighted choices add up to 100%
         -- so there are no percentages probability of picking the unweighted choices
-        error(('Total percentage weights add up to exactly 100%% but there are %d unweighted choices'):format(total_unweighted))
+        vim.notify(('Total percentage weights add up to exactly 100%% but there are %d unweighted choices'):format(total_unweighted), vim.log.levels.ERROR)
     end
 
     -- Convert percentage weights to normalized weights, add weights to unweighted choices
