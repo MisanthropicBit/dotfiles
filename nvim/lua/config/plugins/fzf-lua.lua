@@ -190,7 +190,7 @@ map.n.leader("fd", directories, "Search directories")
 map.leader({ "n", "v" }, "la", function() fzf_lua.lsp_code_actions({ winopts = { height = 0.2, width = 0.33, preview = { layout = "vertical" } } }) end)
 
 map.n("gf", function()
-    fzf_lua.fzf_exec({ "horizontal split", "vertical split", "tab" }, {
+    fzf_lua.fzf_exec({ "horizontal split", "vertical split", "tab", "edit" }, {
         prompt = "Open in " .. icons.misc.prompt .. " ",
         winopts = {
             width = 0.12,
@@ -211,6 +211,8 @@ map.n("gf", function()
                     action = actions.file_vsplit
                 elseif selected[1] == "tab" then
                     action = actions.file_tabedit
+                elseif selected[1] == "edit" then
+                    action = actions.file_edit
                 end
 
                 action({ cfile }, {})
