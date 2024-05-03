@@ -105,7 +105,7 @@ vim.cmd([[
     Plug 'nvim-neotest/nvim-nio'
     Plug 'nvim-neotest/neotest'
     Plug 'nvim-neotest/neotest-plenary'
-    Plug 'haydenmeade/neotest-jest'
+    Plug 'MisanthropicBit/neotest-jest', { 'branch': 'configurable-test-patterns' }
     Plug 'adrigzr/neotest-mocha'
     Plug '~/projects/vim/neotest-busted'
 
