@@ -41,6 +41,34 @@ local menu_hl_groups = {
     natdat = "@conditional",
 }
 
+-- Taken from: https://www.reddit.com/r/neovim/comments/1c9q60s/tip_cmp_menu_with_rightaligned_import_location/
+local function get_lsp_completion_context(completion, source)
+    local ok, source_name = pcall(function() return source.source.client.config.name end)
+
+    if not ok then
+        return nil
+    end
+
+    if source_name == "tsserver" then
+        return completion.detail
+    elseif source_name == "clangd" then
+        local doc = completion.documentation
+
+        if doc == nil then
+            return
+        end
+
+        local import_str = doc.value
+        local i, j = import_str:find("[\"<].*[\">]")
+
+        if i == nil then
+            return
+        end
+
+        return import_str:sub(i, j)
+    end
+end
+
 -- Format autocomplete items
 local function format_entry(entry, vim_item)
     vim_item.kind = " " .. (kind_icons[vim_item.kind] or "")
@@ -49,6 +77,18 @@ local function format_entry(entry, vim_item)
 
     if source_type ~= nil then
         vim_item.menu = source_type
+    end
+
+    local cmp_ctx = get_lsp_completion_context(entry.completion_item, entry.source)
+
+    if cmp_ctx ~= nil and cmp_ctx ~= "" then
+        if vim.startswith(cmp_ctx, "@connectedcars") then
+            cmp_ctx = table.concat(vim.list_slice(vim.split(cmp_ctx, "/", { plain = true }), 1, 2), "/")
+        end
+
+        vim_item.menu = vim_item.menu .. " " .. cmp_ctx
+    else
+        vim_item.menu = ""
     end
 
     vim_item.menu = (vim_item.menu or "")
