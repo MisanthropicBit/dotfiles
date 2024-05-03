@@ -44,10 +44,13 @@ neotest.setup({
             cwd = get_cwd,
         }),
         require("neotest-mocha")({
+            command = function(path)
+                local test_type = is_integration_test(path) and "integration" or "unit"
+
+                return "npm run test:" .. test_type .. " -- "
+            end,
             command_args = function(context)
-                local args = {
-                    "-r",
-                    "./test/babel-register",
+                return {
                     "--reporter=" .. vim.fs.normalize(
                         "~/repos/mocha-multi-reporter/build/dist/src/mocha-multi-reporter.js"
                     ),
@@ -55,28 +58,9 @@ neotest.setup({
                     "--reporter-options=json:output=" .. context.results_path,
                     "--grep=" .. context.test_name_pattern,
                     "--colors",
+                    context.path,
                 }
-
-                if is_integration_test(context.path) then
-                    vim.list_extend(args, {
-                        "--exit",
-                        "--no-deprecation",
-                        "--file",
-                        "./test/integration/global-setup.ts",
-                        "--file",
-                        "./test/integration/global-teardown.ts",
-                    })
-                end
-
-                table.insert(args, context.path)
-
-                return args
             end,
-            env = {
-                TRANSLATIONS_PATH = "./src/utils/locale/translations.json",
-                NODE_ENV = "test",
-                TZ = "UTC",
-            },
             is_test_file = require("neotest-mocha.util").create_test_file_extensions_matcher(
                 { "test", "it" },
                 { "js", "ts" }
