@@ -14,5 +14,9 @@ decipher.setup({
 })
 
 map.n("gr", function()
-    decipher.decode_motion("base64-url", { preview = true })
+    decipher.decode_motion_prompt({ preview = true })
 end, "Decode a base64-url encoded text object")
+
+map.n("gt", function()
+    decipher.encode_motion_prompt({ preview = true })
+end)
