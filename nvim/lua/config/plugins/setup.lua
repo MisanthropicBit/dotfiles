@@ -99,6 +99,7 @@ vim.cmd([[
     Plug 'rafcamlet/tabline-framework.nvim'
     Plug 'chrishrb/gx.nvim'
     Plug 'windwp/nvim-autopairs'
+    Plug 'b0o/incline.nvim'
 
     " neotest + adapters
     Plug 'nvim-neotest/neotest'
