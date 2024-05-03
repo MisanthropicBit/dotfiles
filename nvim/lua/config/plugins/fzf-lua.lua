@@ -123,6 +123,19 @@ fzf_lua.setup({
                 ["ctrl-o"] = { fn = actions.git_stash_pop, reload = true },
             },
         },
+        commits = {
+            actions = {
+                ["ctrl-s"] = function(selected)
+                    vim.cmd("Gsplit " .. selected[1])
+                end,
+                ["ctrl-v"] = function(selected)
+                    vim.cmd("Gvsplit " .. selected[1])
+                end,
+                ["ctrl-t"] = function(selected)
+                    vim.cmd("Gtabedit " .. selected[1])
+                end,
+            },
+        },
     },
     fzf_opts = {
         ["--cycle"] = "",
