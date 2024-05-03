@@ -42,3 +42,5 @@ fish_add_path ~/.luarocks/bin /opt/local/share/luarocks/bin
 if test -e "~/.work-config.fish"
     source ~/.work-config.fish
 end
+
+kubectl completion fish | source
