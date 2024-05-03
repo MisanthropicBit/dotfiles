@@ -91,4 +91,11 @@ autocmds.create_config_autocmd("Colorscheme", {
     end,
 })
 
+autocmds.create_config_autocmd("FileType", {
+    pattern = "neotest-output-panel",
+    callback = function()
+        vim.wo.winfixheight = true
+    end,
+})
+
 return autocmds
