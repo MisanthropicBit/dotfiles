@@ -35,6 +35,7 @@ map.n.leader("de", "<cmd>e %:h<cr>")
 map.n.leader("ds", "<cmd>sp %:h<cr>")
 map.n.leader("dv", "<cmd>vs %:h<cr>")
 map.n.leader("dt", "<cmd>tabe %:h<cr>")
+map.n.leader("cn", "<cmd>cnext<cr>")
 
 map.n("<c-o>", "<c-o>zz")
 map.n("<c-i>", "<c-i>zz")
@@ -69,6 +70,13 @@ map.n("<c-b><c-n>", "<cmd>bnext<cr>")
 map.n("<c-b><c-p>", "<cmd>bprevious<cr>")
 map.n("<c-s-h>", "zH")
 map.n("<c-s-l>", "zL")
+map.n("dd", function()
+    if vim.api.nvim_get_current_line():match("^%s*$") then
+        return '"_dd'
+    else
+        return "dd"
+    end
+end, { expr = true })
 
 map.i("jk", [["<esc>"]], { expr = true })
 map.i("<c-a>", "<c-o>^", "Move to start of line in insert mode")
