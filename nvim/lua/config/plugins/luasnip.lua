@@ -45,9 +45,9 @@ end, "Jump to previous position in a snippet")
 
 map.set({ "i", "s" }, "<c-l>", function()
     if luasnip.choice_active() then
-        luasnip.change_choice(1)
+        require("luasnip.extras.select_choice")()
     end
-end, "Next snippet choice")
+end, "Pick from a choice node")
 
 map.set({ "i", "s" }, "<c-h>", function()
     if luasnip.choice_active() then
