@@ -1,47 +1,36 @@
 local icons = require("config.icons")
 local dashboard = require("dashboard")
 
+---@param lines string[]
+---@param max_width integer
+---@return string[]
 local function wrap_lines(lines, max_width)
     local new_lines = {}
 
     for _, line in ipairs(lines) do
-        if #line > max_width then
-            -- local last_space = line:find('%s', max_width)
-            vim.list_extend(new_lines, { line:sub(1, max_width), line:sub(max_width + 1, #line) })
-        else
-            table.insert(new_lines, line)
+        local words = vim.split(line, "%s+")
+        local width = 0
+        local wrapped_lines = {}
+
+        for _, word in ipairs(words) do
+            if width >= max_width then
+                table.insert(new_lines, table.concat(wrapped_lines, " "))
+                wrapped_lines = {}
+                width = 0
+            end
+
+            table.insert(wrapped_lines, word)
+            width = width + #word
+        end
+
+        if #wrapped_lines > 0 then
+            table.insert(new_lines, table.concat(wrapped_lines, " "))
         end
     end
 
     return new_lines
 end
 
---- Get a random quote from vim-starify if installed
----@return string[]
-local function random_quote()
-    if vim.g.loaded_startify == 1 then
-        local quote = { "", "", "" }
-
-        vim.list_extend(quote, vim.fn["startify#fortune#quote"]())
-
-        return wrap_lines(quote, 100)
-    end
-
-    return { "" }
-end
-
---- Right-pad string
-local dashboard_option_width = 52
-
-local function rpad(value, size, padchar)
-    local npad = size - #value
-
-    return value .. string.rep(padchar, npad)
-end
-
-local rpad_default = function(value)
-    return rpad(value, dashboard_option_width, " ")
-end
 
 local function installed_plugin_count()
     return vim.tbl_count(vim.g.plugs or {})
@@ -50,32 +39,53 @@ end
 local plugins_installed = ("%s  %d plugins installed"):format(icons.misc.package, installed_plugin_count())
 local current_colorsceme = ("%s  %s"):format(icons.color.scheme, vim.g.colors_name)
 
-local default_header = {
-    "",
-    "",
-    "",
-    "",
-    "████████▄     ▄████████    ▄████████    ▄█    █▄    ▀█████████▄   ▄██████▄     ▄████████    ▄████████ ████████▄",
-    "███   ▀███   ███    ███   ███    ███   ███    ███     ███    ███ ███    ███   ███    ███   ███    ███ ███   ▀███",
-    "███    ███   ███    ███   ███    █▀    ███    ███     ███    ███ ███    ███   ███    ███   ███    ███ ███    ███",
-    "███    ███   ███    ███   ███         ▄███▄▄▄▄███▄▄  ▄███▄▄▄██▀  ███    ███   ███    ███  ▄███▄▄▄▄██▀ ███    ███",
-    "███    ███ ▀███████████ ▀███████████ ▀▀███▀▀▀▀███▀  ▀▀███▀▀▀██▄  ███    ███ ▀███████████ ▀▀███▀▀▀▀▀   ███    ███",
-    "███    ███   ███    ███          ███   ███    ███     ███    ██▄ ███    ███   ███    ███ ▀███████████ ███    ███",
-    "███   ▄███   ███    ███    ▄█    ███   ███    ███     ███    ███ ███    ███   ███    ███   ███    ███ ███   ▄███",
-    "████████▀    ███    █▀   ▄████████▀    ███    █▀    ▄█████████▀   ▀██████▀    ███    █▀    ███    ███ ████████▀",
-    "",
-    "",
-    ("%s / %s"):format(plugins_installed, current_colorsceme),
-    "",
-    "",
-}
+--- Get a random quote from vim-starify if installed
+---@return string[]
+local function random_quote()
+    local footer = {}
+
+    table.insert(footer, ("%s / %s"):format(plugins_installed, current_colorsceme))
+
+    if vim.g.loaded_startify == 1 then
+        local quote = { "", "", "" }
+
+        vim.list_extend(quote, vim.fn["startify#fortune#quote"]())
+        vim.list_extend(footer, wrap_lines(quote, 100))
+    end
+
+    return footer
+end
+
+--- Right-pad string
+local dashboard_option_width = 52
+
+---@param value string
+---@param size integer
+---@param padchar string
+---@return string
+local function rpad(value, size, padchar)
+    local npad = size - #value
+
+    return value .. string.rep(padchar, npad)
+end
+
+---@param value string
+---@return string
+local rpad_default = function(value)
+    return rpad(value, dashboard_option_width, " ")
+end
 
 local key_hl = "Number"
 
 dashboard.setup({
     theme = "doom",
+    preview = {
+        command = "cat | cat", -- https://github.com/nvimdev/dashboard-nvim/issues/193
+        file_path = vim.fn.stdpath("config") .. "/lua/config/images/logo.txt",
+        file_width = 50,
+        file_height = 32,
+    },
     config = {
-        header = default_header,
         center = {
             {
                 icon = icons.files.new .. "  ",
