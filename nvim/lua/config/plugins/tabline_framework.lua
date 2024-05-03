@@ -26,6 +26,12 @@ local render = function(f)
                     " " .. f.icon("git"),
                     fg = info.current and f.icon_color("git") or nil
                 })
+            elseif vim.startswith(info.buf_name, "oil://") then
+                f.add("oil")
+                f.add({ " " .. icons.files.oil })
+            elseif info.buf_name == "" then
+                f.add("New file")
+                f.add({ " " .. icons.files.new })
             end
         end
 
