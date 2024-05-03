@@ -261,6 +261,7 @@ expect(fields.{}.name, 'to be', '{}')]],
     -- Testing
     s("ss", fmt("sinon.stub({})", i(1))),
     s("sr", t("sinon.restore()")),
+    s("er", t("envStub.restore()")),
     s("ep", fmt([[expect({}, '{}', {})]], { i(1), get_mocha_choices(2), i(3) })),
     s("ept", fmt([[expect({}).{}({})]], { i(1), get_jest_choices(2), i(3) })),
     s("epct", fmt([[expect({}.callCount).toEqual({})]], range(1, 2))),
@@ -306,6 +307,30 @@ expect({}.args[0]{}, 'to equal', [{}])]],
   <>
 })]],
             range(1, 2)
+        )
+    ),
+    s(
+        "bfe",
+        fmta(
+            [[beforeEach(<>() =>> {
+  <>
+})]],
+            {
+                c(1, { t("async "), t("") }),
+                i(2),
+            }
+        )
+    ),
+    s(
+        "afe",
+        fmta(
+            [[afterEach(<>() =>> {
+  <>
+})]],
+            {
+                c(1, { t("async "), t("") }),
+                i(2),
+            }
         )
     ),
     s("tss", fmt([[TypedSinonStub<typeof {}>]], i(1))),
@@ -582,7 +607,7 @@ describe('it - db/<>', () =>> {
     s(
         { trig = "qit", dscr = "GraphQL query integration test" },
         fmta(
-            [[import { database, testUtils } from '@connectedcars/backend'
+            [[import { access, database, testUtils } from '@connectedcars/backend'
 import { EnvStub, TypedSinonSpy } from '@connectedcars/test'
 import sinon from 'sinon'
 
@@ -592,7 +617,7 @@ import expect from '../../test/unexpected'
 import { Server } from '../http-server'
 import { <> } from './<>'
 
-const { knex, query } = database
+const { knex } = database
 const { IntegrationDatabaseWrapper } = testUtils
 
 describe('it - db/<>', () =>> {
@@ -603,7 +628,6 @@ describe('it - db/<>', () =>> {
     ])
     let envStub: EnvStub
     let server: Server
-    let querySpy: TypedSinonSpy<<typeof query.knexQuery>>
 
 	beforeEach(async () =>> {
         envStub = new EnvStub(['REGION'])
@@ -612,7 +636,6 @@ describe('it - db/<>', () =>> {
 		await db.checkoutDatabase('<>', { truncateTables: ['<>'] })
 
         server = await createServer()
-		querySpy = sinon.spy(query, 'knexQuery')
 	})
 
 	afterEach(async () =>> {
@@ -624,14 +647,11 @@ describe('it - db/<>', () =>> {
 
     it('<>', async () =>> {
         <>
-
-        expect(querySpy.callCount, 'to equal', 1)
-        expect(querySpy.args[0][1].toString(), 'to equal', '<>')
     })
 })]],
             {
+                i(2, "queryName"),
                 i(1),
-                i(2),
                 rep(2),
                 rep(1),
                 i(3),
@@ -639,7 +659,6 @@ describe('it - db/<>', () =>> {
                 i(5),
                 i(6),
                 i(7),
-                i(8),
             }
         )
     ),
