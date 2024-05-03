@@ -26,10 +26,11 @@ vim.cmd([[
     Plug 'ramojus/mellifluous.nvim'
     Plug 'rebelot/kanagawa.nvim'
     Plug 'ribru17/bamboo.nvim'
-    Plug 'savq/melange'
     Plug 'shaunsingh/moonlight.nvim'
     Plug 'tiagovla/tokyodark.nvim'
-    Plug 'LunarVim/horizon.nvim'
+    Plug 'MyyPo/borrowed.nvim'
+    Plug 'b0o/lavi.nvim'
+    Plug 'comfysage/evergarden'
     Plug '~/projects/vim/warlock.nvim'
 
     if executable('node') && executable('yarn')

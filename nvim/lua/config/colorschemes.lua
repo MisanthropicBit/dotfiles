@@ -81,26 +81,27 @@ local builtin_colorschemes = {
 }
 
 local preferred_colorschemes = normalize_weights({
-    { "bamboo", weight = 0.05 },
-    { "calvera", weight = 0.1 },
+    { "bamboo", weight = 0.1 },
+    "calvera",
     "caret",
-    { "catppuccin", weight = 0.05 },
+    { "catppuccin", weight = 0.1 },
     "carbonfox",
     "catppuccin-macchiato",
     { "duskfox", weight = 0.1 },
     "kanagawa",
     { "kanagawa-dragon", weight = 0.1 },
     { "kimbox", weight = 0.1 },
-    "melange",
-    { "mellifluous", weight = 0.1 },
-    { "mellow", weight = 0.05 },
+    "mellifluous",
+    "mellow",
     { "moonlight", weight = 0.15 },
     "nordic",
-    "tokyodark",
+    { "tokyodark", weight = 0.1 },
     "tokyonight-moon",
     "tokyonight-night",
     "visual_studio_code",
-    { "habamax", weight = 0.05 },
+    { "lavi", weight = 0.05 },
+    { "mayu", weight = 0.05 },
+    "evergarden",
 })
 
 ---@param weighted_choices table<string | table>
@@ -156,7 +157,14 @@ function colorschemes.select_random_color_scheme(user_colorschemes)
         end
     end
 
-    vim.cmd(':colorscheme ' .. colorscheme)
+    vim.cmd(":colorscheme " .. colorscheme)
+
+    if colorscheme == "mellifluous" then
+        -- Fix diff highlighting
+        vim.api.nvim_set_hl(0, "diffAdded", { link = "DiffAdd" })
+    elseif colorscheme == "calvera" then
+        vim.cmd([[silent hi! link IblIndent Comment]])
+    end
 
     return colorscheme
 end
