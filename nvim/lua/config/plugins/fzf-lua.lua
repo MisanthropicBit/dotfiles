@@ -187,7 +187,9 @@ map.n.leader("rg", fzf_lua.grep_project, "Search all project files")
 map.n.leader("pp", project_files("~/.vim-plug/"), "Search plugin directories")
 map.n.leader("rr", fzf_lua.resume, "Resume last search")
 map.n.leader("fd", directories, "Search directories")
-map.leader({ "n", "v" }, "la", function() fzf_lua.lsp_code_actions({ winopts = { height = 0.2, width = 0.33, preview = { layout = "vertical" } } }) end)
+map.leader({ "n", "v" }, "la", function()
+    fzf_lua.lsp_code_actions({ winopts = { height = 0.2, width = 0.33, preview = { layout = "vertical" } } })
+end)
 
 map.n("gf", function()
     fzf_lua.fzf_exec({ "horizontal split", "vertical split", "tab", "edit" }, {
@@ -220,6 +222,10 @@ map.n("gf", function()
         }
     })
 end)
+
+map.n.leader("rt", function()
+    fzf_lua.grep({ rg_opts = "-Tta " .. fzf_lua.defaults.grep.rg_opts })
+end, "Search all non-test files")
 
 local project_dir = vim.fn.isdirectory(vim.fs.normalize("~/repos")) and "~/repos" or "~/projects"
 local depth = project_dir == "~/projects" and 2 or 1
