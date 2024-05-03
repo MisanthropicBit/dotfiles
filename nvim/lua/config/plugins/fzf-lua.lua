@@ -96,6 +96,7 @@ fzf_lua.setup({
         fzf = {
             ["ctrl-h"] = "previous-history",
             ["ctrl-l"] = "next-history",
+            ["ctrl-q"] = "select-all+accept",
         },
     },
     lsp = {
