@@ -14,10 +14,10 @@ end
 --- Load a plugin
 ---@param plugin_name string
 function loader.load(plugin_name)
-    local plugin_exists, error = pcall(require, plugin_name)
+    local plugin_exists, err = pcall(require, plugin_name)
 
     if not plugin_exists then
-        plugin_exists, error = pcall(require, plugin_name:gsub("-", "."))
+        plugin_exists, err = pcall(require, plugin_name:gsub("-", "."))
     end
 
     if plugin_exists then
@@ -31,7 +31,7 @@ function loader.load(plugin_name)
             load_plugin("local." .. plugin_name)
         end
     else
-        local msg = string.format("Failed to load plugin '%s' (error: %s)", plugin_name, error)
+        local msg = string.format("Failed to load plugin '%s' (error: %s)", plugin_name, err)
         vim.api.nvim_echo({ { msg, "ErrorMsg" } }, true, {})
     end
 end
