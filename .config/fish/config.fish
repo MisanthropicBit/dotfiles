@@ -38,6 +38,7 @@ fish_add_path ~/.npm-global/bin "$PYENV_ROOT/bin" ~/projects/c/terminal_blocks
 fish_add_path ~/google-cloud-sdk/bin ~/repos/cloud-sql-proxy/
 fish_add_path -p "$N_PREFIX/bin"
 fish_add_path ~/.luarocks/bin /opt/local/share/luarocks/bin
+fish_add_path ~/.cargo/bin
 
 if test -e "~/.work-config.fish"
     source ~/.work-config.fish
