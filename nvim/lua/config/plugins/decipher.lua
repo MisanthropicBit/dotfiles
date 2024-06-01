@@ -6,6 +6,7 @@ decipher.setup({
     active_codecs = {
         "base64",
         "base64-url",
+        "url",
     },
     float = {
         padding = 1,
@@ -15,8 +16,8 @@ decipher.setup({
 
 map.n("gr", function()
     decipher.decode_motion_prompt({ preview = true })
-end, "Decode a base64-url encoded text object")
+end, "Decode an encoded text object")
 
 map.n("gt", function()
     decipher.encode_motion_prompt({ preview = true })
-end)
+end, "Encode a decoded text object")
