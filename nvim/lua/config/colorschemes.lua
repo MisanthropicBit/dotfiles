@@ -96,12 +96,12 @@ local preferred_colorschemes = normalize_weights({
     { "moonlight", weight = 0.15 },
     "nordic",
     { "tokyodark", weight = 0.1 },
-    "tokyonight-moon",
-    "tokyonight-night",
-    "visual_studio_code",
-    { "lavi", weight = 0.05 },
-    { "mayu", weight = 0.05 },
-    "evergarden",
+   "tokyonight-night",
+   "tokyonight-moon",
+   "visual_studio_code",
+   { "lavi", weight = 0.05 },
+   { "mayu", weight = 0.05 },
+   "evergarden",
 })
 
 ---@param weighted_choices table<string | table>
