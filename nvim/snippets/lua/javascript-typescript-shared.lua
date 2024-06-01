@@ -3,6 +3,7 @@ local c = ls.choice_node
 local f = ls.function_node
 local s = ls.snippet
 local i = ls.insert_node
+local isn = ls.indent_snippet_node
 local t = ls.text_node
 local sn = ls.snippet_node
 local extras = require("luasnip.extras")
@@ -79,6 +80,19 @@ local function get_jest_choices(idx)
         t("toMatch"),
     })
 end
+
+local function typename_to_quoted_string(args)
+    if args then
+        local result = {}
+
+        for _, arg in ipairs(args) do
+            for idx, line in ipairs(arg) do 
+                table.insert(result, ("'%s',"):format(line:match("(%w+):")))
+            end
+        end
+
+        return result
+    end
 end
 
 return {
@@ -710,4 +724,40 @@ export const <> = GraphQLQuery({
             }
         )
     ),
+    s(
+        { trig = "db", dscr = "A template for a typescript database file" },
+        fmta([[import { database, utils } from '@connectedcars/backend'
+
+const { knex } = database
+
+export type <> = {
+    id: number
+    <>
+    createdAt: Date
+    updatedAt: Date
+}
+
+const getFields = utils.createGetFieldsFunction<<keyof <>>>([
+    'id',
+    <>
+    'createdAt',
+    'updatedAt'
+])
+
+export async function <>(<>): Promise<<<>>> {
+    return knex('<>').select(getFields()).where(<>).read<>()
+}]],
+        {
+            i(1),
+            i(2),
+            rep(1),
+            isn(nil, { f(typename_to_quoted_string, { 2 }) }, "$PARENT_INDENT"),
+            i(3),
+            i(4),
+            i(5),
+            i(6),
+            i(7),
+            i(8),
+        })
+    )
 }
