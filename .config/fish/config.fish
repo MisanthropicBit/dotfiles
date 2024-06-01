@@ -40,6 +40,14 @@ fish_add_path -p "$N_PREFIX/bin"
 fish_add_path ~/.luarocks/bin /opt/local/share/luarocks/bin
 fish_add_path ~/.cargo/bin
 
+function fish_hybrid_key_bindings --description "Vi-style bindings that inherit emacs-style bindings in all modes"
+    for mode in default insert visual
+        fish_default_key_bindings -M $mode
+    end
+
+    fish_vi_key_bindings --no-erase
+end
+
 if test -e "~/.work-config.fish"
     source ~/.work-config.fish
 end
