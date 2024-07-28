@@ -7,5 +7,6 @@ require("boole").setup({
         { "asc", "desc" },
         { "ASC", "DESC" },
         { "negative", "positive" },
+        { "public", "private", "protected" },
     },
 })
