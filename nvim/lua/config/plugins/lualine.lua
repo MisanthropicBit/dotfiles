@@ -102,19 +102,9 @@ lualine.setup({
         },
         lualine_x = {
             {
-                "filename",
-                file_status = true,
-                icon = { icons.files.files },
-                symbols = {
-                    modified = icons.git.added,
-                    readonly = icons.files.readonly,
-                },
-            },
-            {
                 "fileformat",
                 cond = conditions.all,
             },
-            "filetype",
             {
                 "filesize",
                 cond = conditions.all,
