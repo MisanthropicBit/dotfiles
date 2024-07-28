@@ -7,23 +7,33 @@ require("neodev").setup({
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-vim.g.lsp_configs = {
-    {
+local lsp_configs = {
+    clangd = {
         condition = function()
             return vim.fn.executable("clangd-mp-11") == 1
         end,
-        name = "clangd",
         config = {
             cmd = { "clangd-mp-11" },
         }
     },
-    { name = "tsserver" },
-    { name = "sqlls" },
-    {
+    tsserver = {
+        config = {
+            workspace_folders = {
+                "/Users/aab/repos/node-backend",
+                "/Users/aab/repos/api",
+            },
+            commands = {
+                OrganizeImports = {
+                    organize_imports,
+                    description = "",
+                }
+            },
+        },
+    sqlls = {},
+    lua_ls = {
         condition = function()
             return vim.fn.executable("lua-language-server") == 1
         end,
-        name = "lua_ls",
         config = {
             before_init = require("neodev.lsp").before_init,
             settings = {
@@ -33,13 +43,14 @@ vim.g.lsp_configs = {
                         path = runtime_path,
                     },
                     diagnostics = {
-                        globals = { "vim" },
+                        globals = { "hs", "vim" },
                     },
                     workspace = {
                         library = {
                             vim.env.VIMRUNTIME,
                             vim.fs.normalize("~/.vim-plug/neotest/lua"),
                             vim.fs.normalize("~/.vim-plug/plenary.nvim/lua"),
+                            vim.fs.normalize("~/.hammerspoon/Spoons/EmmyLua.spoon/annotations"),
                         },
                         maxPreload = 3000,
                         preloadFileSize = 50000,
@@ -52,22 +63,54 @@ vim.g.lsp_configs = {
             },
         },
     },
-    {
-        name = "jsonls",
+    jsonls = {
         config = {
-            filetypes = { "json", "jsonc" },
-            flags = {
-                debounce_text_changes = 500,
+            -- format = {
+            --     enable = true,
+            -- },
+            -- flags = {
+            --     debounce_text_changes = 500,
+            -- },
+            settings = {
+                json = {
+                    validate = {
+                        enable = true,
+                    },
+                    schemas = {
+                        {
+                            description = "NPM configuration file",
+                            fileMatch = { "package.json" },
+                            name = "package.json",
+                            url = "https://json.schemastore.org/package.json"
+                        },
+                        {
+                            description = "TypeScript compiler configuration file",
+                            fileMatch = { "tsconfig*.json" },
+                            name = "tsconfig.json",
+                            url = "https://json.schemastore.org/tsconfig.json"
+                        },
+                        {
+                            description = "ESLint configuration files",
+                            fileMatch = { ".eslintrc", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml" },
+                            name = ".eslintrc",
+                            url = "https://json.schemastore.org/eslintrc.json"
+                        },
+                        {
+                            description = "Babel configuration file",
+                            fileMatch = { ".babelrc", ".babelrc.json", "babel.config.json" },
+                            name = "babelrc.json",
+                            url = "https://json.schemastore.org/babelrc.json"
+                        },
+                    },
+                },
             },
-            snippets = true,
         },
     },
-    {
+    yamlls = {
         condition = function()
             return vim.fn.executable("yaml-language-server") == 1
         end,
         -- See: https://www.arthurkoziel.com/json-schemas-in-neovim/
-        name = "yamlls",
         config = {
             yaml = {
                 validate = true,
@@ -88,26 +131,28 @@ vim.g.lsp_configs = {
             },
         },
     },
-    {
-        name = "marksman",
+    marksman = {
         condition = function()
             return vim.fn.executable("marksman")
         end,
     }
 }
 
-local function setup_lsp_server(server_config)
+local function setup_lsp_server(name, server_config)
     local condition = server_config.condition
 
     if condition ~= nil and not condition() then
         return
     end
 
-    local server_setup = require("lspconfig")[server_config.name]
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    local server_setup = require("lspconfig")[name]
 
-    server_setup.setup(server_config.config or {})
+    server_setup.setup(vim.tbl_deep_extend("force", server_config.config or {}, { capabilities = capabilities }))
 end
 
-for _, lsp_config in ipairs(vim.g.lsp_configs) do
-    setup_lsp_server(lsp_config)
+for name, lsp_config in pairs(lsp_configs) do
+    setup_lsp_server(name, lsp_config)
 end
+
+return lsp_configs

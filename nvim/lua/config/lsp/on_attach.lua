@@ -2,6 +2,7 @@ local lsp_on_attach = {}
 
 local icons = require("config.icons")
 local map = require("config.map")
+local lsp_configs = require("config.lsp.lsp_configs")
 
 -- We don't want tsserver to format stuff as the default formatting doesn't
 -- seem to respect project-local settings for eslint and prettier.
@@ -59,7 +60,6 @@ local function lsp_request_jump(lsp_method, split_cmd, selector)
     return function()
         local params = vim.lsp.util.make_position_params(0)
 
-        -- TODO: Use buf_request_sync instead?
         vim.lsp.buf_request_all(0, lsp_method, params, function(results)
             local clients = vim.tbl_keys(results)
 
@@ -113,6 +113,7 @@ function lsp_on_attach.on_attach(event)
         vim.cmd("normal zt")
     end
 
+    -- TODO: Use on_list handler argument?
     -- We don't guard against server capabilities because we want neovim to
     -- inform us if the lsp server doesn't support a method
     map.n("gd", lsp_definition, with_desc("Jump to definition under cursor"))
@@ -133,7 +134,12 @@ function lsp_on_attach.on_attach(event)
     end
 
     if vim.fn.maparg("<localleader>la", "n") == "" then
-        map.leader({ "n", "v" }, "la", lsp_methods.code_action, with_desc("Open code action menu at cursor or in a range"))
+        map.leader(
+            { "n", "v", "x" },
+            "la",
+            lsp_methods.code_action,
+            with_desc("Open code action menu at cursor or in a range")
+        )
     end
 
     if vim.fn.maparg("<c-s>", "n") == "" then
@@ -155,6 +161,12 @@ function lsp_on_attach.on_attach(event)
         with_desc("Jump to definition in a vertical split")
     )
     map.n.leader("at", lsp_request_jump(lsp_method, "tabe", selector), with_desc("Jump to definition in a tab"))
+
+    local config = lsp_configs[client.name]
+
+    if config and config.commands and type(config.commands) == "function" then
+        config.commands()
+    end
 end
 
 return lsp_on_attach
