@@ -1,20 +1,29 @@
 local null_ls = require("null-ls")
 
-null_ls.setup({
-    sources = {
-        null_ls.builtins.formatting.stylua,
+local sources = {}
+
+local builtins = {
+    eslint_d = {
         null_ls.builtins.formatting.eslint_d.with({
             timeout = 10000,
         }),
         null_ls.builtins.code_actions.eslint_d,
         null_ls.builtins.diagnostics.eslint_d,
-        null_ls.builtins.diagnostics.selene.with({
-            command = "/Users/alexb/.cargo/bin/selene",
-        }),
-        null_ls.builtins.formatting.jq,
-        null_ls.builtins.hover.printenv,
     },
-})
+    jq = { null_ls.builtins.formatting.jq },
+    selene = { null_ls.builtins.diagnostics.selene.with({
+        command = "/Users/alexb/.cargo/bin/selene",
+    }) },
+    stylua = { null_ls.builtins.formatting.stylua },
+}
+
+for builtin, config in pairs(builtins) do
+    if vim.fn.executable(builtin) == 1 then
+        vim.list_extend(sources, config)
+    end
+end
+
+null_ls.setup({ sources = sources })
 
 local function null_ls_command(command_func)
     return function()
