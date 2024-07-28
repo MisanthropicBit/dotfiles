@@ -1,5 +1,11 @@
 local colorschemes = {}
 
+
+---@class ColorschemeStats
+---@field colorschemes table<string, integer>
+---@field count integer
+
+---@type ColorschemeStats
 local stats = {
     colorschemes = {},
     count = 0,
@@ -7,6 +13,11 @@ local stats = {
 
 math.randomseed(os.time())
 
+---@class config.WeightedChoice
+---@field { [1]: string, weight: number }
+
+---@param weighted_choices (string | config.WeightedChoice)[]
+---@return config.WeightedChoice[]
 local function normalize_weights(weighted_choices)
     local total_percentage_weight = 0
     local total_unweighted = 0
@@ -96,12 +107,11 @@ local preferred_colorschemes = normalize_weights({
     { "moonlight", weight = 0.15 },
     "nordic",
     { "tokyodark", weight = 0.1 },
-   "tokyonight-night",
-   "tokyonight-moon",
-   "visual_studio_code",
-   { "lavi", weight = 0.05 },
-   { "mayu", weight = 0.05 },
-   "evergarden",
+    "tokyonight-moon",
+    "tokyonight-night",
+    "visual_studio_code",
+    { "mayu", weight = 0.05 },
+    "evergarden",
 })
 
 ---@param weighted_choices table<string | table>
