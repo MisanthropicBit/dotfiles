@@ -1,6 +1,21 @@
 local icons = require("config.icons")
 local dashboard = require("dashboard")
 
+local key_hl = "Number"
+
+local images = {
+    {
+        file_path = "keyboard-dolphin.txt",
+        file_width = 48,
+        file_height = 32,
+    },
+    {
+        file_path = "neovim-logo.txt",
+        file_width = 50,
+        file_height = 32,
+    },
+}
+
 ---@param lines string[]
 ---@param max_width integer
 ---@return string[]
@@ -31,7 +46,6 @@ local function wrap_lines(lines, max_width)
     return new_lines
 end
 
-
 local function installed_plugin_count()
     return vim.tbl_count(vim.g.plugs or {})
 end
@@ -42,9 +56,9 @@ local current_colorsceme = ("%s  %s"):format(icons.color.scheme, vim.g.colors_na
 --- Get a random quote from vim-starify if installed
 ---@return string[]
 local function random_quote()
-    local footer = {}
+    local footer = { "", "" }
 
-    table.insert(footer, ("%s / %s"):format(plugins_installed, current_colorsceme))
+    table.insert(footer, ("%s    %s"):format(plugins_installed, current_colorsceme))
 
     if vim.g.loaded_startify == 1 then
         local quote = { "", "", "" }
@@ -75,16 +89,23 @@ local rpad_default = function(value)
     return rpad(value, dashboard_option_width, " ")
 end
 
-local key_hl = "Number"
+local function select_random_image()
+    local image_info = images[math.random(1, #images)]
+
+    return {
+        file_path = vim.fn.stdpath("config") .. "/lua/config/images/" .. image_info.file_path,
+        file_width = image_info.file_width,
+        file_height = image_info.file_height,
+    }
+end
 
 dashboard.setup({
     theme = "doom",
-    preview = {
-        command = "cat | cat", -- https://github.com/nvimdev/dashboard-nvim/issues/193
-        file_path = vim.fn.stdpath("config") .. "/lua/config/images/logo.txt",
-        file_width = 50,
-        file_height = 32,
-    },
+    preview = vim.tbl_extend(
+        "force",
+        { command = "cat | cat", }, -- https://github.com/nvimdev/dashboard-nvim/issues/193
+        select_random_image()
+    ),
     config = {
         center = {
             {
@@ -102,6 +123,14 @@ dashboard.setup({
                 key = "r",
                 key_hl = key_hl,
                 action = "FzfLua oldfiles cwd_only=true",
+            },
+            {
+                icon = "󱋡  ",
+                icon_hl = "Constant",
+                desc = rpad_default("All recent files"),
+                key = "R",
+                key_hl = key_hl,
+                action = "FzfLua oldfiles",
             },
             {
                 icon = icons.git.logo .. "  ",
