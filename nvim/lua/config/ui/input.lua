@@ -28,6 +28,7 @@ local default_win_config = {
     title_pos = "left",
     noautocmd = true,
     prompt = icons.misc.prompt .. "_ ",
+    prompt_hl = "Title",
     default = nil,
     filetype = vim.bo.filetype,
     enter = true,
@@ -156,6 +157,10 @@ local function resolve_options(options)
         zindex = _options.zindex,
         anchor = _options.anchor,
     }
+
+    local prompt_hl = _options.prompt_hl or default_win_config.prompt_hl
+
+    win_config.title = { { win_config.title, prompt_hl } }
 
     return win_config, _options
 end
