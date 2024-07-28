@@ -17,8 +17,8 @@ luasnip.setup({
 
 luasnip.filetype_extend("all", { "all" })
 luasnip.filetype_extend("all", { "_" })
-luasnip.filetype_extend("javascript", { "javascript-typescript-shared", "javascript-typescript-shared-work" })
-luasnip.filetype_extend("typescript", { "javascript-typescript-shared", "javascript-typescript-shared-work" })
+luasnip.filetype_extend("javascript", { "javascript-typescript-shared" })
+luasnip.filetype_extend("typescript", { "javascript-typescript-shared" })
 
 vscode.lazy_load()
 from_lua.lazy_load({ paths = { snippets_path("snippets", "lua") } })

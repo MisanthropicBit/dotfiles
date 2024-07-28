@@ -77,6 +77,7 @@ local function get_jest_choices(idx)
         t("toBe"),
         t("toMatchObject"),
         t("toMatchSnapshot"),
+        t("toHaveLength"),
         t("toMatch"),
     })
 end
@@ -121,10 +122,12 @@ return {
     ),
     s("lj", fmt([[console.log(JSON.stringify({}))]], i(1))),
     s("rt", t("return ")),
+    s("rtf", t("return false")),
+    s("rtt", t("return true")),
     s("rn", t("return null")),
     s("ru", t("return undefined")),
     s("ud", t("undefined")),
-    s("pe", t("process.env")),
+    s("pe", t("process.env.")),
     s(
         "ef",
         fmta(
@@ -274,6 +277,7 @@ expect(fields.{}.name, 'to be', '{}')]],
 
     -- Testing
     s("ss", fmt("sinon.stub({})", i(1))),
+    s("sp", fmt("sinon.spy({})", i(1))),
     s("sr", t("sinon.restore()")),
     s("er", t("envStub.restore()")),
     s("ep", fmt([[expect({}, '{}', {})]], { i(1), get_mocha_choices(2), i(3) })),
@@ -622,7 +626,7 @@ describe('it - db/<>', () =>> {
         { trig = "qit", dscr = "GraphQL query integration test" },
         fmta(
             [[import { access, database, testUtils } from '@connectedcars/backend'
-import { EnvStub, TypedSinonSpy } from '@connectedcars/test'
+import { TypedSinonSpy } from '@connectedcars/test'
 import sinon from 'sinon'
 
 import { createQueryRunner } from '../../test/helpers'
@@ -634,40 +638,34 @@ import { <> } from './<>'
 const { knex } = database
 const { IntegrationDatabaseWrapper } = testUtils
 
-describe('it - db/<>', () =>> {
+describe('it - queries/<>', () =>> {
 	const db = new IntegrationDatabaseWrapper('api')
-   	const { generateRandomRows } = randomRowsRunner(db)
     const query = createQueryRunner({ <> }, [
         `<>`
     ])
-    let envStub: EnvStub
     let server: Server
 
 	beforeEach(async () =>> {
-        envStub = new EnvStub(['REGION'])
-        process.env.REGION = 'eu1'
-
 		await db.checkoutDatabase('<>', { truncateTables: ['<>'] })
 
-        server = await createServer()
+		server = await createServer()
 	})
 
 	afterEach(async () =>> {
 		sinon.restore()
-        envStub.restore()
-        await stopServer(server)
+		await stopServer(server)
 		await db.cleanup()
 	})
 
-    it('<>', async () =>> {
-        <>
-    })
+	it('<>', async () =>> {
+		<>
+	})
 })]],
             {
                 i(2, "queryName"),
                 i(1),
-                rep(2),
                 rep(1),
+                rep(2),
                 i(3),
                 i(4),
                 i(5),
