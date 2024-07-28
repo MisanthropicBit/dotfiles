@@ -12,6 +12,7 @@ alias fucking   "sudo"
 alias g         "git"
 alias gitconfig "$EDITOR ~/.gitconfig"
 alias gofish    "source ~/.config/fish/config.fish"
+alias kc        "kubectl"
 alias l         "ls -laGh"
 alias ll        "clear; l"
 alias lz        "ls -laGhS"
@@ -194,9 +195,30 @@ function G -d "execute git commands and open them in vim/nvim"
     $EDITOR -c "G $argv | only"
 end
 
-#function bpp
-#    echo "$FISH_POWERPROMPT_THEME"
-#end
+function nvdv -d "Open Diffview in neovim"
+    nvim -c "DiffviewOpen"
+end
+
+function tw -a workspace -d "Set the opentofu workspace"
+    set -l workspaces (tofu workspace list)
+
+    if test -z "$workspace"
+        set -l height (math (count $workspaces) + 2)
+        set workspace (string split -n " " "$workspaces" | fzf --prompt "Select workspace> " --pointer "󱁢 " --color="pointer:215" --height "$height")
+    end
+
+    if test -z "$workspace"
+        return
+    end
+
+    set workspace (string trim -r "$workspace")
+
+    tofu workspace select "$workspace"
+
+    if test $status -ne 0
+        return $status
+    end
+end
 
 #function bpprand -d "Select a random prompt theme"
 #    set --export FISH_POWERPROMPT_THEME random
