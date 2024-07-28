@@ -65,6 +65,7 @@ require("incline").setup({
         overlap = {
             borders = true,
         },
+        zindex = 30,
     },
     render = render,
 })

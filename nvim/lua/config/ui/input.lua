@@ -47,7 +47,7 @@ local default_win_config = {
     },
     focusable = true,
     style = "minimal",
-    zindex = 10,
+    zindex = 60,
     win_options = {
         wrap = false,
         number = false,

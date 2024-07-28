@@ -4,6 +4,7 @@ local goto_preview = require("goto-preview")
 
 goto_preview.setup({
     height = 28,
+    zindex = 31,
     post_open_hook = function()
         vim.cmd.normal("zt")
     end,
