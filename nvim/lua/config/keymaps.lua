@@ -77,6 +77,19 @@ map.n("dd", function()
         return "dd"
     end
 end, { expr = true })
+map.n("<c-b><c-l>", function()
+    local has_useopen = vim.tbl_contains(vim.opt.switchbuf:get(), "useopen")
+
+    if not has_useopen then
+        vim.opt.switchbuf:append("useopen")
+    end
+
+    vim.cmd("sbuffer #")
+
+    if not has_useopen then
+        vim.opt.switchbuf:remove("useopen")
+    end
+end, "Navigate to last visited buffer or open new window")
 
 map.i("jk", [["<esc>"]], { expr = true })
 map.i("<c-a>", "<c-o>^", "Move to start of line in insert mode")
