@@ -48,7 +48,10 @@ map.n.leader("di", dap.step_into, "Step into")
 map.n.leader("du", dap.step_out, "Step out of")
 map.n.leader("dr", dap.repl.open, "Open the REPL for debugging")
 map.n.leader("dh", dap_widgets.hover, "Inspect value of expression under cursor when debugging")
-map.n.leader("dt", dap.terminate, "Terminate/stop debugging")
+map.n.leader("dt", function()
+    dap.terminate()
+    dap.disconnect()
+end, "Terminate/stop debugging")
 
 -- Adapters
 require("dap-vscode-js").setup({
