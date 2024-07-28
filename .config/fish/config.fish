@@ -1,22 +1,8 @@
 set --universal fish_color_command 00c5d7 darkcyan
-
 set --local script_dir (dirname (status -f))
-
-if test -e "$script_dir/aliases.fish"
-    source "$script_dir/aliases.fish"
-end
-
 set --universal PYENV_ROOT "$HOME/.pyenv"
 
-# Use neovim as a pager for manpages
-if type nvim &> /dev/null
-    set -x MANPAGER "nvim +Man!"
-end
-
-if test -x pyenv
-    status --is-interactive; and source (pyenv init -|psub)
-end
-
+set -x LANG en.UTF-8
 set -x N_PREFIX ~/.n
 set -x EDITOR     nvim
 set -x GIT_EDITOR nvim
@@ -48,8 +34,27 @@ function fish_hybrid_key_bindings --description "Vi-style bindings that inherit 
     fish_vi_key_bindings --no-erase
 end
 
+if test -e "$script_dir/aliases.fish"
+    source "$script_dir/aliases.fish"
+end
+
 if test -e "~/.work-config.fish"
     source ~/.work-config.fish
 end
 
-kubectl completion fish | source
+if type -q "fzf"
+    fzf --fish | source
+end
+
+if type -q "kubectl"
+    kubectl completion fish | source
+end
+
+# Use neovim as a pager for manpages
+if type -q "nvim"
+    set -x MANPAGER "nvim +Man!"
+end
+
+if test -x pyenv
+    status --is-interactive; and source (pyenv init -|psub)
+end
