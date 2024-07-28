@@ -25,9 +25,26 @@ end
 
 ---@param mode Mode | Mode[]
 ---@param lhs string
----@param rhs string | fun()
+---@param rhs string | function
 ---@param opts (table | string)?
 function map.set(mode, lhs, rhs, opts)
+    if type(opts) == "table" and opts.condition then
+        local condition = opts.condition
+        local ok, result
+
+        if type(condition) == "string" then
+            ok, result = pcall(require, condition)
+        elseif type(condition) == "function" then
+            ok, result = pcall(condition)
+        end
+
+        if not ok or not result then
+            return
+        end
+
+        opts.condition = nil
+    end
+
     vim.keymap.set(mode, lhs, rhs, map.with_default_options(opts))
 end
 
@@ -38,7 +55,7 @@ end
 function map.leader(mode, lhs, rhs, opts)
     local leader_lhs = '<localleader>' .. lhs
 
-    vim.keymap.set(mode, leader_lhs, rhs, map.with_default_options(opts))
+    map.set(mode, leader_lhs, rhs, opts)
 end
 
 for _, mode in ipairs(modes) do
