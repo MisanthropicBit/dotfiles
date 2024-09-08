@@ -170,8 +170,18 @@ function lsp_on_attach.on_attach(event)
 
     local config = lsp_configs[client.name]
 
-    if config and config.commands and type(config.commands) == "function" then
-        config.commands()
+    if config then
+        if type(config.commands) == "function" then
+            config.commands()
+        end
+
+        if type(config.keymaps) == "table" then
+            for _, keymap in ipairs(config.keymaps) do
+                if type(keymap) == "function" then
+                    keymap()
+                end
+            end
+        end
     end
 end
 

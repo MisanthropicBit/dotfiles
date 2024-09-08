@@ -1,3 +1,5 @@
+local map = require("config.map")
+
 local runtime_path = vim.split(package.path, ";")
 
 require("neodev").setup({
@@ -6,6 +8,16 @@ require("neodev").setup({
 
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
+
+
+local function organize_imports()
+    local params = {
+        command = "_typescript.organizeImports",
+        arguments = { vim.api.nvim_buf_get_name(0) },
+    }
+
+    vim.lsp.buf.execute_command(params)
+end
 
 local lsp_configs = {
     clangd = {
@@ -25,10 +37,16 @@ local lsp_configs = {
             commands = {
                 OrganizeImports = {
                     organize_imports,
-                    description = "",
+                    description = "Organize, sort, and removed unused imports",
                 }
             },
         },
+        keymaps = {
+            function()
+                map.n.leader("oi", "<cmd>OrganizeImports<cr>", "Organize typescript imports")
+            end
+        }
+    },
     sqlls = {},
     lua_ls = {
         condition = function()
