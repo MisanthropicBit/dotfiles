@@ -100,8 +100,14 @@ function lsp_on_attach.on_attach(event)
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     local buffer = event.buf
 
+    ---@cast client -nil
+
     if client.server_capabilities.completionProvider then
         vim.bo[buffer].omnifunc = "v:lua.vim.lsp.omnifunc"
+    end
+
+    if vim.fn.has("nvim-0.10.0") == 1 and client.server_capabilities.inlayHintProvider then
+        vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
     end
 
     local function with_desc(desc)
