@@ -60,11 +60,12 @@
     dl = !git diff --color=always $@ | less -r
     filelog = log --name-status --oneline
     fp = fetch --prune
-    l1 = log -1
+    lp = log -1 -p
     getfile = !git archive --remote=~$1 HEAD:~$2 ~$3 | tar -x
     graph = !git log --graph --color --abbrev-commit --decorate --date=relative
     issue = "!__git_issue_2945() { git branch -a | grep --color=always "issue-$1"; }; __git_issue_2945"
     m = checkout master
+    main = master
     md = log origin/master...HEAD
     mergetest = !git merge-tree `git merge-base $1 $2` $1 $2 | diff-so-fancy
     mt = "!nvim -c DiffviewOpen"
@@ -107,3 +108,5 @@
     enabled = true
 [branch]
     sort = -committerdate
+[column]
+    ui = auto
