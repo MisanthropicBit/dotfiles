@@ -79,6 +79,13 @@ local function get_jest_choices(idx)
         t("toMatchSnapshot"),
         t("toHaveLength"),
         t("toMatch"),
+        t("toThrow"),
+        t("toHaveGraphQLResponse"),
+        t("toHaveGraphQLError"),
+        t("toHaveGraphQLErrorType"),
+        t("toHaveGraphQLQuerySpec"),
+        t("toHaveGraphQLMutationSpec"),
+        t("toHaveGraphQLEnumSpec"),
     })
 end
 
@@ -282,12 +289,12 @@ expect(fields.{}.name, 'to be', '{}')]],
     s("er", t("envStub.restore()")),
     s("ep", fmt([[expect({}, '{}', {})]], { i(1), get_mocha_choices(2), i(3) })),
     s("ept", fmt([[expect({}).{}({})]], { i(1), get_jest_choices(2), i(3) })),
-    s("epct", fmt([[expect({}.callCount).toEqual({})]], range(1, 2))),
+    s("epct", fmt([[expect({}.callCount).toBe({})]], range(1, 2))),
     s("epat", fmt([[expect({}.args[0]{}).toEqual([{}])]], range(1, 3))),
     s(
         "epcat",
         fmt(
-            [[expect({}.callCount).toEqual({})
+            [[expect({}.callCount).toBe({})
 expect({}.args[0]{}).toEqual([{}])]],
             { i(1), i(2), rep(1), i(3), i(4) }
         )
@@ -303,8 +310,6 @@ expect({}.args[0]{}, 'to equal', [{}])]],
         )
     ),
     s("fss", fmta([[this.<3> = sinon.stub(<1>, '<2>')]], { i(1), i(2), rep(2) })),
-    s("qr", t("'to have graphql response'")),
-    s("qe", t("'to have graphql error'")),
     s(
         "it",
         fmta(
@@ -343,6 +348,30 @@ expect({}.args[0]{}, 'to equal', [{}])]],
         "afe",
         fmta(
             [[afterEach(<>() =>> {
+  <>
+})]],
+            {
+                c(1, { t("async "), t("") }),
+                i(2),
+            }
+        )
+    ),
+    s(
+        "bfa",
+        fmta(
+            [[beforeAll(<>() =>> {
+  <>
+})]],
+            {
+                c(1, { t("async "), t("") }),
+                i(2),
+            }
+        )
+    ),
+    s(
+        "afa",
+        fmta(
+            [[afterAll(<>() =>> {
   <>
 })]],
             {
@@ -466,13 +495,12 @@ describe('types/<>-input-type', function () {
     s(
         { trig = "qett", dscr = "GraphQLEnumType test" },
         fmta(
-            [[import expect from '../../../test/unexpected'
-import { <>Type } from './<>-type'
+            [[import { <>Type } from './<>-type'
 
 describe('types/enums/<>-type', function () {
-  describe('<>', () =>> {
+  describe('<>Type', () =>> {
     it('has correct type, name, and values', () =>> {
-      expect(<>Type, 'to have graphql enum spec', {
+      expect(<>Type).toHaveGraphQLEnumSpec({
         name: '<>',
         values: [<>]
       })
@@ -583,9 +611,9 @@ describe('<>', () =>> {
         { trig = "itts", dscr = "Typescript database integration test" },
         fmta(
             [[import { database, testUtils } from '@connectedcars/backend'
-import { TypedSinonSpy } from '@connectedcars/test'
+import type { TypedSinonSpy } from '@connectedcars/test'
 import sinon from 'sinon'
-<>
+
 const { knex, query } = database
 const { IntegrationDatabaseWrapper } = testUtils
 
@@ -608,16 +636,12 @@ describe('it - db/<>', () =>> {
 		it('<>', async () =>> {
 			<>
 
-			expect(querySpy.callCount, 'to equal', 1)
-			expect(querySpy.args[0][1].toString(), 'to equal', '<>')
+			expect(querySpy.callCount).toBe(1)
+			expect(querySpy.args[0][1].toString()).toEqual('<>')
 		})
 	})
 })]],
             {
-                c(1, {
-                    t({ "", "import expect from '../../../test/unexpected'", "" }),
-                    t(""),
-                }),
                 unpack(range(2, 9)),
             }
         )
