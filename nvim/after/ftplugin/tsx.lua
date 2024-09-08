@@ -1,1 +1,1 @@
-require("config.tex-like-after")
+require("config.javascript-like-after")
