@@ -33,7 +33,18 @@ function map.set(mode, lhs, rhs, opts)
         local ok, result
 
         if type(condition) == "string" then
+            local negated = false
+
+            if condition:sub(1, 1) == "!" then
+                condition = condition:sub(2)
+                negated = true
+            end
+
             ok, result = pcall(require, condition)
+
+            if negated then
+                ok = not ok
+            end
         elseif type(condition) == "function" then
             ok, result = pcall(condition)
         end
