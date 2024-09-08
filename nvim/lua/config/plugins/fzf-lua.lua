@@ -8,9 +8,14 @@ local lsp_utils = require("config.lsp.utils")
 
 local fzf_lua = require("fzf-lua")
 local actions = require("fzf-lua.actions")
+local path = require("fzf-lua.path")
+
+-- Fzf-lua appears to use a weird space in results (0x2002 aka 'EN SPACE')
+local en_space = " "
 
 -- Returns a function for selecting a specific directory and then search it afterwards
 ---@param directory string
+---@param options table?
 ---@return fun()
 local function project_files(directory, options)
     local file_selector = function(selector)
@@ -28,6 +33,7 @@ local function project_files(directory, options)
             prompt = "Search project " .. icons.misc.prompt .. " ",
             actions = {
                 ["ctrl-s"] = file_selector(fzf_lua.files),
+                ["ctrl-o"] = file_selector(fzf_lua.lsp_workspace_symbols),
                 ["enter"] = file_selector(fzf_lua.files),
                 ["ctrl-g"] = file_selector(fzf_lua.git_files),
                 ["ctrl-r"] = file_selector(fzf_lua.grep_project),
@@ -99,6 +105,10 @@ fzf_lua.setup({
             ["ctrl-q"] = "select-all+accept",
         },
     },
+    files = {
+        find_opts = require("fzf-lua.defaults").defaults.files.find_opts .. " --exclude node_modules",
+        formatter = "path.filename_first",
+    },
     lsp = {
         git_icons = true,
         symbols = {
@@ -106,6 +116,9 @@ fzf_lua.setup({
         },
     },
     git = {
+        files = {
+            formatter = "path.filename_first",
+        },
         status = {
             actions = {
                 ["ctrl-h"] = { actions.git_unstage, actions.resume },
@@ -164,34 +177,7 @@ local function directories()
     })
 end
 
--- TODO: Do 'norm zt' after jumping
-map.n("<c-s>", fzf_lua.lsp_document_symbols, "LSP document symbols")
-map.n("<c-w><c-s>", fzf_lua.lsp_workspace_symbols, "LSP workspace symbols")
-map.n("gb", fzf_lua.git_branches, "Git branches")
-map.n("<c-p>", fzf_lua.files, "Search files in current directory")
-map.n("<c-b><c-b>", fzf_lua.tabs, "List all buffers in all tabs")
-map.n.leader("lr", fzf_lua.lsp_references, "Show lsp references")
-map.n.leader("cc", custom_colorschemes, "Pick a colorscheme")
-map.n.leader("df", function()
-    fzf_lua.files({ cwd = "~/projects/dotfiles/nvim" })
-end, "Search dotfiles")
-map.n.leader("gf", fzf_lua.git_files, "Search files in the current directory that are tracked by git")
-map.n.leader("gs", fzf_lua.git_status, "Git status")
-map.n.leader("gh", fzf_lua.git_stash, "Git stash")
-map.n.leader("bp", fzf_lua.dap_breakpoints, "List dap breakpoints")
-map.n.leader("hl", fzf_lua.highlights)
-map.n.leader("fb", fzf_lua.blines, "Find lines in current buffer")
-map.n.leader("hi", fzf_lua.oldfiles, "Search recent files")
-map.n.leader("hI", "<cmd>FzfLua oldfiles cwd_only=true<cr>", "Search recent files in current cwd only")
-map.n.leader("rg", fzf_lua.grep_project, "Search all project files")
-map.n.leader("pp", project_files("~/.vim-plug/"), "Search plugin directories")
-map.n.leader("rr", fzf_lua.resume, "Resume last search")
-map.n.leader("fd", directories, "Search directories")
-map.leader({ "n", "v" }, "la", function()
-    fzf_lua.lsp_code_actions({ winopts = { height = 0.2, width = 0.33, preview = { layout = "vertical" } } })
-end)
-
-map.n("gf", function()
+local function open_file_under_cursor()
     fzf_lua.fzf_exec({ "horizontal split", "vertical split", "tab", "edit" }, {
         prompt = "Open in " .. icons.misc.prompt .. " ",
         winopts = {
@@ -221,7 +207,80 @@ map.n("gf", function()
             end,
         }
     })
+end
+
+---@return fun()
+local function open_file_in_branch()
+    -- TODO: Does fzf-lua have a utility function for this?
+    local function create_git_split_command(cmd, branch, path)
+        local parts = vim.split(path, en_space)
+        local trimmed = vim.trim(parts[#parts])
+        return ("%s %s:%s"):format(cmd, branch, trimmed)
+    end
+
+    local git_file_selector = function(selected)
+        local branch = vim.trim(selected[1])
+
+        fzf_lua.git_files({
+            cmd = "git ls-tree -r --name-only " .. branch,
+            actions = {
+                ["ctrl-s"] = function(_selected)
+                    vim.cmd(create_git_split_command("Gsplit", branch, _selected[1]))
+                end,
+                ["ctrl-v"] = function(_selected)
+                    vim.cmd(create_git_split_command("Gvsplit", branch, _selected[1]))
+                end,
+                ["ctrl-t"] = function(_selected)
+                    vim.cmd(create_git_split_command("Gtabedit", branch, _selected[1]))
+                end,
+            },
+        })
+    end
+
+    local provider = fzf_lua.git_branches
+
+        provider({
+            cmd = "git branch --all --color --sort=-committerdate",
+            prompt = "Select branch " .. icons.misc.prompt .. " ",
+            actions = {
+                ["enter"] = git_file_selector,
+            },
+        })
+end
+
+-- TODO: Do 'norm zt' after jumping
+map.n("<c-s>", fzf_lua.lsp_document_symbols, "LSP document symbols")
+map.n("<c-w><c-s>", fzf_lua.lsp_workspace_symbols, "LSP workspace symbols")
+map.n("gb", fzf_lua.git_branches, "Git branches")
+map.n("<c-p>", fzf_lua.files, "Search files in current directory")
+map.n("<c-b><c-b>", fzf_lua.tabs, "List all buffers in all tabs")
+map.n.leader("lr", fzf_lua.lsp_references, "Show lsp references")
+map.n.leader("cc", custom_colorschemes, "Pick a colorscheme")
+map.n.leader("df", function()
+    fzf_lua.files({ cwd = "~/projects/dotfiles/nvim" })
+end, "Search dotfiles")
+map.n.leader("gf", fzf_lua.git_files, "Search files in the current directory that are tracked by git")
+map.n.leader("gs", fzf_lua.git_status, "Git status")
+map.n.leader("gh", fzf_lua.git_stash, "Git stash")
+map.n.leader("bp", fzf_lua.dap_breakpoints, "List dap breakpoints")
+map.n.leader("hl", fzf_lua.highlights)
+map.n.leader("fb", fzf_lua.blines, "Find lines in current buffer")
+map.n.leader("hi", fzf_lua.oldfiles, "Search recent files")
+map.n.leader("hI", "<cmd>FzfLua oldfiles cwd_only=true<cr>", "Search recent files in current cwd only")
+map.n.leader("rg", fzf_lua.grep_project, "Search all project files")
+map.n.leader("pp", project_files("~/.vim-plug/"), "Search plugin directories")
+map.n.leader("rr", fzf_lua.resume, "Resume last search")
+map.n.leader("fd", directories, "Search directories")
+map.leader({ "n", "v" }, "la", function()
+    fzf_lua.lsp_code_actions({ winopts = { height = 0.2, width = 0.33, preview = { layout = "vertical" } } })
 end)
+map.n("gf", open_file_under_cursor)
+map.n("go", open_file_in_branch)
+
+map.n.leader("ft", function() require("todo-comments.fzf").todo() end, {
+    desc = "Find all TODOs",
+    condition = "todo-comments",
+})
 
 map.n.leader("rt", function()
     fzf_lua.grep({ rg_opts = "-Tta " .. fzf_lua.defaults.grep.rg_opts })
