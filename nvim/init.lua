@@ -99,6 +99,8 @@ end
 -- Highlight git merge conflict markers
 vim.cmd([[match ErrorMsg '\v^(\<|\=|\>){7}([^\=].+)?$']])
 
+vim.cmd.packadd("cfilter")
+
 require("config.keymaps")
 require("config.autocmds")
 require("config.commands")
