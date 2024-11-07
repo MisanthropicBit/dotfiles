@@ -8,7 +8,6 @@ local lsp_utils = require("config.lsp.utils")
 
 local fzf_lua = require("fzf-lua")
 local actions = require("fzf-lua.actions")
-local path = require("fzf-lua.path")
 
 -- Fzf-lua appears to use a weird space in results (0x2002 aka 'EN SPACE')
 local en_space = " "
@@ -286,7 +285,7 @@ map.n.leader("rt", function()
     fzf_lua.grep({ rg_opts = "-Tta " .. fzf_lua.defaults.grep.rg_opts })
 end, "Search all non-test files")
 
-local project_dir = vim.fn.isdirectory(vim.fs.normalize("~/repos")) and "~/repos" or "~/projects"
+local project_dir = vim.fn.isdirectory(vim.fs.normalize("~/repos")) == 1 and "~/repos" or "~/projects"
 local depth = project_dir == "~/projects" and 2 or 1
 
 map.leader("n", "pf", project_files(project_dir, { maxdepth = depth }), "Search all local repository files")
