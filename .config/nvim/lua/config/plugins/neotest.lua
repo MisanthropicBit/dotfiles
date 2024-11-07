@@ -51,6 +51,7 @@ neotest.setup({
                 { "js", "ts" }
             ),
         }),
+        require("neotest-busted"),
     },
     ---@diagnostic disable-next-line: missing-fields
     quickfix = {
