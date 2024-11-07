@@ -1,9 +1,6 @@
 local map = require("config.map")
 
 require("gitsigns").setup({
-    signs = {
-        delete = { text = require("gitsigns.config").config.signs.add },
-    },
     numhl = true,
     on_attach = function(buffer)
         local gs = package.loaded.gitsigns
