@@ -29,3 +29,7 @@ map.n("gU", "<Plug>fugitive:gu", { buffer = true })
 map.n("s", "<Plug>fugitive:o", { buffer = true })
 map.n("v", "<Plug>fugitive:gO", { buffer = true })
 map.n("t", "<Plug>fugitive:O", { buffer = true })
+
+map.n.leader("ms", "<cmd>Gsplit origin/master:%")
+map.n.leader("mv", "<cmd>Gvsplit origin/master:%")
+map.n.leader("mt", "<cmd>Gtabedit origin/master:%")
