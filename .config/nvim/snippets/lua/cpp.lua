@@ -28,23 +28,29 @@ return {
         fmta([[#ifndef <>
 #define <>
 
-class <> {
-    public:
-        <>(<>);
-        virtual ~<>();
+namespace <> {
+  class <> {
+      public:
+          <>(<>);
+          virtual ~<>();
 
-    private:
-        <>
+      private:
+          <>
+  };
 }
+
+#endif // <>
 ]],
         {
             i(1),
             rep(1),
             i(2),
-            rep(2),
             i(3),
-            rep(2),
+            rep(3),
             i(4),
+            rep(3),
+            i(5),
+            rep(1),
         })
     ),
     s(
@@ -52,12 +58,14 @@ class <> {
         fmta([[#ifndef <>
 #define <>
 
+<>
+
 #endif // <>
-]], { i(1), rep(1), rep(1) })
+]], { i(1), rep(1), i(2), rep(1) })
     ),
     s("inc", fmt('#include "{}.h"', i(1))),
-    s("pinc", fmt('#include "{}.hpp"', i(1))),
-    s("sinc", fmt('#include <{}>', i(1))),
+    s("pi", fmt('#include "{}.hpp"', i(1))),
+    s("si", fmt('#include <{}>', i(1))),
     s(
         "tc",
         fmta([[TEST_CASE(<>, <>) {
@@ -79,4 +87,6 @@ class <> {
             i(2),
         })
     ),
+    s("np", t("nullptr")),
+    s("rt", t("return")),
 }
