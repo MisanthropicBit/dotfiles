@@ -2,7 +2,7 @@
 
 config_files=(
     ".gitconfig"
-    ".gitignore_global",
+    ".gitignore_global"
     ".inputrc"
     ".latexmkrc"
 )
@@ -10,7 +10,6 @@ config_files=(
 config_dirs=(
     "bat"
     "bpython"
-    "fish"
     "nvim"
 )
 
@@ -71,3 +70,11 @@ done
 for dir in "${config_dirs[@]}"; do
     symlink_install "$dir" "$script_dir" "$HOME/.config"
 done
+
+symlink_install "fish/aliases.fish" "$script_dir" "$HOME/.config"
+symlink_install "fish/config.fish" "$script_dir" "$HOME/.config"
+symlink_install "fish/functions/fish_user_key_bindings.fish" "$script_dir" "$HOME/.config"
+
+if [[ -x "brew ]]; then
+    brew install neovim bat fd fzf ripgrep lua-language-server marksman ninja node
+fi
