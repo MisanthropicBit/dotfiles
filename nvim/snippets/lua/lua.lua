@@ -46,6 +46,7 @@ return {}]], { i(1, "M"), i(2), rep(1) })),
     s("has", fmt("local has_{}, {} = pcall(require, \"{}\")", { i(1), rep(1), f(snake_to_kebab_case, 1) })),
     s("ti", fmt("table.insert({}{})", { i(1), c(2, { t(""), sn(nil, { t(", {}") } ) }) })),
     s("tr", fmt("table.remove({}{})", { i(1), c(2, { t(""), t(", {}") }) })),
+    s("tc", fmt("table.concat({}{})", { i(1), c(2, { t(""), t(", {}") }) })),
     s("rt", t("return")),
     s("rn", t("return nil")),
 
