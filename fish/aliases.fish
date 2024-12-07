@@ -1,5 +1,3 @@
-# A bunch of useful fish aliases ported from my bash config
-
 alias ..        "cd .."
 alias ..2       "cd ../.."
 alias ..3       "cd ../../.."
@@ -20,9 +18,9 @@ alias nv        "nvim"
 alias nvc       "nvim (git diff --name-only --diff-filter=U --relative)"
 alias nvd       "nvim -d"
 alias nvm       "nvim (git diff --name-only --diff-filter=M --relative)"
-alias nvrc      "$EDITOR ~/.config/nvim/init.vim"
+alias nvrc      "$EDITOR ~/.config/nvim/init.lua"
 alias path      "echo $PATH | tr ':' '\n'"
-alias todo      "rg -Hni ' todo:'"
+alias todo      "rg -Hni -A3 ' todo:'"
 alias tree      "tree -C"
 alias v         "pbpaste"
 
@@ -219,22 +217,6 @@ function tw -a workspace -d "Set the opentofu workspace"
         return $status
     end
 end
-
-#function bpprand -d "Select a random prompt theme"
-#    set --export FISH_POWERPROMPT_THEME random
-#end
-
-#if pip list | grep -iw "markdown" > /dev/null
-#    function mdr -d "Render a markdown file as html"
-#        for filename in $argv
-#            # TODO
-#        end
-#    end
-#end
-
-#function man -d "Open a man page with vim"
-#    command man $@ | col -b | vim -R -c "set ft=man nomod nolist" -
-#end
 
 if test -f "$work_aliases"
     source "$work_aliases"
