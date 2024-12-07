@@ -1,14 +1,6 @@
 local icons = require("config.icons")
 
 local render = function(f)
-    local errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-    local warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-
-    f.add(" ")
-    f.add({ " " .. icons.diagnostics.error .. errors, fg = "#e86671" })
-    f.add({ " " .. icons.diagnostics.warn .. warnings, fg = "#e5c07b"})
-    f.add("   ")
-
     f.make_tabs(function(info)
         f.add({ icons.lines.vertical .. " " })
         f.add(info.modified and icons.git.modified)
@@ -27,7 +19,11 @@ local render = function(f)
                     fg = info.current and f.icon_color("git") or nil
                 })
             elseif vim.startswith(info.buf_name, "oil://") then
-                f.add("oil")
+                local no_oil = vim.fn.trim(info.buf_name:sub(7), "/", 2)
+                local head = vim.fn.fnamemodify(no_oil, ":h") .. "/"
+                local tail = vim.fn.fnamemodify(no_oil, ":t")
+
+                f.add(vim.fn.pathshorten(head, 2) .. tail)
                 f.add({ " " .. icons.files.oil })
             elseif info.buf_name == "" then
                 f.add("New file")
