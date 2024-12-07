@@ -60,6 +60,4 @@ if test -x pyenv
     status --is-interactive; and source (pyenv init -|psub)
 end
 
-if type -q "fzf"
-    fzf --fish | source
-end
+fish_config prompt choose scales
