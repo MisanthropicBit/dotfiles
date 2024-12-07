@@ -99,6 +99,7 @@ vim.cmd([[
     Plug 'pmizio/typescript-tools.nvim'
     Plug 'MisanthropicBit/vim-yank-window'
     Plug 'MisanthropicBit/winmove.nvim'
+    Plug 'brenoprata10/nvim-highlight-colors'
 
     " neotest + adapters
     Plug 'nvim-neotest/nvim-nio'
