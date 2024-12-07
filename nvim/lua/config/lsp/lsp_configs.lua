@@ -28,7 +28,7 @@ local lsp_configs = {
             cmd = { "clangd-mp-11" },
         }
     },
-    tsserver = {
+    ts_ls = {
         config = {
             workspace_folders = {
                 "/Users/aab/repos/node-backend",
