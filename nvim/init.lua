@@ -89,7 +89,7 @@ if vim.fn.has("gui_running") == 0 then
     end
 end
 
-if vim.fn.executable("rg") then
+if vim.fn.executable("rg") == 1 then
     o.grepprg = "rg --vimgrep --smart-case"
     o.grepformat = [[%f:%l:%c:%m]]
 else
