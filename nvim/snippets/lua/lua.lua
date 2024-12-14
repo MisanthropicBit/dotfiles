@@ -47,6 +47,8 @@ return {}]], { i(1, "M"), i(2), rep(1) })),
     s("ti", fmt("table.insert({}{})", { i(1), c(2, { t(""), sn(nil, { t(", {}") } ) }) })),
     s("tr", fmt("table.remove({}{})", { i(1), c(2, { t(""), t(", {}") }) })),
     s("tc", fmt("table.concat({}{})", { i(1), c(2, { t(""), t(", {}") }) })),
+    s("le", fmt("vim.list_extend({}, {})", { i(1), i(2) })),
+    s("ls", fmt("vim.list_slice({}, {}, {})", { i(1), i(2), i(3) })),
     s("rt", t("return")),
     s("rn", t("return nil")),
 
