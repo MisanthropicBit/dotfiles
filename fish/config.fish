@@ -18,8 +18,6 @@ set -x BAT_THEME OneHalfDark
 set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
 set -x FZF_CTRL_T_OPTS '--multi --bind="ctrl-s:select,ctrl-u:deselect,ctrl-f:reload(find . -type f \$dir),ctrl-d:reload(find . -type d \$dir)" --preview="bat -n --color=always {}" --cycle --walker=file,follow,hidden'
 set -x FZF_DEFAULT_OPTS "--color='pointer:bright-blue,marker:bright-green' --height=50% --pointer='󰜴 ' --marker=' ' --bind='ctrl-n:preview-page-down,ctrl-p:preview-page-up' --cycle"
-set -x LUA_PATH '/opt/local/share/lua/5.1/?.lua;/opt/local/share/lua/5.1/?/init.lua;/opt/local/lib/lua/5.1/?.lua;/opt/local/lib/lua/5.1/?/init.lua;./?.lua;./?/init.lua;~/.luarocks/share/lua/5.1/?.lua;~/.luarocks/share/lua/5.1/?/init.lua;/opt/local/share/luarocks/share/lua/5.1/?.lua;/opt/local/share/luarocks/share/lua/5.1/?/init.lua'
-set -x LUA_CPATH '/opt/local/lib/lua/5.1/?.so;/opt/local/lib/lua/5.1/loadall.so;./?.so;~/.luarocks/lib/lua/5.1/?.so;/opt/local/share/luarocks/lib/lua/5.1/?.so'
 set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
 set -x HOMEBREW_NO_ANALYTICS 1
 
