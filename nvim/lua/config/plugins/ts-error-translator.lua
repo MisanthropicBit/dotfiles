@@ -1,1 +1,1 @@
-require("ts-error-translator").setup()
+return { "dmmulroy/ts-error-translator.nvim" }

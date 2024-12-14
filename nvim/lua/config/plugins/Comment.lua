@@ -1,1 +1,1 @@
-require("Comment").setup()
+return { "numToStr/Comment.nvim", opts = {} }
