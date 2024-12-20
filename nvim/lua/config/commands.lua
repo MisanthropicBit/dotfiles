@@ -18,3 +18,10 @@ vim.api.nvim_create_user_command("Term", "<mods> new | startinsert | term <args>
     bang = true,
     nargs = "*",
 })
+
+-- Highlight git merge conflict markers
+vim.cmd([[match ErrorMsg '\v^(\<|\=|\>){7}([^\=].+)?$']])
+
+vim.cmd.packadd("cfilter")
+
+vim.cmd([[set keywordprg=:DocsCursor]])
