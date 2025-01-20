@@ -51,12 +51,11 @@ return {
             return require("lazy").stats().count
         end
 
-        local plugins_installed = ("%s  %d plugins installed"):format(icons.misc.package, installed_plugin_count())
-        local current_colorsceme = ("%s  %s"):format(icons.color.scheme, vim.g.colors_name)
-
         --- Get a random quote from vim-starify if installed
         ---@return string[]
         local function random_quote()
+            local plugins_installed = ("%s  %d plugins installed"):format(icons.misc.package, installed_plugin_count())
+            local current_colorsceme = ("%s  %s"):format(icons.color.scheme, vim.g.colors_name)
             local footer = { "", "" }
 
             table.insert(footer, ("%s    %s"):format(plugins_installed, current_colorsceme))
