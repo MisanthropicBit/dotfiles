@@ -16,6 +16,7 @@ return {
                 "cpp",
                 "fish",
                 "gitcommit",
+                "git_rebase",
                 "javascript",
                 "json",
                 "lua",
