@@ -39,18 +39,8 @@ autocmds.create_config_autocmd("TabLeave", {
 -- })
 
 autocmds.create_config_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = "*.fsproj",
-    command = "setlocal ft=xml",
-})
-
-autocmds.create_config_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = { "*.html", "*.yml", "*.json" },
     command = "setlocal sw=2",
-})
-
-autocmds.create_config_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = ".eslintrc",
-    command = "setlocal ft=json",
 })
 
 autocmds.create_config_autocmd("TextYankPost", {
