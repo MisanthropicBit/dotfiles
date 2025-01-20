@@ -269,7 +269,7 @@ return {
         map.n.leader("hi", fzf_lua.oldfiles, "Search recent files")
         map.n.leader("hI", "<cmd>FzfLua oldfiles cwd_only=true<cr>", "Search recent files in current cwd only")
         map.n.leader("rg", fzf_lua.grep_project, "Search all project files")
-        map.n.leader("pp", project_files("~/.vim-plug/"), "Search plugin directories")
+        map.n.leader("pp", project_files(vim.fn.stdpath("data") .. "/lazy/"), "Search plugin directories")
         map.n.leader("rr", fzf_lua.resume, "Resume last search")
         map.n.leader("fd", directories, "Search directories")
         map.leader({ "n", "v" }, "la", function()
