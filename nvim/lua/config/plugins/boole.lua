@@ -10,6 +10,7 @@ return {
             { "ASC", "DESC" },
             { "negative", "positive" },
             { "public", "private", "protected" },
+            { "const", "let" },
         },
     },
 }
