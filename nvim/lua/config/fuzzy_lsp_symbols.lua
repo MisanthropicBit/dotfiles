@@ -1,7 +1,7 @@
 local M = {}
 
 local ansi = require('config.ansi')
-local lsp_utils = require('lsp.utils')
+local lsp_utils = require('config.lsp.utils')
 
 local kind_icons = lsp_utils.kind_icons
 local kind_to_hl = lsp_utils.kind_to_hl
