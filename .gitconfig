@@ -45,6 +45,7 @@
     br = branch
     bs = !git br --list -vv $(git br --show-current)
     browse = !nvim --headless -c 'GBrowse | quit' > /dev/null 2>&1
+    ca = commit --amend
     cf = !git show --pretty="format:" --name-status
     cm = commit -m
     cnv = commit --no-verify -m
