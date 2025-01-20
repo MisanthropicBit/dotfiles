@@ -281,6 +281,21 @@ expect(fields.{}.name, 'to be', '{}')]],
             }
         )
     ),
+    s(
+        { trig = "qeft", dscr = "GraphQL expected field test (typescript)" },
+        fmt(
+            [[expect(fields).toHaveProperty('{}')
+expect(fields.{}.type.toString()).toBe('{}')
+expect(fields.{}.name).toBe('{}')]],
+            {
+                i(1),
+                rep(1),
+                i(2),
+                rep(1),
+                rep(1),
+            }
+        )
+    ),
 
     -- Testing
     s("ss", fmt("sinon.stub({})", i(1))),

@@ -72,4 +72,10 @@ end)]], { i(1), i(2) })),
     s("at", fmt([[assert.is_true({})]], { i(1) })),
     s("af", fmt([[assert.is_false({})]], { i(1) })),
     s("an", fmt([[assert.is_nil({})]], { i(1) })),
+
+    -- Stylua
+    s(
+        { trig = "is", name = "Ignore Stylua" },
+        fmt("-- stylua: ignore {}\n{}", { c(1, { t("start"), t("end") }), i(0) })
+    ),
 }

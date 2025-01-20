@@ -22,6 +22,12 @@ local function get_import_export_fmt_args()
 end
 
 return {
+    s("func", fmta([[function <>(<>): <> {
+  <>
+}]], { i(1), i(2), i(3), i(4) })),
+    s("af", fmta([[async function <>(<>): <> {
+  <>
+}]], { i(1), i(2), i(3), i(4) })),
     s("eaf", fmta([[export async function <>(<>): <> {
   <>
 }]], { i(1), i(2), i(3), i(4) })),
