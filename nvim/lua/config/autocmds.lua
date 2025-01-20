@@ -59,6 +59,10 @@ autocmds.create_config_autocmd("TermOpen", {
 
 autocmds.create_config_autocmd("TermClose", {
     callback = function()
+        if vim.o.ft == "fzf" then
+            return
+        end
+
         if vim.v.event.status == 0 then
             vim.api.nvim_buf_delete(0, {})
         end
