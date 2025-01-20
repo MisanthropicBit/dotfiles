@@ -279,26 +279,25 @@ return {
         map.n("go", open_file_in_branch)
 
         map.n.leader("ft", function() require("todo-comments.fzf").todo() end, {
-        desc = "Find all TODOs",
-        condition = "todo-comments",
-    })
+            desc = "Find all TODOs",
+            condition = "todo-comments",
+        })
 
-    map.n.leader("rt", function()
-        fzf_lua.grep({ rg_opts = "-Tta " .. fzf_lua.defaults.grep.rg_opts })
-    end, "Search all non-test files")
+        map.n.leader("rt", function()
+            fzf_lua.grep({ rg_opts = "-Tta " .. fzf_lua.defaults.grep.rg_opts })
+        end, "Search all non-test files")
 
-    local project_dir = vim.fn.isdirectory(vim.fs.normalize("~/repos")) == 1 and "~/repos" or "~/projects"
-    local depth = project_dir == "~/projects" and 2 or 1
+        local project_dir = vim.fn.isdirectory(vim.fs.normalize("~/repos")) == 1 and "~/repos" or "~/projects"
+        local depth = project_dir == "~/projects" and 2 or 1
 
-    map.leader("n", "pf", project_files(project_dir, { maxdepth = depth }), "Search all local repository files")
+        map.leader("n", "pf", project_files(project_dir, { maxdepth = depth }), "Search all local repository files")
 
-    fzf_lua.register_ui_select(function(_, items)
-        local min_height, max_height = 0.15, 0.70
-        local height = (#items + 4) / vim.o.lines
-        height = math.min(math.max(height, min_height), max_height)
+        fzf_lua.register_ui_select(function(_, items)
+            local min_height, max_height = 0.15, 0.70
+            local height = (#items + 4) / vim.o.lines
+            height = math.min(math.max(height, min_height), max_height)
 
-        return { winopts = { height = height, width = 0.33, row = 0.40 } }
-    end)
-
+            return { winopts = { height = height, width = 0.33, row = 0.40 } }
+        end)
     end,
 }

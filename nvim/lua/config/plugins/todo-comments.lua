@@ -1,5 +1,5 @@
 return {
-    "folke/todo-comments.nvim", 
+    "folke/todo-comments.nvim",
     config = function()
         local todo_comments = require("todo-comments")
         local map = require("config.map")
