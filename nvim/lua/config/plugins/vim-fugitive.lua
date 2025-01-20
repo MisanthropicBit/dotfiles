@@ -15,6 +15,9 @@ return {
         map.n.leader("gos", "<cmd>Gsp origin/master:%<cr>")
         map.n.leader("gov", "<cmd>Gvs origin/master:%<cr>")
         map.n.leader("got", "<cmd>Gtabedit origin/master:%<cr>")
+        map.n.leader("ms", "<cmd>Gsplit origin/master:%<cr>")
+        map.n.leader("mv", "<cmd>Gvsplit origin/master:%<cr>")
+        map.n.leader("mt", "<cmd>Gtabedit origin/master:%<cr>")
         map.leader({ "v", "x" }, "gu", ":GBrowse!<cr>")
 
         map.n("gl", "<cmd>Term git log<cr>")
