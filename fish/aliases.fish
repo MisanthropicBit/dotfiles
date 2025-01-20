@@ -92,9 +92,8 @@ function dh -d "Fuzzy search directory history"
 end
 
 function sp -d "Fuzzy search projects directory"
-    # alias projects  "fd --type d . ~/projects --maxdepth 2 | fzf"
     set -l result (
-        fd --type d . ~/projects --maxdepth 2 |
+        fd --type d . ~/projects ~/repos --maxdepth 2 |
         fzf --ansi --tiebreak=end --preview='tree -C -L 1 -hp --dirsfirst {1}'
     ); and cd "$result"
 end
