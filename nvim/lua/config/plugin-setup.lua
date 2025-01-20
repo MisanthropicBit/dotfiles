@@ -31,6 +31,9 @@ require("lazy").setup({
         patterns = {
             "docs",
             "winmove",
+            "warlock",
+            "neotest-jest",
+            "neotest-busted",
         },
         fallback = true,
     }
