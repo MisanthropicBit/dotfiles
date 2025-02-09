@@ -34,6 +34,7 @@ require("lazy").setup({
             "warlock",
             "neotest-jest",
             "neotest-busted",
+            "fzf-lua-ast-grep",
         },
         fallback = true,
     }
