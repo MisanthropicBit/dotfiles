@@ -111,6 +111,9 @@ local preferred_colorschemes = normalize_weights({
     "tokyonight-night",
     "visual_studio_code",
     { "mayu", weight = 0.05 },
+    "obscure.nvim",
+    "chocolatier.nvim",
+    "oldworld.nvim",
 })
 
 ---@param weighted_choices table<string | table>

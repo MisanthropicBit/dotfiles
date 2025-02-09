@@ -15,4 +15,7 @@ return {
     "tiagovla/tokyodark.nvim",
     "MyyPo/borrowed.nvim",
     { dir = "~/projects/nvim/warlock.nvim" },
+    { "killitar/obscure.nvim" },
+    { "qaptoR-nvim/chocolatier.nvim" },
+    { "dgox16/oldworld.nvim" },
 }
