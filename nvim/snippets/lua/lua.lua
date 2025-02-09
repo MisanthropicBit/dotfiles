@@ -16,7 +16,7 @@ return {
     s("req", fmt('local {} = require("{}")', { i(1), i(2) })),
     s("rm", fmt('local {} = require("{}.{}")', { i(1), i(2), f(lower, 1) })),
     s("pc", fmt('local ok, {} = pcall({})', { i(1), i(2) })),
-    s("pr", fmt('local has_{}, {} = pcall(require, "{}")', { i(1), rep(1), i(2) })),
+    s("pr", fmt('local {}, {} = pcall(require, "{}")', { i(1), i(2), i(3) })),
     s("lf", fmt([[local function {}({})
     {}
 end]], { i(1), i(2), i(3) })),
@@ -47,10 +47,14 @@ return {}]], { i(1, "M"), i(2), rep(1) })),
     s("ti", fmt("table.insert({}{})", { i(1), c(2, { t(""), sn(nil, { t(", {}") } ) }) })),
     s("tr", fmt("table.remove({}{})", { i(1), c(2, { t(""), t(", {}") }) })),
     s("tc", fmt("table.concat({}{})", { i(1), c(2, { t(""), t(", {}") }) })),
+    s("te", fmt("vim.tbl_extend({}{})", { i(1), c(2, { t(""), t(", {}") }) })),
+    s("tde", fmt("vim.tbl_deep_extend({}{})", { i(1), c(2, { t(""), t(", {}") }) })),
     s("le", fmt("vim.list_extend({}, {})", { i(1), i(2) })),
     s("ls", fmt("vim.list_slice({}, {}, {})", { i(1), i(2), i(3) })),
     s("rt", t("return")),
     s("rn", t("return nil")),
+    s("rf", t("return false")),
+    s("ru", t("return true")),
 
     -- Busted
     s("bfe", fmt([[before_each(function()
