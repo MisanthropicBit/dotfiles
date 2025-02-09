@@ -11,6 +11,7 @@ return {
             { "negative", "positive" },
             { "public", "private", "protected" },
             { "const", "let" },
+            { "force", "keep", "error" }, -- vim.tbl_extend behaviours
         },
     },
 }
