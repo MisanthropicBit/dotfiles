@@ -1,8 +1,8 @@
 return {
-    "nvim-treesitter/nvim-treesitter", 
+    "nvim-treesitter/nvim-treesitter",
     config = function()
         local map = require("config.map")
-        local ts = require("config.treesitter")
+        local ts = require("config.treesitter.utils")
 
         -- Temporary fix for https://github.com/nvim-treesitter/nvim-treesitter/issues/3232
         require("nvim-treesitter.install").prefer_git = true

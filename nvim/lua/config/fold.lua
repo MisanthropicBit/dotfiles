@@ -1,5 +1,5 @@
 local icons = require("config.icons")
-local ts = require("config.treesitter")
+local ts = require("config.treesitter.utils")
 
 local has_ts_utils, ts_utils = pcall(require, "nvim-treesitter.ts_utils")
 
