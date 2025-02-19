@@ -1,5 +1,5 @@
 return {
-    "rgroli/other.nvim", 
+    "rgroli/other.nvim",
     config = function()
         local jsMainTarget = {
             target = "%1/%2.js",
@@ -36,6 +36,11 @@ return {
             context = "ts integration test (backend)",
         }
 
+        local tsIntegrationTestSnapshotTarget = {
+            target = "%1/__snapshots__/%2.it.ts.snap",
+            context = "ts integration test snapshot",
+        }
+
         require("other-nvim").setup({
             rememberBuffers = false,
             mappings = {
@@ -58,6 +63,7 @@ return {
                         tsBackendIntegrationTestTarget,
                         jsTestTarget,
                         jsIntegrationTestTarget,
+                        tsIntegrationTestSnapshotTarget,
                         {
                             target = "%1/%2.it.test.js",
                             context = "js integration test (backend)",
@@ -104,6 +110,7 @@ return {
                         tsMainTarget,
                         jsTestTarget,
                         tsTestTarget,
+                        tsIntegrationTestSnapshotTarget,
                     },
                 },
                 {
@@ -114,6 +121,7 @@ return {
                         tsMainTarget,
                         jsTestTarget,
                         tsTestTarget,
+                        tsIntegrationTestSnapshotTarget,
                     },
                 },
                 {

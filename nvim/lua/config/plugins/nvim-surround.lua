@@ -1,5 +1,5 @@
 return {
-    "kylechui/nvim-surround", 
+    "kylechui/nvim-surround",
     config = function()
         local surround = require("nvim-surround")
         local defaults = require("nvim-surround.config").default_opts

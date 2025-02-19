@@ -12,6 +12,7 @@ return {
             { "public", "private", "protected" },
             { "const", "let" },
             { "force", "keep", "error" }, -- vim.tbl_extend behaviours
+            { "continue", "break" },
         },
     },
 }
