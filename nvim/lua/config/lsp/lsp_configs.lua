@@ -66,8 +66,6 @@ local lsp_configs = {
                     workspace = {
                         library = {
                             vim.env.VIMRUNTIME,
-                            vim.fs.normalize("~/.vim-plug/neotest/lua"),
-                            vim.fs.normalize("~/.vim-plug/plenary.nvim/lua"),
                             vim.fs.normalize("~/.hammerspoon/Spoons/EmmyLua.spoon/annotations"),
                         },
                         maxPreload = 3000,
@@ -153,7 +151,13 @@ local lsp_configs = {
         condition = function()
             return vim.fn.executable("marksman")
         end,
-    }
+    },
+    harper_ls = {
+        condition = function()
+            return vim.fn.executable("harper-ls") == 1
+        end,
+        config = {},
+    },
 }
 
 local function setup_lsp_server(name, server_config)
