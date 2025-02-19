@@ -6,14 +6,31 @@ local function find_git_conflict_marker(dir)
     vim.fn.search(conflict_marker_regex, dir == 1 and "w" or "bw")
 end
 
+-- Root directory markers
+local markers = {
+    ".editorconfig",
+    ".eslintrc",
+    ".git",
+    ".gitignore",
+    "Dockerfile",
+    "babel.config.json",
+    "cloudbuild.yaml",
+    "eslint.config.js",
+    "jest.config.js",
+    "package.json",
+    "tsconfig.json",
+}
+
+---@return string?
+local function get_project_root()
+    return vim.fs.basename(vim.fs.root(0, markers))
+end
+
 map.n.leader("<space>", "<cmd>nohl<cr>")
 map.n.leader("w", "<cmd>w<cr>")
 map.n.leader("q", "<cmd>q<cr>")
 map.n.leader("x", "<cmd>x<cr>")
 map.n.leader("Q", "<cmd>qa!<cr>")
-map.n.leader("vs", "<cmd>sp $MYVIMRC<cr>")
-map.n.leader("vv", "<cmd>vsp $MYVIMRC<cr>")
-map.n.leader("vt", "<cmd>tabe $MYVIMRC<cr>")
 map.n.leader("sv", "<cmd>source $MYVIMRC<cr>")
 map.n.leader("1", "1z=", "Correct misspelled word under cursor with the first suggestion")
 map.n.leader("fl", "za")
@@ -28,20 +45,27 @@ end, "Copy tail of current file path")
 map.n.leader("ch", function()
     vim.fn.setreg("+", vim.fn.expand("%:h"))
 end, "Copy head of current file path")
-map.n.leader("cp", function()
+map.n.leader("cf", function()
     vim.fn.setreg("+", vim.fn.expand("%:p"))
-end, "Copy current file path")
+end, "Copy current [f]ull file path")
+map.n.leader("cr", function()
+    vim.fn.setreg("+", get_project_root())
+end, "Copy current repository name")
+map.n.leader("cR", function()
+    vim.fn.setreg("+", ("`%s`"):format(get_project_root()))
+end, "Copy current repository name formatted as inline markdown code")
 map.n.leader("rp", "<cmd>setlocal wrap!<cr>")
 map.n.leader("de", "<cmd>e %:h<cr>")
 map.n.leader("ds", "<cmd>sp %:h<cr>")
 map.n.leader("dv", "<cmd>vs %:h<cr>")
 map.n.leader("dt", "<cmd>tabe %:h<cr>")
+map.n.leader("cp", "<cmd>cprev<cr>")
 map.n.leader("cn", "<cmd>cnext<cr>")
 map.n.leader("ve", "vg_")
 map.n.leader("sa", "ggVGo0")
 map.n.leader("cx", "<cmd>!chmod u+x %<cr>", "Make current file executable by user")
 map.n.leader("yp", "viwp", "Paste last yank over word under cursor")
-map.n.leader("y0", '<cmd>normal! viw"0p<cr>')
+map.n.leader("y0", '<cmd>normal! viw"0p<cr>', "Paste register 0 over word under cursor")
 map.n.leader("mn", function()
     find_git_conflict_marker(1)
 end)
@@ -50,11 +74,12 @@ map.n.leader("mp", function()
 end)
 map.n.leader("yj", function()
     vim.cmd("+" .. vim.v.count .. "yank")
-end)
+end, "Yank line [count] below current line")
 map.n.leader("yk", function()
     vim.cmd("-" .. vim.v.count .. "yank")
-end)
+end, "Yank line [count] above current line")
 map.n.leader("0", "<c-w>=")
+map.n.leader("bb", "<cmd>FzfLua buffers<cr>", { condition = "!fzf-lua" })
 
 map.n("<c-o>", "<c-o>zz")
 map.n("<c-i>", "<c-i>zz")
