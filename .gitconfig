@@ -62,6 +62,7 @@
     filelog = log --name-status --oneline
     fp = fetch --prune
     lp = log -1 -p
+    ls = log -1 --stat
     getfile = !git archive --remote=~$1 HEAD:~$2 ~$3 | tar -x
     graph = !git log --graph --color --abbrev-commit --decorate --date=relative
     issue = "!__git_issue_2945() { git branch -a | grep --color=always "issue-$1"; }; __git_issue_2945"
@@ -76,6 +77,7 @@
     pt = stash push -m "temp"
     puo = push -u origin HEAD
     rcount = rev-list --count @{u}
+    rom = restore --source=origin/master
     rp = reset --patch
     rv = remote -v
     sa = stash apply
