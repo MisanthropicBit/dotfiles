@@ -103,6 +103,13 @@ local function typename_to_quoted_string(args)
     end
 end
 
+local function get_cleaned_filename()
+    local filename = vim.fn.fnamemodify(vim.fn.expand("%"), ":t")
+    local dot_idx, _ = filename:find([[.]], 1, true)
+
+    return filename:sub(1, dot_idx and dot_idx - 1 or #filename)
+end
+
 return {
     -- General
     s("cv", fmta("const <> = <>", { i(1), i(2) })),
@@ -129,7 +136,7 @@ return {
     ),
     s("lj", fmt([[console.log(JSON.stringify({}))]], i(1))),
     s("rt", t("return ")),
-    s("rtf", t("return false")),
+    s("rf", t("return false")),
     s("rtt", t("return true")),
     s("rn", t("return null")),
     s("ru", t("return undefined")),
@@ -185,11 +192,19 @@ return {
     ),
     s("?", fmt("{} ? {} : {}", range(1, 3))),
     s("pa", fmt("Promise.all([{}])", { i(1) })),
+    s("pb", t("Promise<boolean>")),
+    s("pv", t("Promise<void>")),
+    s("pn", t("Promise<number>")),
+    s("pr", t("Promise.resolve()")),
+    s("pm", fmt("Promise<{}>", { i(1) })),
 
     -- Eslint
     s("elnl", fmt([[// eslint-disable-next-line {}]], i(1))),
     s("telnl", fmt([[// eslint-disable-next-line @typescript-eslint/{}]], i(1))),
     s("nea", t("// eslint-disable-next-line @typescript-eslint/no-explicit-any")),
+
+    -- Typescript
+    s("ee", fmt("// @ts-expect-error {}", i(1))),
 
     -- GraphQL
     s("qb", t("GraphQLBoolean")),
@@ -204,10 +219,10 @@ return {
         { trig = "qfi", dscr = "GraphQLField snippet" },
         fmta(
             [[GraphQLField({
-	type: <>,
-	description: '<>',
-	args: <>,
-	resolve: <>
+    type: <>,
+    description: '<>',
+    args: <>,
+    resolve: <>
 })]],
             range(1, 4)
         )
@@ -220,13 +235,13 @@ return {
 import { GraphQLField } from '../extensions/wrappers'
 
 export const <> = new GraphQLObjectType({
-	name: '<>',
-	fields: () =>> ({
-		<>: GraphQLField({
-			type: <>,
-			description: '<>'
-		})
-	})
+    name: '<>',
+    fields: () =>> ({
+        <>: GraphQLField({
+            type: <>,
+            description: '<>'
+        })
+    })
 })]],
             { i(1), f(strip_graphql_type, { 1 }), i(2), i(3), i(4) }
         )
@@ -237,12 +252,12 @@ export const <> = new GraphQLObjectType({
             [[import { GraphQLInputObjectType } from 'graphql'
 
 export const <>InputType = new GraphQLInputObjectType({
-	name: '<>Input',
-	fields: () =>> ({
-		<>: {
-			type: <>
-		}
-	})
+    name: '<>Input',
+    fields: () =>> ({
+        <>: {
+            type: <>
+        }
+    })
 })]],
             { i(1), rep(1), i(2), i(3) }
         )
@@ -269,9 +284,9 @@ export const <>Type = new GraphQLEnumType({
     s(
         { trig = "qef", dscr = "GraphQL expected field test" },
         fmt(
-            [[expect(fields, 'to have key', '{}')
-expect(fields.{}.type.toString(), 'to be', '{}')
-expect(fields.{}.name, 'to be', '{}')]],
+            [[expect(fields).toHaveProperty('{}')
+expect(fields.{}.type.toString()).toBe('{}')
+expect(fields.{}.name).toBe('{}')]],
             {
                 i(1),
                 rep(1),
@@ -411,30 +426,30 @@ import expect from '../../test/unexpected'
 import { <>Type } from './<>-type'
 
 describe('types/<>-type', () =>> {
-	describe('<>Type', () =>> {
-		it('is correct type', () =>> {
-			expect(<>Type, 'to be a', GraphQLObjectType)
-			expect(<>Type.toString(), 'to be', '<>')
-		})
+    describe('<>Type', () =>> {
+        it('is correct type', () =>> {
+            expect(<>Type, 'to be a', GraphQLObjectType)
+            expect(<>Type.toString(), 'to be', '<>')
+        })
 
-		it('has correct name', () =>> {
-			expect(<>Type.name, 'to be', '<>')
-		})
+        it('has correct name', () =>> {
+            expect(<>Type.name, 'to be', '<>')
+        })
 
-		it('has correct fields', () =>> {
-			const fields = <>Type.getFields()
+        it('has correct fields', () =>> {
+            const fields = <>Type.getFields()
 
-			expect(Object.keys(fields), 'to have length', <>)
+            expect(Object.keys(fields), 'to have length', <>)
 
-			expect(fields, 'to have key', '<>')
-			expect(fields.<>.type.toString(), 'to be', '<>')
-			expect(fields.<>.name, 'to be', '<>')
-		})
+            expect(fields, 'to have key', '<>')
+            expect(fields.<>.type.toString(), 'to be', '<>')
+            expect(fields.<>.name, 'to be', '<>')
+        })
 
-		describe('custom resolvers', async () =>> {
+        describe('custom resolvers', async () =>> {
             <>
         })
-	})
+    })
 })]],
             {
                 i(1),
@@ -466,26 +481,26 @@ import expect from '../../test/unexpected'
 import { <>InputType } from './<>-input-type'
 
 describe('types/<>-input-type', function () {
-	describe('<>Input', () =>> {
-		it('is correct type', () =>> {
-			expect(<>InputType, 'to be a', GraphQLInputObjectType)
-			expect(<>InputType.toString(), 'to be', '<>Input')
-		})
+    describe('<>Input', () =>> {
+        it('is correct type', () =>> {
+            expect(<>InputType, 'to be a', GraphQLInputObjectType)
+            expect(<>InputType.toString(), 'to be', '<>Input')
+        })
 
-		it('has correct name', () =>> {
-			expect(<>InputType.name, 'to be', '<>Input')
-		})
+        it('has correct name', () =>> {
+            expect(<>InputType.name, 'to be', '<>Input')
+        })
 
-		it('has correct fields', () =>> {
-			const fields = <>InputType.getFields()
+        it('has correct fields', () =>> {
+            const fields = <>InputType.getFields()
 
-			expect(Object.keys(fields), 'to have length', <>)
+            expect(Object.keys(fields), 'to have length', <>)
 
-			expect(fields, 'to have key', '<>')
-			expect(fields.<>.type.toString(), 'to be', '<>')
-			expect(fields.<>.name, 'to be', '<>')
-		})
-	})
+            expect(fields, 'to have key', '<>')
+            expect(fields.<>.type.toString(), 'to be', '<>')
+            expect(fields.<>.name, 'to be', '<>')
+        })
+    })
 })]],
             {
                 i(1),
@@ -539,7 +554,7 @@ describe('types/enums/<>-type', function () {
         "ar",
         fmta(
             [[async (obj, args, context) =>> {
-	<>
+    <>
 }]],
             i(1)
         )
@@ -607,17 +622,17 @@ const expect = require('../../test/unexpected')
 const sinon = require('sinon')
 
 describe('<>', () =>> {
-	beforeEach(() =>> {
-		<>
-	})
+    beforeEach(() =>> {
+        <>
+    })
 
-	afterEach(async () =>> {
-		<>
-	})
+    afterEach(async () =>> {
+        <>
+    })
 
-	it('<>', async () =>> {
-		<>
-	})
+    it('<>', async () =>> {
+        <>
+    })
 })]],
             range(1, 5)
         )
@@ -633,31 +648,43 @@ const { knex, query } = database
 const { IntegrationDatabaseWrapper } = testUtils
 
 describe('it - db/<>', () =>> {
-	const db = new IntegrationDatabaseWrapper('<>')
-	let querySpy: TypedSinonSpy<<typeof query.knexQuery>>
+    const db = new IntegrationDatabaseWrapper('<>')
+    let querySpy: TypedSinonSpy<<typeof query.knexQuery>>
 
-	beforeEach(async () =>> {
-		await db.checkoutDatabase('<>', { truncateTables: ['<>'] })
+    beforeAll(async () =>> {
+        await db.checkoutDatabase('<>', { truncateTables: ['<>'] })
+    })
 
-		querySpy = sinon.spy(query, 'knexQuery')
-	})
+    beforeEach(async () =>> {
+        await db.query(knex('<>').insert().toQuery(), '<>')
+        querySpy = sinon.spy(query, 'knexQuery')
+    })
 
-	afterEach(async () =>> {
-		sinon.restore()
-		await db.cleanup()
-	})
+    afterEach(async () =>> {
+        sinon.restore()
+        await db.reset()
+    })
 
-	describe('<>', () =>> {
-		it('<>', async () =>> {
-			<>
+    afterAll(async () =>> {
+        await db.cleanup()
+    })
 
-			expect(querySpy.callCount).toBe(1)
-			expect(querySpy.args[0][1].toString()).toEqual('<>')
-		})
-	})
+    describe('<>', () =>> {
+        it('<>', async () =>> {
+            expect(querySpy.callCount).toBe(1)
+            expect(querySpy.args[0][1].toQuery()).toMatchSnapshot()
+        })
+    })
 })]],
             {
-                unpack(range(2, 9)),
+                extras.partial(get_cleaned_filename),
+                i(1),
+                i(2),
+                i(3),
+                rep(3),
+                rep(2),
+                i(4),
+                i(5),
             }
         )
     ),
@@ -678,27 +705,27 @@ const { knex } = database
 const { IntegrationDatabaseWrapper } = testUtils
 
 describe('it - queries/<>', () =>> {
-	const db = new IntegrationDatabaseWrapper('api')
+    const db = new IntegrationDatabaseWrapper('api')
     const query = createQueryRunner({ <> }, [
         `<>`
     ])
     let server: Server
 
-	beforeEach(async () =>> {
-		await db.checkoutDatabase('<>', { truncateTables: ['<>'] })
+    beforeEach(async () =>> {
+        await db.checkoutDatabase('<>', { truncateTables: ['<>'] })
 
-		server = await createServer()
-	})
+        server = await createServer()
+    })
 
-	afterEach(async () =>> {
-		sinon.restore()
-		await stopServer(server)
-		await db.cleanup()
-	})
+    afterEach(async () =>> {
+        sinon.restore()
+        await stopServer(server)
+        await db.cleanup()
+    })
 
-	it('<>', async () =>> {
-		<>
-	})
+    it('<>', async () =>> {
+        <>
+    })
 })]],
             {
                 i(2, "queryName"),
@@ -719,17 +746,17 @@ describe('it - queries/<>', () =>> {
             [[import sinon from 'sinon'
 
 describe('<>', () =>> {
-	beforeEach(() =>> {
-		<>
-	})
+    beforeEach(() =>> {
+        <>
+    })
 
-	afterEach(() =>> {
-		<>
-	})
+    afterEach(() =>> {
+        <>
+    })
 
-	it('<>', async () =>> {
-		<>
-	})
+    it('<>', async () =>> {
+        <>
+    })
 })]],
             range(1, 5)
         )

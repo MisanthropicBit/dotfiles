@@ -15,6 +15,7 @@ local function get_import_export_fmt_args()
                 sn(nil, { t("{ "), i(1), t(" }") }),
                 sn(nil, { t("type { "), i(1), t(" }") }),
                 sn(nil, { t("* as "), i(1) }),
+                sn(nil, { i(1) }),
             }
         ),
         i(1)
