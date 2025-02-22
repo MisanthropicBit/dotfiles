@@ -3,6 +3,7 @@
   "FastFold": { "branch": "master", "commit": "fff6d05064dec4d7e1398aa507db35fcd57edfb4" },
   "LuaSnip": { "branch": "master", "commit": "c9b9a22904c97d0eb69ccb9bab76037838326817" },
   "bamboo.nvim": { "branch": "master", "commit": "0a94f81705733951be286493b8d1876d0e3d990f" },
+  "boole.nvim": { "branch": "main", "commit": "7b4a3dae28e3b2497747aa840439e9493cabdc49" },
   "borrowed.nvim": { "branch": "main", "commit": "0401978220e659b9ad09f7386d8005aff109594d" },
   "calvera-dark.nvim": { "branch": "main", "commit": "84802d0bde047ce79ebfddc1800800f0bd67f37a" },
   "caret.nvim": { "branch": "main", "commit": "62a18089e5eedc329dea7fb5f1436d1c1bf672b1" },
