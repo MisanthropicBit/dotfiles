@@ -56,6 +56,11 @@ if type -q "kubectl"
     kubectl completion fish | source
 end
 
+if type -q "docker"
+    mkdir -p ~/.config/fish/completions
+    docker completion fish > ~/.config/fish/completions/docker.fish
+end
+
 # Use neovim as a pager for manpages
 if type -q "nvim"
     set -x MANPAGER "nvim +Man!"
