@@ -8,4 +8,7 @@ function fish_user_key_bindings
   bind \cs clear-screen
   bind \cl forward-word
   bind \ch backward-word
+  bind \c_ edit_command_buffer
+
+  # TODO: Add binding for ctrl+space with a function that removes the first token
 end
