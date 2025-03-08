@@ -96,8 +96,6 @@ map.n("N", "Nzvzz")
 map.n("<c-t><c-o>", "<cmd>tabonly<cr>")
 map.n("H", "gT")
 map.n("L", "gt")
-map.n("g0", "<cmd>tabnext 1<cr>")
-map.n("g$", "<cmd>tabnext $<cr>")
 map.n("<c-t><c-s>", "<cmd>Term<cr>")
 map.n("<c-t><c-v>", "<cmd>vert Term<cr>")
 map.n("<c-t><c-t>", "<cmd>tab Term<cr>")
@@ -139,6 +137,11 @@ map.n("<c-b><c-l>", function()
     end
 end, "Navigate to last visited buffer or open new window")
 map.n("<bs>", "^")
+map.n("g$", "<cmd>tabnext $<cr>")
+
+for idx = 1, 9 do
+    map.n("g" .. tostring(idx), "<cmd>tabnext " .. tostring(idx) .. "<cr>")
+end
 
 map.i("jk", [["<esc>"]], { expr = true })
 map.i("<c-a>", "<c-o>^", "Move to start of line in insert mode")
