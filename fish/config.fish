@@ -1,11 +1,20 @@
+function fish_hybrid_key_bindings --description "Vi-style bindings that inherit emacs-style bindings in all modes"
+    for mode in default insert visual
+        fish_default_key_bindings -M $mode
+    end
+
+    fish_vi_key_bindings --no-erase
+end
+
+function try_source -a path
+    if test -e "$path"
+        source "$path"
+    end
+end
+
 set --universal fish_color_command 00c5d7 darkcyan
 set --local script_dir (dirname (status -f))
 set --universal PYENV_ROOT "$HOME/.pyenv"
-
-if type -q "fd"
-    set -x FZF_DEFAULT_COMMAND "fd -tf --color=never"
-    set -x FZF_ALT_C_COMMAND "fd -td --color=never"
-end
 
 set -x LANG en.UTF-8
 set -x N_PREFIX ~/.n
@@ -27,21 +36,16 @@ fish_add_path ~/google-cloud-sdk/bin ~/repos/cloud-sql-proxy/
 fish_add_path -p "$N_PREFIX/bin"
 fish_add_path ~/.luarocks/bin /opt/local/share/luarocks/bin
 fish_add_path ~/.cargo/bin
+fish_config prompt choose scales
 
-function fish_hybrid_key_bindings --description "Vi-style bindings that inherit emacs-style bindings in all modes"
-    for mode in default insert visual
-        fish_default_key_bindings -M $mode
-    end
+try_source "$script_dir/aliases.fish"
+try_source "$script_dir/work_aliases.fish"
+try_source "$script_dir/abbreviations.fish"
+try_source "$script_dir/work-config.fish"
 
-    fish_vi_key_bindings --no-erase
-end
-
-if test -e "$script_dir/aliases.fish"
-    source "$script_dir/aliases.fish"
-end
-
-if test -e "~/.work-config.fish"
-    source ~/.work-config.fish
+if type -q "fd"
+    set -x FZF_DEFAULT_COMMAND "fd -tf --color=never"
+    set -x FZF_ALT_C_COMMAND "fd -td --color=never"
 end
 
 if type -q "fzf"
@@ -60,5 +64,3 @@ end
 if test -x pyenv
     status --is-interactive; and source (pyenv init -|psub)
 end
-
-fish_config prompt choose scales
