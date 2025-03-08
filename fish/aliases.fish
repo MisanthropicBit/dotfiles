@@ -4,7 +4,6 @@ alias ..3       "cd ../../.."
 alias ..4       "cd ../../../.."
 alias aliases   "$EDITOR ~/.config/fish/aliases.fish"
 alias c         "pbcopy"
-alias config    "$EDITOR ~/.config/fish/config.fish"
 alias dbox      "~/Dropbox/"
 alias fucking   "sudo"
 alias g         "git"
@@ -216,6 +215,11 @@ function tw -a workspace -d "Set the opentofu workspace"
     if test $status -ne 0
         return $status
     end
+end
+
+function config -d "Select a fish configuration file"
+    fd --type f . ~/.config/fish |
+        fzf --ansi --preview='bat --color=always --style=plain {}' --bind "enter:become($EDITOR {})"
 end
 
 if test -f "$work_aliases"
