@@ -69,7 +69,9 @@ function weather -d "Show the current weather in the terminal"
 end
 
 function npa -d "Run multiple npm scripts"
-    if test (count $argv) -eq 0
+    if test (count $argv) -eq 1; and test "$argv[1]" = "all"
+        npm run build && npm test && npm run lint
+    else if test (count $argv) -eq 0
         npm run
     else
         for script in $argv
