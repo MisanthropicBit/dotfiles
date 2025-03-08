@@ -5,12 +5,12 @@ update_vimrc.sh
 .mypy_cache/
 .vim/.netrwhist
 .vim/plugged/
-fishd.*
-.config/fish/work_aliases.fish
-.config/fish/config.fish.backup
-.config/fish/fish_variables
-.config/fish/functions/__*.fish
 private.vim
 private_plugins.lua
 .vim/lua/config/plugins/local/
 hammerspoon/*.local.json
+fishd.*
+fish/config.fish.backup
+fish/fish_variables
+fish/functions/__*.fish
+fish/work_*.fish
