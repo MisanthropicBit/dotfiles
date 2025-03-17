@@ -1,7 +1,11 @@
 local notify = {}
 
+---@class NotifyOptions
+---@field title string?
+---@field withdrawAfter integer?
+
 ---@param message string
----@param options table<string, any>?
+---@param options NotifyOptions?
 function notify.send(message, options)
     local _options = options or {}
 
@@ -12,6 +16,11 @@ function notify.send(message, options)
             withdrawAfter = _options.withdrawAfter or 2,
         })
         :send()
+end
+
+---@param message string
+function notify.error(message)
+    notify.send(message, { title = "Config error" })
 end
 
 return notify

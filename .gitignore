@@ -8,7 +8,7 @@ update_vimrc.sh
 private.vim
 private_plugins.lua
 .vim/lua/config/plugins/local/
-hammerspoon/*.local.json
+hammerspoon/configs/*.local.json
 fishd.*
 fish/config.fish.backup
 fish/fish_variables

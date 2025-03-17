@@ -1,7 +1,6 @@
 -- Inspired by https://github.com/chrisscott/ZoomSlack
 local slack = {}
 
-local config = require("config")
 local notify = require("notify")
 
 slack.emojis = {
@@ -40,30 +39,6 @@ function slack.updateStatus(text, emoji, expiration, token)
             end
         end
     )
-end
-
-local currentNetwork = hs.wifi.currentNetwork()
-
-if type(config.slack_token) == "string" then
-    ---@diagnostic disable-next-line: unused-local
-    hs.wifi.watcher.new(function(_watcher, message, interface)
-        local newNetwork = hs.wifi.currentNetwork()
-
-        if currentNetwork == nil and newNetwork ~= nil and not config.at_work then
-            slack.updateStatus("Working remotely", slack.emojis.wfh, 0, config.slack_token)
-        end
-    end):watchingFor({ "SSIDChange" }):start()
-
-    ---@diagnostic disable-next-line: unused-local
-    hs.application.watcher.new(function(name, event, app)
-        if name == "Slack" and event == hs.application.watcher.launched then
-            if not config.at_work then
-                slack.updateStatus("Working remotely", slack.emojis.wfh, 0, config.slack_token)
-            end
-        end
-    end)
-else
-    notify.send("Missing slack token in configuration")
 end
 
 return slack

@@ -1,20 +1,7 @@
-local function reloadConfig(files)
-    for _, file in pairs(files) do
-        if file:sub(-4) == ".lua" then
-            hs.reload()
-            break
-        end
-    end
-end
+local config = require("config")
 
-require("hyper")
+config.read_default()
 
-hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
-
-hs.notify
-    .new({
-        title = "Hammerspoon",
-        informativeText = "Config loaded",
-        withdrawAfter = 2,
-    })
-    :send()
+require("hyper").init()
+require("autoreload").init()
+require("slack_status").init()
