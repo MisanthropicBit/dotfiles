@@ -55,7 +55,6 @@ function config.read(path)
     local config_path = path or default_path
     local ok_default, config_json = pcall(read_json_file, config_path)
 
-    print(hs.inspect(config_json))
     local local_path = get_local_path_from_path(config_path)
     local ok_default_local, local_config_json = pcall(read_json_file, local_path)
 

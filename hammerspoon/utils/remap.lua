@@ -14,11 +14,14 @@ function remap.set(src_code, dst_code, devices)
         local result = handle:read("*a")
 
         if result ~= "(null)\n" then
+            -- Assume it has already been set
             handle:close()
-            return false
+            return true
         end
 
         handle:close()
+    else
+        return false
     end
 
     -- Credit: https://github.com/Hammerspoon/hammerspoon/issues/3512#issuecomment-1661977782
