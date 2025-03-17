@@ -45,8 +45,17 @@ local function remapKey(src_code, dst_code, devices)
     end
 end
 
+---@class HyperConfigKeyMap
+---@field key     string
+---@field type   "launch" | "bundleId" | "caffeinate"
+---@field target string
+
+---@class HyperConfig
+---@field strategy "merge"
+---@field keymaps HyperConfigKeyMap[]
+
 ---@param relative_path string
----@return table<string, string>
+---@return HyperConfig
 local function loadHyperConfig(relative_path)
     local local_config_path = relative_path:sub(1, -6) .. ".local.json"
     local hyper_config = hs.json.read(local_config_path)
@@ -76,33 +85,42 @@ if hyper_config == nil then
     return
 end
 
-local hyper = hs.hotkey.modal.new()
+-- Create a new model state that cannot be activated but lets us manually
+-- toggle it and bind stateful keybinds to it
+local hyper = hs.hotkey.modal.new({}, nil)
 
+-- A global hotkey for toggling the above model state. Using hidutil, capslock
+-- is remapped to F18
 hs.hotkey.bind({}, "F18", function()
     hyper:enter()
 end, function()
     hyper:exit()
 end)
 
-for _, config in ipairs(hyper_config.keymaps) do
-    local action
+local keymap_actions = {
+  launch = hs.application.launchOrFocus,
+  bundleId = hs.application.launchOrFocusByBundleID,
+  caffeinate = hs.caffeinate,
+}
 
-    if config.launch then
-        action = hs.application.launchOrFocus
-    elseif config.bundleId then
-        action = hs.application.launchOrFocusByBundleID
-    elseif config.caffeinate then
-        action = hs.caffeinate
-    else
+for _, keymap in ipairs(hyper_config.keymaps) do
+    local action = keymap_actions[keymap.type]
+    local target = keymap.target
+
+    if not action then
         hs.notify
             .new({
                 title = "Hammerspoon",
-                informativeText = ("Error: Unknown hyper action for key '%s'"):format(config.key),
+                informativeText = ("Error: Unknown hyper action for key '%s'"):format(keymap.key),
             })
             :send()
     end
 
-    hyper:bind({}, config.key, function()
-        action(config.launch)
+    hyper:bind({}, keymap.key, function()
+        if keymap.type == "caffeinate" then
+            hs.caffeinate[target]()
+        else
+            action(target)
+        end
     end)
 end
