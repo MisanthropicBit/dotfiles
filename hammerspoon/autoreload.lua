@@ -2,6 +2,7 @@ local autoreload = {}
 
 local notify = require("notify")
 
+---@param files string[]
 local function reloadConfig(files)
     for _, file in pairs(files) do
         if file:sub(-4) == ".lua" then

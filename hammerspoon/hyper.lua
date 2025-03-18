@@ -1,6 +1,7 @@
 local hyper = {}
 
 local config = require("config")
+local HyperMode = require("hyper_mode")
 local notify = require("notify")
 local remap = require("utils.remap")
 
@@ -55,10 +56,10 @@ local function setupHyperKey(hyperKeyConfig)
             return
         end
 
-        local sourceId = tonumber(hyperRemap.source)
-        local targetId = tonumber(hyperRemap.target)
+        local sourceId = hyperRemap.source
+        local targetId = hyperRemap.target
 
-        if not sourceId or not targetId then
+        if type(sourceId) ~= "number" or type(targetId) ~= "number" then
             notify.error("Hyper config remap has invalid 'source' and/or 'target' number")
             return
         end
@@ -75,24 +76,13 @@ local function setupHyperKey(hyperKeyConfig)
         end
     end
 
-    -- Create a new modal state that cannot be activated but lets us manually
-    -- toggle it and bind stateful keybinds to it
-    local hyperMode = hs.hotkey.modal.new({}, nil)
-
-    -- A global hotkey for toggling the above model state. Using hidutil, capslock
-    -- is remapped to F18
-    hs.hotkey.bind({}, hyperKeyConfig.hyperKey, function()
-        hyperMode:enter()
-    end, function()
-        hyperMode:exit()
-    end)
+    local hyperMode = HyperMode.new(hyperKeyConfig.hyperKey)
 
     bindHyperKeys(hyperMode, hyperKeyConfig.keymaps)
 end
 
 function hyper.init()
-    local path = os.getenv("HOME") .. "/.hammerspoon/configs/hyper.json"
-
+    local path = "configs.hyper"
     local hyperConfig = config.read(path)
 
     if hyperConfig == nil then
