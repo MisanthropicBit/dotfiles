@@ -69,15 +69,22 @@ function weather -d "Show the current weather in the terminal"
 end
 
 function npa -d "Run multiple npm scripts"
+    argparse --name="npa" "c/continue" -- $argv
+
+    set -l scripts $argv
+
     if test (count $argv) -eq 1; and test "$argv[1]" = "all"
-        npm run build && npm test && npm run lint
+        set scripts build test lint
     else if test (count $argv) -eq 0
         npm run
-    else
-        for script in $argv
-            npm run "$script"
+        return 0
+    end
 
-            if test $status -gt 0
+    for script in $scripts
+        npm run "$script"
+
+        if test $status -gt 0
+            if test -z $_flag_continue
                 break
             end
         end
