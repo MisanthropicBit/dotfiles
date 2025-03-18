@@ -24,7 +24,7 @@ local old_vim_ui_input
 -- TODO: Add footer in 0.10
 local default_win_config = {
     relative = "editor",
-    title = {{ " Input", "Title" }},
+    title = " Input",
     title_pos = "left",
     noautocmd = true,
     prompt = icons.misc.prompt .. "_ ",

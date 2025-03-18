@@ -38,6 +38,30 @@ return {
             end
         end
 
+        local function create_select_args_func(default_args)
+            return function()
+                return coroutine.create(function(dap_run_co)
+                    local _default_args = type(default_args) == "string" and #default_args > 0 and default_args or nil
+
+                    vim.ui.input({
+                        prompt = "Program arguments " .. icons.misc.prompt .. " ",
+                        default = _default_args,
+                        completion = "file",
+                        title = " Program arguments",
+                    },
+                    function(input)
+                        local args = {}
+
+                        for word in input:gmatch("%S+") do
+                            table.insert(args, word)
+                        end
+
+                        coroutine.resume(dap_run_co, args)
+                    end)
+                end)
+            end
+        end
+
         local function conditional_breakpoint()
             dap.set_breakpoint(vim.fn.input("Breakpoint condition " .. icons.misc.prompt))
         end
@@ -66,12 +90,14 @@ return {
         })
 
         dap.adapters.codelldb = {
-            type = "server",
-            port = "${port}",
-            executable = {
-                command = vim.fs.normalize("~/packages/codelldb/extension/adapter/codelldb"),
-                args = { "--port", "${port}" },
-            },
+            type = "executable",
+            command = vim.fs.normalize("~/packages/codelldb/extension/adapter/codelldb"),
+        }
+
+        dap.adapters.lldb = {
+            type = "executable",
+            command = "/usr/local/opt/llvm/bin/lldb-dap",
+            name = "lldb",
         }
 
         dap.adapters["local-lua"] = {
@@ -99,7 +125,7 @@ return {
                     request = "launch",
                     name = "Launch server",
                     runtimeExecutable = "npm",
-                    runtimeArgs = { "run", "start-env" },
+                    runtimeArgs = create_select_args_func("run start-env"),
                     skipFiles = { "node_modules/**" },
                     console = "integratedTerminal",
                     cwd = "${workspaceFolder}",
@@ -109,30 +135,23 @@ return {
 
         dap.configurations.cpp = {
             {
-                name = "Launch file",
+                name = "Debug with codelldb",
                 type = "codelldb",
                 request = "launch",
                 program = select_executable,
                 cwd = "${workspaceFolder}",
                 stopOnEntry = false,
-                args = function()
-                    return coroutine.create(function(dap_run_co)
-                        vim.ui.input({
-                            prompt = "Program arguments " .. icons.misc.prompt .. " ",
-                            completion = "file",
-                        },
-                        function(input)
-                            local args = {}
-
-                            for word in input:gmatch("%S+") do
-                                table.insert(args, word)
-                            end
-
-                            coroutine.resume(dap_run_co, args)
-                        end)
-                    end)
-                end,
+                args = create_select_args_func(),
             },
+            {
+                name = "Debug with lldb",
+                type = "lldb",
+                request = "launch",
+                program = select_executable,
+                cwd = "${workspaceFolder}",
+                stopOnEntry = false,
+                args = create_select_args_func(),
+            }
         }
 
         dap.configurations.lua = {
