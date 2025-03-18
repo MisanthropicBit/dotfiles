@@ -29,6 +29,7 @@ set -x FZF_CTRL_T_OPTS '--multi --bind="ctrl-s:select,ctrl-u:deselect,ctrl-f:rel
 set -x FZF_DEFAULT_OPTS "--color='pointer:bright-blue,marker:bright-green' --height=50% --pointer='󰜴 ' --marker=' ' --bind='ctrl-n:preview-page-down,ctrl-p:preview-page-up' --cycle"
 set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
 set -x HOMEBREW_NO_ANALYTICS 1
+set -x MINIKUBE_IN_STYLE false
 
 fish_add_path /opt/local/bin /usr/local/bin /opt/homebrew/bin
 fish_add_path ~/.npm-global/bin "$PYENV_ROOT/bin" ~/projects/c/terminal_blocks
