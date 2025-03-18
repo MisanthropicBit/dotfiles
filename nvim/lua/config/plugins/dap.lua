@@ -23,7 +23,7 @@ return {
         if fzf_lua_loaded then
             select_executable = function()
                 return coroutine.create(function(dap_run_co)
-                    fzf_lua_core.fzf_exec("fd --type executable", {
+                    fzf_lua_core.fzf_exec("fd --no-ignore --type executable", {
                         prompt = select_executable_prompt,
                         cwd = vim.fn.getcwd(),
                         winopts = { width = 0.6, height = 0.5 },
