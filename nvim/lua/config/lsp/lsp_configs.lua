@@ -9,7 +9,6 @@ require("neodev").setup({
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
 
-
 local function organize_imports()
     local params = {
         command = "_typescript.organizeImports",
@@ -19,13 +18,25 @@ local function organize_imports()
     vim.lsp.buf.execute_command(params)
 end
 
+local function get_clangd_command()
+    if vim.fn.executable("clangd") == 1 then
+        return "clangd"
+    elseif vim.fn.executable("clangd-mp-11") == 1 then
+        return "clangd-mp-11"
+    end
+
+    return nil
+end
+
 local lsp_configs = {
     clangd = {
         condition = function()
-            return vim.fn.executable("clangd-mp-11") == 1
+            return get_clangd_command() ~= nil
         end,
+        root_markers = { ".clangd", "compile_commands.json" },
+        filetypes = { "c", "cpp" },
         config = {
-            cmd = { "clangd-mp-11" },
+            cmd = { get_clangd_command() },
         }
     },
     ts_ls = {
