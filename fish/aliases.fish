@@ -227,7 +227,7 @@ function tw -a workspace -d "Set the opentofu workspace"
 end
 
 function config -d "Select a fish configuration file"
-    fd --type f . ~/.config/fish |
+    fd --type f --follow . ~/.config/fish |
         fzf --ansi --preview='bat --color=always --style=plain {}' --bind "enter:become($EDITOR {})"
 end
 
