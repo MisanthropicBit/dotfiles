@@ -73,7 +73,6 @@ done
 
 symlink_install "fish/aliases.fish" "$script_dir" "$HOME/.config"
 symlink_install "fish/config.fish" "$script_dir" "$HOME/.config"
-symlink_install "fish/functions/fish_user_key_bindings.fish" "$script_dir" "$HOME/.config"
 
 if [[ -x "brew" ]]; then
     info "Installing homebrew packages"

@@ -42,6 +42,7 @@ try_source "$script_dir/aliases.fish"
 try_source "$script_dir/work_aliases.fish"
 try_source "$script_dir/abbreviations.fish"
 try_source "$script_dir/work-config.fish"
+try_source "$script_dir/key-bindings.fish"
 
 if type -q "fd"
     set -x FZF_DEFAULT_COMMAND "fd -tf --color=never"
