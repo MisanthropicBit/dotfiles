@@ -77,7 +77,7 @@ symlink_install "fish/functions/fish_user_key_bindings.fish" "$script_dir" "$HOM
 
 if [[ -x "brew" ]]; then
     info "Installing homebrew packages"
-    brew install bat delta fd fzf lua-language-server marksman neovim ninja node ripgrep
+    brew install bat delta fd fzf lua-language-server marksman neovim ninja node ripgrep starship
 else
     warn "Homebrew not installed, not installing packages"
 fi

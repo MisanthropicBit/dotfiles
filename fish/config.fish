@@ -37,7 +37,6 @@ fish_add_path ~/google-cloud-sdk/bin ~/repos/cloud-sql-proxy/
 fish_add_path -p "$N_PREFIX/bin"
 fish_add_path ~/.luarocks/bin /opt/local/share/luarocks/bin
 fish_add_path ~/.cargo/bin
-fish_config prompt choose scales
 
 try_source "$script_dir/aliases.fish"
 try_source "$script_dir/work_aliases.fish"
@@ -69,4 +68,10 @@ end
 
 if test -x pyenv
     status --is-interactive; and source (pyenv init -|psub)
+end
+
+if type -q starship
+    starship init fish | source
+else
+    fish_config prompt choose scales
 end

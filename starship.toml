@@ -1,0 +1,30 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+
+format = """$directory$git_state$git_branch$git_status$jobs$kubernetes$status
+$character"""
+
+right_format = """$cmake$container$docker_context$package$nodejs$gcloud$terraform"""
+
+[character]
+success_symbol = '[](bold green)'
+error_symbol = '[](bold red)'
+
+[directory]
+fish_style_pwd_dir_length = 3
+truncate_to_repo = false
+
+[jobs]
+number_threshold = 1
+symbol = "󰒲 "
+
+[git_branch]
+style = 'bold green'
+
+[git_status]
+style = 'bold yellow'
+up_to_date = ''
+ahead = '⇡${count}'
+behind = '⇣${count}'
+diverged = '⇡${ahead_count}⇣${behind_count}'
