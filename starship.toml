@@ -2,29 +2,42 @@
 
 add_newline = true
 
-format = """$directory$git_state$git_branch$git_status$jobs$kubernetes$status
+format = """$directory$git_state$git_branch$git_status$jobs$status
 $character"""
 
-right_format = """$cmake$container$docker_context$package$nodejs$gcloud$terraform"""
+right_format = """$cmake$container$docker_context$nodejs$kubernetes$gcloud$terraform"""
 
 [character]
 success_symbol = '[](bold green)'
 error_symbol = '[](bold red)'
 
 [directory]
-fish_style_pwd_dir_length = 3
-truncate_to_repo = false
+truncate_to_repo = true
+style = 'bold purple'
+format = '[$path]($style)[$read_only]($read_only_style) '
 
 [jobs]
 number_threshold = 1
 symbol = "󰒲 "
 
 [git_branch]
-style = 'bold green'
+style = 'bold yellow'
 
 [git_status]
+format = '([$conflicted$stashed$modified$staged$ahead_behind]($style) ) '
 style = 'bold yellow'
-up_to_date = ''
-ahead = '⇡${count}'
-behind = '⇣${count}'
-diverged = '⇡${ahead_count}⇣${behind_count}'
+up_to_date = '[](bold green)'
+ahead = '[⇡${count}](bold green)'
+behind = '[⇣${count}](bold red)'
+diverged = '[⇡${ahead_count}](bold green)[⇣${behind_count}](bold red)'
+
+[nodejs]
+format = '[](bold purple)[$symbol($version)]($style)[](bold purple) '
+
+[gcloud]
+symbol = ' '
+format = '[](bold purple)[$symbol $project]($style)[](bold purple) '
+
+[kubernetes]
+disabled = false
+format = '[](bold purple)[$symbol$context( \($namespace\))]($style)[](bold purple) '
