@@ -43,8 +43,9 @@
     b = !fish -c git_fzf_branches
     ba = branch -a
     br = branch
+    bc = branch --show-current
     bs = !git br --list -vv $(git br --show-current)
-    browse = !nvim --headless -c 'GBrowse | quit' > /dev/null 2>&1
+    browse = !gh browse
     ca = commit --amend
     cf = !git show --pretty="format:" --name-status
     cm = commit -m
@@ -73,7 +74,7 @@
     mt = "!nvim -c DiffviewOpen"
     mp = !git checkout master && git pull
     p = pull
-    pr = '!f() { git fetch ${2:-upstream}refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f'
+    pr = "!~/repos/work-scripts/pr.fish"
     pt = stash push -m "temp"
     puo = push -u origin HEAD
     rcount = rev-list --count @{u}
