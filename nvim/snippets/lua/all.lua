@@ -1,5 +1,6 @@
 local ls = require("luasnip")
 local c = ls.choice_node
+local f = ls.function_node
 local s = ls.snippet
 local i = ls.insert_node
 local t = ls.text_node
@@ -66,6 +67,10 @@ local function todo_snippet(trig)
     return s(trig, fmt("{}: {}", { alias_choices, i(2) }))
 end
 
+local function get_iso_datetime()
+   return os.date("%Y-%m-%dT%H:%M:%SZ")
+end
+
 return {
     todo_snippet("todo"),
     todo_snippet("fix"),
@@ -73,4 +78,8 @@ return {
     todo_snippet("warn"),
     todo_snippet("perf"),
     todo_snippet("note"),
+    s(
+        { trig = "iso", dscr = "Insert the current date and time formatted as an ISO datetime string" },
+        f(get_iso_datetime)
+    )
 }
