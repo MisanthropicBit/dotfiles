@@ -13,6 +13,7 @@ return {
             { "const", "let" },
             { "force", "keep", "error" }, -- vim.tbl_extend behaviours
             { "continue", "break" },
+            { "type", "interface" },
         },
     },
 }
