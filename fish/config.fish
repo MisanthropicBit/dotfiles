@@ -74,6 +74,7 @@ if test -x pyenv
 end
 
 if type -q starship
+    starship completions fish | source
     starship init fish | source
 else
     fish_config prompt choose scales
