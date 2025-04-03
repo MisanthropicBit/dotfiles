@@ -9,6 +9,7 @@ private.vim
 private_plugins.lua
 .vim/lua/config/plugins/local/
 hammerspoon/configs/*.local.json
+hammerspoon/configs/*_local.lua
 fishd.*
 fish/config.fish.backup
 fish/fish_variables
