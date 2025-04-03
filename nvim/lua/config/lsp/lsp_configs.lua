@@ -160,7 +160,7 @@ local lsp_configs = {
     },
     marksman = {
         condition = function()
-            return vim.fn.executable("marksman")
+            return vim.fn.executable("marksman") == 1
         end,
     },
     harper_ls = {
