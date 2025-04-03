@@ -233,4 +233,20 @@ end
 
 if test -f "$work_aliases"
     source "$work_aliases"
+function tag_changes -d "Generate a slack message of changes between the two most recent tags"
+    set -f tags (git tag --sort=-version:refname | head -2)
+
+    if test (count $tags) -ne 2
+        printf "Need at least two tags\n"
+        return 1
+    end
+
+    set -f changes (git log --no-merges --format="%s" "$tags[2]..$tags[1]~1" | string replace --regex " \(#\d+\)" "")
+    set -f repo (basename (pwd))
+
+    printf "@$COMPANY_NAME/$repo@$tags[1]:\n"
+
+    for change in $changes
+        printf "* $change\n"
+    end
 end
