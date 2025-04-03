@@ -1,44 +1,66 @@
 -- Inspired by https://github.com/chrisscott/ZoomSlack
 local slack = {}
 
+local config = require("config")
 local notify = require("notify")
 
 slack.emojis = {
+    away = "🏃",
+    doctor = "🏥",
     clear = "",
     lunch = "🍽",
-    wfh = "🏠",
+    wfh = "🏡",
 }
+
+local function getSlackHeaders()
+    return {
+        ["Authorization"] = "Bearer " .. config.slack_token,
+        ["Content-Type"] = "application/json; charset=utf-8",
+    }
+end
+
+---@param http_code integer
+---@param body table
+local function handleSlackResponse(http_code, body)
+    local result = hs.json.decode(body)
+    local failed = http_code ~= 200 or (result and not result.ok)
+
+    if failed then
+        print(http_code, hs.inspect(body))
+        notify.send(result and result.error or "No context", { title = "Setting Slack Status Failed!" })
+
+        return false
+    end
+end
+
+---@param endpoint string
+---@param body table
+local function postRequest(endpoint, body)
+    hs.http.asyncPost(endpoint, hs.json.encode(body), getSlackHeaders(), handleSlackResponse)
+end
 
 ---@param text string
 ---@param emoji string
----@param expiration integer
----@param token string
-function slack.updateStatus(text, emoji, expiration, token)
-    local json = {
+---@param expiration integer? Expiration of status in seconds
+function slack.updateStatus(text, emoji, expiration)
+    if type(expiration) == "number" and expiration > 0 then
+        expiration = os.time() + expiration
+    end
+
+    local body = {
         profile = {
             status_text = text,
             status_emoji = emoji,
-            status_expiration = expiration
-        }
+            status_expiration = expiration,
+        },
     }
 
-    hs.http.asyncPost(
-        "https://slack.com/api/users.profile.set",
-        hs.json.encode(json),
-        {
-            ["Authorization"] = "Bearer " .. token,
-            ["Content-type"] = "application/json; charset=utf-8"
-        },
-        function(http_code, body)
-            local result = hs.json.decode(body)
-            local failed = (http_code == 200 and result and not result.ok) or (http_code ~= 200)
+    postRequest("https://slack.com/api/users.profile.set", body)
+end
 
-            if failed then
-                notify.send(result and result.error or "No context", { title = "Setting Slack Status Failed!" })
-                return false
-            end
-        end
-    )
+---@param presence "auto" | "away"
+function slack.setPresence(presence)
+    postRequest("https://slack.com/api/users.setPresence", { presence = presence })
 end
 
 return slack
