@@ -2,12 +2,14 @@ function is_kubectl_command -a token
     set -f kubectl_alias_keys\
         "cc"\
         "shell"\
-        "taints"
+        "taints"\
+        "podevents"
 
     set -f kubectl_alias_values\
         "config current-context"\
         "exec --stdin --tty % -- /bin/bash"\
-        "get node % -o jsonpath='{.metadata.labels} {.spec.taints}' | jq"
+        "get node % -o jsonpath='{.metadata.labels} {.spec.taints}' | jq"\
+        "events --for=pod/%"
 
     set -l is_kubectl_cmd (string match --regex "^(kc|kubectl)" (commandline --current-buffer))
 
@@ -25,3 +27,4 @@ end
 abbr --add cc --position anywhere --function is_kubectl_command
 abbr --add shell --position anywhere --function is_kubectl_command --set-cursor="%"
 abbr --add taints --position anywhere --function is_kubectl_command --set-cursor="%"
+abbr --add podevents --position anywhere --function is_kubectl_command --set-cursor="%"
