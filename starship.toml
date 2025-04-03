@@ -2,14 +2,28 @@
 
 add_newline = true
 
-format = """$directory$git_state$git_branch$git_status$jobs$status
+format = """$directory\
+$git_state\
+$git_branch\
+$git_status\
+$jobs\
+$status\
+$fill\
+$cmake\
+$container\
+$docker_context\
+$nodejs\
+$kubernetes\
+$gcloud\
+$terraform
 $character"""
-
-right_format = """$cmake$container$docker_context$nodejs$kubernetes$gcloud$terraform"""
 
 [character]
 success_symbol = '[](bold green)'
 error_symbol = '[](bold red)'
+
+[fill]
+symbol = ' '
 
 [directory]
 truncate_to_repo = true
@@ -27,6 +41,7 @@ style = 'bold yellow'
 format = '([$conflicted$stashed$modified$staged$ahead_behind]($style) ) '
 style = 'bold yellow'
 up_to_date = '[](bold green)'
+stashed = '󰀼 '
 ahead = '[⇡${count}](bold green)'
 behind = '[⇣${count}](bold red)'
 diverged = '[⇡${ahead_count}](bold green)[⇣${behind_count}](bold red)'
@@ -41,3 +56,7 @@ format = '[](bold purple)[$symbol $project]($style)[](bold purple) '
 [kubernetes]
 disabled = false
 format = '[](bold purple)[$symbol$context( \($namespace\))]($style)[](bold purple) '
+
+[[kubernetes.contexts]]
+context_pattern = "\\w+_[\\w-]+_(?P<region>[\\w-]+)_(?P<cluster>[\\w-]+)"
+context_alias = '$cluster $region'
