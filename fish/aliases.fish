@@ -231,8 +231,6 @@ function config -d "Select a fish configuration file"
         fzf --ansi --preview='bat --color=always --style=plain {}' --bind "enter:become($EDITOR {})"
 end
 
-if test -f "$work_aliases"
-    source "$work_aliases"
 function tag_changes -d "Generate a slack message of changes between the two most recent tags"
     set -f tags (git tag --sort=-version:refname | head -2)
 
