@@ -38,6 +38,10 @@ fish_add_path -p "$N_PREFIX/bin"
 fish_add_path ~/.luarocks/bin /opt/local/share/luarocks/bin
 fish_add_path ~/.cargo/bin
 
+if type -q "fzf"
+    fzf --fish | source
+end
+
 try_source "$script_dir/aliases.fish"
 try_source "$script_dir/work_aliases.fish"
 try_source "$script_dir/abbreviations.fish"
@@ -47,10 +51,6 @@ try_source "$script_dir/key-bindings.fish"
 if type -q "fd"
     set -x FZF_DEFAULT_COMMAND "fd -tf --color=never"
     set -x FZF_ALT_C_COMMAND "fd -td --color=never"
-end
-
-if type -q "fzf"
-    fzf --fish | source
 end
 
 if type -q "kubectl"
