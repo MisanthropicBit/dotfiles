@@ -6,13 +6,7 @@ local _config = {}
 local default_path = "configs.config"
 
 local function get_local_path_from_path(path)
-    local match = path:match([[(.+)%.json]])
-
-    if match then
-        return match .. "_local"
-    end
-
-    return nil
+    return path .. "_local"
 end
 
 ---@param table1 table
@@ -67,5 +61,5 @@ return setmetatable(config, {
     end,
     __newindex = function(_, _)
         error("Cannot mutate configuration object")
-    end
+    end,
 })
