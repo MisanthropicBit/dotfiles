@@ -27,7 +27,7 @@ require("lazy").setup({
         notify = false,
     },
     dev = {
-        path = "~/projects",
+        path = "~/projects/nvim",
         patterns = {
             "docs",
             "winmove",
