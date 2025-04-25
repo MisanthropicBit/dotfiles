@@ -6,11 +6,13 @@ return {
         local key_hl = "Number"
         local images = {
             {
+                type = 'image',
                 file_path = "keyboard-dolphin.txt",
                 file_width = 48,
                 file_height = 32,
             },
             {
+                type = 'image',
                 file_path = "neovim-logo.txt",
                 file_width = 50,
                 file_height = 32,
@@ -89,10 +91,11 @@ return {
             return rpad(value, dashboard_option_width, " ")
         end
 
-        local function select_random_image()
+        local function select_random_preview()
             local image_info = images[math.random(1, #images)]
 
             return {
+                command = "cat | cat", -- https://github.com/nvimdev/dashboard-nvim/issues/193
                 file_path = vim.fn.stdpath("config") .. "/lua/config/images/" .. image_info.file_path,
                 file_width = image_info.file_width,
                 file_height = image_info.file_height,
@@ -101,12 +104,23 @@ return {
 
         dashboard.setup({
             theme = "doom",
-            preview = vim.tbl_extend(
-            "force",
-            { command = "cat | cat", }, -- https://github.com/nvimdev/dashboard-nvim/issues/193
-            select_random_image()
-            ),
             config = {
+                vertical_center = true,
+                header = {
+                    [[                                                                   ]],
+                    [[ ███▄▄▄▄      ▄████████  ▄██████▄   ▄█    █▄   ▄█    ▄▄▄▄███▄▄▄▄   ]],
+                    [[ ███▀▀▀██▄   ███    ███ ███    ███ ███    ███ ███  ▄██▀▀▀███▀▀▀██▄ ]],
+                    [[ ███   ███   ███    █▀  ███    ███ ███    ███ ███▌ ███   ███   ███ ]],
+                    [[ ███   ███  ▄███▄▄▄     ███    ███ ███    ███ ███▌ ███   ███   ███ ]],
+                    [[ ███   ███ ▀▀███▀▀▀     ███    ███ ███    ███ ███▌ ███   ███   ███ ]],
+                    [[ ███   ███   ███    █▄  ███    ███ ███    ███ ███  ███   ███   ███ ]],
+                    [[ ███   ███   ███    ███ ███    ███ ███    ███ ███  ███   ███   ███ ]],
+                    [[  ▀█   █▀    ██████████  ▀██████▀   ▀██████▀  █▀    ▀█   ███   █▀  ]],
+                    [[                                                                   ]],
+                    [[                                                                   ]],
+                    [[                                                                   ]],
+                    [[                                                                   ]],
+                },
                 center = {
                     {
                         icon = icons.files.new .. "  ",
