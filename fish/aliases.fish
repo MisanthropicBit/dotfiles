@@ -21,6 +21,7 @@ alias nvl       "nvim (git diff-tree --no-commit-id --name-only -r HEAD)"
 alias nvrc      "$EDITOR ~/.config/nvim/init.lua"
 alias path      "echo $PATH | tr ':' '\n'"
 alias todo      "rg -Hni -A3 ' todo:'"
+alias rgt       "rg -g '!*.it.test.{js,ts}' -g '!*.it.{js,ts}' -g '!*.test.{js,ts}' -ttjs"
 alias tree      "tree -C"
 alias v         "pbpaste"
 
