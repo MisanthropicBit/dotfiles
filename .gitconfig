@@ -107,7 +107,7 @@
 [credential]
     helper = osxkeychain
 [help]
-    autocorrect = 1
+    autocorrect = 15
 [rerere]
     enabled = true
 [branch]
