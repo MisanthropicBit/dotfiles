@@ -1,9 +1,10 @@
 local ts = {}
 
 local function_nodes = {
+    "arrow_function",
     "function",
     "function_declaration",
-    "arrow_function",
+    "method_definition",
 }
 
 ---@param node TSNode
