@@ -69,6 +69,8 @@ local icons = {
         double_vertical = "║",
     },
     separators = {
+        bubble_left = "",
+        bubble_right = "",
         high_slant_lower_right = "",
         high_slant_upper_left = "",
     },
