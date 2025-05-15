@@ -92,28 +92,21 @@ local builtin_colorschemes = {
 }
 
 local preferred_colorschemes = normalize_weights({
-    { "bamboo", weight = 0.1 },
-    "calvera",
-    "caret",
-    { "catppuccin", weight = 0.1 },
+    { "bamboo", weight = 0.05 },
     "carbonfox",
-    "catppuccin-macchiato",
     { "duskfox", weight = 0.1 },
     "kanagawa",
-    { "kanagawa-dragon", weight = 0.1 },
-    { "kimbox", weight = 0.1 },
+    "kanagawa-dragon",
+    { "kimbox", weight = 0.05 },
     "mellifluous",
     "mellow",
-    { "moonlight", weight = 0.15 },
-    "nordic",
-    { "tokyodark", weight = 0.1 },
-    "tokyonight-moon",
-    "tokyonight-night",
+    { "tokyonight-night", weight = 0.05 },
     "visual_studio_code",
-    { "mayu", weight = 0.05 },
-    "obscure",
-    "chocolatier",
-    "oldworld",
+    { "obscure", weight = 0.1},
+    { "chocolatier", weight = 0.05 },
+    { "oldworld", weight = 0.05 },
+    { "yorumi", weight = 0.05 },
+    "shin",
 })
 
 ---@param weighted_choices table<string | table>
@@ -181,7 +174,7 @@ function colorschemes.select_random_color_scheme(user_colorschemes)
     return colorscheme
 end
 
-vim.api.nvim_create_user_command('RandomColorscheme', function()
+vim.api.nvim_create_user_command("RandomColorscheme", function()
     local selected = colorschemes.select_random_color_scheme()
     local msg = ("Selected colorscheme '%s'"):format(selected)
 
