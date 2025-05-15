@@ -81,13 +81,15 @@ return {
         end, "Terminate/stop debugging")
 
         -- Adapters
-        require("dap-vscode-js").setup({
-            debugger_path = vim.fn.expand("~/vscode-js-debug"),
-            adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
-            log_file_path = "(stdpath cache)/dap_vscode_js.log",
-            log_file_level = false,
-            log_console_level = vim.log.levels.ERROR,
-        })
+        dap.adapters["pwa-node"] = {
+            type = "server",
+            host = "localhost",
+            port = "${port}",
+            executable = {
+                command = "node",
+                args = { vim.fn.expand("~/projects/js-debug/src/dapDebugServer.js"), "${port}" },
+            },
+        }
 
         dap.adapters.codelldb = {
             type = "executable",
