@@ -1,5 +1,5 @@
 return {
-    "mhinz/vim-startify", 
+    "mhinz/vim-startify",
     init = function()
         -- Not really using vim-startify anymore but it is installed for the quotes so
         -- they can be used with another dashboard plugin
