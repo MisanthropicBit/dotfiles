@@ -115,6 +115,7 @@ return {
     s("cv", fmta("const <> = <>", { i(1), i(2) })),
     s("ds", fmta("const { <> } = <>", { i(2), i(1) })),
     s("cl", fmt([[console.log({})]], i(1))),
+    s("cd", fmta([[console.dir(<>, { depth: null })]], i(1))),
     s(
         "cs",
         fmt([[console.{}({})]], {
@@ -681,10 +682,22 @@ describe('it - db/<>', () =>> {
                 i(1),
                 i(2),
                 i(3),
+                rep(4),
                 rep(3),
-                rep(2),
                 i(4),
                 i(5),
+            }
+        )
+    ),
+    s(
+        { trig = "dbq", dscr = "" },
+        fmta(
+            "await db.query(knex('<>').<>(<>).toQuery(), '<>')",
+            {
+                i(1),
+                c(2, { t("select"), t("insert"), t("update"), t("delete"), t("truncate") }),
+                i(3),
+                i(4)
             }
         )
     ),
