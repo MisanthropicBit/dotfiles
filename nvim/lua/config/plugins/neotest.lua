@@ -1,8 +1,8 @@
 return {
     "nvim-neotest/nvim-nio",
     "nvim-neotest/neotest-plenary",
-    { dir = "~/projects/nvim/neotest-jest" },
-    { dir = "~/projects/nvim/neotest-busted" },
+    { "MisanthropicBit/neotest-jest", branch = "dev" },
+    { "MisanthropicBit/neotest-busted" },
     {
         "nvim-neotest/neotest",
         config = function()
@@ -55,8 +55,8 @@ return {
                         end,
                         cwd = get_cwd,
                         extension_test_file_match = require("neotest-jest.util").create_test_file_extensions_matcher(
-                        { "test", "it" },
-                        { "js", "ts" }
+                            { "test", "it" },
+                            { "js", "ts" }
                         ),
                     }),
                     require("neotest-busted"),
