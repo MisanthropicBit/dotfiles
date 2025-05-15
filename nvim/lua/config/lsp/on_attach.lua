@@ -4,12 +4,12 @@ local icons = require("config.icons")
 local map = require("config.map")
 local lsp_configs = require("config.lsp.lsp_configs")
 
--- We don't want tsserver to format stuff as the default formatting doesn't
+-- We don't want ts_ls to format stuff as the default formatting doesn't
 -- seem to respect project-local settings for eslint and prettier.
 local function lsp_format_wrapper()
     vim.lsp.buf.format({
         filter = function(client)
-            return client.name ~= "tsserver"
+            return client.name ~= "ts_ls"
         end,
     })
 end
