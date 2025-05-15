@@ -272,6 +272,8 @@ return {
         map.n.leader("pp", project_files(vim.fn.stdpath("data") .. "/lazy/"), "Search plugin directories")
         map.n.leader("rr", fzf_lua.resume, "Resume last search")
         map.n.leader("fd", directories, "Search directories")
+        map.n.leader("bb", "<cmd>FzfLua buffers<cr>")
+        map.n.leader("fw", "<cmd>FzfLua grep_cword<cr>")
         map.leader({ "n", "v" }, "la", function()
             fzf_lua.lsp_code_actions({ winopts = { height = 0.2, width = 0.33, preview = { layout = "vertical" } } })
         end)

@@ -24,6 +24,8 @@ return {
         map.n("glv", "<cmd>vert Term git log<cr>")
         map.n("glt", "<cmd>tab Term git log<cr>")
 
+        map.c("<c-b>", "<c-r>=printf('origin/%s', FugitiveHead())<cr>", { silent = false })
+
         vim.api.nvim_create_user_command("Gom", "<cmd><mods> Gsp origin/master:%", {})
     end,
 }
