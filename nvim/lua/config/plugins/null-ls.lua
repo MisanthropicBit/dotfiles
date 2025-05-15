@@ -9,9 +9,14 @@ return {
             eslint_d = {
                 null_ls.builtins.formatting.eslint_d.with({
                     timeout = 10000,
+                    extra_filetypes = { "yaml" },
                 }),
-                null_ls.builtins.code_actions.eslint_d,
-                null_ls.builtins.diagnostics.eslint_d,
+                null_ls.builtins.code_actions.eslint_d.with({
+                    extra_filetypes = { "yaml" },
+                }),
+                null_ls.builtins.diagnostics.eslint_d.with({
+                    extra_filetypes = { "yaml" },
+                }),
             },
             jq = { null_ls.builtins.formatting.jq },
             selene = { null_ls.builtins.diagnostics.selene.with({
