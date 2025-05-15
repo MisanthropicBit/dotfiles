@@ -66,8 +66,8 @@ return {
             options = {
                 theme = "auto",
                 section_separators = {
-                    left = "",
-                    right = "",
+                    left = icons.separators.bubble_right,
+                    right = icons.separators.bubble_left,
                 },
                 extensions = { "fugitive", "nvim-dap-ui" },
             },
@@ -77,16 +77,6 @@ return {
                         "branch",
                         icon = nil, -- { icons.git.logo, align = "left" },
                         fmt = format_git_branch,
-                    },
-                    {
-                        "diff",
-                        colored = true,
-                        symbols = {
-                            added = icons.git.added,
-                            modified = icons.git.added,
-                            removed = icons.git.added,
-                        },
-                        cond = conditions.ignore_terminal,
                     },
                 },
                 lualine_b = {
