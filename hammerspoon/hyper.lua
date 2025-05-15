@@ -6,9 +6,10 @@ local notify = require("notify")
 local remap = require("utils.remap")
 
 ---@class HyperConfigKeyMap
----@field key    string
----@field type   "launch" | "bundleId" | "caffeinate"
----@field target string
+---@field key     string
+---@field mods    string[]?
+---@field action  fun()
+---@field options { preventRetrigger: boolean? }
 
 ---@class HyperConfigRemap
 ---@field source string
@@ -20,33 +21,21 @@ local remap = require("utils.remap")
 ---@field remap? HyperConfigRemap
 ---@field keymaps HyperConfigKeyMap[]
 
-local keymap_actions = {
-  launch = hs.application.launchOrFocus,
-  bundleId = hs.application.launchOrFocusByBundleID,
-  caffeinate = hs.caffeinate,
-}
-
 ---@param hyperMode unknown
 ---@param keymaps HyperConfigKeyMap
 local function bindHyperKeys(hyperMode, keymaps)
     for _, keymap in ipairs(keymaps) do
-        local action = keymap_actions[keymap.type]
-        local target = keymap.target
+        local action = keymap.action
 
         if not action then
-            notify.error(("Unknown hyper action for key '%s'"):format(keymap.key))
+            notify.error(("Missing action for key '%s' in hyper mode '%s'"):format(keymap.key, hyperMode.key))
         end
 
-        hyperMode:bind({}, keymap.key, function()
-            if keymap.type == "caffeinate" then
-                hs.caffeinate[target]()
-            else
-                action(target)
-            end
-        end)
+        hyperMode:bind(keymap.mods, keymap.key, action, keymap.options)
     end
 end
 
+-- TODO: Check for duplicate keys
 local function setupHyperKey(hyperKeyConfig)
     local hyperRemap = hyperKeyConfig.remap
 

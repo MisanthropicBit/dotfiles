@@ -1,4 +1,9 @@
+---@class HyperMode
+---@field _mode hs.hotkey.modal
 local HyperMode = {}
+
+---@class HyperModeBindOptions
+---@field preventRetrigger boolean?
 
 HyperMode.__index = HyperMode
 
@@ -17,8 +22,33 @@ function HyperMode.new(key)
     return setmetatable({ key = key, _mode = hyperMode }, HyperMode)
 end
 
-function HyperMode:bind(mods, key, action)
-    self._mode:bind(mods, key, action)
+---@param mods string[]?
+---@param key string
+---@param action fun(options: table)
+---@param options HyperModeBindOptions?
+function HyperMode:bind(mods, key, action, options)
+    local _mods = mods or {}
+
+    if options and options.preventRetrigger == true then
+        self._mode:bind(_mods, key, function()
+            -- Avoid retriggering action when e.g. sending keystrokes
+            -- programmatically by exiting and entering the hyper mode around
+            -- the action
+            self._mode:exit()
+            action(options)
+            self._mode:enter()
+        end)
+    else
+        self._mode:bind(_mods, key, action)
+    end
+end
+
+function HyperMode:enter()
+    self._mode:enter()
+end
+
+function HyperMode:exit()
+    self._mode:exit()
 end
 
 return HyperMode

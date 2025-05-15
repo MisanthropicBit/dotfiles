@@ -12,9 +12,22 @@ end
 ---@param table1 table
 ---@param table2 table
 ---@return table
-local function merge_tables(table1, table2)
+local function mergeTables(table1, table2)
     for key, value in pairs(table2) do
-        table1[key] = value
+        if type(value) == "table" and type(table1[key]) == "table" then
+            mergeTables(table1[key], table2[key])
+        else
+            if type(key) == "number" then
+                -- Assume this is an array
+                for _, item in ipairs(table2) do
+                    table.insert(table1, item)
+                end
+
+                break
+            else
+                table1[key] = value
+            end
+        end
     end
 
     return table1
@@ -24,12 +37,11 @@ end
 ---@return table<string, any>?
 function config.read(path)
     local ok_default, default_config = pcall(require, path)
-
     local local_path = get_local_path_from_path(path)
     local ok_local, local_config = pcall(require, local_path)
 
     if ok_default and ok_local then
-        return merge_tables(default_config, local_config)
+        return mergeTables(default_config, local_config)
     elseif ok_default then
         return default_config
     elseif ok_local then
@@ -50,7 +62,10 @@ function config.read_default()
     end
 
     _config = user_config
-    _config.at_work = user_config.at_work or false
+
+    _config.at_work = function()
+        return _config.home_wifis and hs.fnutils.contains(_config.home_wifis, hs.wifi.currentNetwork())
+    end
 
     return user_config
 end

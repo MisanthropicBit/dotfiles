@@ -22,7 +22,12 @@ end
 ---@param http_code integer
 ---@param body table
 local function handleSlackResponse(http_code, body)
-    local result = hs.json.decode(body)
+    local ok, result = pcall(hs.json.decode, body)
+
+    if not ok then
+        result = body
+    end
+
     local failed = http_code ~= 200 or (result and not result.ok)
 
     if failed then
