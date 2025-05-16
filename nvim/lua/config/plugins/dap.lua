@@ -91,11 +91,6 @@ return {
             },
         }
 
-        dap.adapters.codelldb = {
-            type = "executable",
-            command = vim.fs.normalize("~/packages/codelldb/extension/adapter/codelldb"),
-        }
-
         dap.adapters.lldb = {
             type = "executable",
             command = "/usr/local/opt/llvm/bin/lldb-dap",
@@ -136,15 +131,6 @@ return {
         end
 
         dap.configurations.cpp = {
-            {
-                name = "Debug with codelldb",
-                type = "codelldb",
-                request = "launch",
-                program = select_executable,
-                cwd = "${workspaceFolder}",
-                stopOnEntry = false,
-                args = create_select_args_func(),
-            },
             {
                 name = "Debug with lldb",
                 type = "lldb",
