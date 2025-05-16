@@ -82,4 +82,14 @@ local icons = {
 
 icons.text.bullet = icons.test.running
 
+function icons.get_for_filetype(filetype)
+    local ok, devicons = pcall(require, "nvim-web-devicons")
+
+    if not ok then
+        return icons.misc.help, "", ""
+    end
+
+    return devicons.get_icon_colors_by_filetype(filetype)
+end
+
 return icons
