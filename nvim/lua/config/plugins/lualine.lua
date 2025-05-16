@@ -1,5 +1,6 @@
 return {
     "nvim-lualine/lualine.nvim",
+    dependencies = "stevearc/overseer.nvim",
     config = function()
         local lualine = require("lualine")
 
@@ -15,10 +16,10 @@ return {
 
             if #clients > 0 then
                 return table.concat(
-                vim.tbl_map(function(client)
-                    return client.name
-                end, clients),
-                ", "
+                    vim.tbl_map(function(client)
+                        return client.name
+                    end, clients),
+                    ", "
                 )
             end
 
@@ -37,7 +38,7 @@ return {
             local icon = ({
                 feature = "",
                 bug = "",
-                chore = "󰱶"
+                chore = "󰱶",
             })[head]
 
             if icon then
@@ -51,7 +52,7 @@ return {
 
         local conditions = {
             show_for_width = function()
-                return vim.fn.winwidth(0) > 120
+                return vim.fn.winwidth(0) > 100
             end,
             ignore_terminal = function()
                 return vim.bo.buftype ~= "terminal"
@@ -62,12 +63,12 @@ return {
             return conditions.show_for_width() and conditions.ignore_terminal()
         end
 
-        lualine.setup({
+        local layout = {
             options = {
                 theme = "auto",
                 section_separators = {
-                    left = icons.separators.bubble_right,
-                    right = icons.separators.bubble_left,
+                    left = icons.separators.high_slant_lower_left,
+                    right = icons.separators.high_slant_lower_right .. " ",
                 },
                 extensions = { "fugitive", "nvim-dap-ui" },
             },
@@ -123,6 +124,24 @@ return {
                     },
                 },
             },
-        })
+        }
+
+        local has_overseer, overseer = pcall(require, "overseer")
+
+        if has_overseer then
+            table.insert(layout.sections.lualine_b, {
+                "overseer",
+                label = "",
+                colored = true,
+                symbols = {
+                    [overseer.STATUS.FAILURE] = icons.test.failed .. " ",
+                    [overseer.STATUS.CANCELED] = icons.test.skipped .. " ",
+                    [overseer.STATUS.SUCCESS] = icons.test.passed .. " ",
+                    [overseer.STATUS.RUNNING] = icons.test.running .. " ",
+                },
+            })
+        end
+
+        lualine.setup(layout)
     end,
 }

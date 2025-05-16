@@ -69,10 +69,11 @@ local icons = {
         double_vertical = "║",
     },
     separators = {
-        bubble_left = "",
-        bubble_right = "",
         high_slant_lower_right = "",
         high_slant_upper_left = "",
+        high_slant_lower_left = "",
+        bubble_left = "",
+        bubble_right = "",
     },
     text = {
         linebreak = "↪ ",
