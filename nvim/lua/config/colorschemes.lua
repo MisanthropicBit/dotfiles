@@ -1,6 +1,5 @@
 local colorschemes = {}
 
-
 ---@class ColorschemeStats
 ---@field colorschemes table<string, integer>
 ---@field count integer
@@ -92,20 +91,19 @@ local builtin_colorschemes = {
 }
 
 local preferred_colorschemes = normalize_weights({
-    { "bamboo", weight = 0.05 },
+    "bamboo",
     "carbonfox",
-    { "duskfox", weight = 0.1 },
+    "duskfox",
     "kanagawa",
     "kanagawa-dragon",
-    { "kimbox", weight = 0.05 },
+    "kimbox",
     "mellifluous",
     "mellow",
-    { "tokyonight-night", weight = 0.05 },
-    "visual_studio_code",
-    { "obscure", weight = 0.1},
-    { "chocolatier", weight = 0.05 },
-    { "oldworld", weight = 0.05 },
-    { "yorumi", weight = 0.05 },
+    "tokyonight-night",
+    "obscure",
+    "chocolatier",
+    "oldworld",
+    "yorumi",
     "shin",
 })
 
