@@ -14,10 +14,6 @@ return {
         },
         keymaps = {
             {
-                key = "t",
-                action = actions.launch("iTerm"),
-            },
-            {
                 key = "i",
                 action = actions.launch("iTerm"),
             },
