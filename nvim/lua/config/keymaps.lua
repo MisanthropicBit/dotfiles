@@ -143,6 +143,8 @@ for idx = 1, 9 do
     map.n("g" .. tostring(idx), "<cmd>tabnext " .. tostring(idx) .. "<cr>")
 end
 
+map.n("<c-g>", "6<c-g>", "Get full info about current file by default")
+
 map.i("jk", [["<esc>"]], { expr = true })
 map.i("<c-a>", "<c-o>^", "Move to start of line in insert mode")
 map.i("<c-e>", "<c-o>$", "Move to end of line in insert mode")

@@ -11,7 +11,7 @@ return {
             local icons = require("config.icons")
             local map = require("config.map")
 
-            local filter_dirs = { "node_modules", "build", "cache", "__snapshots__" }
+            local filter_dirs = { "bin", "mysqldata", "node_modules", "build", "cache", "__snapshots__" }
 
             vim.diagnostic.config({}, vim.api.nvim_create_namespace("neotest"))
 

@@ -98,7 +98,6 @@ local preferred_colorschemes = normalize_weights({
     "kanagawa-dragon",
     "kimbox",
     "mellifluous",
-    "mellow",
     "tokyonight-night",
     "obscure",
     "chocolatier",

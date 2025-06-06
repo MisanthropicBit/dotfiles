@@ -3,35 +3,9 @@ return {
     dependencies = "stevearc/overseer.nvim",
     config = function()
         local lualine = require("lualine")
-
         local icons = require("config.icons")
-        local lsp_utils = require("config.lsp.utils")
-
-        local cached_formatted_branch = nil
-
-        ---@return string
-        local function get_active_lsps_for_buffer()
-            local msg = "No active LSPs"
-            local clients = lsp_utils.get_active_clients_for_buffer(vim.api.nvim_get_current_buf())
-
-            if #clients > 0 then
-                return table.concat(
-                    vim.tbl_map(function(client)
-                        return client.name
-                    end, clients),
-                    ", "
-                )
-            end
-
-            return msg
-        end
 
         local function format_git_branch(branch)
-            -- No need to continuously format the git branch
-            if cached_formatted_branch then
-                return cached_formatted_branch
-            end
-
             local parts = vim.fn.split(branch, [[\/]], false)
             local head = parts[1]
 
@@ -42,12 +16,10 @@ return {
             })[head]
 
             if icon then
-                cached_formatted_branch = ("%s %s"):format(icon, table.concat(vim.list_slice(parts, 2), "/"))
-            else
-                cached_formatted_branch = branch
+                return ("%s %s"):format(icon, table.concat(vim.list_slice(parts, 2), "/"))
             end
 
-            return cached_formatted_branch
+            return branch
         end
 
         local conditions = {
@@ -67,7 +39,7 @@ return {
             options = {
                 theme = "auto",
                 section_separators = {
-                    left = icons.separators.high_slant_lower_left,
+                    left = icons.separators.high_slant_lower_left .. " ",
                     right = icons.separators.high_slant_lower_right .. " ",
                 },
                 extensions = { "fugitive", "nvim-dap-ui" },
@@ -82,9 +54,12 @@ return {
                 },
                 lualine_b = {
                     {
-                        get_active_lsps_for_buffer,
+                        "lsp_status",
                         icon = icons.lsp.nvim_lsp,
-                        cond = conditions.all,
+                        symbols = {
+                            spinner = icons.animation.updating,
+                            done = icons.test.passed,
+                        }
                     },
                 },
                 lualine_c = {

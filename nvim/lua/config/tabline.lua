@@ -1,5 +1,6 @@
 local tabline = {}
 
+local fileinfo = require("config.utils.fileinfo")
 local highlight = require("config.highlight")
 local icons = require("config.icons")
 
@@ -35,24 +36,35 @@ local function render(tab, value, selected, options)
 end
 
 ---@param bufnr integer
----@return string
----@return string?
+---@return FileInfo
 local function get_filename(bufnr)
-    local bufname = vim.fn.bufname(bufnr)
+    local info = fileinfo.get(bufnr)
+    local path = info.path
+    local root = vim.fs.root(path, { ".git" })
 
-    if vim.startswith(bufname, "fugitive://") then
-        return "git status", "git"
-    elseif vim.startswith(bufname, "oil://") then
-        local no_oil = vim.fn.trim(bufname:sub(7), "/", 2)
-        local head = vim.fn.fnamemodify(no_oil, ":h") .. "/"
-        local tail = vim.fn.fnamemodify(no_oil, ":t")
-
-        return vim.fn.pathshorten(head, 2) .. tail, icons.files.oil
-    elseif bufname == "" then
-        return "New file", icons.files.new
+    if root and vim.startswith(path, root) then
+        -- '+ 2' for prefix itself and the following '/'
+        path = path:sub(#root + 2)
     end
 
-    return vim.fn.pathshorten(bufname, 3)
+    return vim.tbl_extend("force", info, {
+        path = vim.fn.pathshorten(path, 3),
+    })
+end
+
+---@return string?
+local function get_repo()
+    if vim.g.loaded_fugitive then
+        local repo = vim.fn.fnamemodify(vim.fn.FugitiveGitDir(), ":h:t")
+
+        if not repo or repo == "." then
+            return nil
+        end
+
+        return repo
+    end
+
+    return nil
 end
 
 ---@param tabpage integer
@@ -60,18 +72,18 @@ local function get_tab_context(tabpage)
     local winnr = vim.api.nvim_tabpage_get_win(tabpage)
     local bufnr = vim.api.nvim_win_get_buf(winnr)
     local filetype = vim.bo[bufnr].filetype
-    local icon, rgb_color, _ = icons.get_for_filetype(filetype)
+    local info = get_filename(bufnr)
 
     return {
         tabnr = vim.api.nvim_tabpage_get_number(tabpage),
         selected = tabpage == vim.api.nvim_get_current_tabpage(),
         winnr = winnr,
         bufnr = bufnr,
-        filename = get_filename(bufnr),
+        filename = info.path,
         modified = vim.bo[bufnr].modified,
         filetype = filetype,
-        icon = icon,
-        rgb = rgb_color,
+        icon = info.icon,
+        rgb = info.icon_color,
     }
 end
 
@@ -81,17 +93,12 @@ local function render_tab(tabpage, options)
     local selected = context.selected
     local tab = {}
 
-    if context.tabnr > 1 and options.left_separator then
+    if options.left_separator then
         local sep_color = selected and "TabLineLeftSepSel" or "TabLineLeftSep"
         render(tab, options.left_separator .. " ", selected, { hl_group = sep_color })
     end
 
-    render(
-        tab,
-        " " .. context.filename .. " ",
-        selected,
-        { hl_group = selected and "TabLineSel" or "TabLine" }
-    )
+    render(tab, " " .. context.filename .. " ", selected, { hl_group = selected and "TabLineSel" or "TabLine" })
 
     if context.icon then
         render(tab, context.icon, selected, { color = context.rgb, filetype = context.filetype })
@@ -120,13 +127,17 @@ end
 function tabline.render()
     local tabpages = vim.api.nvim_list_tabpages()
     local result = {}
+    local repo = get_repo()
+    local repo_str = repo and icons.git.logo .. " " .. repo .. " " or ""
+
+    render(result, repo_str .. "󰂺 " .. tostring(#vim.api.nvim_list_tabpages()) .. " ", false, { hl_group = "Title" })
+    render(result, tabline.options.right_separator .. " ", false, { hl_group = "TabLineRightSep" })
 
     for _, tabpage in ipairs(tabpages) do
         table.insert(result, render_tab(tabpage, tabline.options))
     end
 
     render(result, "%=", false, { hl_group = "TabLineFill" })
-    render(result, "󰂺 " .. tostring(#vim.api.nvim_list_tabpages()), false, { hl_group = "Title" })
 
     return table.concat(result)
 end
@@ -147,45 +158,23 @@ local function create_separator_highlights()
     --     fill_group = "TabLineFillAlt"
     -- end
 
-    highlight.create_hl_from(
-        0,
-        "TabLineLeftSepSel",
-        { fg = { "TabLineSel", "bg" }, bg = { "TabLineFill", "bg" } }
-    )
-    highlight.create_hl_from(
-        0,
-        "TabLineLeftSep",
-        { fg = { "TabLine", "bg" }, bg = { "TabLineFill", "bg" } }
-    )
-    highlight.create_hl_from(
-        0,
-        "TabLineRightSepSel",
-        { fg = { "TabLineSel", "bg" }, bg = { "TabLineFill", "bg" } }
-    )
-    highlight.create_hl_from(
-        0,
-        "TabLineRightSep",
-        { fg = { "TabLine", "bg" }, bg = { "TabLineFill", "bg" } }
-    )
-    highlight.create_hl_from(
-        0,
-        "TabLineModified",
-        { fg = { "WarningMsg", "fg" }, bg = { "TabLine", "bg" } }
-    )
-    highlight.create_hl_from(
-        0,
-        "TabLineModifiedSel",
-        { fg = { "WarningMsg", "fg" }, bg = { "TabLineSel", "bg" } }
-    )
+    highlight.create_hl_from(0, "TabLineLeftSepSel", { fg = { "TabLineSel", "bg" }, bg = { "TabLineFill", "bg" } })
+    highlight.create_hl_from(0, "TabLineLeftSep", { fg = { "TabLine", "bg" }, bg = { "TabLineFill", "bg" } })
+    highlight.create_hl_from(0, "TabLineRightSepSel", { fg = { "TabLineSel", "bg" }, bg = { "TabLineFill", "bg" } })
+    highlight.create_hl_from(0, "TabLineRightSep", { fg = { "TabLine", "bg" }, bg = { "TabLineFill", "bg" } })
+    highlight.create_hl_from(0, "TabLineModified", { fg = { "WarningMsg", "fg" }, bg = { "TabLine", "bg" } })
+    highlight.create_hl_from(0, "TabLineModifiedSel", { fg = { "WarningMsg", "fg" }, bg = { "TabLineSel", "bg" } })
 end
 
 function tabline.register()
     create_separator_highlights()
 
     vim.api.nvim_create_autocmd("Colorscheme", { callback = create_separator_highlights })
-    vim.api.nvim_create_autocmd("TabNew", { callback = function()
-        tabline.render()
-    end})
+    vim.api.nvim_create_autocmd("TabNew", {
+        callback = function()
+            tabline.render()
+        end,
+    })
 
     vim.o.tabline = [[%!v:lua.require'config.tabline'.render()]]
 end

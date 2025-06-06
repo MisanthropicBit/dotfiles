@@ -81,6 +81,7 @@ local icons = {
 }
 
 icons.text.bullet = icons.test.running
+icons.unknown = icons.test.unknown
 
 function icons.get_for_filetype(filetype)
     local ok, devicons = pcall(require, "nvim-web-devicons")

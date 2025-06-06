@@ -1,7 +1,6 @@
 return {
     "EdenEast/nightfox.nvim",
     { "folke/tokyonight.nvim", branch = "main" },
-    "mellow-theme/mellow.nvim",
     "lmburns/kimbox",
     "ramojus/mellifluous.nvim",
     "rebelot/kanagawa.nvim",

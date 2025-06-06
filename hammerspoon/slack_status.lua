@@ -5,7 +5,7 @@ local slack = require("slack")
 
 -- The wifi might not be completely ready when the hs.wifi.watcher reacts so
 -- wait a bit before setting the status
-local wifi_set_status_delay_seconds = 5
+local wifi_set_status_delay_seconds = 8
 
 local choiceToEmoji = {
     ["Clear status"] = { slack.emojis.clear, false },
@@ -18,6 +18,7 @@ local choiceToEmoji = {
 local function updateStatus(message, emoji)
     hs.timer.doAfter(wifi_set_status_delay_seconds, function()
         slack.updateStatus(message, emoji)
+        slack.setPresence("auto")
     end)
 end
 

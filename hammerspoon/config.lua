@@ -64,7 +64,7 @@ function config.read_default()
     _config = user_config
 
     _config.at_work = function()
-        return _config.home_wifis and hs.fnutils.contains(_config.home_wifis, hs.wifi.currentNetwork())
+        return _config.work_wifis and hs.fnutils.contains(_config.work_wifis, hs.wifi.currentNetwork())
     end
 
     return user_config

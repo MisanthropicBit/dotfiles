@@ -1,8 +1,9 @@
 return {
     "ibhagwan/fzf-lua",
+    dependencies = { "folke/todo-comments.nvim" },
     branch = "main",
     config = function()
-        local ansi = require("config.ansi")
+        local ansi = require("config.utils.ansi")
         local colorschemes = require("config.colorschemes")
         local icons = require("config.icons")
         local map = require("config.map")
@@ -210,12 +211,13 @@ return {
             })
         end
 
-        ---@return fun()
         local function open_file_in_branch()
             -- TODO: Does fzf-lua have a utility function for this?
             local function create_git_split_command(cmd, branch, path)
                 local parts = vim.split(path, en_space)
-                local trimmed = vim.trim(parts[#parts])
+                local path_parts = vim.split(parts[#parts], "\t")
+                local trimmed = vim.trim(path_parts[2] .. "/" .. path_parts[1])
+                vim.print(("%s %s:%s"):format(cmd, branch, trimmed))
                 return ("%s %s:%s"):format(cmd, branch, trimmed)
             end
 
@@ -280,11 +282,7 @@ return {
         map.n("gf", open_file_under_cursor)
         map.n("go", open_file_in_branch)
 
-        map.n.leader("ft", function() require("todo-comments.fzf").todo() end, {
-            desc = "Find all TODOs",
-            condition = "todo-comments",
-        })
-
+        map.n.leader("ft", function() require("todo-comments.fzf").todo() end, "Find all TODOs")
         map.n.leader("rt", function()
             fzf_lua.grep({ rg_opts = "-Tta " .. fzf_lua.defaults.grep.rg_opts })
         end, "Search all non-test files")

@@ -1,6 +1,6 @@
 local M = {}
 
-local ansi = require("config.ansi")
+local ansi = require("config.utils.ansi")
 
 -- Completion kinds
 M.kind_icons = {

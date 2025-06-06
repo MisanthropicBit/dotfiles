@@ -14,70 +14,42 @@ function map.merge(opts1, opts2)
     return vim.tbl_extend("force", opts1, opts2 or {})
 end
 
----@param opts (table | string)?
-function map.with_default_options(opts)
-    if type(opts) == "string" then
-        return map.merge(map.default_options, { desc = opts })
+---@param options (table | string)?
+function map.with_default_options(options)
+    if type(options) == "string" then
+        return map.merge(map.default_options, { desc = options })
     end
 
-    return map.merge(map.default_options, opts)
+    return map.merge(map.default_options, options)
 end
 
 ---@param mode Mode | Mode[]
 ---@param lhs string
 ---@param rhs string | function
----@param opts (table | string)?
-function map.set(mode, lhs, rhs, opts)
-    if type(opts) == "table" and opts.condition then
-        local condition = opts.condition
-        local ok, result
-
-        if type(condition) == "string" then
-            local negated = false
-
-            if condition:sub(1, 1) == "!" then
-                condition = condition:sub(2)
-                negated = true
-            end
-
-            ok, result = pcall(require, condition)
-
-            if negated then
-                ok = not ok
-            end
-        elseif type(condition) == "function" then
-            ok, result = pcall(condition)
-        end
-
-        if not ok or not result then
-            return
-        end
-
-        opts.condition = nil
-    end
-
-    vim.keymap.set(mode, lhs, rhs, map.with_default_options(opts))
+---@param options (table | string)?
+function map.set(mode, lhs, rhs, options)
+    vim.keymap.set(mode, lhs, rhs, map.with_default_options(options))
 end
 
 ---@param mode Mode | Mode[]
 ---@param lhs string
 ---@param rhs string | fun()
----@param opts (table | string)?
-function map.leader(mode, lhs, rhs, opts)
+---@param options (table | string)?
+function map.leader(mode, lhs, rhs, options)
     local leader_lhs = '<localleader>' .. lhs
 
-    map.set(mode, leader_lhs, rhs, opts)
+    map.set(mode, leader_lhs, rhs, options)
 end
 
 for _, mode in ipairs(modes) do
     map[mode] = setmetatable({}, {
-        __call = function(_, lhs, rhs, opts)
-            map.set(mode, lhs, rhs, opts)
+        __call = function(_, lhs, rhs, options)
+            map.set(mode, lhs, rhs, options)
         end,
         __index = function(_, key)
             if key == "leader" then
-                return function(lhs, rhs, opts)
-                    map.leader(mode, lhs, rhs, opts)
+                return function(lhs, rhs, options)
+                    map.leader(mode, lhs, rhs, options)
                 end
             end
 
