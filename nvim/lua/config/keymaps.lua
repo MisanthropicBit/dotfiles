@@ -80,6 +80,7 @@ map.n.leader("yk", function()
     vim.cmd("-" .. vim.v.count .. "yank")
 end, "Yank line [count] above current line")
 map.n.leader("0", "<c-w>=")
+map.n.leader("ou", "<cmd>norm! o<cr>", "Open a line under current line")
 
 map.n("<c-o>", "<c-o>zz")
 map.n("<c-i>", "<c-i>zz")
