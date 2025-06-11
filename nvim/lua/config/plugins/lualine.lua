@@ -4,6 +4,7 @@ return {
     config = function()
         local lualine = require("lualine")
         local icons = require("config.icons")
+        local git = require("config.utils.git")
 
         local function format_git_branch(branch)
             local parts = vim.fn.split(branch, [[\/]], false)
@@ -36,19 +37,12 @@ return {
         end
 
         local layout = {
-            options = {
-                theme = "auto",
-                section_separators = {
-                    left = icons.separators.high_slant_lower_left .. " ",
-                    right = icons.separators.high_slant_lower_right .. " ",
-                },
-                extensions = { "fugitive", "nvim-dap-ui" },
-            },
             sections = {
                 lualine_a = {
+                    git.current_repository,
                     {
                         "branch",
-                        icon = nil, -- { icons.git.logo, align = "left" },
+                        icon = { icons.git.logo, align = "left" },
                         fmt = format_git_branch,
                     },
                 },
@@ -98,6 +92,14 @@ return {
                         cond = conditions.ignore_terminal,
                     },
                 },
+            },
+            options = {
+                theme = "auto",
+                section_separators = {
+                    left = icons.separators.high_slant_lower_left .. " ",
+                    right = icons.separators.high_slant_lower_right .. " ",
+                },
+                extensions = { "fugitive", "nvim-dap-ui" },
             },
         }
 

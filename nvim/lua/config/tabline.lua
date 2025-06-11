@@ -52,21 +52,6 @@ local function get_filename(bufnr)
     })
 end
 
----@return string?
-local function get_repo()
-    if vim.g.loaded_fugitive then
-        local repo = vim.fn.fnamemodify(vim.fn.FugitiveGitDir(), ":h:t")
-
-        if not repo or repo == "." then
-            return nil
-        end
-
-        return repo
-    end
-
-    return nil
-end
-
 ---@param tabpage integer
 local function get_tab_context(tabpage)
     local winnr = vim.api.nvim_tabpage_get_win(tabpage)
@@ -127,10 +112,8 @@ end
 function tabline.render()
     local tabpages = vim.api.nvim_list_tabpages()
     local result = {}
-    local repo = get_repo()
-    local repo_str = repo and icons.git.logo .. " " .. repo .. " " or ""
 
-    render(result, repo_str .. "󰂺 " .. tostring(#vim.api.nvim_list_tabpages()) .. " ", false, { hl_group = "Title" })
+    render(result, "󰂺 " .. tostring(#vim.api.nvim_list_tabpages()) .. " ", false, { hl_group = "Title" })
     render(result, tabline.options.right_separator .. " ", false, { hl_group = "TabLineRightSep" })
 
     for _, tabpage in ipairs(tabpages) do
