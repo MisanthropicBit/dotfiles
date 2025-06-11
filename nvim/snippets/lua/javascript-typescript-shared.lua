@@ -94,7 +94,7 @@ local function typename_to_quoted_string(args)
         local result = {}
 
         for _, arg in ipairs(args) do
-            for idx, line in ipairs(arg) do 
+            for _, line in ipairs(arg) do
                 table.insert(result, ("'%s',"):format(line:match("(%w+):")))
             end
         end
@@ -638,6 +638,9 @@ describe('<>', () =>> {
             range(1, 5)
         )
     ),
+    s("qsp", fmt([[
+expect(querySpy.callCount).toBe(1)
+expect(querySpy.args[0][1].toQuery()).toMatchSnapshot()]], {})),
     s(
         { trig = "itts", dscr = "Typescript database integration test" },
         fmta(
