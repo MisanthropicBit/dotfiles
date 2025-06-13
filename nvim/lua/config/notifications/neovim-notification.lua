@@ -10,22 +10,18 @@ return setmetatable({}, {
             local _options = options or {}
             local _msg = utils.escape_message(msg)
             local command = {
-                "terminal-notifier",
-                "-title",
-                '"' .. (_options.title or 'neovim') .. '"',
-                "-message",
-                '"' .. _msg .. '"'
+                "open",
+                "/Applications/NeovimNotification.app",
+                "--args",
+                _msg,
+                (_options.title or 'Neovim'),
             }
-
-            if _options.icon and #_options.icon > 0 then
-                vim.list_extend(command, { "-contentImage", '"' .. _options.icon .. '"' })
-            end
 
             if level and not _options.muted then
                 local sound = _options.sound or sounds.get_sound_by_level(level)
 
                 if sound ~= nil and #sound > 0 then
-                    vim.list_extend(command, { "-sound", '"' .. sound .. '"' })
+                    table.insert(command, '"' .. sound .. '"')
                 end
             end
 
