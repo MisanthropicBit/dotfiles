@@ -26,6 +26,10 @@ require("lazy").setup({
         enabled = true,
         notify = false,
     },
+    change_detection = {
+        enabled = true,
+        notify = false,
+    },
     dev = {
         path = "~/projects/nvim",
         patterns = {
