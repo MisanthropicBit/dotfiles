@@ -8,6 +8,7 @@ vim.filetype.add({
     filename = {
         [".eslintrc"] = "json",
         [".busted*"] = "lua",
+        [".env.*"] = "sh",
     },
     pattern = {
         ["Dockerfile.*"] = "dockerfile",
