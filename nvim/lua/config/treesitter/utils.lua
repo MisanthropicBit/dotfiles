@@ -3,6 +3,7 @@ local ts = {}
 local function_nodes = {
     "arrow_function",
     "function",
+    "function_definition",
     "function_declaration",
     "method_definition",
 }
