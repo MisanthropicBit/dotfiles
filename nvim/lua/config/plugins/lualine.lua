@@ -39,14 +39,19 @@ return {
         local layout = {
             sections = {
                 lualine_a = {
-                    git.current_repository,
+                    {
+                        git.current_repository,
+                        icon = { icons.files.folder, align = "left" },
+                    },
+                },
+                lualine_b = {
                     {
                         "branch",
                         icon = { icons.git.logo, align = "left" },
                         fmt = format_git_branch,
                     },
                 },
-                lualine_b = {
+                lualine_c = {
                     {
                         "lsp_status",
                         icon = icons.lsp.nvim_lsp,
@@ -56,14 +61,14 @@ return {
                         }
                     },
                 },
-                lualine_c = {
+                lualine_x = {
                     {
                         "vim.g.colors_name",
                         icon = { icons.color.scheme .. " ", align = "left" },
                         cond = conditions.show_for_width,
                     },
                 },
-                lualine_x = {
+                lualine_y = {
                     {
                         "fileformat",
                         cond = conditions.all,
@@ -78,17 +83,14 @@ return {
                     },
                     "%b/0x%B",
                 },
-                lualine_y = {
+                lualine_z = {
                     {
-                        "progress",
+                        "location",
+                        left_padding = 2,
                         cond = conditions.ignore_terminal,
                     },
-                },
-                lualine_z = {
-                    "location",
                     {
-                        separator = { right = "" },
-                        left_padding = 2,
+                        "progress",
                         cond = conditions.ignore_terminal,
                     },
                 },
@@ -106,7 +108,7 @@ return {
         local has_overseer, overseer = pcall(require, "overseer")
 
         if has_overseer then
-            table.insert(layout.sections.lualine_b, {
+            table.insert(layout.sections.lualine_c, {
                 "overseer",
                 label = "",
                 colored = true,
