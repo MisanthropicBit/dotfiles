@@ -149,6 +149,7 @@ map.n("<c-g>", "6<c-g>", "Get full info about current file by default")
 map.i("jk", [["<esc>"]], { expr = true })
 map.i("<c-a>", "<c-o>^", "Move to start of line in insert mode")
 map.i("<c-e>", "<c-o>$", "Move to end of line in insert mode")
+map.i("<c-k>", "<c-g>u<esc>[s1z=gi<c-g>u", "Correct last spelling mistake without leaving cursor position")
 
 map.v.leader("sc", [[<cmd>s/\v\s*,\s*/\r/g<cr><esc><cmd>nohl<cr>]], "Replace all commas in visual selection with newlines")
 
