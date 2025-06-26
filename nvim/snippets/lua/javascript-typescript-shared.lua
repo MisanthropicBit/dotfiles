@@ -198,6 +198,7 @@ return {
     s("pn", t("Promise<number>")),
     s("pr", t("Promise.resolve()")),
     s("pm", fmt("Promise<{}>", { i(1) })),
+    s("kv", fmt("{}: {},", { i(1), i(2) })),
 
     -- Eslint
     s("elnl", fmt([[// eslint-disable-next-line {}]], i(1))),
