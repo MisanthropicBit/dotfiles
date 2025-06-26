@@ -75,10 +75,10 @@ return {
         map.n.leader("du", dap.step_out, "Step out of")
         map.n.leader("dr", dap.repl.open, "Open the REPL for debugging")
         map.n.leader("dh", dap_widgets.hover, "Inspect value of expression under cursor when debugging")
-        map.n.leader("dq", function()
+        map.n.leader("dx", function()
             dap.terminate()
             dap.disconnect()
-        end, "Terminate/stop debugging")
+        end, "Terminate/stop/exit debugging")
 
         -- Adapters
         dap.adapters["pwa-node"] = {
