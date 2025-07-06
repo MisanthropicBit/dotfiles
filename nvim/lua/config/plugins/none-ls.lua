@@ -1,24 +1,24 @@
 return {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
+    dependencies = { "nvimtools/none-ls-extras.nvim" },
     config = function()
         local null_ls = require("null-ls")
-
         local sources = {}
 
         local builtins = {
             eslint_d = {
-                null_ls.builtins.formatting.eslint_d.with({
+                require("none-ls.formatting.eslint_d").with({
                     timeout = 10000,
                     extra_filetypes = { "yaml" },
                 }),
-                null_ls.builtins.code_actions.eslint_d.with({
+                require("none-ls.code_actions.eslint_d").with({
                     extra_filetypes = { "yaml" },
                 }),
-                null_ls.builtins.diagnostics.eslint_d.with({
+                require("none-ls.diagnostics.eslint_d").with({
                     extra_filetypes = { "yaml" },
                 }),
             },
-            jq = { null_ls.builtins.formatting.jq },
+            jq = { require("none-ls.formatting.jq") },
             selene = { null_ls.builtins.diagnostics.selene.with({
                 command = "/Users/alexb/.cargo/bin/selene",
             }) },
@@ -37,7 +37,7 @@ return {
             return function()
                 local null_ls_client
 
-                for _, client in ipairs(vim.lsp.get_active_clients()) do
+                for _, client in ipairs(vim.lsp.get_clients()) do
                     if client.name == "null-ls" then
                         null_ls_client = client
                     end
@@ -59,7 +59,7 @@ return {
 
         local function null_ls_restart(client)
             null_ls_stop(client)
-            vim.lsp.start_client(client.config)
+            vim.lsp.start(client.config)
         end
 
         vim.api.nvim_create_user_command("NullLsStop", null_ls_command(null_ls_stop), {})
