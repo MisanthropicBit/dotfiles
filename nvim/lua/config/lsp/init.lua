@@ -1,5 +1,7 @@
 local augroup = vim.api.nvim_create_augroup("ConfigLspAttach", {})
 
+require("config.lsp.configs")
+
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = augroup,
 	callback = function(event)
@@ -17,5 +19,3 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 
     return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
-
-require("config.lsp.lsp_configs")

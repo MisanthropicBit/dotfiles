@@ -1,8 +1,16 @@
 -- Configuration assumes neovim 0.9.0+
+local min_nvim_version = "nvim-0.11.0"
 
-if vim.fn.has("nvim-0.9.0") == 1 then
-    vim.loader.enable()
+if vim.fn.has(min_nvim_version) == 0 then
+    vim.notify(("Configuration requires at least %s, current version is nvim-%s"):format(
+        min_nvim_version,
+        vim.version()
+    ), vim.log.levels.ERROR)
+
+    return
 end
+
+vim.loader.enable()
 
 require("config.options")
 require("config.keymaps")

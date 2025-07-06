@@ -2,7 +2,6 @@ local lsp_on_attach = {}
 
 local icons = require("config.icons")
 local map = require("config.map")
-local lsp_configs = require("config.lsp.lsp_configs")
 
 -- We don't want ts_ls to format stuff as the default formatting doesn't
 -- seem to respect project-local settings for eslint and prettier.
@@ -58,19 +57,24 @@ end
 ---@return function
 local function lsp_request_jump(lsp_method, split_cmd, selector)
     return function()
-        local params = vim.lsp.util.make_position_params(0)
+        ---@param client vim.lsp.Client
+        ---@return lsp.TextDocumentPositionParams
+        local function get_params(client)
+            return vim.lsp.util.make_position_params(0, client.offset_encoding)
+        end
 
-        vim.lsp.buf_request_all(0, lsp_method, params, function(results)
+        vim.lsp.buf_request_all(0, lsp_method, get_params, function(results)
             local clients = vim.tbl_keys(results)
 
             if #clients == 0 then
                 return
             elseif #clients == 1 then
                 local client = vim.lsp.get_client_by_id(clients[1])
+                ---@cast client -nil
 
                 if results[client.id] and results[client.id].result and #results[client.id].result > 0 then
                     vim.cmd(split_cmd)
-                    vim.lsp.util.jump_to_location(results[client.id].result[1], client.offset_encoding, false)
+                    vim.lsp.util.show_document(results[client.id].result[1], client.offset_encoding, { focus = true })
                     vim.cmd("normal zt")
                 end
             else
@@ -78,9 +82,12 @@ local function lsp_request_jump(lsp_method, split_cmd, selector)
 
                 for client_id, result in pairs(results) do
                     local client = vim.lsp.get_client_by_id(client_id)
-                    local items = vim.lsp.util.locations_to_items(result.result, client.offset_encoding)
 
-                    vim.list_extend(locations, items)
+                    if client then
+                        local items = vim.lsp.util.locations_to_items(result.result, client.offset_encoding)
+
+                        vim.list_extend(locations, items)
+                    end
                 end
 
                 local has_fzf_lua, _ = pcall(require, "fzf-lua")
@@ -97,6 +104,7 @@ local function lsp_request_jump(lsp_method, split_cmd, selector)
 end
 
 function lsp_on_attach.on_attach(event)
+    -- TODO: Extend server capabilities with cmp_nvim_lsp
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     local buffer = event.buf
 
@@ -167,22 +175,6 @@ function lsp_on_attach.on_attach(event)
         with_desc("Jump to definition in a vertical split")
     )
     map.n.leader("at", lsp_request_jump(lsp_method, "tabe", selector), with_desc("Jump to definition in a tab"))
-
-    local config = lsp_configs[client.name]
-
-    if config then
-        if type(config.commands) == "function" then
-            config.commands()
-        end
-
-        if type(config.keymaps) == "table" then
-            for _, keymap in ipairs(config.keymaps) do
-                if type(keymap) == "function" then
-                    keymap()
-                end
-            end
-        end
-    end
 end
 
 return lsp_on_attach
