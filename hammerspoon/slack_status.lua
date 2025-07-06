@@ -28,11 +28,14 @@ local function updateStatus()
     end)
 end
 
+--- Set slack status automatically when the network changes, when Slack is
+--- launched or when the hammerspoon config is loaded
 function slack_status.init()
     if type(config.slack_token) ~= "string" then
         return
     end
 
+    -- Listen to network changes
     ---@diagnostic disable-next-line: unused-local
     local watcher = hs.wifi.watcher.new(function(_watcher, message, interface)
         local newNetwork = hs.wifi.currentNetwork()
@@ -47,12 +50,22 @@ function slack_status.init()
     watcher:watchingFor({ "SSIDChange" })
     watcher:start()
 
+    -- Listen to Slack being launched
     ---@diagnostic disable-next-line: unused-local
     hs.application.watcher.new(function(name, event, app)
         if name == "Slack" and event == hs.application.watcher.launched then
             updateStatus()
         end
     end)
+
+    -- Listen to screen unlock events
+    local caffeinateWatcher = hs.caffeinate.watcher.new(function(event)
+        if event == hs.caffeinate.watcher.screensDidUnlock then
+            updateStatus()
+        end
+    end)
+
+    caffeinateWatcher:start()
 end
 
 function slack_status.choose()
