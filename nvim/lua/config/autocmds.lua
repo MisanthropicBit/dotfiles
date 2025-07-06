@@ -57,14 +57,16 @@ autocmds.create_config_autocmd("TermOpen", {
     command = "setlocal signcolumn=no nospell",
 })
 
+-- Close terminals automatically if the process' exit code was zero
 autocmds.create_config_autocmd("TermClose", {
-    callback = function()
-        if vim.o.ft == "fzf" then
+    callback = function(event)
+        -- Do not close fzf-lua or overseer task terminals automatically
+        if vim.o.ft == "fzf" or vim.b[event.buf].overseer_task then
             return
         end
 
         if vim.v.event.status == 0 then
-            vim.api.nvim_buf_delete(0, {})
+            vim.api.nvim_buf_delete(event.buf, {})
         end
     end,
 })
