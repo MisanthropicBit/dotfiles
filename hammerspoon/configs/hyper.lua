@@ -3,6 +3,8 @@ local autolayout = require("autolayout")
 local config = require("config")
 local slack_status = require("slack_status")
 
+local default_window_transition_speed = 0.3
+
 return {
     {
         hyperKey = "F18",
@@ -71,7 +73,11 @@ return {
                     local window = hs.window.focusedWindow()
 
                     if window then
-                        window:moveOneScreenWest(false, true, 0.3)
+                        window:moveOneScreenWest(
+                            false,
+                            true,
+                            config.window_transition_speed or default_window_transition_speed
+                        )
                     end
                 end,
             },
@@ -81,7 +87,11 @@ return {
                     local window = hs.window.focusedWindow()
 
                     if window then
-                        window:moveOneScreenEast(false, true, 0.3)
+                        window:moveOneScreenEast(
+                            false,
+                            true,
+                            config.window_transition_speed or default_window_transition_speed
+                        )
                     end
                 end,
             },
