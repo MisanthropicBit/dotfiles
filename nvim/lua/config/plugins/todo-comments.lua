@@ -11,6 +11,7 @@ return {
                 FIX = {
                     icon = icons.misc.alarm .. " ",
                 },
+                DEBUG = "TEST",
             },
         })
 
