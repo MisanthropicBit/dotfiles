@@ -12,6 +12,12 @@ local fmt = require("luasnip.extras.fmt").fmt
 
 local fmta = ls.extend_decorator.apply(fmt, { delimiters = "<>" })
 
+---@enum CaseFormat
+local CaseFormat = {
+    SnakeCase = "snake_case",
+    PascalCase = "pascal_case",
+}
+
 -- Generate a range of a node type
 ---@param min integer
 ---@param max integer
@@ -52,6 +58,64 @@ local function snake_case(args)
 
         return table.concat(result)
     end
+end
+
+local function pascal_case(node_idx)
+    local function to_pascal_case(args)
+        if args then
+            local arg = args[1][1]
+            local result = {}
+            local upper_case_next = false
+
+            for idx = 1, #arg do
+                local char = arg:sub(idx, idx)
+
+                if char == "-" then
+                    upper_case_next = true
+                else
+                    if upper_case_next then
+                        table.insert(result, char:upper())
+                        upper_case_next = false
+                    else
+                        table.insert(result, char)
+                    end
+                end
+            end
+
+            return table.concat(result)
+        end
+    end
+
+    return f(to_pascal_case, { node_idx })
+end
+
+local function sentence_case(node_idx)
+    local function to_sentence_case(args)
+        if args then
+            local arg = args[1][1]
+            local result = {}
+            local first_dash = true
+
+            for idx = 1, #arg do
+                local char = arg:sub(idx, idx)
+
+                if char == "-" then
+                    if first_dash then
+                        table.insert(result, "s")
+                        first_dash = false
+                    end
+
+                    table.insert(result, " ")
+                else
+                    table.insert(result, char)
+                end
+            end
+
+            return table.concat(result)
+        end
+    end
+
+    return f(to_sentence_case, { node_idx })
 end
 
 local function get_mocha_choices(idx)
@@ -231,19 +295,18 @@ return {
     ),
     s(
         { trig = "qot", dscr = "New GraphQLObjectType" },
-        fmta(
-            [[import { GraphQLObjectType } from 'graphql'
+        fmta([[import { GraphQLObjectType } from 'graphql'
 
 import { GraphQLField } from '../extensions/wrappers'
 
 export const <> = new GraphQLObjectType({
-    name: '<>',
-    fields: () =>> ({
-        <>: GraphQLField({
-            type: <>,
-            description: '<>'
-        })
-    })
+	name: '<>',
+	fields: () =>> ({
+		<>: GraphQLField({
+			type: <>,
+			description: '<>'
+		})
+	})
 })]],
             { i(1), f(strip_graphql_type, { 1 }), i(2), i(3), i(4) }
         )
@@ -424,34 +487,29 @@ expect({}.args[0]{}, 'to equal', [{}])]],
         fmta(
             [[import { GraphQLObjectType } from 'graphql'
 
-import expect from '../../test/unexpected'
 import { <>Type } from './<>-type'
 
 describe('types/<>-type', () =>> {
-    describe('<>Type', () =>> {
-        it('is correct type', () =>> {
-            expect(<>Type, 'to be a', GraphQLObjectType)
-            expect(<>Type.toString(), 'to be', '<>')
-        })
+	describe('<>Type', () =>> {
+		it('is correct type', () =>> {
+			expect(<>Type).toBeInstanceOf(GraphQLObjectType)
+			expect(<>Type.toString()).toBe('<>')
+		})
 
-        it('has correct name', () =>> {
-            expect(<>Type.name, 'to be', '<>')
-        })
+		it('has correct name', () =>> {
+			expect(<>Type.name).toBe('<>')
+		})
 
-        it('has correct fields', () =>> {
-            const fields = <>Type.getFields()
+		it('has correct fields', () =>> {
+			const fields = <>Type.getFields()
 
-            expect(Object.keys(fields), 'to have length', <>)
+			expect(Object.keys(fields)).toHaveLength(<>)
 
-            expect(fields, 'to have key', '<>')
-            expect(fields.<>.type.toString(), 'to be', '<>')
-            expect(fields.<>.name, 'to be', '<>')
-        })
-
-        describe('custom resolvers', async () =>> {
-            <>
-        })
-    })
+			expect(fields).toHaveProperty('<>')
+			expect(fields.<>.type.toString()).toBe('<>')
+			expect(fields.<>.name).toBe('<>')
+		})
+	})
 })]],
             {
                 i(1),
@@ -470,7 +528,6 @@ describe('types/<>-type', () =>> {
                 i(4),
                 rep(3),
                 rep(3),
-                i(5),
             }
         )
     ),
@@ -701,7 +758,7 @@ describe('it - db/<>', () =>> {
                 i(1),
                 c(2, { t("select"), t("insert"), t("update"), t("delete"), t("truncate") }),
                 i(3),
-                i(4)
+                i(4, "connectedcars")
             }
         )
     ),
@@ -709,12 +766,11 @@ describe('it - db/<>', () =>> {
         { trig = "qit", dscr = "GraphQL query integration test" },
         fmta(
             [[import { access, database, testUtils } from '@connectedcars/backend'
-import { TypedSinonSpy } from '@connectedcars/test'
+import { type TypedSinonSpy } from '@connectedcars/test'
 import sinon from 'sinon'
 
-import { createQueryRunner } from '../../test/helpers'
+import { <> } from '../../test/helpers'
 import { createServer, stopServer } from '../../test/http-server'
-import expect from '../../test/unexpected'
 import { Server } from '../http-server'
 import { <> } from './<>'
 
@@ -722,38 +778,103 @@ const { knex } = database
 const { IntegrationDatabaseWrapper } = testUtils
 
 describe('it - queries/<>', () =>> {
-    const db = new IntegrationDatabaseWrapper('api')
-    const query = createQueryRunner({ <> }, [
-        `<>`
-    ])
-    let server: Server
+  const db = new IntegrationDatabaseWrapper('api')
+  const query = <>({ <> }, ['<>'])
+  let server: Server
 
-    beforeEach(async () =>> {
-        await db.checkoutDatabase('<>', { truncateTables: ['<>'] })
+  beforeAll(async () =>> {
+    await db.checkoutDatabase('<>', { truncateTables: ['<>'] })
 
-        server = await createServer()
-    })
+    server = await createServer()
+  })
 
-    afterEach(async () =>> {
-        sinon.restore()
-        await stopServer(server)
-        await db.cleanup()
-    })
+  beforeEach(async () =>> {
+  })
 
-    it('<>', async () =>> {
-        <>
-    })
+  afterEach(async () =>> {
+    sinon.restore()
+    await db.reset()
+  })
+
+  afterAll(async () =>> {
+    await stopServer(server)
+    await db.cleanup()
+  })
+
+  it('<>', async () =>> {
+    <>
+  })
 })]],
             {
-                i(2, "queryName"),
-                i(1),
-                rep(1),
+                c(1, { t("createQueryRunner"), t("createAuthorizedQueryRunner") }),
+                pascal_case(2),
+                i(2),
                 rep(2),
+                rep(1),
+                pascal_case(2),
                 i(3),
                 i(4),
                 i(5),
+                sentence_case(2),
                 i(6),
-                i(7),
+            }
+        )
+    ),
+    s(
+        { trig = "mit", dscr = "GraphQL mutation integration test" },
+        fmta(
+            [[import { access, database, testUtils } from '@connectedcars/backend'
+import { type TypedSinonSpy } from '@connectedcars/test'
+import sinon from 'sinon'
+
+import { <> } from '../../test/helpers'
+import { createServer, stopServer } from '../../test/http-server'
+import { Server } from '../http-server'
+import { <> } from './<>'
+
+const { knex } = database
+const { IntegrationDatabaseWrapper } = testUtils
+
+describe('it - mutations/<>', () =>> {
+  const db = new IntegrationDatabaseWrapper('api')
+  const mutation = <>({ <> }, ['<>'])
+  let server: Server
+
+  beforeAll(async () =>> {
+    await db.checkoutDatabase('<>', { truncateTables: ['<>'] })
+
+    server = await createServer()
+  })
+
+  beforeEach(async () =>> {
+  })
+
+  afterEach(async () =>> {
+    sinon.restore()
+    await db.reset()
+  })
+
+  afterAll(async () =>> {
+    await stopServer(server)
+    await db.cleanup()
+  })
+
+  it('<>', async () =>> {
+      <>
+  })
+})]],
+            {
+                c(1, { t("createMutationRunner"), t("createAuthorizedMutationRunner") }),
+                pascal_case(2),
+                i(2),
+                rep(2),
+                rep(1),
+                pascal_case(2),
+                i(3),
+                i(4),
+                i(5),
+                sentence_case(2),
+                i(6),
             }
         )
     ),
