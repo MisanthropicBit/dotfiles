@@ -123,6 +123,20 @@ return {
             end
         end, "Navigate to the enclosing top-level function")
 
+        map.n.leader("fe", function()
+            local node = ts.get_enclosing_top_level_function(ts_utils.get_node_at_cursor())
+
+            if node ~= nil then
+                local result = ts.get_end_of_enclosing_top_level_function(node)
+
+                if result then
+                    vim.fn.cursor(result.lnum, result.col)
+                else
+                    vim.notify("Could not find end of enclosing top-level function", vim.log.levels.ERROR)
+                end
+            end
+        end, "Navigate to the end of the enclosing top-level function")
+
         -- Unmap incremental selection inside the command-line window
         vim.api.nvim_create_autocmd("CmdwinEnter", { command = "silent! nunmap <buffer> <cr>" })
     end,

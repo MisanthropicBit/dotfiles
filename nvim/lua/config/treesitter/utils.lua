@@ -31,6 +31,20 @@ function ts.get_enclosing_top_level_function(node)
 end
 
 ---@param node TSNode
+---@return { lnum: integer, col: integer }?
+function ts.get_end_of_enclosing_top_level_function(node)
+    local func_node = ts.get_enclosing_top_level_function(node)
+
+    if func_node then
+        local lnum, col, _ = func_node:end_()
+
+        return { lnum = lnum + 1, col = col + 1 }
+    end
+
+    return nil
+end
+
+---@param node TSNode
 ---@return TSNode?
 function ts.get_enclosing_function_node(node)
     while node ~= nil do
