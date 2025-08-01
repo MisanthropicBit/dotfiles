@@ -3,6 +3,7 @@ return {
     config = function()
         local icons = require("config.icons")
         local dashboard = require("dashboard")
+        local ascii = require("config.images.ascii")
         local key_hl = "Number"
         local images = {
             {
@@ -106,21 +107,7 @@ return {
             theme = "doom",
             config = {
                 vertical_center = true,
-                header = {
-                    [[                                                                   ]],
-                    [[ ███▄▄▄▄      ▄████████  ▄██████▄   ▄█    █▄   ▄█    ▄▄▄▄███▄▄▄▄   ]],
-                    [[ ███▀▀▀██▄   ███    ███ ███    ███ ███    ███ ███  ▄██▀▀▀███▀▀▀██▄ ]],
-                    [[ ███   ███   ███    █▀  ███    ███ ███    ███ ███▌ ███   ███   ███ ]],
-                    [[ ███   ███  ▄███▄▄▄     ███    ███ ███    ███ ███▌ ███   ███   ███ ]],
-                    [[ ███   ███ ▀▀███▀▀▀     ███    ███ ███    ███ ███▌ ███   ███   ███ ]],
-                    [[ ███   ███   ███    █▄  ███    ███ ███    ███ ███  ███   ███   ███ ]],
-                    [[ ███   ███   ███    ███ ███    ███ ███    ███ ███  ███   ███   ███ ]],
-                    [[  ▀█   █▀    ██████████  ▀██████▀   ▀██████▀  █▀    ▀█   ███   █▀  ]],
-                    [[                                                                   ]],
-                    [[                                                                   ]],
-                    [[                                                                   ]],
-                    [[                                                                   ]],
-                },
+                header = ascii[math.random(1, #ascii)],
                 center = {
                     {
                         icon = icons.files.new .. "  ",
