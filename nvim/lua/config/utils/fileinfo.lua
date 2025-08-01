@@ -14,7 +14,7 @@ local _, txt_icon_color, _ = icons.get_for_filetype("txt")
 ---@param buffer integer
 ---@return FileInfo
 function fileinfo.get(buffer)
-    local bufname = vim.fn.bufname(buffer)
+    local bufname = vim.api.nvim_buf_get_name(buffer)
 
     if vim.startswith(bufname, "fugitive://") then
         local icon, icon_color, _ = icons.get_for_filetype("git")
@@ -42,6 +42,15 @@ function fileinfo.get(buffer)
             path = vim.bo[buffer].filetype,
             icon = icons.test.passed,
             icon_color = txt_icon_color,
+        }
+    elseif vim.bo[buffer].filetype == "fzf" then
+        local _, icon_color, _ = icons.get_for_filetype("lua")
+
+        return {
+            name = "fzf-lua",
+            path = vim.bo[buffer].filetype,
+            icon = icons.misc.search,
+            icon_color = icon_color,
         }
     elseif bufname == "" then
         return {
