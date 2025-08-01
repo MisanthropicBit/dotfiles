@@ -32,6 +32,18 @@ function map.set(mode, lhs, rhs, options)
 end
 
 ---@param mode Mode | Mode[]
+---@param lhs string | string[]
+---@param options table?
+function map.delete(mode, lhs, options)
+    local lhs_to_delete = type(lhs) == "string" and { lhs } or lhs
+    ---@cast lhs_to_delete string[]
+
+    for _, _lhs in ipairs(lhs_to_delete) do
+        vim.keymap.del(mode, _lhs, options)
+    end
+end
+
+---@param mode Mode | Mode[]
 ---@param lhs string
 ---@param rhs string | fun()
 ---@param options (table | string)?

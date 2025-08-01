@@ -146,6 +146,11 @@ end
 
 map.n("<c-g>", "6<c-g>", "Get full info about current file by default")
 
+-- Remove default lsp keymaps
+map.delete("n", { "grn", "gra", "grr", "gri", "gO" })
+map.delete("x", "gra")
+map.delete("i", "<c-s>")
+
 map.i("jk", [["<esc>"]], { expr = true })
 map.i("<c-a>", "<c-o>^", "Move to start of line in insert mode")
 map.i("<c-e>", "<c-o>$", "Move to end of line in insert mode")
