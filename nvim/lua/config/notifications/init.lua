@@ -22,8 +22,7 @@ end
 local notifiers = {
     {
         "neovim-notification",
-        ---@diagnostic disable-next-line: unused-local
-        condition = function(name)
+        condition = function()
             ---@diagnostic disable-next-line: undefined-field
             local stat, _, _ = vim.uv.fs_stat("/Applications/NeovimNotification.app")
 
