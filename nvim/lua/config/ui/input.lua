@@ -144,7 +144,7 @@ local function resolve_options(options)
 
     local win_config = {
         relative = _options.relative,
-        title = _options.title,
+        title = _options.prompt or _options.title,
         title_pos = _options.title_pos,
         noautocmd = _options.noautocmd,
         border = _options.border,
