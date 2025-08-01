@@ -1,7 +1,7 @@
 return {
     "nvim-neotest/nvim-nio",
     "nvim-neotest/neotest-plenary",
-    { "MisanthropicBit/neotest-jest", branch = "dev" },
+    { "nvim-neotest/neotest-jest" },
     { "MisanthropicBit/neotest-busted" },
     {
         "nvim-neotest/neotest",
@@ -53,11 +53,20 @@ return {
 
                             return "npm test --"
                         end,
+                        jest_test_discovery = true,
                         cwd = get_cwd,
-                        extension_test_file_match = require("neotest-jest.util").create_test_file_extensions_matcher(
-                            { "test", "it" },
-                            { "js", "ts" }
-                        ),
+                        strategy_config = function(default_strategy, _)
+                            default_strategy["resolveSourceMapLocations"] = {
+                                "${workspaceFolder}/**",
+                                "!**/node_modules/**",
+                            }
+
+                            return default_strategy
+                        end,
+                        -- extension_test_file_match = require("neotest-jest.util").create_test_file_extensions_matcher(
+                        --     { "test", "it" },
+                        --     { "js", "ts" }
+                        -- ),
                     }),
                     require("neotest-busted"),
                 },
