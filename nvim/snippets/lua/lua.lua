@@ -1,3 +1,8 @@
+local ls = require("luasnip")
+local fmt = require("luasnip.extras.fmt").fmt
+
+local fmta = ls.extend_decorator.apply(fmt, { delimiters = "<>" })
+
 -- TODO: Use for 'has' snippet
 local function snake_to_kebab_case(args)
     if args then
@@ -52,9 +57,19 @@ return {}]], { i(1, "M"), i(2), rep(1) })),
     s("le", fmt("vim.list_extend({}, {})", { i(1), i(2) })),
     s("ls", fmt("vim.list_slice({}, {}, {})", { i(1), i(2), i(3) })),
     s("rt", t("return")),
+    s("re", t("return")),
+    s("r8", fmta([[return {
+	<>
+}]], i(1))),
     s("rn", t("return nil")),
     s("rf", t("return false")),
     s("ru", t("return true")),
+
+    -- Documentation
+    s("dp", fmt("---@param {}", i(1))),
+    s("dr", fmt("---@return {}", i(1))),
+    s("dc", fmt("---@class {}", i(1))),
+    s("df", fmt("---@field {}", i(1))),
 
     -- Busted
     s("bfe", fmt([[before_each(function()
