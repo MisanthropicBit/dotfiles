@@ -35,6 +35,7 @@ return {
                 typescript = {
                     array = lang_utils.set_preset_for_list(js_ts_array_override),
                     object = lang_utils.set_preset_for_dict(js_ts_dict_override),
+                    parenthesized_expression = lang_utils.set_preset_for_args(),
                 },
             },
         })
