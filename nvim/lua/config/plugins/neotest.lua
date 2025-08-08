@@ -88,6 +88,9 @@ return {
                     extra_args = { "--updateSnapshot" },
                 })
             end, "Run the test under the cursor and update snapshots")
+            map.n.leader("tU", function()
+                neotest.run.run({ vim.fn.expand("%"), extra_args = { "--updateSnapshot" } })
+            end, "Run all tests in the current file and update snapshots")
             map.n.leader("tl", neotest.run.run_last, "Run the last run test")
             map.n.leader("tf", function()
                 neotest.run.run(vim.fn.expand("%"))
