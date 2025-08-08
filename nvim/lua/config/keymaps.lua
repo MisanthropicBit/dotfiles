@@ -37,6 +37,7 @@ map.n.leader("1", "1z=", "Correct misspelled word under cursor with the first su
 map.n.leader("fl", "za")
 map.n.leader("k", "K")
 map.n.leader("ip", "<cmd>Inspect<cr>", "Inspect treesitter node under cursor")
+map.n.leader("it", "<cmd>InspectTree<cr>", "Inspect treesitter tree")
 map.n.leader("pt", function()
     vim.cmd("tabnext " .. vim.g.last_tab)
 end)
