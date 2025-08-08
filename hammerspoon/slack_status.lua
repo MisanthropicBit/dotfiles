@@ -13,6 +13,7 @@ local choiceToEmoji = {
     ["WFH"] = { slack.emojis.wfh, true },
     ["Away"] = { slack.emojis.away, false },
     ["Doctor"] = { slack.emojis.doctor, false },
+    ["Vacation"] = { slack.emojis.vacation, false },
 }
 
 local function updateStatus()

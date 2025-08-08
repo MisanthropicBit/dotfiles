@@ -10,6 +10,7 @@ slack.emojis = {
     clear = "",
     lunch = "🍽",
     wfh = "🏡",
+    vacation = "🌴",
 }
 
 local function getSlackHeaders()
