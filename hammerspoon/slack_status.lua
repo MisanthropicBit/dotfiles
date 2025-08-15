@@ -9,11 +9,12 @@ local wifi_set_status_delay_seconds = 8
 
 local choiceToEmoji = {
     ["Clear status"] = { slack.emojis.clear, false },
-    ["Lunch"] = { slack.emojis.lunch, true },
-    ["WFH"] = { slack.emojis.wfh, true },
-    ["Away"] = { slack.emojis.away, false },
-    ["Doctor"] = { slack.emojis.doctor, false },
-    ["Vacation"] = { slack.emojis.vacation, false },
+    Lunch = { slack.emojis.lunch, true },
+    WFH = { slack.emojis.wfh, true },
+    Away = { slack.emojis.away, false },
+    Doctor = { slack.emojis.doctor, false },
+    Vacation = { slack.emojis.vacation, false },
+    Sick = { slack.emojis.sick, false },
 }
 
 local function updateStatus()
@@ -71,21 +72,27 @@ end
 
 function slack_status.choose()
     local chooser = hs.chooser.new(function(choice)
-        if choice then
-            local text = choice.text
+        if not choice then
+            return
+        end
 
-            if text == "Set online" then
-                slack.setPresence("auto")
-            elseif text == "Set offline" then
-                slack.setPresence("away")
-                slack.updateStatus("", slack.emojis.clear)
-            else
-                local message = text == "Clear status" and "" or text
-                local emoji, online = choiceToEmoji[text][1], choiceToEmoji[text][2]
+        local text = choice.text
 
-                slack.updateStatus(message, emoji)
-                slack.setPresence(online and "auto" or "away")
-            end
+        if text == "Set online" then
+            slack.setPresence("auto")
+        elseif text == "Set offline" then
+            slack.setPresence("away")
+            slack.updateStatus("", slack.emojis.clear)
+        else
+            local message = text == "Clear status" and "" or text
+            local emoji, online = choiceToEmoji[text][1], choiceToEmoji[text][2]
+
+            slack.updateStatus(message, emoji)
+            slack.setPresence(online and "auto" or "away")
+        end
+
+        if text == "Sick" then
+            slack.postMessage("Sick", config.team_channel)
         end
     end)
 

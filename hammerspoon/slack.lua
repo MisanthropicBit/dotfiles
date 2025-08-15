@@ -11,6 +11,7 @@ slack.emojis = {
     lunch = "🍽",
     wfh = "🏡",
     vacation = "🌴",
+    sick = "🤒",
 }
 
 local function getSlackHeaders()
@@ -67,6 +68,12 @@ end
 ---@param presence "auto" | "away"
 function slack.setPresence(presence)
     postRequest("https://slack.com/api/users.setPresence", { presence = presence })
+end
+
+---@param message string
+---@param channel string
+function slack.postMessage(message, channel)
+    postRequest("https://slack.com/api/chat.postMessage", { text = message, channel = channel })
 end
 
 return slack
