@@ -200,9 +200,9 @@ return {
         })
     ),
     s("lj", fmt([[console.log(JSON.stringify({}))]], i(1))),
-    s("rt", t("return ")),
+    s("re", t("return ")),
+    s("rt", t("return true")),
     s("rf", t("return false")),
-    s("rtt", t("return true")),
     s("rn", t("return null")),
     s("ru", t("return undefined")),
     s("ud", t("undefined")),
@@ -263,6 +263,9 @@ return {
     s("pr", t("Promise.resolve()")),
     s("pm", fmt("Promise<{}>", { i(1) })),
     s("kv", fmt("{}: {},", { i(1), i(2) })),
+    s("ok", fmt("Object.keys({})", i(1))),
+    s("ov", fmt("Object.values({})", i(1))),
+    s("oe", fmt("Object.entries({})", i(1))),
 
     -- Eslint
     s("elnl", fmt([[// eslint-disable-next-line {}]], i(1))),
@@ -536,48 +539,47 @@ describe('types/<>-type', () =>> {
         fmta(
             [[import { GraphQLInputObjectType } from 'graphql'
 
-import expect from '../../test/unexpected'
 import { <>InputType } from './<>-input-type'
 
 describe('types/<>-input-type', function () {
-    describe('<>Input', () =>> {
-        it('is correct type', () =>> {
-            expect(<>InputType, 'to be a', GraphQLInputObjectType)
-            expect(<>InputType.toString(), 'to be', '<>Input')
-        })
+	describe('<>Input', () =>> {
+		it('is correct type', () =>> {
+			expect(<>InputType).toBeInstanceOf(GraphQLInputObjectType)
+			expect(<>InputType.toString()).toBe('<>Input')
+		})
 
-        it('has correct name', () =>> {
-            expect(<>InputType.name, 'to be', '<>Input')
-        })
+		it('has correct name', () =>> {
+			expect(<>InputType.name).toBe('<>Input')
+		})
 
-        it('has correct fields', () =>> {
-            const fields = <>InputType.getFields()
+		it('has correct fields', () =>> {
+			const fields = <>InputType.getFields()
 
-            expect(Object.keys(fields), 'to have length', <>)
+			expect(Object.keys(fields)).toHaveLength(<>)
 
-            expect(fields, 'to have key', '<>')
-            expect(fields.<>.type.toString(), 'to be', '<>')
-            expect(fields.<>.name, 'to be', '<>')
-        })
-    })
+			expect(fields).toHaveProperty('<>')
+			expect(fields.<>.type.toString()).toBe('<>')
+			expect(fields.<>.name).toBe('<>')
+		})
+	})
 })]],
             {
                 i(1),
+                f(snake_case, { 1 }),
+                f(snake_case, { 1 }),
+                rep(1),
+                rep(1),
+                rep(1),
+                rep(1),
+                rep(1),
+                rep(1),
+                rep(1),
                 i(2),
-                rep(2),
-                rep(1),
-                rep(1),
-                rep(1),
-                rep(1),
-                rep(1),
-                rep(1),
-                rep(1),
                 i(3),
+                rep(3),
                 i(4),
-                rep(4),
-                i(5),
-                rep(4),
-                rep(4),
+                rep(3),
+                rep(3),
             }
         )
     ),
