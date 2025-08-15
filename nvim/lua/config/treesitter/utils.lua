@@ -24,6 +24,7 @@ function ts.get_enclosing_top_level_function(node)
             result = node
         end
 
+        ---@diagnostic disable-next-line: cast-local-type
         node = node:parent()
     end
 
@@ -46,12 +47,51 @@ end
 
 ---@param node TSNode
 ---@return TSNode?
+function ts.get_next_top_level_function(node)
+    local result_node = nil
+    local func_node = ts.get_enclosing_top_level_function(node)
+
+    if func_node then
+        result_node = func_node:next_sibling()
+    else
+        result_node = node:next_sibling()
+    end
+
+    while result_node and not is_function_node(result_node) do
+        result_node = result_node:next_sibling()
+    end
+
+    return result_node
+end
+
+---@param node TSNode
+---@return TSNode?
+function ts.get_prev_top_level_function(node)
+    local result_node = nil
+    local func_node = ts.get_enclosing_top_level_function(node)
+
+    if func_node then
+        result_node = func_node:prev_sibling()
+    else
+        result_node = node:prev_sibling()
+    end
+
+    while result_node and not is_function_node(result_node) do
+        result_node = result_node:prev_sibling()
+    end
+
+    return result_node
+end
+
+---@param node TSNode
+---@return TSNode?
 function ts.get_enclosing_function_node(node)
     while node ~= nil do
         if is_function_node(node) then
             return node
         end
 
+        ---@diagnostic disable-next-line: cast-local-type
         node = node:parent()
     end
 
