@@ -2,6 +2,8 @@ local notify = {}
 
 local notifier = nil
 
+---@alias config.notifications.BuiltVimNotify fun(msg: string, level: integer?, opts: table?)
+
 ---@param level integer
 ---@return boolean
 local function should_notify(level)

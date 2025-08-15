@@ -8,38 +8,34 @@ return setmetatable({}, {
         ---@param options table
         return function(msg, level, options)
             local _options = options or {}
-            local filter, filter_builtin = utils.filter_notification(msg, _options.title)
+            local _title, _msg = utils.transform_message(_options.title, msg)
+            local filter = utils.filter_notification(_title, _msg, level, _options, builtin_notify)
 
-            if not filter_builtin then
-                if _options.echo_message == nil or _options.echo_message == true then
-                    builtin_notify(msg, level, options)
-                end
+            if filter then
+                return
             end
 
-            if not filter then
-                local _msg = utils.escape_message(msg)
-                local command = {
-                    "terminal-notifier",
-                    "-title",
-                    '"' .. (_options.title or "neovim") .. '"',
-                    "-message",
-                    '"' .. _msg .. '"',
-                }
+            _msg = utils.escape_message(_msg)
 
-                if _options.icon and #_options.icon > 0 then
-                    vim.list_extend(command, { "-contentImage", '"' .. _options.icon .. '"' })
-                end
+            local command = {
+                "terminal-notifier",
+                "-title",
+                '"' .. (_options.title or "neovim") .. '"',
+                "-message",
+                '"' .. _msg .. '"',
+            }
 
-                if level and not _options.muted then
-                    local sound = _options.sound or sounds.get_sound_by_level(level)
-
-                    if sound ~= nil and #sound > 0 then
-                        vim.list_extend(command, { "-sound", '"' .. sound .. '"' })
-                    end
-                end
-
-                utils.run_async_command(command, builtin_notify)
+            if _options.icon and #_options.icon > 0 then
+                vim.list_extend(command, { "-contentImage", '"' .. _options.icon .. '"' })
             end
+
+            local sound = sounds.from_options(level, _options)
+
+            if sound then
+                vim.list_extend(command, { "-sound", '"' .. sound .. '"' })
+            end
+
+            utils.run_async_command(command, builtin_notify)
         end
     end,
 })
