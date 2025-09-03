@@ -249,3 +249,43 @@ function tag_changes -d "Generate a slack message of changes between the two mos
         printf "* $change\n"
     end
 end
+
+function nvim_grep -d "Use ripgrep to search for files then open them in neovim"
+    set -l rg_command 'rg --column --line-number --no-heading --smart-case --color=always'
+    set -l preview_command 'bat --color=always --style=plain --highlight-line {2} {1} --line-range {2}:-30 --line-range {2}:+30'
+
+    # {1} = file name, {2} line number, {3} = column, {4} = text from search
+    set -l result (
+        fzf --bind "change:reload:$rg_command {q} || true"\
+            --ansi\
+            --disabled\
+            --preview="$preview_command"\
+            --multi\
+            --bind="ctrl-s:select,ctrl-u:deselect"\
+            --prompt="Grep for> "\
+            --delimiter=:\
+            --accept-nth '{1}____{2}____{3}____{4}'
+    )
+
+    if test -z "$result"
+        commandline -f repaint
+        return
+    end
+
+    set -l length (count $result)
+
+    if test $length -gt 1
+        set -l args
+
+        for item in $result
+            set -l parts (string split "____" $item)
+            set -a args $parts[1]
+        end
+
+        nvim $args
+    else
+        set -l parts (string split "____" $result)
+
+        nvim -c "lua vim.fn.cursor($parts[2], $parts[3])" $parts[1]
+    end
+end
