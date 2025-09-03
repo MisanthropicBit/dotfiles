@@ -30,6 +30,12 @@ set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
 set -x HOMEBREW_NO_ANALYTICS 1
 set -x MINIKUBE_IN_STYLE false
 
+if type -q "delta"
+    set -x KUBECTL_EXTERNAL_DIFF delta
+else
+    set -x KUBECTL_EXTERNAL_DIFF "diff --color=auto --context=3"
+end
+
 fish_add_path /opt/local/bin /usr/local/bin /opt/homebrew/bin
 fish_add_path ~/.npm-global/bin "$PYENV_ROOT/bin" ~/projects/c/terminal_blocks
 fish_add_path ~/google-cloud-sdk/bin ~/repos/cloud-sql-proxy/
