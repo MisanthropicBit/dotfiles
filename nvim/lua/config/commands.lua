@@ -24,4 +24,11 @@ vim.cmd([[match ErrorMsg '\v^(\<|\=|\>){7}([^\=].+)?$']])
 
 vim.cmd.packadd("cfilter")
 
-vim.cmd([[set keywordprg=:DocsCursor]])
+vim.api.nvim_create_user_command("Messages", function(args)
+    local lines = vim.api.nvim_exec2("messages", { output = true }).output
+
+    vim.cmd(args.mods and (args.mods .. " new") or "new")
+    vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(lines, "\n"))
+    vim.cmd("setlocal buftype=nofile bufhidden=wipe nobuflisted")
+    vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>bd!<CR>", { noremap = true, silent = true })
+end, {})
