@@ -5,7 +5,7 @@ function show_error -a message
 end
 
 function create_pr -d "Create a pull request from the command line"
-    argparse --name="create_pr" "s/skip-ci" "r/reviewer=?" "n/no-view" -- $argv
+    argparse --name="create_pr" "s/skip-sc" "r/reviewer=?" "n/no-view" -- $argv
 
     gh auth status > /dev/null
 
@@ -53,7 +53,7 @@ function create_pr -d "Create a pull request from the command line"
         set -f pr_body (string join \n "$parsed_ids")
 
         if set -ql _flag_skip_ci
-            set -f pr_body "$pr_body"\n"[skip-ci]"
+            set -f pr_body "$pr_body"\n"[skip-sc]"
         end
     end
 
