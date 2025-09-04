@@ -56,14 +56,14 @@ return {}]], { i(1, "M"), i(2), rep(1) })),
     s("tde", fmt("vim.tbl_deep_extend({}{})", { i(1), c(2, { t(""), t(", {}") }) })),
     s("le", fmt("vim.list_extend({}, {})", { i(1), i(2) })),
     s("ls", fmt("vim.list_slice({}, {}, {})", { i(1), i(2), i(3) })),
-    s("rt", t("return")),
     s("re", t("return")),
     s("r8", fmta([[return {
 	<>
 }]], i(1))),
+    s("va", fmt("vim.api.nvim_{}({})", { i(1), i(2) })),
     s("rn", t("return nil")),
     s("rf", t("return false")),
-    s("ru", t("return true")),
+    s("rt", t("return true")),
 
     -- Documentation
     s("dp", fmt("---@param {}", i(1))),
