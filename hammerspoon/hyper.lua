@@ -22,17 +22,15 @@ local remap = require("utils.remap")
 ---@field keymaps HyperConfigKeyMap[]
 
 ---@param hyperMode unknown
----@param keymaps HyperConfigKeyMap
-local function bindHyperKeys(hyperMode, keymaps)
-    for _, keymap in ipairs(keymaps) do
-        local action = keymap.action
+---@param keymap HyperConfigKeyMap
+local function bindHyperKey(hyperMode, keymap)
+    local action = keymap.action
 
-        if not action then
-            notify.error(("Missing action for key '%s' in hyper mode '%s'"):format(keymap.key, hyperMode.key))
-        end
-
-        hyperMode:bind(keymap.mods, keymap.key, action, keymap.options)
+    if not action then
+        notify.error(("Missing action for key '%s' in hyper mode '%s'"):format(keymap.key, hyperMode.key))
     end
+
+    hyperMode:bind(keymap.mods, keymap.key, action, keymap.options)
 end
 
 -- TODO: Check for duplicate keys
@@ -67,7 +65,9 @@ local function setupHyperKey(hyperKeyConfig)
 
     local hyperMode = HyperMode.new(hyperKeyConfig.hyperKey)
 
-    bindHyperKeys(hyperMode, hyperKeyConfig.keymaps)
+    for _, keymap in ipairs(hyperKeyConfig.keymaps) do
+        bindHyperKey(hyperMode, keymap)
+    end
 end
 
 function hyper.init()

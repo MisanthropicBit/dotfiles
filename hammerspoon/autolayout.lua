@@ -14,17 +14,32 @@ local lastScreenCount = 0
 
 ---@alias LayoutConfig table<string, LayoutConfigEntry>
 
-function autolayout.autolayout(newScreenCount, autolayoutConfig)
-    local layoutName = config.at_work and "work" or "wfh"
-    local layoutConfig = autolayoutConfig[layoutName]
+function autolayout.apply(name, options)
+    local screenCount = #hs.screen.allScreens()
 
-    if not layoutConfig then
-        notify.error(("No layout found for layout config '%s'"):format(layoutName))
+    if screenCount == 1 then
+        notify.send("No layout applied, only one screen")
         return
     end
 
-    if type(layoutConfig.condition) == "function" then
-        if not layoutConfig.condition({ screenCount = newScreenCount }) then
+    local path = "configs.autolayout"
+    local autolayoutConfig = config.read(path)
+
+    if autolayoutConfig == nil then
+        notify.error(("Failed to read autolayout config file '%s'"):format(path))
+        return
+    end
+
+    local layoutConfig = autolayoutConfig[name]
+    print(hs.inspect(layoutConfig))
+
+    if not layoutConfig then
+        notify.error(("No layout found for layout config '%s'"):format(name))
+        return
+    end
+
+    if options and not options.skipCondition and type(layoutConfig.condition) == "function" then
+        if not layoutConfig.condition({ screenCount = options.newScreenCount }) then
             return
         end
     end
@@ -33,12 +48,11 @@ function autolayout.autolayout(newScreenCount, autolayoutConfig)
 end
 
 function autolayout.init()
-    local path = "configs.autolayout"
-    local autolayoutConfig = config.read(path)
+    local function default_apply_layout(screenCount)
+        local _screenCount = screenCount or #hs.screen.allScreens()
+        local layoutName = config.at_work and "work" or "wfh"
 
-    if autolayoutConfig == nil then
-        notify.error(("Failed to read autolayout config file '%s'"):format(path))
-        return
+        autolayout.apply(layoutName, { skipCondition = false, screenCount = _screenCount })
     end
 
     hs.screen.watcher.new(function()
@@ -50,9 +64,18 @@ function autolayout.init()
 
         if lastScreenCount ~= newScreenCount then
             lastScreenCount = newScreenCount
-            autolayout.autolayout(newScreenCount, autolayoutConfig)
+
+            default_apply_layout(newScreenCount)
         end
     end):start()
+
+    local caffeinateWatcher = hs.caffeinate.watcher.new(function(event)
+        if event == hs.caffeinate.watcher.screensDidUnlock then
+            default_apply_layout()
+        end
+    end)
+
+    caffeinateWatcher:start()
 end
 
 return autolayout

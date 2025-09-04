@@ -30,16 +30,18 @@ function HyperMode:bind(mods, key, action, options)
     local _mods = mods or {}
 
     if options and options.preventRetrigger == true then
-        self._mode:bind(_mods, key, function()
+        local newAction = function()
             -- Avoid retriggering action when e.g. sending keystrokes
             -- programmatically by exiting and entering the hyper mode around
             -- the action
             self._mode:exit()
             action(options)
             self._mode:enter()
-        end)
+        end
+
+        self._mode:bind(_mods, key, nil, newAction, nil, newAction)
     else
-        self._mode:bind(_mods, key, action)
+        self._mode:bind(_mods, key, nil, action, nil, action)
     end
 end
 

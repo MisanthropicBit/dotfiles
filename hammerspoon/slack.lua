@@ -25,16 +25,18 @@ end
 ---@param body table
 local function handleSlackResponse(http_code, body)
     local ok, result = pcall(hs.json.decode, body)
+    local failed
 
     if not ok then
         result = body
+        failed = true
+    else
+        failed = http_code ~= 200 or (result and not result.ok)
     end
 
-    local failed = http_code ~= 200 or (result and not result.ok)
-
     if failed then
-        print(http_code, hs.inspect(body))
-        notify.send(result and result.error or "No context", { title = "Setting Slack Status Failed!" })
+        print(("Got http error code %d from slack api"):format(http_code))
+        notify.send(result and result.error or "No error context", { title = "Setting Slack Status Failed!" })
 
         return false
     end
