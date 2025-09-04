@@ -5,9 +5,9 @@ return {
     "rebelot/kanagawa.nvim",
     "ribru17/bamboo.nvim",
     "tiagovla/tokyodark.nvim",
-    "MyyPo/borrowed.nvim",
     "MisanthropicBit/warlock.nvim",
     "killitar/obscure.nvim",
     "dgox16/oldworld.nvim",
     "yorumicolors/yorumi.nvim",
+    "rijulpaul/nightblossom.nvim",
 }
