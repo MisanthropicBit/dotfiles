@@ -12,4 +12,7 @@ bind \ch backward-word
 bind ctrl-_     edit_command_buffer
 bind ctrl-minus edit_command_buffer
 
+bind ctrl-.     nvim_grep
+bind ctrl-enter nvim_grep
+
 # TODO: Add binding for ctrl+space with a function that removes the first token
