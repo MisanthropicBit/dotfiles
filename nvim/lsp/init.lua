@@ -5,6 +5,10 @@ vim.lsp.enable({
     "lua_ls",
     "marksman",
     "sqlls",
-    "ts_ls",
+    -- "ts_ls",
+    -- "tsgo",
     "yamlls",
+    "tflint",
+    "vtsls",
 })
+

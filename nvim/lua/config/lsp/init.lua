@@ -1,12 +1,24 @@
 local augroup = vim.api.nvim_create_augroup("ConfigLspAttach", {})
 
-require("config.lsp.configs")
+vim.lsp.enable({
+    "clangd",
+    -- "harper_ls",
+    "jsonls",
+    "lua_ls",
+    "marksman",
+    "sqlls",
+    -- "ts_ls",
+    -- "tsgo",
+    "yamlls",
+    "tflint",
+    "vtsls",
+})
 
 vim.api.nvim_create_autocmd("LspAttach", {
-	group = augroup,
-	callback = function(event)
-		require("config.lsp.on_attach").on_attach(event)
-	end,
+    group = augroup,
+    callback = function(event)
+        require("config.lsp.on_attach").on_attach(event)
+    end,
 })
 
 -- Globally override lsp border settings

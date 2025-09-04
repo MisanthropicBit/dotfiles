@@ -14,8 +14,6 @@ local function get_clangd_command()
 end
 
 return {
-    root_markers = { ".clangd", "compile_commands.json" },
-    filetypes = { "c", "cpp" },
     config = {
         cmd = { get_clangd_command() },
     }
