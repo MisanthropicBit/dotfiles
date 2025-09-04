@@ -13,29 +13,6 @@ local function lsp_format_wrapper()
     })
 end
 
-local lsp_methods = {
-    "code_action",
-    "declaration",
-    "definition",
-    "document_symbol",
-    "hover",
-    "references",
-    "rename",
-    "signature_help",
-    "type_definition",
-    formatting = lsp_format_wrapper,
-}
-
-setmetatable(lsp_methods, {
-    __index = function(_, key)
-        if type(key) == "string" then
-            return vim.lsp.buf[key]
-        end
-
-        return key
-    end,
-})
-
 ---Use fzf-lua as a lsp result selector in case of multiple results
 ---@param locations any
 local function fzf_lua_lsp_jump_selector(locations)
@@ -106,15 +83,18 @@ end
 function lsp_on_attach.on_attach(event)
     -- TODO: Extend server capabilities with cmp_nvim_lsp
     local client = vim.lsp.get_client_by_id(event.data.client_id)
-    local buffer = event.buf
 
-    ---@cast client -nil
+    if not client then
+        return
+    end
+
+    local buffer = event.buf
 
     if client.server_capabilities.completionProvider then
         vim.bo[buffer].omnifunc = "v:lua.vim.lsp.omnifunc"
     end
 
-    if vim.fn.has("nvim-0.10.0") == 1 and client.server_capabilities.inlayHintProvider then
+    if client.server_capabilities.inlayHintProvider then
         vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
     end
 
@@ -123,7 +103,7 @@ function lsp_on_attach.on_attach(event)
     end
 
     local function lsp_definition()
-        lsp_methods.definition()
+        vim.lsp.buf.definition()
         vim.cmd("normal zt")
     end
 
@@ -131,34 +111,26 @@ function lsp_on_attach.on_attach(event)
     -- We don't guard against server capabilities because we want neovim to
     -- inform us if the lsp server doesn't support a method
     map.n("gd", lsp_definition, with_desc("Jump to definition under cursor"))
-    map.n("<s-m>", lsp_methods.hover, with_desc("Open lsp float"))
-    map.n.leader("lc", lsp_methods.declaration, with_desc("Jump to declaration under cursor"))
-    map.n.leader("lt", lsp_methods.type_definition, with_desc("Jump to type definition"))
-    map.n.leader("lh", lsp_methods.signature_help, with_desc("Lsp signature help"))
-    map.n.leader("lm", lsp_methods.rename, with_desc("Rename under cursor"))
-    map.leader({ "n", "v" }, "lf", lsp_methods.formatting, with_desc("Format code in a buffer or in a range"))
+    map.n("<s-m>", function()
+        vim.lsp.buf.hover({ border = "rounded" })
+    end, with_desc("Open lsp float"))
+    map.n.leader("lc", vim.lsp.buf.declaration, with_desc("Jump to declaration under cursor"))
+    map.n.leader("lt", vim.lsp.buf.type_definition, with_desc("Jump to type definition"))
+    map.n.leader("lh", vim.lsp.buf.signature_help, with_desc("Lsp signature help"))
+    map.n.leader("lm", vim.lsp.buf.rename, with_desc("Rename under cursor"))
+    map.leader({ "n", "v" }, "lf", lsp_format_wrapper, with_desc("Format code in a buffer or in a range"))
 
     -- Set up document symbol and lsp references mappings if they are not already bound (by e.g. fzf-lua)
-    if vim.fn.maparg("<c-s>", "n") == "" then
-        map.n("<c-s>", lsp_methods.document_symbol, with_desc("Show document symbol"))
-    end
+    map.n("<c-s>", vim.lsp.buf.document_symbol, { buffer = buffer, desc = "Show document symbol", check = true })
 
-    if vim.fn.maparg("<localleader>lr", "n") == "" then
-        map.n.leader("lr", lsp_methods.references, with_desc("Show lsp references"))
-    end
+    map.n.leader("lr", vim.lsp.buf.references, { buffer = buffer, desc = "Show lsp references", check = true })
 
-    if vim.fn.maparg("<localleader>la", "n") == "" then
-        map.leader(
-            { "n", "v", "x" },
-            "la",
-            lsp_methods.code_action,
-            with_desc("Open code action menu at cursor or in a range")
-        )
-    end
-
-    if vim.fn.maparg("<c-s>", "n") == "" then
-        map.n("<c-s>", lsp_methods.document_symbol, with_desc("Show document symbol"))
-    end
+    map.leader(
+        { "n", "v", "x" },
+        "la",
+        vim.lsp.buf.code_action,
+        { buffer = buffer, desc = "Open code action menu at cursor or in a range", check = true }
+    )
 
     local lsp_method = "textDocument/definition"
     local selector = "fzf"
