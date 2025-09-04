@@ -4,6 +4,7 @@ return {
         local map = require("config.map")
 
         require("gitsigns").setup({
+            sign_priority = 1001,
             numhl = true,
             on_attach = function(buffer)
                 local gs = package.loaded.gitsigns
