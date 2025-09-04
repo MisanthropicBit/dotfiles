@@ -55,6 +55,15 @@ return {
                         end,
                         jest_test_discovery = true,
                         cwd = get_cwd,
+                        isTestFile = function(file_path)
+                            if require("neotest-jest.jest-util").defaultIsTestFile(file_path) then
+                                return true
+                            end
+
+                            local ext = vim.fn.fnamemodify(file_path, ":e:e")
+
+                            return ext == "it.ts" and require("neotest-jest.jest-util").hasJestDependency(file_path)
+                        end,
                         strategy_config = function(default_strategy, _)
                             default_strategy["resolveSourceMapLocations"] = {
                                 "${workspaceFolder}/**",
