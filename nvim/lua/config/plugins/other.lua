@@ -138,28 +138,36 @@ return {
                 },
                 {
                     -- C/C++ header (.h) file => implementation (.c) file
-                    pattern = "(.*)/(.*).h",
+                    pattern = "(.*)/(.*).h$",
                     target = "%1/%2.c",
                     context = "c/c++ implementation (.c) file",
                 },
                 {
                     -- C/C++ header (.hpp) file => implementation (.cpp) file
-                    pattern = "(.*)/(.*).hpp",
+                    pattern = "(.*)/(.*).hpp$",
                     target = "%1/%2.cpp",
                     context = "c/c++ implementation (.cpp) file",
                 },
                 {
                     -- C/C++ implementation (.c) file => header (.h) file
-                    pattern = "(.*)/(.*).c",
+                    pattern = "(.*)/(.*).c$",
                     target = "%1/%2.h",
                     context = "c/c++ header (.h) file",
                 },
                 {
                     -- C/C++ implementation (.cpp) file => header (.hpp) file
-                    pattern = "(.*)/(.*).cpp",
+                    pattern = "(.*)/(.*).cpp$",
                     target = "%1/%2.hpp",
                     context = "c/c++ header (.hpp) file",
-                }
+                },
+                {
+                  pattern = "(package)%.json",
+                  target = "%1-lock.json",
+                },
+                {
+                  pattern = "(package)-lock%.json",
+                  target = "%1.json",
+                },
             },
         })
 
