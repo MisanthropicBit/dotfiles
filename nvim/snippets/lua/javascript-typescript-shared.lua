@@ -205,6 +205,8 @@ return {
     s("rf", t("return false")),
     s("rn", t("return null")),
     s("ru", t("return undefined")),
+    s("ra", fmt("return [{}]", i(1))),
+    s("ro", fmta("return {<>}", i(1))),
     s("ud", t("undefined")),
     s("pe", t("process.env.")),
     s(
@@ -263,6 +265,7 @@ return {
     s("pr", t("Promise.resolve()")),
     s("pm", fmt("Promise<{}>", { i(1) })),
     s("kv", fmt("{}: {},", { i(1), i(2) })),
+    s("ee", fmt("{} = '{}'", { i(1), rep(1) })),
     s("ok", fmt("Object.keys({})", i(1))),
     s("ov", fmt("Object.values({})", i(1))),
     s("oe", fmt("Object.entries({})", i(1))),
@@ -712,33 +715,33 @@ const { knex, query } = database
 const { IntegrationDatabaseWrapper } = testUtils
 
 describe('it - db/<>', () =>> {
-    const db = new IntegrationDatabaseWrapper('<>')
-    let querySpy: TypedSinonSpy<<typeof query.knexQuery>>
+	const db = new IntegrationDatabaseWrapper('<>')
+	let querySpy: TypedSinonSpy<<typeof query.knexQuery>>
 
-    beforeAll(async () =>> {
-        await db.checkoutDatabase('<>', { truncateTables: ['<>'] })
-    })
+	beforeAll(async () =>> {
+		await db.checkoutDatabase('<>', { truncateTables: ['<>'] })
+	})
 
-    beforeEach(async () =>> {
-        await db.query(knex('<>').insert().toQuery(), '<>')
-        querySpy = sinon.spy(query, 'knexQuery')
-    })
+	beforeEach(async () =>> {
+		await db.query(knex('<>').insert().toQuery(), '<>')
+		querySpy = sinon.spy(query, 'knexQuery')
+	})
 
-    afterEach(async () =>> {
-        sinon.restore()
-        await db.reset()
-    })
+	afterEach(async () =>> {
+		sinon.restore()
+		await db.reset()
+	})
 
-    afterAll(async () =>> {
-        await db.cleanup()
-    })
+	afterAll(async () =>> {
+		await db.cleanup()
+	})
 
-    describe('<>', () =>> {
-        it('<>', async () =>> {
-            expect(querySpy.callCount).toBe(1)
-            expect(querySpy.args[0][1].toQuery()).toMatchSnapshot()
-        })
-    })
+	describe('<>', () =>> {
+		it('<>', async () =>> {
+			expect(querySpy.callCount).toBe(1)
+			expect(querySpy.args[0][1].toQuery()).toMatchSnapshot()
+		})
+	})
 })]],
             {
                 extras.partial(get_cleaned_filename),
