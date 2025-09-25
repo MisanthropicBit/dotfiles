@@ -12,6 +12,7 @@ $fill\
 $cmake\
 $container\
 $docker_context\
+$env_var\
 $nodejs\
 $kubernetes\
 $gcloud\
@@ -60,3 +61,13 @@ format = '[](bold purple)[$symbol$context( \($namespace\))]($style)[](bold
 [[kubernetes.contexts]]
 context_pattern = "\\w+_[\\w-]+_(?P<region>[\\w-]+)_(?P<cluster>[\\w-]+)"
 context_alias = '$cluster $region'
+
+[terraform]
+format = '[$symbol $workspace]($style) '
+symbol = ''
+
+[env_var]
+variable = 'ITERM_PROFILE'
+symbol = ''
+style = 'bold fg:#ffd280'
+format = '[$symbol $env_value]($style) '
