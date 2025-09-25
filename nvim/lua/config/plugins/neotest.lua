@@ -1,10 +1,12 @@
 return {
-    "nvim-neotest/nvim-nio",
-    "nvim-neotest/neotest-plenary",
-    { "nvim-neotest/neotest-jest" },
-    { "MisanthropicBit/neotest-busted" },
     {
         "nvim-neotest/neotest",
+        dependencies = {
+            "nvim-neotest/nvim-nio",
+            "nvim-neotest/neotest-plenary",
+            "nvim-neotest/neotest-jest",
+            "MisanthropicBit/neotest-busted",
+        },
         config = function()
             local neotest = require("neotest")
 
