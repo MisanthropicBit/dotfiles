@@ -111,6 +111,9 @@ return {
                 find_opts = require("fzf-lua.defaults").defaults.files.find_opts .. " --exclude node_modules",
                 formatter = "path.filename_first",
             },
+            grep = {
+                RIPGREP_CONFIG_PATH = vim.env.RIPGREP_CONFIG_PATH
+            },
             lsp = {
                 git_icons = true,
                 symbols = {
