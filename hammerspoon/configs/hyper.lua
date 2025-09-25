@@ -110,6 +110,32 @@ return {
                 end,
             },
             {
+                key = "j",
+                action = function()
+                    local window = hs.window.focusedWindow()
+
+                    if window then
+                        window:moveToUnit(
+                            hs.geometry(0, 0, 0.5, 1),
+                            config.window_transition_speed or default_window_transition_speed
+                        )
+                    end
+                end,
+            },
+            {
+                key = "k",
+                action = function()
+                    local window = hs.window.focusedWindow()
+
+                    if window then
+                        window:moveToUnit(
+                            hs.geometry(0.5, 0, 0.5, 1),
+                            config.window_transition_speed or default_window_transition_speed
+                        )
+                    end
+                end,
+            },
+            {
                 key = "u",
                 action = slack_status.choose,
             },
