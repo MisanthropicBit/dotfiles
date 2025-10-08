@@ -65,7 +65,11 @@ for _, notifier_spec in ipairs(notifiers) do
 end
 
 function notify.builtin(...)
-    builtin_vim_notify(...)
+    local args = { ... }
+
+    vim.schedule(function()
+        builtin_vim_notify(unpack(args))
+    end)
 end
 
 return notify
