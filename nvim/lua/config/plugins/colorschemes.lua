@@ -10,4 +10,6 @@ return {
     "dgox16/oldworld.nvim",
     "yorumicolors/yorumi.nvim",
     "rijulpaul/nightblossom.nvim",
+    "wurli/cobalt.nvim",
+    "WTFox/jellybeans.nvim",
 }

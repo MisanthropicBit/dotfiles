@@ -101,7 +101,11 @@ local preferred_colorschemes = normalize_weights({
     "obscure",
     "oldworld",
     "yorumi",
-    "shin",
+    "cobalt",
+    "jellybeans",
+    "nightblossom",
+    "nightblossom-pastel",
+    "nightblossom-sakura",
 })
 
 ---@param weighted_choices table<string | table>
