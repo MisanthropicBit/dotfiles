@@ -82,6 +82,8 @@ map.n.leader("yk", function()
 end, "Yank line [count] above current line")
 map.n.leader("0", "<c-w>=")
 map.n.leader("ou", "<cmd>norm! o<cr>", "Open a line under current line")
+map.n.leader("bd", "<cmd>diffthis<cr>", "Buffer diffthis")
+map.n.leader("bo", "<cmd>diffoff!<cr>", "Buffer diffthis off")
 
 map.n("<c-o>", "<c-o>zz")
 map.n("<c-i>", "<c-i>zz")
