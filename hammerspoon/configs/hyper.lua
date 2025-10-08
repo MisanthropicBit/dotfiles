@@ -172,7 +172,7 @@ return {
                 action = function()
                     fastKeyStroke({ "alt" }, "'")
                 end,
-                options = { preventRetrigger = true }
+                options = { preventRetrigger = true },
             },
         },
     },

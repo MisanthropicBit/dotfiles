@@ -31,7 +31,6 @@ function autolayout.apply(name, options)
     end
 
     local layoutConfig = autolayoutConfig[name]
-    print(hs.inspect(layoutConfig))
 
     if not layoutConfig then
         notify.error(("No layout found for layout config '%s'"):format(name))
