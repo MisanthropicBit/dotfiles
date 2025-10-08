@@ -12,7 +12,10 @@ g.python_host_prog = vim.fn.expand("~/.neovim_venvs/neovim2/bin/python")
 g.python3_host_prog = vim.fn.expand("~/.neovim_venvs/neovim3/bin/python")
 g.custom_notifier = nil
 g.notify_log_level = vim.log.levels.WARN
-g.netrw_nogx = 1
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
+g.loaded_netrwSettings = 1
+g.loaded_netrwFileHandlers = 1
 
 o.compatible = false
 o.number = true
