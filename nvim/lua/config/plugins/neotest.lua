@@ -19,7 +19,7 @@ return {
 
             ---@return string
             local function get_cwd()
-                return vim.fn.getcwd()
+                return vim.uv.cwd()
             end
 
             ---@diagnostic disable-next-line: missing-fields

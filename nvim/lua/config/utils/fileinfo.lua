@@ -8,7 +8,7 @@ local icons = require("config.icons")
 ---@field icon       string
 ---@field icon_color string
 
-local _, txt_icon_color, _ = icons.get_for_filetype("txt")
+local _, txt_icon_color, _ = icons.get_for_filetype("text")
 
 --- Get filename information from a buffer
 ---@param buffer integer

@@ -38,7 +38,7 @@ return {
             if vim.startswith(bufname, "oil://") then
                 filename = "oil"
                 ft_icon = icons.files.oil
-                ft_color = ({ devicons.get_icon_color_by_filetype("txt") })[2]
+                ft_color = ({ devicons.get_icon_color_by_filetype("text") })[2]
             elseif vim.startswith(bufname, "fugitive://") then
                 filename = "fugitive"
                 ft_icon, ft_color = devicons.get_icon_color_by_filetype("git")

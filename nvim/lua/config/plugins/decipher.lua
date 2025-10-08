@@ -5,13 +5,7 @@ return {
         local map = require("config.map")
 
         decipher.setup({
-            active_codecs = {
-                "base64",
-                "base64-url",
-                "url",
-            },
             float = {
-                padding = 1,
                 enter = true,
             },
         })
