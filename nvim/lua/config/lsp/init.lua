@@ -2,16 +2,14 @@ local augroup = vim.api.nvim_create_augroup("ConfigLspAttach", {})
 
 vim.lsp.enable({
     "clangd",
-    -- "harper_ls",
     "jsonls",
     "lua_ls",
     "marksman",
     "sqlls",
-    -- "ts_ls",
-    -- "tsgo",
-    "yamlls",
     "tflint",
+    "tofu_ls",
     "vtsls",
+    "yamlls",
 })
 
 vim.api.nvim_create_autocmd("LspAttach", {
