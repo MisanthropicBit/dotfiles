@@ -38,6 +38,7 @@ return {
             map.n.leader("hU", gs.undo_stage_hunk)
             map.n.leader("hs", gs.stage_hunk)
             map.n.leader("hd", gs.diffthis)
+            map.n.leader("hR", gs.reset_buffer)
 
             map.set({ "o", "x" }, "ah", "<cmd>Gitsigns select_hunk<cr>")
         end
