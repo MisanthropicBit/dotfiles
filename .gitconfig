@@ -74,7 +74,7 @@
     mt = "!nvim -c DiffviewOpen"
     mp = !git checkout master && git pull
     p = pull
-    pr = "!~/repos/work-scripts/pr.fish"
+    pr = "!~/projects/dotfiles/scripts/pr.fish"
     pt = stash push -m "temp"
     puo = push -u origin HEAD
     rcount = rev-list --count @{u}
