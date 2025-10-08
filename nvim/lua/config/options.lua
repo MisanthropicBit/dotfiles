@@ -48,8 +48,12 @@ o.splitright = true
 o.foldlevel = 3 -- Only close folds that are at level 3 or higher
 o.foldmethod = "indent"
 o.foldnestmax = 3
-o.shell = "fish"
 o.inccommand = "nosplit"
+o.undofile = true
+
+if type(vim.env.SHELL) == "string" and vim.env.SHELL:match("fish") then
+    o.shell = "fish"
+end
 
 opt.backspace = { "indent", "eol", "start" }
 opt.clipboard:append("unnamed")
