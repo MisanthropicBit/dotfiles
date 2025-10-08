@@ -2,9 +2,9 @@ local map = require("config.map")
 
 local function buf_toggle_diagnostics_messages()
     local bufnr = vim.api.nvim_get_current_buf()
-    local disabled = not vim.diagnostic.is_disabled(bufnr)
+    local flag = not vim.diagnostic.is_enabled({ bufnr = bufnr })
 
-    vim.diagnostic[disabled and "disable" or "enable"](bufnr)
+    vim.diagnostic.enable(flag, { bufnr = bufnr })
 end
 
 map.n.leader("dm", buf_toggle_diagnostics_messages, { desc = "Toggle diagnostic messages in the current buffer" })
