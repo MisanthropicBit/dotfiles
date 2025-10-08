@@ -118,23 +118,6 @@ local function sentence_case(node_idx)
     return f(to_sentence_case, { node_idx })
 end
 
-local function get_mocha_choices(idx)
-    return c(idx, {
-        t("to equal"),
-        t("to satisfy"),
-        t("to be null"),
-        t("to be true"),
-        t("to be false"),
-        t("to throw"),
-        t("to be rejected with"),
-        t("to have graphql response"),
-        t("to have graphql error"),
-        t("to match"),
-        t("to be undefined"),
-        t("to have length"),
-    })
-end
-
 local function get_jest_choices(idx)
     return c(idx, {
         t("toEqual"),
@@ -388,10 +371,9 @@ expect(fields.{}.name).toBe('{}')]],
     s("sp", fmt("sinon.spy({})", i(1))),
     s("sr", t("sinon.restore()")),
     s("er", t("envStub.restore()")),
-    s("ep", fmt([[expect({}, '{}', {})]], { i(1), get_mocha_choices(2), i(3) })),
-    s("ept", fmt([[expect({}).{}({})]], { i(1), get_jest_choices(2), i(3) })),
-    s("epct", fmt([[expect({}.callCount).toBe({})]], range(1, 2))),
-    s("epat", fmt([[expect({}.args[0]{}).toEqual([{}])]], range(1, 3))),
+    s("ep", fmt([[expect({}).{}({})]], { i(1), get_jest_choices(2), i(3) })),
+    s("epc", fmt([[expect({}.callCount).toBe({})]], range(1, 2))),
+    s("epa", fmt([[expect({}.args[0]{}).toEqual([{}])]], range(1, 3))),
     s(
         "epcat",
         fmt(
@@ -400,17 +382,6 @@ expect({}.args[0]{}).toEqual([{}])]],
             { i(1), i(2), rep(1), i(3), i(4) }
         )
     ),
-    s("epc", fmt([[expect({}.callCount, 'to equal', {})]], range(1, 2))),
-    s("epa", fmt([[expect({}.args[0]{}, 'to equal', [{}])]], range(1, 3))),
-    s(
-        "epca",
-        fmt(
-            [[expect({}.callCount, 'to equal', {})
-expect({}.args[0]{}, 'to equal', [{}])]],
-            { i(1), i(2), rep(1), i(3), i(4) }
-        )
-    ),
-    s("fss", fmta([[this.<3> = sinon.stub(<1>, '<2>')]], { i(1), i(2), rep(2) })),
     s(
         "it",
         fmta(
