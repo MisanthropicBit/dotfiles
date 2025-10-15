@@ -60,6 +60,7 @@ return {
                             done = icons.test.passed,
                         }
                     },
+                    "winmove",
                 },
                 lualine_x = {
                     {
