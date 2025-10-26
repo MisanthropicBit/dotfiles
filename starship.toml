@@ -69,5 +69,5 @@ symbol = ''
 [env_var]
 variable = 'ITERM_PROFILE'
 symbol = ''
-style = 'bold fg:#ffd280'
+style = 'bold fg:#ff6e6e'
 format = '[$symbol $env_value]($style) '
