@@ -49,9 +49,9 @@ end
 function autolayout.init()
     local function default_apply_layout(screenCount)
         local _screenCount = screenCount or #hs.screen.allScreens()
-        local layoutName = config.at_work and "work" or "wfh"
+        local layoutName = config.at_work() and "work" or "wfh"
 
-        autolayout.apply(layoutName, { skipCondition = false, screenCount = _screenCount })
+        autolayout.apply(layoutName, { skipCondition = false, newScreenCount = _screenCount })
     end
 
     hs.screen.watcher.new(function()
