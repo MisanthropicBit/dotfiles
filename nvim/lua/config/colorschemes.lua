@@ -92,11 +92,9 @@ local builtin_colorschemes = {
 
 local preferred_colorschemes = normalize_weights({
     "bamboo",
-    "carbonfox",
     "duskfox",
     "kanagawa",
     "kanagawa-dragon",
-    "kimbox",
     "tokyonight-night",
     "obscure",
     "oldworld",
