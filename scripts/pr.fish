@@ -7,12 +7,6 @@ end
 function create_pr -d "Create a pull request from the command line"
     argparse --name="create_pr" "s/skip-sc" "r/reviewer=?" "n/no-view" -- $argv
 
-    gh auth status > /dev/null
-
-    if test $status -eq 1
-        gh auth login
-    end
-
     gh pr view > /dev/null
 
     if test $status -eq 0
