@@ -287,7 +287,7 @@ return {
 
         map.n.leader("ft", function() require("todo-comments.fzf").todo() end, "Find all TODOs")
         map.n.leader("rt", function()
-            fzf_lua.grep({ rg_opts = "-Tta " .. fzf_lua.defaults.grep.rg_opts })
+            fzf_lua.grep_project({ rg_opts = "-Tta " .. fzf_lua.defaults.grep.rg_opts })
         end, "Search all non-test files")
 
         local project_dir = vim.fn.isdirectory(vim.fs.normalize("~/repos")) == 1 and "~/repos" or "~/projects"
