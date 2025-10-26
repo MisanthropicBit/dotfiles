@@ -220,7 +220,7 @@ return {
                 local parts = vim.split(path, en_space)
                 local path_parts = vim.split(parts[#parts], "\t")
                 local trimmed = vim.trim(path_parts[2] .. "/" .. path_parts[1])
-                vim.print(("%s %s:%s"):format(cmd, branch, trimmed))
+
                 return ("%s %s:%s"):format(cmd, branch, trimmed)
             end
 
