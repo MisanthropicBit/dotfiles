@@ -1,5 +1,6 @@
 return {
     "stevearc/overseer.nvim",
+    version = "~1.6.0",
     config = function()
         local map = require("config.map")
         local overseer = require("overseer")
@@ -37,8 +38,7 @@ return {
 
         overseer.register_template({
             name = "npm run all",
-            ---@diagnostic disable-next-line: unused-local
-            builder = function(params)
+            builder = function()
                 return {
                     cmd = { vim.env.SHELL },
                     args = { "-c", "npa all -c" },
@@ -54,8 +54,7 @@ return {
 
         overseer.register_template({
             name = "npm install",
-            ---@diagnostic disable-next-line: unused-local
-            builder = function(params)
+            builder = function()
                 return {
                     cmd = { vim.env.SHELL },
                     args = { "-c", "npm i" },
@@ -77,8 +76,7 @@ return {
 
         overseer.register_template({
             name = "Ninja",
-            ---@diagnostic disable-next-line: unused-local
-            builder = function(params)
+            builder = function()
                 return {
                     cmd = { "ninja" },
                 }
