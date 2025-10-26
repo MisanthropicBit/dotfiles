@@ -52,7 +52,7 @@ function create_pr -d "Create a pull request from the command line"
 
         set -f pr_body (string join \n "$parsed_ids")
 
-        if set -ql _flag_skip_ci
+        if set -ql _flag_skip_sc
             set -f pr_body "$pr_body"\n"[skip-sc]"
         end
     end
