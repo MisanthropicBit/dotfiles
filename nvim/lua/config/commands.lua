@@ -14,8 +14,17 @@ end, {})
 
 -- vim supports a 'vertical'/'tab' prefix before :terminal, but neovim
 -- currently doesn't
-vim.api.nvim_create_user_command("Term", "<mods> new | startinsert | term <args>", {
+vim.api.nvim_create_user_command("Term", function(args)
+    local count = args.count
+
+    vim.cmd(("%s%s new | startinsert | term %s"):format(
+        args.mods,
+        count > 0 and tostring(count) or "",
+        args.args
+    ))
+end, {
     bang = true,
+    count = true,
     nargs = "*",
 })
 
