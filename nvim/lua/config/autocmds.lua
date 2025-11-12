@@ -1,5 +1,7 @@
 local autocmds = {}
 
+local map = require("config.map")
+
 local augroup = vim.api.nvim_create_augroup("config", { clear = true })
 
 if vim.fn.exists("g:last_tab") == 0 then
@@ -91,6 +93,14 @@ autocmds.create_config_autocmd("FileType", {
     pattern = "neotest-output-panel",
     callback = function()
         vim.wo.winfixheight = true
+    end,
+})
+
+autocmds.create_config_autocmd("BufReadPost", {
+    pattern = "/private/*/T/*/command-line.fish",
+    desc = "Save changes and quit buffer when editing a command in fish",
+    callback = function(event)
+        map.n("q", "<cmd>x<cr>", { buffer = event.buf })
     end,
 })
 
