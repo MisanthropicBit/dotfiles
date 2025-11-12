@@ -78,6 +78,7 @@
     pt = stash push -m "temp"
     puo = push -u origin HEAD
     rcount = rev-list --count @{u}
+    ready = "!~/projects/dotfiles/scripts/ready-for-review.fish"
     rom = restore --source=origin/master
     rp = reset --patch
     rv = remote -v
