@@ -11,8 +11,8 @@ $status\
 $fill\
 $cmake\
 $container\
-$docker_context\
 $env_var\
+$docker_context\
 $nodejs\
 $kubernetes\
 $gcloud\
@@ -71,3 +71,6 @@ variable = 'ITERM_PROFILE'
 symbol = ''
 style = 'bold fg:#ff6e6e'
 format = '[$symbol $env_value]($style) '
+
+[docker_context]
+format = '[](bold purple)[$symbol$context]($style)[](bold purple) '
