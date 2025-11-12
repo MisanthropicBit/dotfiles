@@ -26,6 +26,83 @@ local function get_project_root()
     return vim.fs.basename(vim.fs.root(0, markers))
 end
 
+---@type number[]
+local http_codes = {
+    100,
+    101,
+    102,
+    103,
+    200,
+    201,
+    202,
+    203,
+    204,
+    205,
+    206,
+    207,
+    208,
+    226,
+    300,
+    301,
+    302,
+    303,
+    304,
+    307,
+    308,
+    400,
+    401,
+    402,
+    403,
+    404,
+    405,
+    406,
+    407,
+    408,
+    409,
+    410,
+    411,
+    412,
+    413,
+    414,
+    415,
+    416,
+    417,
+    418,
+    421,
+    422,
+    423,
+    424,
+    425,
+    426,
+    428,
+    429,
+    431,
+    451,
+    500,
+    501,
+    502,
+    503,
+    504,
+    505,
+    506,
+    507,
+    508,
+    510,
+    511,
+}
+
+---@param value string
+---@return string?
+local function is_supported_http_code(value)
+    local number = tonumber(value)
+
+    if not number then
+        return nil
+    end
+
+    return vim.list_contains(http_codes, number) and value or nil
+end
+
 map.n.leader("<space>", "<cmd>nohl<cr>")
 map.n.leader("w", "<cmd>w<cr>")
 map.n.leader("q", "<cmd>q<cr>")
@@ -35,7 +112,6 @@ map.n.leader("Q", "<cmd>qa!<cr>")
 map.n.leader("sv", "<cmd>source $MYVIMRC<cr>")
 map.n.leader("1", "1z=", "Correct misspelled word under cursor with the first suggestion")
 map.n.leader("fl", "za")
-map.n.leader("k", "K")
 map.n.leader("ip", "<cmd>Inspect<cr>", "Inspect treesitter node under cursor")
 map.n.leader("it", "<cmd>InspectTree<cr>", "Inspect treesitter tree")
 map.n.leader("pt", function()
@@ -84,6 +160,17 @@ map.n.leader("0", "<c-w>=")
 map.n.leader("ou", "<cmd>norm! o<cr>", "Open a line under current line")
 map.n.leader("bd", "<cmd>diffthis<cr>", "Buffer diffthis")
 map.n.leader("bo", "<cmd>diffoff!<cr>", "Buffer diffthis off")
+
+map.n.leader("k", function()
+    local number_str = is_supported_http_code(vim.fn.expand("<cword>"))
+
+    if number_str then
+        vim.ui.open("https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/" .. number_str)
+        return
+    end
+
+    vim.cmd("normal! K")
+end)
 
 map.n("<c-o>", "<c-o>zz")
 map.n("<c-i>", "<c-i>zz")
