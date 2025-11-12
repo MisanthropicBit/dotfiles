@@ -246,7 +246,11 @@ map.i("<c-a>", "<c-o>^", "Move to start of line in insert mode")
 map.i("<c-e>", "<c-o>$", "Move to end of line in insert mode")
 map.i("<c-k>", "<c-g>u<esc>[s1z=gi<c-g>u", "Correct last spelling mistake without leaving cursor position")
 
-map.v.leader("sc", [[<cmd>s/\v\s*,\s*/\r/g<cr><esc><cmd>nohl<cr>]], "Replace all commas in visual selection with newlines")
+map.v.leader(
+    "sc",
+    [[<cmd>s/\v\s*,\s*/\r/g<cr><esc><cmd>nohl<cr>]],
+    "Replace all commas in visual selection with newlines"
+)
 
 -- Otherwise, nothing will be echoed on the commandline initially
 local cmap_options = { silent = false }
