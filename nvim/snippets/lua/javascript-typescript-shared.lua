@@ -192,6 +192,9 @@ return {
     s("ro", fmta("return {<>}", i(1))),
     s("ud", t("undefined")),
     s("pe", t("process.env.")),
+    s("sn", t("string | null")),
+    s("su", t("string | undefined")),
+    s("te", fmt("throw new Error('{}')", i(1))),
     s(
         "ef",
         fmta(
