@@ -1,5 +1,7 @@
 local utils = {}
 
+---@alias config.notifications.BuiltInVimNotify fun(msg: string, level: integer?, opts: table?)
+
 ---@param msg string
 ---@return string
 function utils.escape_message(msg)
@@ -11,8 +13,8 @@ end
 ---@param msg string
 ---@param title string
 ---@param level integer
----@param options table
----@param builtin_notify config.notifications.BuiltVimNotify
+---@param options config.NotificationOptions
+---@param builtin_notify config.notifications.BuiltInVimNotify
 ---@return boolean # If true, filter notification
 ---@diagnostic disable-next-line: unused-local
 function utils.filter_notification(title, msg, level, options, builtin_notify)
@@ -44,7 +46,7 @@ function utils.transform_message(title, msg)
 end
 
 ---@param command string[]
----@param builtin_notify config.notifications.BuiltVimNotify
+---@param builtin_notify config.notifications.BuiltInVimNotify
 ---@param options vim.SystemOpts?
 ---@param on_exit? fun(out: vim.SystemCompleted)
 function utils.run_async_command(command, builtin_notify, options, on_exit)

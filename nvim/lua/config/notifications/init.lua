@@ -1,8 +1,14 @@
 local notify = {}
 
+---@class config.NotificationOptions
+---@field muted        boolean?
+---@field sound        string? 
+---@field title        string?
+---@field echo_message boolean?
+
 local notifier = nil
 
----@alias config.notifications.BuiltVimNotify fun(msg: string, level: integer?, opts: table?)
+local builtin_vim_notify = vim.notify
 
 ---@param level integer
 ---@return boolean
@@ -31,38 +37,8 @@ local notifiers = {
             return stat ~= nil
         end,
     },
-    { "terminal-notifier", condition = default_condition },
     { "osascript", condition = default_condition },
 }
-
-local builtin_vim_notify = vim.notify
-
-for _, notifier_spec in ipairs(notifiers) do
-    local name, condition = notifier_spec[1], notifier_spec.condition
-    local ok, _notifier = pcall(require, "config.notifications." .. name)
-
-    if ok and condition(name) then
-        notifier = _notifier(builtin_vim_notify)
-
-        ---@diagnostic disable-next-line: duplicate-set-field
-        vim.notify = function(msg, level, options)
-            local disabled = vim.g.disable_custom_notifier
-            local is_enabled = disabled == nil or (type(disabled) == "boolean" and not disabled)
-
-            if is_enabled or (type(options) == "table" and options.custom == true) then
-                if not should_notify(vim.g.notify_log_level) then
-                    return
-                end
-
-                notifier(msg, level, options)
-            else
-                builtin_vim_notify(msg, level, options)
-            end
-        end
-
-        break
-    end
-end
 
 function notify.builtin(...)
     local args = { ... }
@@ -71,5 +47,40 @@ function notify.builtin(...)
         builtin_vim_notify(unpack(args))
     end)
 end
+
+local function setup()
+    for _, notifier_spec in ipairs(notifiers) do
+        local name, condition = notifier_spec[1], notifier_spec.condition
+        local ok, _notifier = pcall(require, "config.notifications." .. name)
+
+        if ok and condition(name) then
+            notifier = _notifier(builtin_vim_notify)
+
+            ---@diagnostic disable-next-line: duplicate-set-field
+            vim.notify = function(msg, level, options)
+                local disabled = vim.g.disable_custom_notifier
+                local is_enabled = disabled == nil or (type(disabled) == "boolean" and not disabled)
+
+                if is_enabled or (type(options) == "table" and options.custom == true) then
+                    if not should_notify(vim.g.notify_log_level) then
+                        return
+                    end
+
+                    notifier(msg, level, options)
+                else
+                    builtin_vim_notify(msg, level, options)
+                end
+            end
+
+            break
+        end
+    end
+
+    if notifier == nil then
+        builtin_vim_notify("Failed to setup all custom notifiers", vim.log.levels.WARN)
+    end
+end
+
+setup()
 
 return notify

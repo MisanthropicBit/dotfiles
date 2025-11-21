@@ -22,6 +22,7 @@ function sounds.get_sound_by_level(level)
 end
 
 ---@param level integer
+---@param options config.NotificationOptions
 ---@return string?
 function sounds.from_options(level, options)
     if level and not options.muted then

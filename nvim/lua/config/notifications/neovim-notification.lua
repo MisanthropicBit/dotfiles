@@ -5,7 +5,7 @@ return setmetatable({}, {
     __call = function(_, builtin_notify)
         ---@param msg string
         ---@param level integer
-        ---@param options table
+        ---@param options config.NotificationOptions
         return function(msg, level, options)
             local _options = options or {}
             local _title, _msg = utils.transform_message(_options.title, msg)
