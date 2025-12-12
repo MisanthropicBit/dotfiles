@@ -16,7 +16,8 @@ set --universal fish_color_command 00c5d7 darkcyan
 set --local script_dir (dirname (status -f))
 set --universal PYENV_ROOT "$HOME/.pyenv"
 
-set -x LANG en.UTF-8
+set -x LANG en_US.UTF-8
+set -x LC_ALL en_US.UTF-8
 set -x N_PREFIX ~/.n
 set -x EDITOR     nvim
 set -x GIT_EDITOR nvim
