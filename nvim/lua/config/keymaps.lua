@@ -26,70 +26,14 @@ local function get_project_root()
     return vim.fs.basename(vim.fs.root(0, markers))
 end
 
+-- stylua: ignore start
 ---@type number[]
 local http_codes = {
-    100,
-    101,
-    102,
-    103,
-    200,
-    201,
-    202,
-    203,
-    204,
-    205,
-    206,
-    207,
-    208,
-    226,
-    300,
-    301,
-    302,
-    303,
-    304,
-    307,
-    308,
-    400,
-    401,
-    402,
-    403,
-    404,
-    405,
-    406,
-    407,
-    408,
-    409,
-    410,
-    411,
-    412,
-    413,
-    414,
-    415,
-    416,
-    417,
-    418,
-    421,
-    422,
-    423,
-    424,
-    425,
-    426,
-    428,
-    429,
-    431,
-    451,
-    500,
-    501,
-    502,
-    503,
-    504,
-    505,
-    506,
-    507,
-    508,
-    510,
-    511,
+    100, 101, 102, 103, 200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 300, 301, 302, 303, 304, 307,
+    308, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418,
+    421, 422, 423, 424, 425, 426, 428, 429, 431, 451, 500, 501, 502, 503, 504, 505, 506, 507, 508, 510, 511,
 }
+-- stylua: ignore end
 
 ---@param value string
 ---@return string?
@@ -109,14 +53,10 @@ map.n.leader("q", "<cmd>q<cr>")
 map.n.leader("x", "<cmd>x<cr>")
 map.n.leader("X", "<cmd>xa!<cr>")
 map.n.leader("Q", "<cmd>qa!<cr>")
-map.n.leader("sv", "<cmd>source $MYVIMRC<cr>")
 map.n.leader("1", "1z=", "Correct misspelled word under cursor with the first suggestion")
 map.n.leader("fl", "za")
 map.n.leader("ip", "<cmd>Inspect<cr>", "Inspect treesitter node under cursor")
 map.n.leader("it", "<cmd>InspectTree<cr>", "Inspect treesitter tree")
-map.n.leader("pt", function()
-    vim.cmd("tabnext " .. vim.g.last_tab)
-end)
 map.n.leader("ct", function()
     vim.fn.setreg("+", vim.fn.expand("%:t"))
 end, "Copy tail of current file path")
@@ -142,8 +82,6 @@ map.n.leader("cn", "<cmd>cnext<cr>")
 map.n.leader("ve", "vg_")
 map.n.leader("sa", "ggVGo0")
 map.n.leader("cx", "<cmd>!chmod u+x %<cr>", "Make current file executable by user")
-map.n.leader("yp", "viwp", "Paste last yank over word under cursor")
-map.n.leader("y0", '<cmd>normal! viw"0p<cr>', "Paste register 0 over word under cursor")
 map.n.leader("mn", function()
     find_git_conflict_marker(1)
 end)
@@ -214,26 +152,7 @@ map.n("dd", function()
         return "dd"
     end
 end, { expr = true })
-map.n("<c-b><c-l>", function()
-    local has_useopen = vim.tbl_contains(vim.opt.switchbuf:get(), "useopen")
-
-    if not has_useopen then
-        vim.opt.switchbuf:append("useopen")
-    end
-
-    vim.cmd("sbuffer #")
-
-    if not has_useopen then
-        vim.opt.switchbuf:remove("useopen")
-    end
-end, "Navigate to last visited buffer or open new window")
 map.n("<bs>", "^")
-map.n("g$", "<cmd>tabnext $<cr>")
-
-for idx = 1, 7 do
-    map.n("g" .. tostring(idx), "<cmd>tabnext " .. tostring(idx) .. "<cr>")
-end
-
 map.n("<c-g>", "6<c-g>", "Get full info about current file by default")
 
 -- Remove default lsp keymaps
@@ -244,12 +163,17 @@ map.delete("i", "<c-s>")
 map.i("jk", [["<esc>"]], { expr = true })
 map.i("<c-a>", "<c-o>^", "Move to start of line in insert mode")
 map.i("<c-e>", "<c-o>$", "Move to end of line in insert mode")
-map.i("<c-k>", "<c-g>u<esc>[s1z=gi<c-g>u", "Correct last spelling mistake without leaving cursor position")
+map.i("<c-k>", "<c-o>1z=", "Correct last spelling mistake without leaving cursor position")
 
 map.v.leader(
     "sc",
     [[<cmd>s/\v\s*,\s*/\r/g<cr><esc><cmd>nohl<cr>]],
-    "Replace all commas in visual selection with newlines"
+    "Replace all commas in a visual selection with newlines"
+)
+map.v.leader(
+    "nl",
+    [[<cmd>s/\v\n/\r/g<cr><esc><cmd>nohl<cr>]],
+    "Replace all explicit newlines in a visual selection with real newlines"
 )
 
 -- Otherwise, nothing will be echoed on the commandline initially
