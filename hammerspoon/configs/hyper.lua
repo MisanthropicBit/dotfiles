@@ -150,8 +150,10 @@ return {
                 end,
             },
             {
-                key = "o",
-                action = actions.launch("Docker Desktop"),
+                key = "e",
+                action = function()
+                    ClipboardTool:toggleClipboard()
+                end
             },
             {
                 key = "8",

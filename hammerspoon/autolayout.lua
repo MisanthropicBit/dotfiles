@@ -46,14 +46,15 @@ function autolayout.apply(name, options)
     hs.layout.apply(layoutConfig.layout)
 end
 
+---@param screenCount integer?
+function autolayout.apply_default(screenCount)
+    local _screenCount = screenCount or #hs.screen.allScreens()
+    local layoutName = config.at_work() and "work" or "wfh"
+
+    autolayout.apply(layoutName, { skipCondition = false, newScreenCount = _screenCount })
+end
+
 function autolayout.init()
-    local function default_apply_layout(screenCount)
-        local _screenCount = screenCount or #hs.screen.allScreens()
-        local layoutName = config.at_work() and "work" or "wfh"
-
-        autolayout.apply(layoutName, { skipCondition = false, newScreenCount = _screenCount })
-    end
-
     hs.screen.watcher.new(function()
         local newScreenCount = #hs.screen.allScreens()
 
@@ -64,13 +65,13 @@ function autolayout.init()
         if lastScreenCount ~= newScreenCount then
             lastScreenCount = newScreenCount
 
-            default_apply_layout(newScreenCount)
+            autolayout.apply_default(newScreenCount)
         end
     end):start()
 
     local caffeinateWatcher = hs.caffeinate.watcher.new(function(event)
         if event == hs.caffeinate.watcher.screensDidUnlock then
-            default_apply_layout()
+            autolayout.apply_default()
         end
     end)
 

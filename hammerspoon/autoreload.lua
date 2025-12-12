@@ -4,7 +4,7 @@ local notify = require("notify")
 
 ---@param files string[]
 local function reloadConfig(files)
-    for _, file in pairs(files) do
+    for _, file in ipairs(files) do
         if file:sub(-4) == ".lua" then
             hs.reload()
             break
