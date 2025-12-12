@@ -4,6 +4,7 @@ vim.filetype.add({
         scons = "python",
         hbs = "html",
         plist = "xml",
+        snap = "javascript",
     },
     filename = {
         [".eslintrc"] = "json",
