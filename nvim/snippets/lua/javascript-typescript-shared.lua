@@ -378,7 +378,7 @@ expect(fields.{}.name).toBe('{}')]],
     s("epc", fmt([[expect({}.callCount).toBe({})]], range(1, 2))),
     s("epa", fmt([[expect({}.args[0]{}).toEqual([{}])]], range(1, 3))),
     s(
-        "epcat",
+        "epca",
         fmt(
             [[expect({}.callCount).toBe({})
 expect({}.args[0]{}).toEqual([{}])]],
@@ -722,8 +722,8 @@ describe('it - db/<>', () =>> {
                 i(1),
                 i(2),
                 i(3),
-                rep(4),
                 rep(3),
+                rep(2),
                 i(4),
                 i(5),
             }
