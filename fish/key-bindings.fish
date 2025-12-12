@@ -2,17 +2,11 @@ if type -q fzf_key_bindings
     fzf_key_bindings
 end
 
-bind \cb git_fzf_branches
-bind \cg git_fzf_log
-bind \co git_fzf_commits
-bind \cz 'fg 2>/dev/null; commandline -f repaint'
-bind \cs clear-screen
-bind \cl forward-word
-bind \ch backward-word
-bind ctrl-_     edit_command_buffer
+bind ctrl-g,ctrl-g git_fzf_graph
+bind ctrl-g,ctrl-p sp # [G]o to [p]roject
+bind ctrl-z 'fg 2>/dev/null; commandline -f repaint'
+bind ctrl-s clear-screen
+bind ctrl-l forward-word
+bind ctrl-h backward-word
 bind ctrl-minus edit_command_buffer
-
-bind ctrl-.     nvim_grep
 bind ctrl-enter nvim_grep
-
-# TODO: Add binding for ctrl+space with a function that removes the first token

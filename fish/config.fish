@@ -50,6 +50,7 @@ try_source "$script_dir/work_aliases.fish"
 try_source "$script_dir/work-config.fish"
 try_source "$script_dir/key-bindings.fish"
 try_source "~/.iterm2_shell_integration.fish"
+try_source "~/.config/fzf-git.fish"
 
 if type -q "fd"
     set -x FZF_DEFAULT_COMMAND "fd -tf --color=never"

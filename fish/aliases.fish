@@ -106,6 +106,8 @@ function sp -d "Fuzzy search projects directory"
         fd --type d . ~/projects ~/repos --max-depth 2 |
         fzf --ansi --tiebreak=end --preview='tree -C -L 1 -hp --dirsfirst {1}'
     ); and cd "$result"
+
+    commandline --function repaint
 end
 
 function git_fzf_branches -d "Select a git branch"
