@@ -4,70 +4,22 @@ alias ..3       "cd ../../.."
 alias ..4       "cd ../../../.."
 alias aliases   "$EDITOR ~/.config/fish/aliases.fish"
 alias c         "pbcopy"
-alias dbox      "~/Dropbox/"
-alias fucking   "sudo"
 alias g         "git"
 alias gitconfig "$EDITOR ~/.gitconfig"
 alias gofish    "source ~/.config/fish/config.fish"
 alias kc        "kubectl"
 alias l         "ls -laGh"
-alias ll        "clear; l"
 alias lz        "ls -laGhS"
 alias nv        "nvim"
 alias nvc       "nvim (git diff --name-only --diff-filter=U --relative)"
 alias nvd       "nvim -d"
 alias nvm       "nvim (git diff --name-only --diff-filter=MA --relative && git diff --name-only --diff-filter=MA --relative --cached)"
 alias nvl       "nvim (git diff-tree --no-commit-id --name-only -r HEAD)"
-alias nvrc      "$EDITOR ~/.config/nvim/init.lua"
 alias listpath  "echo $PATH | tr ':' '\n'"
-alias todo      "rg -Hni -A3 ' todo:'"
-alias rgt       "rg -g '!*.it.test.{js,ts}' -g '!*.it.{js,ts}' -g '!*.test.{js,ts}' -ttjs"
-alias tree      "tree -C"
 alias v         "pbpaste"
 
 set --local script_dir (dirname (status -f))
 set --local work_aliases "$script_dir/work_aliases.fish"
-
-function tophist -d "Show the top 'n' most used commands"
-    set -l top "$argv[1]"
-
-    if test -z "$top"
-        set top 3
-    end
-
-    history | awk 'BEGIN {FS="|"}{print $1}' | awk '{print $1}' | sort | uniq -c | sort -nr | head -n "$top"
-end
-
-function sve -d "Display or activate a virtual environment"
-    if test -z "$argv[1]"
-        if test -n "$VIRTUAL_ENV"
-            printf "Current virtual environment is '$VIRTUAL_ENV'\n"
-        else
-            printf "No currently active virtual environment\n"
-        end
-    else
-        if test -e "$argv[1]/bin/activate.fish"
-            source "$argv[1]/bin/activate.fish"
-            printf "%s\n" "Virtual environment '$VIRTUAL_ENV' is active"
-        else
-            printf "'$argv[1]' is not a virtual environment"
-        end
-    end
-end
-
-function pup -d "Upgrade pip using pip"
-    command pip install --upgrade pip
-end
-
-function weather -d "Show the current weather in the terminal"
-    set -l arg "$argv[1]"
-
-    if test -z $arg
-        curl -s wttr.in
-    else
-        curl -s "wttr.in?$arg"
-    end
-end
 
 function npa -d "Run multiple npm scripts"
     argparse --name="npa" "c/continue" -- $argv
