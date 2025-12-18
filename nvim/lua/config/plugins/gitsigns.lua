@@ -30,12 +30,11 @@ return {
                 })
             end
 
-            move("gj", "]c", gs.next_hunk)
-            move("gk", "[c", gs.prev_hunk)
+            move("gj", "]c", function() gs.nav_hunk("next") end)
+            move("gk", "[c", function() gs.nav_hunk("prev") end)
 
             map.n.leader("hv", gs.preview_hunk)
             map.n.leader("hu", gs.reset_hunk)
-            map.n.leader("hU", gs.undo_stage_hunk)
             map.n.leader("hs", gs.stage_hunk)
             map.n.leader("hd", gs.diffthis)
             map.n.leader("hR", gs.reset_buffer)
