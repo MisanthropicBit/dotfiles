@@ -56,7 +56,9 @@ function utils.run_async_command(command, builtin_notify, options, on_exit)
         if result.code ~= 0 then
             local err_msg = ("Notification failed with code %d and message: %s"):format(result.code, result.stderr)
 
-            builtin_notify(err_msg, vim.log.levels.ERROR)
+            vim.schedule(function()
+                builtin_notify(err_msg, vim.log.levels.ERROR)
+            end)
         end
 
         if on_exit then
