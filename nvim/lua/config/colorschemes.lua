@@ -99,7 +99,6 @@ local preferred_colorschemes = normalize_weights({
     "obscure",
     "oldworld",
     "yorumi",
-    "cobalt",
     "jellybeans",
     "nightblossom",
     "nightblossom-pastel",
