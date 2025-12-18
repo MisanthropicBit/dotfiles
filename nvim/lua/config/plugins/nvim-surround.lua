@@ -31,8 +31,7 @@ return {
         }
 
         map.n("gns", function()
-            local ts_utils = require("nvim-treesitter.ts_utils")
-            local node = ts_utils.get_node_at_cursor()
+            local node = vim.treesitter.get_node()
 
             if not node or not vim.list_contains(supported_node_types, node:type()) then
                 return
@@ -40,6 +39,10 @@ return {
 
             if node:type() == "string_fragment" then
                 node = node:parent()
+            end
+
+            if not node then
+                return
             end
 
             local text = vim.treesitter.get_node_text(node, vim.api.nvim_get_current_buf())

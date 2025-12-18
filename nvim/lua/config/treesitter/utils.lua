@@ -14,9 +14,13 @@ local function is_function_node(node)
     return vim.tbl_contains(function_nodes, node:type())
 end
 
----@param node TSNode
+---@param node TSNode?
 ---@return TSNode?
 function ts.get_enclosing_top_level_function(node)
+    if not node then
+        return
+    end
+
     local result = nil
 
     while node ~= nil do
