@@ -1,5 +1,5 @@
 return {
-    "AndrewRadev/linediff.vim", 
+    "AndrewRadev/linediff.vim",
     config = function()
         local map = require("config.map")
 
