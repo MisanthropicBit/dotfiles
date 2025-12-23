@@ -1,19 +1,18 @@
 local colorschemes = {}
 
----@class ColorschemeStats
+---@class config.ColorschemeStats
 ---@field colorschemes table<string, integer>
 ---@field count integer
 
----@type ColorschemeStats
-local stats = {
+---@type config.ColorschemeStats
+local colorscheme_stats = {
     colorschemes = {},
     count = 0,
 }
 
 math.randomseed(os.time())
 
----@class config.WeightedChoice
----@field { [1]: string, weight: number }
+---@alias config.WeightedChoice { [1]: string, weight: number }
 
 ---@param weighted_choices (string | config.WeightedChoice)[]
 ---@return config.WeightedChoice[]
@@ -22,21 +21,25 @@ local function normalize_weights(weighted_choices)
     local total_unweighted = 0
 
     for _, choice in ipairs(weighted_choices) do
-        if choice.weight and 0 <= choice.weight and choice.weight <= 1.0 then
-            total_percentage_weight = total_percentage_weight + choice.weight
+        if choice.weight then
+            if 0 <= choice.weight and choice.weight <= 1.0 then
+                total_percentage_weight = total_percentage_weight + choice.weight
+            else
+                vim.notify(('Invalid weight %d for choice %s'):format(choice.weight, choice[1]), vim.log.levels.ERROR, { title = "Config" })
+            end
         else
             total_unweighted = total_unweighted + 1
         end
     end
 
     if total_percentage_weight > 1.0 then
-        vim.notify(('Total percentage weights exceed 100%% (> %d%%)'):format(total_percentage_weight * 100), vim.log.levels.ERROR)
+        vim.notify(('Total percentage weights exceed 100%% (> %d%%)'):format(total_percentage_weight * 100), vim.log.levels.ERROR, { title = "Config" })
     end
 
     if total_unweighted > 0 and total_percentage_weight == 1 then
         -- There are unweighted choices but all weighted choices add up to 100%
-        -- so there are no percentages probability of picking the unweighted choices
-        vim.notify(('Total percentage weights add up to exactly 100%% but there are %d unweighted choices'):format(total_unweighted), vim.log.levels.ERROR)
+        -- so we cannot distribute any remaining weights to the unweighted choices
+        vim.notify(('Total percentage weights add up to exactly 100%% but there are %d unweighted choices'):format(total_unweighted), vim.log.levels.ERROR, { title = "Config" })
     end
 
     -- Convert percentage weights to normalized weights, add weights to unweighted choices
@@ -44,6 +47,7 @@ local function normalize_weights(weighted_choices)
         if choice.weight and 0 <= choice.weight and choice.weight <= 1.0 then
             choice.weight = choice.weight * #weighted_choices
         else
+            ---@cast choice string
             weighted_choices[idx] = { choice, weight = (1 - total_percentage_weight) * #weighted_choices / total_unweighted }
         end
     end
@@ -90,6 +94,7 @@ local builtin_colorschemes = {
     "zellner",
 }
 
+---@type config.WeightedChoice[]
 local preferred_colorschemes = normalize_weights({
     "bamboo",
     "duskfox",
@@ -103,9 +108,11 @@ local preferred_colorschemes = normalize_weights({
     "nightblossom",
     "nightblossom-pastel",
     "nightblossom-sakura",
+    "wildberries",
+    "monet",
 })
 
----@param weighted_choices table<string | table>
+---@param weighted_choices config.WeightedChoice[]
 local function random_weighted_choice(weighted_choices)
     local total_weight = weighted_choices[#weighted_choices].weight
     local random = math.random() * total_weight
@@ -120,52 +127,55 @@ local function random_weighted_choice(weighted_choices)
 end
 
 -- Run this to print stats and visually verify weighted choices
-function colorschemes.print_stats()
+---@param stats config.ColorschemeStats
+function colorschemes.print_stats(stats)
     vim.print(('Colorscheme set %d times in this session'):format(stats.count))
-    vim.print(stats.colorschemes)
+
+    for name, count in pairs(stats.colorschemes) do
+        vim.api.nvim_echo({ { ("  %s = %d"):format(name, count), "" } }, true, {})
+    end
 end
 
+---@return string[]
 function colorschemes.get_preferred_colorschemes()
     return vim.tbl_map(function(item)
         return type(item) == 'string' and item or item[1]
     end, preferred_colorschemes)
 end
 
+---@param weighted_colorschemes config.WeightedChoice[]
+---@return string
 function colorschemes.get_random_colorscheme(weighted_colorschemes)
     local colorscheme = random_weighted_choice(weighted_colorschemes)
 
-    if not stats.colorschemes[colorscheme] then
-        stats.colorschemes[colorscheme] = 0
+    if not colorscheme_stats.colorschemes[colorscheme] then
+        colorscheme_stats.colorschemes[colorscheme] = 0
     end
 
-    stats.colorschemes[colorscheme] = stats.colorschemes[colorscheme] + 1
-    stats.count = stats.count + 1
+    colorscheme_stats.colorschemes[colorscheme] = colorscheme_stats.colorschemes[colorscheme] + 1
+    colorscheme_stats.count = colorscheme_stats.count + 1
 
     return colorscheme
 end
 
+---@param user_colorschemes config.WeightedChoice[]?
 function colorschemes.select_random_color_scheme(user_colorschemes)
     local pool = user_colorschemes or preferred_colorschemes
     local current_colorscheme = vim.g.colors_name or nil
-    local colorscheme = nil
+    local colorscheme, count = nil, 0
 
     -- Ensures that we don't random pick the current colorscheme
-    while true do
+    while count <= 100 do
         colorscheme = colorschemes.get_random_colorscheme(pool)
 
         if not current_colorscheme or colorscheme ~= current_colorscheme then
             break
         end
+
+        count = count + 1
     end
 
     vim.cmd(":colorscheme " .. colorscheme)
-
-    if colorscheme == "mellifluous" then
-        -- Fix diff highlighting
-        vim.api.nvim_set_hl(0, "diffAdded", { link = "DiffAdd" })
-    elseif colorscheme == "calvera" then
-        vim.cmd([[silent hi! link IblIndent Comment]])
-    end
 
     return colorscheme
 end
@@ -174,7 +184,27 @@ vim.api.nvim_create_user_command("RandomColorscheme", function()
     local selected = colorschemes.select_random_color_scheme()
     local msg = ("Selected colorscheme '%s'"):format(selected)
 
-    vim.notify(msg, vim.log.levels.INFO)
+    vim.notify(msg, vim.log.levels.INFO, { title = "Config" })
+end, {})
+
+vim.api.nvim_create_user_command("ColorschemeWeights", function()
+    vim.api.nvim_echo({ { "Colorscheme weights", "Title" } }, true, {})
+
+    local prev_weight = 0
+
+    for _, colorscheme in ipairs(preferred_colorschemes) do
+        local unnorm_weight = (colorscheme.weight - prev_weight) / #preferred_colorschemes
+
+        vim.api.nvim_echo({ { ("  %s = %.2f%%"):format( colorscheme[1], unnorm_weight * 100), "" } }, true, {})
+
+        prev_weight = colorscheme.weight
+    end
+end, {})
+
+vim.api.nvim_create_user_command("ColorschemeStats", function()
+    vim.api.nvim_echo({ { "Colorscheme stats", "Title" } }, true, {})
+
+    colorschemes.print_stats(colorscheme_stats)
 end, {})
 
 return colorschemes
