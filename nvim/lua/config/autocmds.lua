@@ -21,11 +21,6 @@ autocmds.create_config_autocmd("TabLeave", {
     end,
 })
 
--- autocmds.create_config_autocmd("VimResized", {
---     pattern = "*",
---     command = "tabdo wincmd =",
--- })
-
 -- nvim_create_autocmd("InsertEnter", {
 --     pattern = "*",
 --     callback = function()
