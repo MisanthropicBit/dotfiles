@@ -109,6 +109,7 @@ return {
             map.n.leader("ts", neotest.summary.toggle, "Toggle test summary")
             map.n.leader("tp", neotest.jump.prev, "Jump to previous test")
             map.n.leader("tn", neotest.jump.next, "Jump to next test")
+            map.n.leader("tj", neotest.jump.last, "Jump to the last test")
             map.n.leader("tP", function()
                 neotest.jump.prev({ status = "failed" })
             end, "Jump to previous failed test")
