@@ -1,5 +1,6 @@
 return {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     config = function()
         local nvts = require("nvim-treesitter")
         local map = require("config.map")
