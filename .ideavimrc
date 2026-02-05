@@ -23,7 +23,7 @@ Plug 'machakann/vim-highlightedyank'
 " Don't use Ex mode, use Q for formatting.
 map Q gq
 
-map jk <ESC>
+imap jk <ESC>
 
 vnoremap < <gv
 vnoremap > >gv
