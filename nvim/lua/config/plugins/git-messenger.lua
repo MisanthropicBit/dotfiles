@@ -10,8 +10,8 @@ return {
         autocmds.create_config_autocmd("FileType", {
             pattern = { "gitmessengerpopup" },
             callback = function(event)
-                map.n("<c-h>", "o", { buffer = event.buf, noremap = false })
-                map.n("<c-l>", "O", { buffer = event.buf, noremap = false })
+                map.n("<c-h>", "o", { buffer = event.buf, remap = true })
+                map.n("<c-l>", "O", { buffer = event.buf, remap = true })
             end,
         })
     end,
