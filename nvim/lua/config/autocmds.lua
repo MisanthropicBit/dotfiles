@@ -9,9 +9,9 @@ if vim.fn.exists("g:last_tab") == 0 then
 end
 
 ---@param event string | string[]
----@param options table
+---@param options vim.api.keyset.create_autocmd
 autocmds.create_config_autocmd = function(event, options)
-    vim.api.nvim_create_autocmd(event, vim.tbl_extend("force", { group = augroup }, options))
+    vim.api.nvim_create_autocmd(event, vim.tbl_extend("force", options, { group = augroup }))
 end
 
 autocmds.create_config_autocmd("TabLeave", {
