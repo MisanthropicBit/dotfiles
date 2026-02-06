@@ -11,6 +11,7 @@ return {
         nvts.install({
             "bash",
             "cpp",
+            "dockerfile",
             "fish",
             "gitcommit",
             "git_rebase",
@@ -21,6 +22,7 @@ return {
             "markdown_inline",
             "python",
             "sql",
+            "terraform",
             "typescript",
             "vim",
             "vimdoc",
