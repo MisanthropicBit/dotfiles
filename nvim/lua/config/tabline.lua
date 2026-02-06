@@ -92,7 +92,7 @@ end
 local function render_before()
     local result = {}
 
-    render(result, "󰂺 " .. tostring(#vim.api.nvim_list_tabpages()) .. " ", false, { hl_group = "Title" })
+    render(result, icons.files.bookmark .. " " .. tostring(#vim.api.nvim_list_tabpages()) .. " ", false, { hl_group = "Title" })
     render(result, tabline.options.right_separator, false, { hl_group = "TabLineRightSep", pad_right = 1 })
 
     return result

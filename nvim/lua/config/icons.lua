@@ -51,6 +51,7 @@ local icons = {
         readonly = "",
         oil = "",
         folder = "󰉋",
+        bookmark = "󰂺",
     },
     misc = {
         alarm = "󰞏",
