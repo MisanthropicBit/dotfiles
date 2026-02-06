@@ -8,7 +8,7 @@ local slack = require("slack")
 local wifi_set_status_delay_seconds = 8
 
 local choiceToEmoji = {
-    ["Clear status"] = { slack.emojis.clear, false },
+    ["Clear status"] = { slack.emojis.clear },
     Lunch = { slack.emojis.lunch, true },
     WFH = { slack.emojis.wfh, true },
     Away = { slack.emojis.away, false },
@@ -88,7 +88,10 @@ function slack_status.choose()
             local emoji, online = choiceToEmoji[text][1], choiceToEmoji[text][2]
 
             slack.updateStatus(message, emoji)
-            slack.setPresence(online and "auto" or "away")
+
+            if online ~= nil then
+                slack.setPresence(online and "auto" or "away")
+            end
         end
 
         if text == "Sick" then
