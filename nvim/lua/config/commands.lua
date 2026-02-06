@@ -17,11 +17,7 @@ end, {})
 vim.api.nvim_create_user_command("Term", function(args)
     local count = args.count
 
-    vim.cmd(("%s%s new | startinsert | term %s"):format(
-        args.mods,
-        count > 0 and tostring(count) or "",
-        args.args
-    ))
+    vim.cmd(("%s%s new | startinsert | term %s"):format(args.mods, count > 0 and tostring(count) or "", args.args))
 end, {
     bang = true,
     count = true,
@@ -36,3 +32,18 @@ vim.api.nvim_create_user_command("Messages", function(args)
     vim.cmd("setlocal buftype=nofile bufhidden=wipe nobuflisted")
     vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>bd!<CR>", { noremap = true, silent = true })
 end, {})
+
+vim.api.nvim_create_user_command("HttpCode", function(args)
+    local arg = args.fargs[1]
+    local http = require("config.utils.http")
+    local http_code = http.is_supported_code(arg)
+
+    if not http_code then
+        vim.notify(("Not a valid or supported http code: '%s'"):format(arg))
+        return
+    end
+
+    http.lookup_code(http_code)
+end, {
+    nargs = 1,
+})
