@@ -27,3 +27,8 @@ require("config.fold")
 require("config.colorschemes").select_random_color_scheme()
 require("config.tabline").register()
 require("config.ui").input.register_default()
+
+vim.cmd.packadd("cfilter")
+
+-- Highlight git merge conflict markers
+vim.cmd([[match ErrorMsg '\v^(\<|\=|\>){7}([^\=].+)?$']])

@@ -28,11 +28,6 @@ end, {
     nargs = "*",
 })
 
--- Highlight git merge conflict markers
-vim.cmd([[match ErrorMsg '\v^(\<|\=|\>){7}([^\=].+)?$']])
-
-vim.cmd.packadd("cfilter")
-
 vim.api.nvim_create_user_command("Messages", function(args)
     local lines = vim.api.nvim_exec2("messages", { output = true }).output
 
