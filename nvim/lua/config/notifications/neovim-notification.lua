@@ -18,6 +18,7 @@ return setmetatable({}, {
             local command = {
                 "open",
                 "/Applications/NeovimNotification.app",
+                "-g", -- Do not bring the application to the foreground so it does not steal focus
                 "--args",
                 _msg,
                 (_title or 'Neovim'),
