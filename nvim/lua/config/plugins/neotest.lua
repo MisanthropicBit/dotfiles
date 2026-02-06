@@ -44,7 +44,7 @@ return {
                             local cwd = get_cwd()
 
                             if vim.endswith(cwd, "/api") or vim.endswith(cwd, "/mailman") then
-                                if path:match(".it.[tj]s$") then
+                                if path:match(".it.test.[tj]s$") then
                                     return "npm run test:integration -- "
                                 elseif path:match(".render.test.ts$") then
                                     return "npm run test:render --"
