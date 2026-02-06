@@ -11,6 +11,5 @@ return {
     "yorumicolors/yorumi.nvim",
     "rijulpaul/nightblossom.nvim",
     "WTFox/jellybeans.nvim",
-    "ianklapouch/wildberries.nvim",
     "fynnfluegge/monet.nvim",
 }
