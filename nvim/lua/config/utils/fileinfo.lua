@@ -59,6 +59,15 @@ function fileinfo.get(buffer)
             icon = icons.files.new,
             icon_color = txt_icon_color,
         }
+    elseif vim.startswith(bufname, "/private") and vim.endswith(bufname, "command-line.fish") then
+        local icon, icon_color, _ = icons.get_for_filetype("fish")
+
+        return {
+            name = "Edit command line",
+            path = "Edit command line",
+            icon = icon,
+            icon_color = icon_color,
+        }
     end
 
     local icon, icon_color, _ = icons.get_for_filetype(vim.bo[buffer].filetype)
