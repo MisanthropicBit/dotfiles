@@ -108,7 +108,6 @@ local preferred_colorschemes = normalize_weights({
     "nightblossom",
     "nightblossom-pastel",
     "nightblossom-sakura",
-    "wildberries",
     "monet",
 })
 
