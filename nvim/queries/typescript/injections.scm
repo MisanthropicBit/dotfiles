@@ -9,9 +9,7 @@
     property: (property_identifier) @member (#eq? @member "query")
   )
   arguments: (arguments
-    (string (string_fragment) @injection.content @injection.include-children)
+    ((string) @injection.content (#set! injection.language "sql") (#set! injection.include-children) (#offset! @injection.content 0 1 0 -1))
     (string)
   )
-
-  (#set! injection.language "mysql")
 )

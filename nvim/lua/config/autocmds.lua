@@ -98,6 +98,30 @@ autocmds.create_config_autocmd("FileType", {
     end,
 })
 
+autocmds.create_config_autocmd("FileType", {
+    pattern = "javascript",
+    callback = function(event)
+        if not event.file:match(".test.ts.snap$") then
+            return
+        end
+
+        local flag = vim.diagnostic.is_enabled({ bufnr = event.buf })
+
+        if flag then
+            vim.diagnostic.enable(not flag, { bufnr = event.buf })
+        end
+
+        -- TODO: Why does this work with schedule and after/ files do not work?
+        vim.schedule(function()
+            vim.cmd([[syntax match ConcealEscapedBackticksInJestSnapshots /\v`"(select|insert|update|delete|truncate).+"`/ contains=ConcealEscapedBackticks]])
+            vim.cmd([[syntax match ConcealEscapedBackticks /\v\\`/ conceal containedin=ConcealEscapedBackticksInJestSnapshots]])
+        end)
+
+        vim.opt_local.conceallevel = 2
+    end,
+    desc = "Disable diagnostics in jest snapshot files"
+})
+
 autocmds.create_config_autocmd("BufReadPost", {
     pattern = "/private/*/T/*/command-line.fish",
     desc = "Save changes and quit buffer when editing a command in fish",
