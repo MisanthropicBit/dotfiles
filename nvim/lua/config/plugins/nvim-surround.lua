@@ -13,6 +13,7 @@ return {
         })
 
         map.n("g'", "<cmd>normal ysiw'<cr>")
+        map.n("g+'", "<cmd>normal ysiw`<cr>")
         -- map.n("g´", "<cmd>normal ysiw`<cr>>")
         map.n("g0", "<cmd>normal ysiw\"<cr>")
         map.n("g8", "<cmd>normal ysiw)<cr>")
