@@ -54,6 +54,13 @@ autocmds.create_config_autocmd("TermOpen", {
     command = "setlocal signcolumn=no nospell",
 })
 
+autocmds.create_config_autocmd("TermOpen", {
+    callback = function()
+        map.n.leader("tp", "<cmd>normal ]]<cr>", "Jump to the previous prompt")
+        map.n.leader("tn", "<cmd>normal [[<cr>", "Jump to the next prompt")
+    end
+})
+
 -- Close terminals automatically if the process' exit code was zero
 autocmds.create_config_autocmd("TermClose", {
     callback = function(event)
