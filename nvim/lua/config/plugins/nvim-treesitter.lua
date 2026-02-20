@@ -38,7 +38,24 @@ return {
 
             -- Assume that the "name" child node is the function identifier/name
             local nodes = node:field("name")
-            local function_name = #nodes > 0 and nodes[1] or node
+            local function_name
+
+            if #nodes > 0 then
+                -- Function declarations usually have a child called 'name'
+                function_name = nodes[1]
+            else
+                -- Arrow functions are values usually assigned to a name
+                local prev_sibling = node:prev_named_sibling()
+
+                if prev_sibling and prev_sibling:type() == "identifier" then
+                    function_name = prev_sibling
+                end
+            end
+
+            if not function_name then
+                return
+            end
+
             local lnum, col, _ = function_name:start()
 
             vim.fn.cursor(lnum + 1, col + 1)
@@ -82,7 +99,7 @@ return {
                 return
             end
 
-            local center_lnum = start_lnum + func_height / 2
+            local center_lnum = math.floor(start_lnum + func_height / 2 + 0.5)
 
             vim.fn.cursor(center_lnum + 1, 0)
             vim.cmd.normal("zz")
