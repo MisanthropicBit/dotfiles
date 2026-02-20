@@ -74,10 +74,6 @@ return {
 
                             return default_strategy
                         end,
-                        -- extension_test_file_match = require("neotest-jest.util").create_test_file_extensions_matcher(
-                        --     { "test", "it" },
-                        --     { "js", "ts" }
-                        -- ),
                     }),
                     require("neotest-busted"),
                 },
