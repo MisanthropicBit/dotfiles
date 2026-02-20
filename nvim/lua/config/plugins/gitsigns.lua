@@ -18,29 +18,35 @@ return {
                             return diff_rhs
                         end
 
-                        vim.schedule(function()
-                            move_func()
-                            vim.cmd.normal("zz")
-                        end)
+                        move_func()
 
                         return "<ignore>"
                     end, {
-                    buffer = buffer,
-                    expr = true,
-                })
-            end
+                        buffer = buffer,
+                        expr = true,
+                    })
+                end
 
-            move("gj", "]c", function() gs.nav_hunk("next") end)
-            move("gk", "[c", function() gs.nav_hunk("prev") end)
+                move("gj", "]c", function()
+                    gs.nav_hunk("next", { wrap = true, foldopen = true }, function()
+                        vim.cmd.normal("zz")
+                    end)
+                end)
 
-            map.n.leader("hv", gs.preview_hunk)
-            map.n.leader("hu", gs.reset_hunk)
-            map.n.leader("hs", gs.stage_hunk)
-            map.n.leader("hd", gs.diffthis)
-            map.n.leader("hR", gs.reset_buffer)
+                move("gk", "[c", function()
+                    gs.nav_hunk("prev", { wrap = true, foldopen = true }, function()
+                        vim.cmd.normal("zz")
+                    end)
+                end)
 
-            map.set({ "o", "x" }, "ah", "<cmd>Gitsigns select_hunk<cr>")
-        end
-    })
+                map.n.leader("hv", gs.preview_hunk)
+                map.n.leader("hu", gs.reset_hunk)
+                map.n.leader("hs", gs.stage_hunk)
+                map.n.leader("hd", gs.diffthis)
+                map.n.leader("hr", gs.reset_buffer)
+
+                map.set({ "o", "x" }, "ah", "<cmd>Gitsigns select_hunk<cr>")
+            end,
+        })
     end,
 }
