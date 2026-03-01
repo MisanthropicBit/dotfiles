@@ -32,6 +32,31 @@ return {
                 "",
                 "- Justin M. Keyes",
             },
+            {
+                "There is no emotion, there is peace.",
+                "",
+                "- First line of the jedi code",
+            },
+            {
+                "There is no ignorance, there is knowledge.",
+                "",
+                "- Second line of the jedi code",
+            },
+            {
+                "There is no passion, there is serenity.",
+                "",
+                "- Third line of the jedi code",
+            },
+            {
+                "There is no chaos, there is harmony.",
+                "",
+                "- Fourth line of the jedi code",
+            },
+            {
+                "There is no death, there is the Force.[13]",
+                "",
+                "- Fifth line of the jedi code",
+            },
         }
 
         vim.g.startify_custom_header_quotes = vim.list_extend(extra_quotes, vim.fn["startify#fortune#predefined_quotes"]())
