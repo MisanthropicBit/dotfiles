@@ -5,16 +5,6 @@ local slack_status = require("slack_status")
 
 local default_window_transition_speed = 0.3
 
---- See: https://stackoverflow.com/a/40987183
----@param modifiers string[]
----@param character string
-local function fastKeyStroke(modifiers, character)
-    local event = require("hs.eventtap").event
-
-    event.newKeyEvent(modifiers, string.lower(character), true):post()
-    event.newKeyEvent(modifiers, string.lower(character), false):post()
-end
-
 return {
     {
         hyperKey = "F18",
@@ -174,7 +164,16 @@ return {
             {
                 key = "'",
                 action = function()
-                    fastKeyStroke({ "alt" }, "'")
+                    -- NOTE: event:post seems faster then hs.eventtap.keyStroke
+                    hs.eventtap.event.newKeyEvent({ "alt" }, "'", true):post()
+                end,
+                options = { preventRetrigger = true },
+            },
+            {
+                key = "¨",
+                action = function()
+                    -- NOTE: event:post seems faster then hs.eventtap.keyStroke
+                    hs.eventtap.event.newKeyEvent({ "alt" }, "¨", true):post()
                 end,
                 options = { preventRetrigger = true },
             },
