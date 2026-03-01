@@ -102,4 +102,22 @@ function ts.get_enclosing_function_node(node)
     return node
 end
 
+---@param node TSNode
+---@param parent_types string[]
+---@return TSNode?
+function ts.find_parent_by_type(node, parent_types)
+    ---@type TSNode?
+    local result_node = node
+
+    while result_node do
+        if vim.list_contains(parent_types, result_node:type()) then
+            break
+        end
+
+        result_node = result_node:parent()
+    end
+
+    return result_node
+end
+
 return ts
