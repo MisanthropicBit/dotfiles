@@ -181,9 +181,6 @@ end
 
 vim.api.nvim_create_user_command("RandomColorscheme", function()
     local selected = colorschemes.select_random_color_scheme()
-    local msg = ("Selected colorscheme '%s'"):format(selected)
-
-    vim.notify(msg, vim.log.levels.INFO, { title = "Config" })
 end, {})
 
 vim.api.nvim_create_user_command("ColorschemeWeights", function()
