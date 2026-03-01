@@ -109,6 +109,8 @@ local preferred_colorschemes = normalize_weights({
     "nightblossom-pastel",
     "nightblossom-sakura",
     "monet",
+    "boo-berry",
+    "tzfn",
 })
 
 ---@param weighted_choices config.WeightedChoice[]

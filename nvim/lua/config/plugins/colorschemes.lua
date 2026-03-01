@@ -12,4 +12,6 @@ return {
     "rijulpaul/nightblossom.nvim",
     "WTFox/jellybeans.nvim",
     "fynnfluegge/monet.nvim",
+    "mrpbennett/boo-berry.nvim",
+    "sirzif/tzfn.nvim",
 }
