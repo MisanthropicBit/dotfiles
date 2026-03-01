@@ -25,5 +25,13 @@ return {
         map.v("gt", function()
             decipher.encode_motion_prompt({ preview = true })
         end, "Encode a visual selection")
+
+        map.n("gR", function()
+            decipher.decode_motion(decipher.codec.base64_url)
+        end, "Decode an encoded text object")
+
+        map.n("gT", function()
+            decipher.encode_motion(decipher.codec.base64_url)
+        end, "Encode a decoded text object")
     end,
 }
