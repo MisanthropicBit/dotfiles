@@ -84,7 +84,7 @@ local function toggle_diagnostics()
     vim.diagnostic[diagnostics_visible and "show" or "hide"]()
 end
 
-map.n.leader("dl", prompt_level, { desc = "Set diagnostics level via a prompt" })
+-- map.n.leader("dl", prompt_level, { desc = "Set diagnostics level via a prompt" })
 map.n.leader("dg", toggle_diagnostics, { desc = "Toggle global diagnostics" })
 
 vim.api.nvim_create_user_command(

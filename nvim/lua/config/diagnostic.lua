@@ -68,7 +68,10 @@ map.n.leader("ln", goto_diagnostic_wrapper(1), "Jump to next diagnostic")
 map.n.leader("ep", goto_diagnostic_wrapper(-1, error_severity), "Jump to previous diagnostic error")
 map.n.leader("en", goto_diagnostic_wrapper(1, error_severity), "Jump to next diagnostic error")
 map.n.leader("ll", vim.diagnostic.open_float, "Open diagnostic float")
-map.n.leader("dq", vim.diagnostic.setqflist, "Open diagnostics in location list")
+map.n.leader("dl", function()
+    vim.diagnostic.setloclist({ winnr = vim.api.nvim_get_current_win() })
+end, "Open current window diagnostics in location list")
+map.n.leader("dq", vim.diagnostic.setqflist, "Open diagnostics in quickfix list")
 map.n.leader("dQ", function()
     vim.diagnostic.setqflist({
         severity = vim.diagnostic.severity.ERROR,
