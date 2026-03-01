@@ -39,7 +39,7 @@ function utils.transform_message(title, msg)
         local status, message = groups[2], groups[3]
         local icon = status == "SUCCESS" and "✅" or "❌"
 
-        return ("overseer.nvim %s"):format(icon), message
+        return "overseer.nvim", ("%s %s"):format(message, icon)
     end
 
     return title, msg
