@@ -36,6 +36,16 @@ function fileinfo.get(buffer)
             icon = icons.files.oil,
             icon_color = txt_icon_color,
         }
+    elseif vim.b[buffer].term_title ~= nil or vim.b[buffer].buftype == "terminal" then
+        local icon, icon_color, _ = icons.get_for_filetype("sh")
+        local name = vim.b[buffer].term_title or "terminal"
+
+        return {
+            name = name,
+            path = bufname ~= "" and bufname or name,
+            icon = icon,
+            icon_color = icon_color,
+        }
     elseif vim.startswith(vim.bo[buffer].filetype, "neotest") then
         return {
             name = "neotest",
