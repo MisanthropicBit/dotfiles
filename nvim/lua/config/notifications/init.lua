@@ -48,7 +48,7 @@ function notify.builtin(...)
     end)
 end
 
-local function setup()
+function notify.setup()
     for _, notifier_spec in ipairs(notifiers) do
         local name, condition = notifier_spec[1], notifier_spec.condition
         local ok, _notifier = pcall(require, "config.notifications." .. name)
@@ -79,8 +79,16 @@ local function setup()
     if notifier == nil then
         builtin_vim_notify("Failed to setup all custom notifiers", vim.log.levels.WARN)
     end
-end
 
-setup()
+    for name, level in pairs(vim.log.levels) do
+        if name ~= 'OFF' then
+            ---@param msg string
+            ---@param options table?
+            notify[name:lower()] = function(msg, options)
+                vim.notify(msg, level, vim.tbl_extend("force", options or {}, { title = "Config" }))
+            end
+        end
+    end
+end
 
 return notify
