@@ -64,8 +64,8 @@ autocmds.create_config_autocmd("TermOpen", {
 -- Close terminals automatically if the process' exit code was zero
 autocmds.create_config_autocmd("TermClose", {
     callback = function(event)
-        -- Do not close fzf-lua or overseer task terminals automatically
-        if vim.o.ft == "fzf" or vim.b[event.buf].overseer_task then
+        -- Do not close fzf-lua terminals automatically
+        if vim.o.ft == "fzf" then
             return
         end
 

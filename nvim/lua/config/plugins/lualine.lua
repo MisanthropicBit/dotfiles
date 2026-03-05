@@ -1,6 +1,5 @@
 return {
     "nvim-lualine/lualine.nvim",
-    dependencies = "stevearc/overseer.nvim",
     config = function()
         local lualine = require("lualine")
         local icons = require("config.icons")
@@ -102,25 +101,9 @@ return {
                     left = icons.separators.high_slant_lower_left .. " ",
                     right = icons.separators.high_slant_lower_right .. " ",
                 },
-                extensions = { "fugitive", "nvim-dap-ui" },
+                extensions = { "fugitive", "nvim-dap-ui", "quickfix", "oil" },
             },
         }
-
-        local has_overseer, overseer = pcall(require, "overseer")
-
-        if has_overseer then
-            table.insert(layout.sections.lualine_c, {
-                "overseer",
-                label = "",
-                colored = true,
-                symbols = {
-                    [overseer.STATUS.FAILURE] = icons.test.failed .. " ",
-                    [overseer.STATUS.CANCELED] = icons.test.skipped .. " ",
-                    [overseer.STATUS.SUCCESS] = icons.test.passed .. " ",
-                    [overseer.STATUS.RUNNING] = icons.test.running .. " ",
-                },
-            })
-        end
 
         lualine.setup(layout)
     end,

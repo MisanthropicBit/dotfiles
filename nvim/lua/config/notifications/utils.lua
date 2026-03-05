@@ -33,15 +33,6 @@ end
 ---@param title string
 ---@return string, string
 function utils.transform_message(title, msg)
-    local groups = vim.fn.matchlist(msg, [[\v^(SUCCESS|FAILURE) (.+)]])
-
-    if #groups > 0 then
-        local status, message = groups[2], groups[3]
-        local icon = status == "SUCCESS" and "✅" or "❌"
-
-        return "overseer.nvim", ("%s %s"):format(message, icon)
-    end
-
     return title, msg
 end
 
