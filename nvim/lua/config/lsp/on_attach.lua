@@ -96,6 +96,22 @@ function lsp_on_attach.on_attach(event)
 
     if client.server_capabilities.inlayHintProvider then
         vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
+
+        local autocmds = require("config.autocmds")
+
+        autocmds.create_config_autocmd("InsertEnter", {
+            buffer = buffer,
+            callback = function()
+                vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
+            end
+        })
+
+        autocmds.create_config_autocmd("InsertLeave", {
+            buffer = buffer,
+            callback = function()
+                vim.lsp.inlay_hint.enable(false, { bufnr = buffer })
+            end
+        })
     end
 
     local function with_desc(desc)
