@@ -60,6 +60,9 @@ return {
                         }
                     },
                     "winmove",
+                    {
+                        require("config.commands.run.lualine")
+                    }
                 },
                 lualine_x = {
                     {
