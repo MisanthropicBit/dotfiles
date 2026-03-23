@@ -15,6 +15,7 @@ alias nvc       "nvim (git diff --name-only --diff-filter=U --relative)"
 alias nvd       "nvim -d"
 alias nvm       "nvim (git diff --name-only --diff-filter=MA --relative && git diff --name-only --diff-filter=MA --relative --cached)"
 alias nvl       "nvim (git diff-tree --no-commit-id --name-only -r HEAD)"
+alias nt        "nvim -c 'term' -c 'startinsert'"
 alias listpath  "echo $PATH | tr ':' '\n'"
 alias v         "pbpaste"
 
