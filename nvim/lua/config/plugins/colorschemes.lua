@@ -14,4 +14,5 @@ return {
     "fynnfluegge/monet.nvim",
     "mrpbennett/boo-berry.nvim",
     "sirzif/tzfn.nvim",
+    "danfry1/lume",
 }
