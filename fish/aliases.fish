@@ -15,7 +15,7 @@ alias nvc       "nvim (git diff --name-only --diff-filter=U --relative)"
 alias nvd       "nvim -d"
 alias nvm       "nvim (git diff --name-only --diff-filter=MA --relative && git diff --name-only --diff-filter=MA --relative --cached)"
 alias nvl       "nvim (git diff-tree --no-commit-id --name-only -r HEAD)"
-alias nt        "nvim -c 'term' -c 'startinsert'"
+alias nt        nvim_terminal
 alias listpath  "echo $PATH | tr ':' '\n'"
 alias v         "pbpaste"
 
@@ -243,4 +243,16 @@ function nvim_grep -d "Use ripgrep to search for files then open them in neovim"
 
         nvim -c "lua vim.fn.cursor($parts[2], $parts[3])" $parts[1]
     end
+
+    commandline --function repaint
+end
+
+function nvim_terminal -d "Open neovim and start a terminal with an optional command" -a command
+    set -f args -c 'term' -c 'startinsert'
+
+    if test (count $argv) -gt 0
+        set -a args -c "lua vim.api.nvim_feedkeys(\"$argv\n\", \"i\", false)"
+    end
+
+    nvim $args
 end
