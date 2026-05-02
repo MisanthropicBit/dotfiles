@@ -26,6 +26,11 @@ local function get_project_root()
     return vim.fs.basename(vim.fs.root(0, markers))
 end
 
+-- Remove default lsp keymaps
+map.delete("n", { "grn", "gra", "grr", "gri", "grt", "gO", "grx" })
+map.delete("x", "gra")
+map.delete("i", "<c-s>")
+
 map.n.leader("<space>", "<cmd>nohl<cr>")
 map.n.leader("w", "<cmd>w<cr>")
 map.n.leader("q", "<cmd>q<cr>")
@@ -134,11 +139,6 @@ map.n("dd", function()
 end, { expr = true })
 map.n("<bs>", "^")
 map.n("<c-g>", "6<c-g>", "Get full info about current file by default")
-
--- Remove default lsp keymaps
-map.delete("n", { "grn", "gra", "grr", "gri", "grt", "gO" })
-map.delete("x", "gra")
-map.delete("i", "<c-s>")
 
 map.i("jk", [["<esc>"]], { expr = true })
 map.i("<c-a>", "<c-o>^", "Move to start of line in insert mode")
