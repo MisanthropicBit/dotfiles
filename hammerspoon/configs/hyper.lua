@@ -2,6 +2,7 @@ local actions = require("hyper.actions")
 local autolayout = require("autolayout")
 local config = require("config")
 local slack_status = require("slack_status")
+local ClipboardTool = require("ClipboardTool")
 
 local default_window_transition_speed = 0.3
 
@@ -99,32 +100,32 @@ return {
                     end
                 end,
             },
-            {
-                key = "j",
-                action = function()
-                    local window = hs.window.focusedWindow()
-
-                    if window then
-                        window:moveToUnit(
-                            hs.geometry(0, 0, 0.5, 1),
-                            config.window_transition_speed or default_window_transition_speed
-                        )
-                    end
-                end,
-            },
-            {
-                key = "k",
-                action = function()
-                    local window = hs.window.focusedWindow()
-
-                    if window then
-                        window:moveToUnit(
-                            hs.geometry(0.5, 0, 0.5, 1),
-                            config.window_transition_speed or default_window_transition_speed
-                        )
-                    end
-                end,
-            },
+            -- {
+            --     key = "j",
+            --     action = function()
+            --         local window = hs.window.focusedWindow()
+            --
+            --         if window then
+            --             window:moveToUnit(
+            --                 hs.geometry(0, 0, 0.5, 1),
+            --                 config.window_transition_speed or default_window_transition_speed
+            --             )
+            --         end
+            --     end,
+            -- },
+            -- {
+            --     key = "k",
+            --     action = function()
+            --         local window = hs.window.focusedWindow()
+            --
+            --         if window then
+            --             window:moveToUnit(
+            --                 hs.geometry(0.5, 0, 0.5, 1),
+            --                 config.window_transition_speed or default_window_transition_speed
+            --             )
+            --         end
+            --     end,
+            -- },
             {
                 key = "u",
                 action = slack_status.choose,
@@ -143,39 +144,42 @@ return {
                 key = "e",
                 action = function()
                     ClipboardTool:toggleClipboard()
-                end
+                end,
             },
             {
                 key = "8",
-                action = function()
-                    -- NOTE: event:post seems faster then hs.eventtap.keyStroke
-                    hs.eventtap.event.newKeyEvent({ "alt", "shift" }, "8", true):post()
-                end,
+                action = actions.keyStroke("8", { "alt", "shift" }),
                 options = { preventRetrigger = true },
             },
             {
                 key = "9",
-                action = function()
-                    -- NOTE: event:post seems faster then hs.eventtap.keyStroke
-                    hs.eventtap.event.newKeyEvent({ "alt" }, "8", true):post()
-                end,
+                action = actions.keyStroke("9", { "alt", "shift" }),
                 options = { preventRetrigger = true },
             },
             {
                 key = "'",
-                action = function()
-                    -- NOTE: event:post seems faster then hs.eventtap.keyStroke
-                    hs.eventtap.event.newKeyEvent({ "alt" }, "'", true):post()
-                end,
-                options = { preventRetrigger = true },
+                action = actions.keyStroke("'", { "alt" }),
             },
             {
                 key = "¨",
-                action = function()
-                    -- NOTE: event:post seems faster then hs.eventtap.keyStroke
-                    hs.eventtap.event.newKeyEvent({ "alt" }, "¨", true):post()
-                end,
-                options = { preventRetrigger = true },
+                action = actions.keyStroke("¨", { "alt" }),
+            },
+            {
+                key = "delete",
+                action = actions.keyStroke("delete", { "alt" }),
+            },
+            {
+                key = "j",
+                action = actions.keyStroke("left", { "alt" }),
+            },
+            {
+                key = "k",
+                action = actions.keyStroke("right", { "alt" }),
+            },
+            {
+                key = "ø",
+                -- Presses '|'
+                action = actions.keyStroke("i", { "alt" }),
             },
         },
     },

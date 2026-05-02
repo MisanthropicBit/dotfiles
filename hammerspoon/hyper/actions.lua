@@ -14,4 +14,10 @@ function actions.launch(target, type)
     end
 end
 
+function actions.keyStroke(key, modifiers)
+    return function()
+        hs.eventtap.event.newKeyEvent(modifiers, key, true):post()
+    end
+end
+
 return actions
