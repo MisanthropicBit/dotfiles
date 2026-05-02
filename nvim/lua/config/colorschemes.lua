@@ -112,6 +112,7 @@ local preferred_colorschemes = normalize_weights({
     "boo-berry",
     "tzfn",
     "lume",
+    "vague",
 })
 
 ---@param weighted_choices config.WeightedChoice[]
