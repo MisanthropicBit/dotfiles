@@ -1,7 +1,33 @@
 local component = require("lualine.component"):extend()
 local lualine_utils = require("lualine.utils.utils")
 local icons = require("config.icons")
-local utils = require("config.commands.run.utils")
+local utils = require("config.run.utils")
+
+local default_options = {
+    icons = {
+        spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+        failed = {
+            icon = icons.test.failed,
+            hl = "diffRemoved",
+            scope = { "fg", "bg" },
+        },
+        success = {
+            icon = icons.test.passed,
+            hl = "diffAdded",
+            scope = { "fg", "bg" },
+        },
+        running = {
+            icon = icons.test.running,
+            hl = "diffChanged",
+            scope = { "fg", "bg" },
+        },
+        unknown = {
+            icon = icons.test.unknown,
+            hl = "Normal",
+            scope = { "fg", "bg" },
+        },
+    },
+}
 
 local task_icons_spec = {
     Failed = { icon = icons.test.failed, hl = "diffRemoved", scope = { "fg", "bg" } },
@@ -35,7 +61,7 @@ function component:update_colors()
 end
 
 function component:update_status()
-    local task = require("config.commands.run").last_run_task()
+    local task = require("config.run.run").last_run_task()
     local parts = {}
 
     if self.options.label ~= "" then
@@ -68,6 +94,7 @@ function component:update_status()
                 )
             )
         elseif task:running() then
+            -- local spinner_symbol = self.symbols.spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #self.symbols.spinner + 1]
             local hl_start = self:format_hl(self.highlight_groups["Running"])
 
             table.insert(

@@ -51,11 +51,11 @@ function FixedSizedQueue:peek()
     return self._items[#self._items]
 end
 
---- Returns a deep copy of all the items in the queue
+--- Returns a list of all the items in the queue
 ---@generic T
 ---@return T[]
 function FixedSizedQueue:items()
-    return vim.deepcopy(self._items)
+    return self._items
 end
 
 ---@return integer

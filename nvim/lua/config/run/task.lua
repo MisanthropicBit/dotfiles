@@ -1,3 +1,7 @@
+---@class config.run.TaskStartOptions : config.run.RunOptions
+---@field command (string | string[])?
+---@field on_exit fun(task: config.run.Task)?
+
 ---@class config.run.Task
 ---@field private _job_id     integer?
 ---@field private _command    string | string[]
@@ -43,19 +47,34 @@ function Task.new(command)
     }, Task)
 end
 
----@param on_exit fun(task: config.run.Task)?
+---@param options config.run.TaskStartOptions?
 ---@return boolean, unknown?
-function Task:start(on_exit)
+function Task:start(options)
+    local _options = options or {}
+    local stdin
+
+    if _options.stdin then
+        if type(_options.stdin) == "string" then
+            stdin = _options.stdin
+        else
+            ---@diagnostic disable-next-line: param-type-mismatch
+            stdin = table.concat(_options.stdin, "\n")
+        end
+    end
+
+    self._command = _options.command or self._command
+
     local ok, job_id = pcall(vim.fn.jobstart, self._command, {
         on_exit = function(_, exit_code, _)
             ---@diagnostic disable-next-line: undefined-field
             self._end_time = vim.uv.hrtime()
             self._exit_code = exit_code
 
-            if on_exit then
-                on_exit(self)
+            if vim.is_callable(_options.on_exit) then
+                _options.on_exit(self)
             end
         end,
+        stdin = stdin,
         on_stdout = function(_, data, _)
             output_handler(self, data, "_stdout")
         end,
