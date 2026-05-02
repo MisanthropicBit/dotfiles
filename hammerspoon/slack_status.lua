@@ -15,6 +15,7 @@ local choiceToEmoji = {
     Doctor = { slack.emojis.doctor, false },
     Vacation = { slack.emojis.vacation, false },
     Sick = { slack.emojis.sick, false },
+    Omw = { slack.emojis.away, false },
 }
 
 local function updateStatus()
