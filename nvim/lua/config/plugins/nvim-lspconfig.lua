@@ -1,1 +1,4 @@
-return { "neovim/nvim-lspconfig" }
+return {
+    src = 'https://github.com/neovim/nvim-lspconfig',
+    noload = true,
+}

@@ -1,7 +1,7 @@
 return {
-    "echasnovski/mini.move",
-    config = function()
-        require("mini.move").setup({
+    src = "https://www.github.com/echasnovski/mini.move",
+    data = {
+        config = {
             mappings = {
                 left = "H",
                 right = "L",
@@ -12,6 +12,6 @@ return {
                 line_left = "",
                 line_right = "",
             },
-        })
-    end,
+        },
+    },
 }

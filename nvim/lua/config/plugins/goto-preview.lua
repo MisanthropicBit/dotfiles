@@ -1,20 +1,21 @@
 return {
-    "rmagatti/goto-preview",
-    config = function()
-        local map = require("config.map")
-        local goto_preview = require("goto-preview")
+    src = "https://www.github.com/rmagatti/goto-preview",
+    data = {
+        config = function(goto_preview)
+            local map = require("config.map")
 
-        goto_preview.setup({
-            height = 28,
-            zindex = 31,
-            post_open_hook = function()
-                vim.cmd.normal("zt")
-            end,
-        })
+            goto_preview.setup({
+                height = 28,
+                zindex = 31,
+                post_open_hook = function()
+                    vim.cmd.normal("zt")
+                end,
+            })
 
-        map.n("gp", goto_preview.goto_preview_definition, "Preview definition under cursor")
-        map.n("gi", goto_preview.goto_preview_implementation, "Preview implementation under cursor")
-        map.n("ge", goto_preview.close_all_win, "Close all goto-preview windows")
-        map.n.leader("gt", goto_preview.goto_preview_type_definition, "Preview type definition under cursor")
-    end,
+            map.n("gp", goto_preview.goto_preview_definition, "Preview definition under cursor")
+            -- map.n("gi", goto_preview.goto_preview_implementation, "Preview implementation under cursor")
+            map.n("ge", goto_preview.close_all_win, "Close all goto-preview windows")
+            map.n.leader("gt", goto_preview.goto_preview_type_definition, "Preview type definition under cursor")
+        end,
+    },
 }

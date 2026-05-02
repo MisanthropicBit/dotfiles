@@ -1,1 +1,1 @@
-return { "andymass/vim-matchup" }
+return "https://www.github.com/andymass/vim-matchup"

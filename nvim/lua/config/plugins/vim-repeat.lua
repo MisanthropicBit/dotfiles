@@ -1,1 +1,1 @@
-return { "tpope/vim-repeat" }
+return "https://www.github.com/tpope/vim-repeat"

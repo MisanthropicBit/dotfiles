@@ -1,15 +1,8 @@
+---@type config.PluginSpec
 return {
-    { "Gelio/cmp-natdat", opts = {} },
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-cmdline",
-    "hrsh7th/cmp-emoji",
-    { "hrsh7th/cmp-nvim-lsp", opts = {} },
-    "hrsh7th/cmp-path",
-    "saadparwaiz1/cmp_luasnip",
-    {
-        "hrsh7th/nvim-cmp",
-        config = function()
-            local cmp = require("cmp")
+    src = "https://www.github.com/hrsh7th/nvim-cmp",
+    data = {
+        config = function(cmp)
             local luasnip = require("luasnip")
 
             local icons = require("config.icons")
@@ -55,7 +48,9 @@ return {
             -- Taken from:
             -- https://www.reddit.com/r/neovim/comments/1c9q60s/tip_cmp_menu_with_rightaligned_import_location/
             local function get_lsp_completion_context(completion, source)
-                local ok, source_name = pcall(function() return source.source.client.config.name end)
+                local ok, source_name = pcall(function()
+                    return source.source.client.config.name
+                end)
 
                 if not ok then
                     return nil
@@ -71,7 +66,7 @@ return {
                     end
 
                     local import_str = doc.value
-                    local i, j = import_str:find("[\"<].*[\">]")
+                    local i, j = import_str:find('["<].*[">]')
 
                     if i == nil then
                         return
@@ -230,7 +225,7 @@ return {
                         option = {
                             ignore_cmds = { "Man", "!" },
                         },
-                    }
+                    },
                 }),
             })
         end,

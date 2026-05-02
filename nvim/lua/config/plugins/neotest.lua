@@ -1,15 +1,7 @@
 return {
-    {
-        "nvim-neotest/neotest",
-        dependencies = {
-            "nvim-neotest/nvim-nio",
-            "nvim-neotest/neotest-plenary",
-            "nvim-neotest/neotest-jest",
-            "MisanthropicBit/neotest-busted",
-        },
-        config = function()
-            local neotest = require("neotest")
-
+    src = "https://www.github.com/nvim-neotest/neotest",
+    data = {
+        config = function(neotest)
             local icons = require("config.icons")
             local map = require("config.map")
 
@@ -24,6 +16,7 @@ return {
 
             ---@diagnostic disable-next-line: missing-fields
             neotest.setup({
+                log_level = vim.log.levels.DEBUG,
                 icons = {
                     running_animated = icons.animation.updating,
                 },

@@ -1,169 +1,226 @@
 return {
-    "mfussenegger/nvim-dap",
-    config = function()
-        local map = require("config.map")
-        local icons = require("config.icons")
+    src = "https://www.github.com/mfussenegger/nvim-dap",
+    data = {
+        config = function(dap)
+            local map = require("config.map")
+            local icons = require("config.icons")
+            local dap_widgets = require("dap.ui.widgets")
+            local debugging = icons.debugging
+            local fzf_lua_loaded, fzf_lua_core = pcall(require, "fzf-lua.core")
 
-        local dap = require("dap")
-        local dap_widgets = require("dap.ui.widgets")
-        local debugging = icons.debugging
+            local select_executable_prompt = "Select executable " .. icons.misc.prompt
 
-        local fzf_lua_loaded, fzf_lua_core = pcall(require, "fzf-lua.core")
-
-        local select_executable_prompt = "Select executable " .. icons.misc.prompt
-
-        local function select_executable()
-            return vim.fn.input({
-                prompt = select_executable_prompt,
-                default = vim.fn.getcwd() .. "/",
-                completion = "file",
-            })
-        end
-
-        if fzf_lua_loaded then
-            select_executable = function()
-                return coroutine.create(function(dap_run_co)
-                    fzf_lua_core.fzf_exec("fd --no-ignore --type executable", {
-                        prompt = select_executable_prompt,
-                        cwd = vim.fn.getcwd(),
-                        winopts = { width = 0.6, height = 0.5 },
-                        fzf_opts = { ["--pointer"] = debugging.breakpoint },
-                        actions = {
-                            ["enter"] = function(selected)
-                                coroutine.resume(dap_run_co, selected[1])
-                            end,
-                        },
-                    })
-                end)
+            local function select_executable()
+                return vim.fn.input({
+                    prompt = select_executable_prompt,
+                    default = vim.fn.getcwd() .. "/",
+                    completion = "file",
+                })
             end
-        end
 
-        local function create_select_args_func(default_args)
-            return function()
+            if fzf_lua_loaded then
+                select_executable = function()
+                    return coroutine.create(function(dap_run_co)
+                        fzf_lua_core.fzf_exec("fd --no-ignore --type executable", {
+                            prompt = select_executable_prompt,
+                            cwd = vim.fn.getcwd(),
+                            winopts = { width = 0.6, height = 0.5 },
+                            fzf_opts = { ["--pointer"] = debugging.breakpoint },
+                            actions = {
+                                ["enter"] = function(selected)
+                                    coroutine.resume(dap_run_co, selected[1])
+                                end,
+                            },
+                        })
+                    end)
+                end
+            end
+
+            ---@param default_args string?
+            ---@return fun(): thread
+            local function create_select_args_func(default_args)
+                return function()
+                    return coroutine.create(function(dap_run_co)
+                        local _default_args = type(default_args) == "string" and #default_args > 0 and default_args
+                            or nil
+
+                        vim.ui.input({
+                            prompt = "Program arguments " .. icons.misc.prompt .. " ",
+                            default = _default_args,
+                            completion = "file",
+                            title = " Program arguments",
+                        }, function(input)
+                            local args = {}
+
+                            for word in input:gmatch("%S+") do
+                                table.insert(args, word)
+                            end
+
+                            coroutine.resume(dap_run_co, args)
+                        end)
+                    end)
+                end
+            end
+
+            ---@param prompt string
+            ---@return thread
+            local function create_input_prompt(prompt)
                 return coroutine.create(function(dap_run_co)
-                    local _default_args = type(default_args) == "string" and #default_args > 0 and default_args or nil
-
-                    vim.ui.input({
-                        prompt = "Program arguments " .. icons.misc.prompt .. " ",
-                        default = _default_args,
-                        completion = "file",
-                        title = " Program arguments",
-                    },
-                    function(input)
-                        local args = {}
-
-                        for word in input:gmatch("%S+") do
-                            table.insert(args, word)
-                        end
-
-                        coroutine.resume(dap_run_co, args)
+                    vim.ui.input({ prompt = prompt }, function(input)
+                        coroutine.resume(dap_run_co, input)
                     end)
                 end)
             end
-        end
 
-        local function conditional_breakpoint()
-            dap.set_breakpoint(vim.fn.input("Breakpoint condition " .. icons.misc.prompt))
-        end
+            local function conditional_breakpoint()
+                dap.set_breakpoint(vim.fn.input("Breakpoint condition " .. icons.misc.prompt))
+            end
 
-        map.n.leader("db", dap.toggle_breakpoint, "Toggle a breakpoint")
-        map.n.leader("dB", conditional_breakpoint, "Set a conditional breakpoint")
-        map.n.leader("dd", dap.clear_breakpoints, "Clear all breakpoints")
-        map.n.leader("dc", dap.continue, "Continue debugging")
-        map.n.leader("do", dap.step_over, "Step over")
-        map.n.leader("di", dap.step_into, "Step into")
-        map.n.leader("du", dap.step_out, "Step out of")
-        map.n.leader("dr", dap.repl.open, "Open the REPL for debugging")
-        map.n.leader("dh", dap_widgets.hover, "Inspect value of expression under cursor when debugging")
-        map.n.leader("dx", function()
-            dap.terminate()
-            dap.disconnect()
-        end, "Terminate/stop/exit debugging")
+            map.n.leader("db", dap.toggle_breakpoint, "Toggle a breakpoint")
+            map.n.leader("dB", conditional_breakpoint, "Set a conditional breakpoint")
+            map.n.leader("dd", dap.clear_breakpoints, "Clear all breakpoints")
+            map.n.leader("dc", dap.continue, "Continue debugging")
+            map.n.leader("do", dap.step_over, "Step over")
+            map.n.leader("di", dap.step_into, "Step into")
+            map.n.leader("du", dap.step_out, "Step out of")
+            map.n.leader("dr", dap.repl.open, "Open the REPL for debugging")
+            map.n.leader("dh", dap_widgets.hover, "Inspect value of expression under cursor when debugging")
+            map.n.leader("dx", function()
+                dap.terminate()
+                dap.disconnect()
+            end, "Terminate/stop/exit debugging")
 
-        -- Adapters
-        dap.adapters["pwa-node"] = {
-            type = "server",
-            host = "localhost",
-            port = "${port}",
-            executable = {
+            -- Adapters
+            dap.adapters["pwa-node"] = {
+                type = "server",
+                host = "localhost",
+                port = "${port}",
+                executable = {
+                    command = "node",
+                    args = { vim.fn.expand("~/projects/js-debug/src/dapDebugServer.js"), "${port}" },
+                },
+            }
+
+            dap.adapters.lldb = {
+                type = "executable",
+                command = "/usr/local/opt/llvm/bin/lldb-dap",
+                name = "lldb",
+            }
+
+            dap.adapters["local-lua"] = {
+                type = "executable",
                 command = "node",
-                args = { vim.fn.expand("~/projects/js-debug/src/dapDebugServer.js"), "${port}" },
-            },
-        }
+                args = {
+                    vim.fs.normalize("~/projects/typescript/local-lua-debugger-vscode/extension/debugAdapter.js"),
+                },
+                enrich_config = function(config, on_config)
+                    if not config["extensionPath"] then
+                        local _config = vim.deepcopy(config)
+                        _config.extensionPath = vim.fs.normalize("~/projects/typescript/local-lua-debugger-vscode")
+                        on_config(_config)
+                    else
+                        on_config(config)
+                    end
+                end,
+            }
 
-        dap.adapters.lldb = {
-            type = "executable",
-            command = "/usr/local/opt/llvm/bin/lldb-dap",
-            name = "lldb",
-        }
+            -- Configurations
+            for _, language in ipairs({ "typescript", "javascript" }) do
+                dap.configurations[language] = {
+                    {
+                        type = "pwa-node",
+                        request = "launch",
+                        name = "Launch server (.env)",
+                        runtimeExecutable = "npm",
+                        runtimeArgs = create_select_args_func("run start-env"),
+                        skipFiles = { "node_modules/**" },
+                        console = "integratedTerminal",
+                        cwd = "${workspaceFolder}",
+                    },
+                    {
+                        preLaunchTask = "Prepare staging environment",
+                        envFile = "${workspaceFolder}/.vscode/localStaging.env",
+                        type = "pwa-node",
+                        request = "launch",
+                        name = "Launch staging server",
+                        runtimeExecutable = "npm",
+                        runtimeArgs = create_select_args_func("run start"),
+                        skipFiles = { "node_modules/**" },
+                        console = "integratedTerminal",
+                        cwd = "${workspaceFolder}",
+                        env = {
+                            DB_USER = create_input_prompt("Database user: "),
+                            DB_PASS = create_input_prompt("Database password: "),
+                            ENVIRONMENT = "development",
+                            LOG_LEVEL = "DEBUG",
+                            EXTERNAL_LOOKUP_API_BASE_URL = "http://external-lookup",
+                            BIGQUERY_PROJECT_ID = "connectedcars-staging",
+                            DATA_SOURCE_API_BASE_URL = "http://localhost:3000",
+                            DRY_RUN = "true",
+                            NODE_ENV = "staging",
+                        },
+                    },
+                    {
+                        preLaunchTask = "Prepare production environment",
+                        envFile = "${workspaceFolder}/.vscode/localProd.env",
+                        type = "pwa-node",
+                        request = "launch",
+                        name = "Launch production server",
+                        runtimeExecutable = "npm",
+                        runtimeArgs = create_select_args_func("run start"),
+                        skipFiles = { "node_modules/**" },
+                        console = "integratedTerminal",
+                        cwd = "${workspaceFolder}",
+                        env = {
+                            DB_USER = create_input_prompt("Database user: "),
+                            DB_PASS = create_input_prompt("Database password: "),
+                            ENVIRONMENT = "development",
+                            LOG_LEVEL = "DEBUG",
+                            EXTERNAL_LOOKUP_API_BASE_URL = "http://external-lookup",
+                            BIGQUERY_PROJECT_ID = "connectedcars-staging",
+                            DATA_SOURCE_API_BASE_URL = "http://localhost:3000",
+                            DRY_RUN = "true",
+                            NODE_ENV = "production",
+                        },
+                    },
+                }
+            end
 
-        dap.adapters["local-lua"] = {
-            type = "executable",
-            command = "node",
-            args = {
-                vim.fs.normalize("~/projects/typescript/local-lua-debugger-vscode/extension/debugAdapter.js"),
-            },
-            enrich_config = function(config, on_config)
-                if not config["extensionPath"] then
-                    local _config = vim.deepcopy(config)
-                    _config.extensionPath = vim.fs.normalize("~/projects/typescript/local-lua-debugger-vscode")
-                    on_config(_config)
-                else
-                    on_config(config)
-                end
-            end,
-        }
-
-        -- Configurations
-        for _, language in ipairs({ "typescript", "javascript" }) do
-            dap.configurations[language] = {
+            dap.configurations.cpp = {
                 {
-                    type = "pwa-node",
+                    name = "Debug with lldb",
+                    type = "lldb",
                     request = "launch",
-                    name = "Launch server",
-                    runtimeExecutable = "npm",
-                    runtimeArgs = create_select_args_func("run start-env"),
-                    skipFiles = { "node_modules/**" },
-                    console = "integratedTerminal",
+                    program = select_executable,
                     cwd = "${workspaceFolder}",
+                    stopOnEntry = false,
+                    args = create_select_args_func(),
                 },
             }
-        end
 
-        dap.configurations.cpp = {
-            {
-                name = "Debug with lldb",
-                type = "lldb",
-                request = "launch",
-                program = select_executable,
-                cwd = "${workspaceFolder}",
-                stopOnEntry = false,
-                args = create_select_args_func(),
-            }
-        }
-
-        dap.configurations.lua = {
-            {
-                name = "Current file (local-lua-dbg, lua)",
-                type = "local-lua",
-                request = "launch",
-                cwd = "${workspaceFolder}",
-                program = {
-                    lua = "lua5.1",
-                    file = "${file}",
+            dap.configurations.lua = {
+                {
+                    name = "Current file (local-lua-dbg, lua)",
+                    type = "local-lua",
+                    request = "launch",
+                    cwd = "${workspaceFolder}",
+                    program = {
+                        lua = "lua5.1",
+                        file = "${file}",
+                    },
+                    args = {},
                 },
-                args = {},
-            },
-        }
+            }
 
-        -- Signs
-        vim.fn.sign_define(
-            "DapBreakpoint",
-            { text = debugging.breakpoint, texthl = "DiagnosticError", numhl = "DiagnosticError" }
-        )
-        vim.fn.sign_define("DapBreakpointCondition", { text = debugging.breakpoint_condition })
-        vim.fn.sign_define("DapLogPoint", { text = debugging.log_point })
-        vim.fn.sign_define("DapStopped", { text = debugging.cursor, texthl = "ErrorMsg", culhl = "ErrorMsg" })
-        vim.fn.sign_define("DapBreakpointRejected", { text = debugging.rejected })
-    end,
+            -- Signs
+            vim.fn.sign_define(
+                "DapBreakpoint",
+                { text = debugging.breakpoint, texthl = "DiagnosticError", numhl = "DiagnosticError" }
+            )
+            vim.fn.sign_define("DapBreakpointCondition", { text = debugging.breakpoint_condition })
+            vim.fn.sign_define("DapLogPoint", { text = debugging.log_point })
+            vim.fn.sign_define("DapStopped", { text = debugging.cursor, texthl = "ErrorMsg", culhl = "ErrorMsg" })
+            vim.fn.sign_define("DapBreakpointRejected", { text = debugging.rejected })
+        end,
+    },
 }

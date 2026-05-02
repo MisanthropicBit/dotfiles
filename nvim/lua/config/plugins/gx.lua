@@ -1,14 +1,16 @@
 return {
-    "chrishrb/gx.nvim",
-    config = function()
-        local map = require("config.map")
+    src = "https://www.github.com/chrishrb/gx.nvim",
+    data = {
+        config = function(gx)
+            local map = require("config.map")
 
-        require("gx").setup({
-            handler_options = {
-                search_engine = "https://duckduckgo.com/?q=",
-            },
-        })
+            gx.setup({
+                handler_options = {
+                    search_engine = "https://duckduckgo.com/?q=",
+                },
+            })
 
-        map.set({ "n", "x" }, "gx", "<cmd>Browse<cr>")
-    end,
+            map.set({ "n", "x" }, "gx", "<cmd>Browse<cr>")
+        end,
+    },
 }

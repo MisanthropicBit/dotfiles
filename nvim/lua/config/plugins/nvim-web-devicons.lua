@@ -1,30 +1,30 @@
 return {
-    "kyazdani42/nvim-web-devicons",
-    config = function()
-        local devicons = require("nvim-web-devicons")
+    src = "https://www.github.com/kyazdani42/nvim-web-devicons",
+    data = {
+        config = function(devicons)
+            local git_icon, git_color = devicons.get_icon_color_by_filetype("git")
+            local sql_icon, sql_color = devicons.get_icon_color_by_filetype("sql")
 
-        local git_icon, git_color = devicons.get_icon_color_by_filetype("git")
-        local sql_icon, sql_color = devicons.get_icon_color_by_filetype("sql")
-
-        devicons.setup({
-            default = false,
-            override = {
-                fugitive = {
-                    icon = git_icon,
-                    color = git_color,
-                    name = "Fugitive",
+            devicons.setup({
+                default = false,
+                override = {
+                    fugitive = {
+                        icon = git_icon,
+                        color = git_color,
+                        name = "Fugitive",
+                    },
+                    oil = {
+                        icon = "",
+                        color = ({ devicons.get_icon_color_by_filetype("txt") })[2],
+                        name = "Oil",
+                    },
+                    mysql = {
+                        icon = sql_icon,
+                        color = sql_color,
+                        name = "MySQL",
+                    },
                 },
-                oil = {
-                    icon = "",
-                    color = ({ devicons.get_icon_color_by_filetype("txt") })[2],
-                    name = "Oil",
-                },
-                mysql = {
-                    icon = sql_icon,
-                    color = sql_color,
-                    name = "MySQL",
-                },
-            },
-        })
-    end
+            })
+        end,
+    },
 }

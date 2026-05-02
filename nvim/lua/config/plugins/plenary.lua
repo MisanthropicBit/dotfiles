@@ -1,1 +1,1 @@
-return { "nvim-lua/plenary.nvim" }
+return "https://www.github.com/nvim-lua/plenary.nvim"

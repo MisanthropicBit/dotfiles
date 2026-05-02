@@ -1,0 +1,21 @@
+-- local map = require("config.map")
+--
+-- local tssorter = require("tssorter")
+--
+-- tssorter.setup({
+--     sortables = {
+--         typescript = {
+--             array = {
+--                 node = "array",
+--             },
+--             object = {
+--                 node = "object",
+--                 ordinal = "key",
+--             },
+--         },
+--     },
+-- })
+--
+-- map.n.leader("so", tssorter.sort, "Sort treesitter node under cursor")
+
+return {}

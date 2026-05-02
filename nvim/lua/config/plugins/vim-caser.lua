@@ -1,1 +1,1 @@
-return { "arthurxavierx/vim-caser" }
+return "https://www.github.com/arthurxavierx/vim-caser"

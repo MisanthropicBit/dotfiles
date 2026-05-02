@@ -1,111 +1,132 @@
 return {
-    "nvim-treesitter/nvim-treesitter",
-    branch = "main",
-    config = function()
-        local nvts = require("nvim-treesitter")
-        local map = require("config.map")
-        local ts = require("config.treesitter.utils")
+    src = "https://www.github.com/nvim-treesitter/nvim-treesitter",
+    version = "main",
+    on = {
+        hook = ":TSUpdate"
+    },
+    data = {
+        config = function(nvts)
+            local map = require("config.map")
+            local autocmds = require("config.autocmds")
+            local ts = require("config.treesitter.utils")
 
-        nvts.setup()
+            nvts.setup()
 
-        nvts.install({
-            "bash",
-            "cpp",
-            "dockerfile",
-            "fish",
-            "gitcommit",
-            "git_rebase",
-            "javascript",
-            "json",
-            "lua",
-            "markdown",
-            "markdown_inline",
-            "python",
-            "sql",
-            "terraform",
-            "typescript",
-            "vim",
-            "vimdoc",
-            "yaml",
-        })
+            nvts.install({
+                "bash",
+                "cpp",
+                "dockerfile",
+                "fish",
+                "gitcommit",
+                "git_rebase",
+                "javascript",
+                "json",
+                "lua",
+                "markdown",
+                "markdown_inline",
+                "python",
+                "sql",
+                "terraform",
+                "typescript",
+                "vim",
+                "vimdoc",
+                "yaml",
+            })
 
-        map.n.leader("fs", function()
-            local node = ts.get_enclosing_top_level_function(vim.treesitter.get_node())
+            map.n.leader("fs", function()
+                local node = ts.get_enclosing_top_level_function(vim.treesitter.get_node())
 
-            if not node then
-                return
-            end
-
-            -- Assume that the "name" child node is the function identifier/name
-            local nodes = node:field("name")
-            local function_name
-
-            if #nodes > 0 then
-                -- Function declarations usually have a child called 'name'
-                function_name = nodes[1]
-            else
-                -- Arrow functions are values usually assigned to a name
-                local prev_sibling = node:prev_named_sibling()
-
-                if prev_sibling and prev_sibling:type() == "identifier" then
-                    function_name = prev_sibling
+                if not node then
+                    return
                 end
-            end
 
-            if not function_name then
-                return
-            end
+                -- Assume that the "name" child node is the function identifier/name
+                local nodes = node:field("name")
+                local function_name
 
-            local lnum, col, _ = function_name:start()
-
-            vim.fn.cursor(lnum + 1, col + 1)
-        end, "Navigate to the enclosing top-level function")
-
-        map.n.leader("fe", function()
-            local node = ts.get_enclosing_top_level_function(vim.treesitter.get_node())
-
-            if node ~= nil then
-                local result = ts.get_end_of_enclosing_top_level_function(node)
-
-                if result then
-                    vim.fn.cursor(result.lnum, result.col)
+                if #nodes > 0 then
+                    -- Function declarations usually have a child called 'name'
+                    function_name = nodes[1]
                 else
-                    vim.notify("Could not find end of enclosing top-level function", vim.log.levels.ERROR)
+                    -- Arrow functions are values usually assigned to a name
+                    local prev_sibling = node:prev_named_sibling()
+
+                    if prev_sibling and prev_sibling:type() == "identifier" then
+                        function_name = prev_sibling
+                    end
                 end
-            end
-        end, "Navigate to the end of the enclosing top-level function")
 
-        map.n.leader("fz", function()
-            local node = ts.get_enclosing_top_level_function(vim.treesitter.get_node())
+                if not function_name then
+                    return
+                end
 
-            if not node then
-                return
-            end
+                local lnum, col, _ = function_name:start()
 
-            -- Assume that the "name" child node is the function identifier/name
-            local nodes = node:field("name")
-            local function_name = #nodes > 0 and nodes[1] or node
-            local start_lnum, start_col, _ = function_name:start()
-            local end_lnum, _, _ = node:end_()
-            local win_height = vim.api.nvim_win_get_height(0)
-            local func_height = end_lnum - start_lnum
+                vim.fn.cursor(lnum + 1, col + 1)
+            end, "Navigate to the enclosing top-level function")
 
-            vim.print(func_height)
-            vim.print(win_height)
+            map.n.leader("fe", function()
+                local node = ts.get_enclosing_top_level_function(vim.treesitter.get_node())
 
-            if func_height > win_height then
-                -- Cannot center, default to jumping to start of function
-                vim.fn.cursor(start_lnum + 1, start_col + 1)
-                return
-            end
+                if node ~= nil then
+                    local result = ts.get_end_of_enclosing_top_level_function(node)
 
-            local center_lnum = math.floor(start_lnum + func_height / 2 + 0.5)
+                    if result then
+                        vim.fn.cursor(result.lnum, result.col)
+                    else
+                        vim.notify("Could not find end of enclosing top-level function", vim.log.levels.ERROR)
+                    end
+                end
+            end, "Navigate to the end of the enclosing top-level function")
 
-            vim.fn.cursor(center_lnum + 1, 0)
-            vim.cmd.normal("zz")
-        end, "Center current function if smaller than current window")
+            map.n.leader("fz", function()
+                local node = ts.get_enclosing_top_level_function(vim.treesitter.get_node())
 
-        -- Unmap incremental selection inside the command-line window
-        vim.api.nvim_create_autocmd("CmdwinEnter", { command = "silent! nunmap <buffer> <cr>" })
-    end,
+                if not node then
+                    return
+                end
+
+                -- Assume that the "name" child node is the function identifier/name
+                local nodes = node:field("name")
+                local function_name = #nodes > 0 and nodes[1] or node
+                local start_lnum, start_col, _ = function_name:start()
+                local end_lnum, _, _ = node:end_()
+                local win_height = vim.api.nvim_win_get_height(0)
+                local func_height = end_lnum - start_lnum
+
+                vim.print(func_height)
+                vim.print(win_height)
+
+                if func_height > win_height then
+                    -- Cannot center, default to jumping to start of function
+                    vim.fn.cursor(start_lnum + 1, start_col + 1)
+                    return
+                end
+
+                local center_lnum = math.floor(start_lnum + func_height / 2 + 0.5)
+
+                vim.fn.cursor(center_lnum + 1, 0)
+                vim.cmd.normal("zz")
+            end, "Center current function if smaller than current window")
+
+            autocmds.create_config_autocmd("FileType", {
+                callback = function(event)
+                    local buffer = event.buf
+                    local filetype = event.match
+                    local language = vim.treesitter.language.get_lang(filetype) or filetype
+
+                    if not vim.treesitter.language.add(language) then
+                        return
+                    end
+
+                    vim.wo.foldmethod = "expr"
+                    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+                    vim.treesitter.start(buffer, language)
+
+                    vim.bo[buffer].indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+                end,
+            })
+        end,
+    },
 }

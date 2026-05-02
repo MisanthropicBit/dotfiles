@@ -1,1 +1,0 @@
-return { "honza/vim-snippets" }

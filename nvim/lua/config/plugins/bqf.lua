@@ -1,11 +1,14 @@
+---@type config.PluginSpec
 return {
-    "kevinhwang91/nvim-bqf",
-    opts = {
-        filter = {
-            fzf = {
-                ["ctrl-s"] = {
-                    description = [[Open item in a new horizontal split]],
-                    default = "split",
+    src = "https://www.github.com/kevinhwang91/nvim-bqf",
+    data = {
+        config = {
+            filter = {
+                fzf = {
+                    ["ctrl-s"] = {
+                        description = "Open item in a new horizontal split",
+                        default = "split",
+                    },
                 },
             },
         },
