@@ -43,8 +43,11 @@ require("config.lsp")
 require("config.fold")
 
 require("config.colorschemes").select_random_color_scheme()
-require("config.tabline").register()
-require("config.ui").input.register_default()
+
+local ui = require("config.ui")
+
+ui.tabline.register()
+ui.input.register_default()
 
 vim.cmd.packadd("cfilter")
 

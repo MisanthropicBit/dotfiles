@@ -191,9 +191,9 @@ function tabline.register()
     create_separator_highlights()
 
     -- Create corrected highlights every time a new colorscheme is set
-    vim.api.nvim_create_autocmd("Colorscheme", { callback = create_separator_highlights })
+    vim.api.nvim_create_autocmd("ColorScheme", { callback = create_separator_highlights })
 
-    vim.o.tabline = [[%!v:lua.require'config.tabline'.render()]]
+    vim.o.tabline = [[%!v:lua.require'config.ui.tabline'.render()]]
 end
 
 return tabline
