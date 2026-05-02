@@ -1,2 +1,2 @@
-vim.o.shiftwidth = 2
-vim.o.formatprg = "prettier --parser json"
+vim.opt_local.shiftwidth = 2
+vim.opt_local.formatprg = "prettier --parser json"

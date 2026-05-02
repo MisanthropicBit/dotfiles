@@ -1,1 +1,1 @@
-require("config.javascript-like-after")
+vim.opt_local.shiftwidth = 2
