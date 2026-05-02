@@ -18,6 +18,16 @@ local CaseFormat = {
     PascalCase = "pascal_case",
 }
 
+local js_ts_types = {
+    t("ID"),
+    t("string"),
+    t("Date"),
+    t("boolean"),
+    t("void"),
+    t("number"),
+    t("Buffer")
+}
+
 -- Generate a range of a node type
 ---@param min integer
 ---@param max integer
@@ -192,8 +202,10 @@ return {
     s("ro", fmta("return {<>}", i(1))),
     s("ud", t("undefined")),
     s("pe", t("process.env.")),
-    s("sn", t("string | null")),
-    s("su", t("string | undefined")),
+    s("on", fmt("{} | {}", {
+        c(1, js_ts_types),
+        c(2, { t("null"), t("undefined") }),
+    })),
     s("te", fmt("throw new Error('{}')", i(1))),
     s(
         "ef",
@@ -245,16 +257,14 @@ return {
     ),
     s("?", fmt("{} ? {} : {}", range(1, 3))),
     s("pa", fmt("Promise.all([{}])", { i(1) })),
-    s("pb", t("Promise<boolean>")),
-    s("pv", t("Promise<void>")),
-    s("pn", t("Promise<number>")),
-    s("pr", t("Promise.resolve()")),
-    s("pm", fmt("Promise<{}>", { i(1) })),
+    s("pm", fmt("Promise<{}>", { c(1, js_ts_types) })),
     s("kv", fmt("{}: {},", { i(1), i(2) })),
     s("ee", fmt("{} = '{}'", { i(1), rep(1) })),
     s("ok", fmt("Object.keys({})", i(1))),
     s("ov", fmt("Object.values({})", i(1))),
     s("oe", fmt("Object.entries({})", i(1))),
+    s("or", t("||")),
+    s("and", t("&&")),
 
     -- Eslint
     s("elnl", fmt([[// eslint-disable-next-line {}]], i(1))),
@@ -928,17 +938,17 @@ const getFields = utils.createGetFieldsFunction<<keyof <>>>([
 export async function <>(<>): Promise<<<>>> {
     return knex('<>').select(getFields()).where(<>).read<>()
 }]],
-        {
-            i(1),
-            i(2),
-            rep(1),
-            isn(nil, { f(typename_to_quoted_string, { 2 }) }, "$PARENT_INDENT"),
-            i(3),
-            i(4),
-            i(5),
-            i(6),
-            i(7),
-            i(8),
-        })
+            {
+                i(1),
+                i(2),
+                rep(1),
+                isn(nil, { f(typename_to_quoted_string, { 2 }) }, "$PARENT_INDENT"),
+                i(3),
+                i(4),
+                i(5),
+                i(6),
+                i(7),
+                i(8),
+            })
     )
 }
