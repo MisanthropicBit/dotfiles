@@ -4,8 +4,23 @@ function show_error -a message
     printf "\x1b[31mError\x1b[0m: $message\n"
 end
 
+function parse_branch_to_pr_title -d "Parse the part of the branch name denoting the story title" -a branch
+    set -f branch_tokens (string split "/" "$branch")
+    set -f branch_name (string split "-" "$branch_tokens[-1]" | string join " ")
+    set -f branch_name (string sub -l 1 "$branch_name" | string upper)(string sub -s 2 "$branch_name")
+
+    printf "$branch_name"
+end
+
+function parse_last_commit_message_to_pr_title
+    # Command to extract the last commit message body that isn't a merge and isn't a version bump. Also strip PR numbers in parentheses
+    set -f title (git log -1 -s --no-merges --format=%B --invert-grep --grep="\d\+\.\d\+\.\d\+" | string collect | string replace -r " \(#\d+\)\$" "")
+
+    printf "$title"
+end
+
 function create_pr -d "Create a pull request from the command line"
-    argparse --name="create_pr" "s/skip-sc" "r/reviewer=?" "n/no-view" -- $argv
+    argparse --name="create_pr" "s/skip-sc" "r/reviewer=?" "v/view" -- $argv
 
     gh pr view > /dev/null
 
@@ -57,15 +72,29 @@ function create_pr -d "Create a pull request from the command line"
         set -f pr_body "$pr_body"\n\n"$extra_body"
     end
 
-    # Parse the part of the branch name denoting the story title
-    set -f branch_tokens (string split "/" "$branch")
-    set -f branch_name (string split "-" "$branch_tokens[-1]" | string join " ")
-    set -f branch_name (string sub -l 1 "$branch_name" | string upper)(string sub -s 2 "$branch_name")
+    set -f branch_pr_title (parse_branch_to_pr_title "$branch")
+    set -f commit_pr_title (parse_last_commit_message_to_pr_title)
 
-    read -f --prompt-str "Title will be '$branch_name'? (leave empty to accept): " accept_title
+    printf "Select PR title: \n" 
+    printf "  %sb%s: Use branch name ($branch_pr_title)\n" (set_color blue) (set_color normal)
+    printf "  %sc%s: Use commit message ($commit_pr_title) [default]\n" (set_color blue) (set_color normal)
+    printf "  %se%s: Edit title\n\n" (set_color blue) (set_color normal)
 
-    if test -n "$accept_title"
-        read -f --prompt-str "Title: " --command "$branch_name" branch_name
+    read -f --prompt-str "> " pr_title
+
+    if test -z "$pr_title"
+        set -f pr_title "$commit_pr_title"
+    else
+        if test "$pr_title" = "c"
+            set -f pr_title "$commit_pr_title"
+        else if test "$pr_title" = "b"
+            set -f pr_title "$branch_pr_title"
+        else if test "$pr_title" = "e"
+            read -f --prompt-str "Title: " --command "$commit_pr_title" pr_title
+        else
+            show_error "Invalid choice '$pr_title'"
+            exit 1
+        end
     end
 
     if set -ql _flag_reviewer
@@ -77,16 +106,17 @@ function create_pr -d "Create a pull request from the command line"
     end
 
     # DEBUG
-    # echo "$branch_name"
+    # echo "$branch_pr_title"
     # echo "$pr_body"
     # echo "sc-$shortcut_id"
 
     gh pr create\
         (test -n "$reviewer" && --reviewer "$reviewer")\
-        --title "$branch_name"\
-        --body "$pr_body"
+        --title "$pr_title"\
+        --body "$pr_body"\
+        --base master
 
-    if test -z "$_flag_no_view"
+    if test -n "$_flag_view"
         gh pr view --web
     end
 end
