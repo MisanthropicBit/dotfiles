@@ -95,7 +95,7 @@ function lsp_on_attach.on_attach(event)
     end
 
     if client.server_capabilities.inlayHintProvider then
-        vim.lsp.inlay_hint.enable(true, { bufnr = buffer })
+        vim.lsp.inlay_hint.enable(false, { bufnr = buffer })
 
         local autocmds = require("config.autocmds")
 
