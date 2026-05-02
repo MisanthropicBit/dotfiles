@@ -1,4 +1,3 @@
--- Configuration assumes neovim 0.9.0+
 local min_nvim_version = "nvim-0.11.0"
 
 if vim.fn.has(min_nvim_version) == 0 then
@@ -8,6 +7,24 @@ if vim.fn.has(min_nvim_version) == 0 then
     ), vim.log.levels.ERROR)
 
     return
+end
+
+if vim.fn.has("nvim-0.12.0") == 1 then
+    require("vim._core.ui2").enable({
+    	enable = true,
+        targets = "msg",
+        msg = {
+            targets = {
+                [""] = "msg",
+                list_cmd = "pager",
+                progress = "msg",
+                confirm = "dialog",
+            }
+        }
+    })
+
+    vim.cmd.packadd("nvim.difftool")
+    vim.cmd.packadd("nvim.undotree")
 end
 
 vim.loader.enable()
