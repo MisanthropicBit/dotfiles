@@ -21,7 +21,7 @@ function utils.filter_notification(title, msg, level, options, builtin_notify)
     local filter_builtin = false
 
     if not filter_builtin then
-        if options.echo_message == nil or options.echo_message == true then
+        if options.echo_message == true then
             builtin_notify(msg, level, options)
         end
     end
