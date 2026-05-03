@@ -14,6 +14,7 @@ local clipboard_tool = hs.loadSpoon("ClipboardTool")
 if clipboard_tool then
     clipboard_tool.frequency = 5
     clipboard_tool.show_copied_alert = false
+    clipboard_tool.paste_on_select = true
     clipboard_tool:start()
 end
 
