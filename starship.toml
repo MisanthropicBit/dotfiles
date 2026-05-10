@@ -48,22 +48,22 @@ behind = '[⇣${count}](bold red)'
 diverged = '[⇡${ahead_count}](bold green)[⇣${behind_count}](bold red)'
 
 [nodejs]
-format = '[](bold purple)[$symbol($version)]($style)[](bold purple) '
+format = '[](bold purple)[$symbol($version)]($style)[](bold purple) '
 
 [gcloud]
 symbol = ' '
-format = '[](bold purple)[$symbol $project]($style)[](bold purple) '
+format = '[](bold purple)[$symbol $project]($style)[](bold purple) '
 
 [kubernetes]
 disabled = false
-format = '[](bold purple)[$symbol$context( \($namespace\))]($style)[](bold purple) '
+format = '[](bold purple)[$symbol$context( \($namespace\))]($style)[](bold purple) '
 
 [[kubernetes.contexts]]
 context_pattern = "\\w+_[\\w-]+_(?P<region>[\\w-]+)_(?P<cluster>[\\w-]+)"
 context_alias = '$cluster $region'
 
 [terraform]
-format = '[$symbol $workspace]($style) '
+format = '[$symbol $workspace]($style) '
 symbol = ''
 
 [env_var]
@@ -73,4 +73,4 @@ style = 'bold fg:#ff6e6e'
 format = '[$symbol $env_value]($style) '
 
 [docker_context]
-format = '[](bold purple)[$symbol$context]($style)[](bold purple) '
+format = '[](bold purple)[$symbol$context]($style)[](bold purple) '
