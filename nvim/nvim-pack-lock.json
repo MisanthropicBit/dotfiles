@@ -256,7 +256,7 @@
       "src": "https://www.github.com/axelvc/template-string.nvim"
     },
     "terminal-diagnostics.nvim": {
-      "rev": "aa681c2a784f03c20371ebb89cdaa395302fbae5",
+      "rev": "c63e950bb509fd3a905d9efba51a618301c69ba9",
       "src": "https://www.github.com/MisanthropicBit/terminal-diagnostics.nvim"
     },
     "tiny-code-action.nvim": {
