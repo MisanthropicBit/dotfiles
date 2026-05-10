@@ -3,17 +3,14 @@ local utils = {}
 ---@param command string | string[]
 ---@return string
 function utils.format_command(command)
-    if type(command) == "string" then
-        return command
+    ---@diagnostic disable-next-line: param-type-mismatch
+    local command_string = type(command) == "string" and command or table.concat(command, " ")
+
+    if #command_string < 50 then
+        return command_string
+    else
+        return command_string:sub(1, 50) .. "..."
     end
-
-    local truncated = table.concat(command, " "):sub(1, 50)
-
-    if #command > 50 then
-        truncated = truncated .. "..."
-    end
-
-    return truncated
 end
 
 ---@param durationMs integer

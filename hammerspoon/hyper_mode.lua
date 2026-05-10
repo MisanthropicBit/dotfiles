@@ -34,9 +34,9 @@ function HyperMode:bind(mods, key, action, options)
             -- Avoid retriggering action when e.g. sending keystrokes
             -- programmatically by exiting and entering the hyper mode around
             -- the action
-            self._mode:exit()
+            self:exit()
             action(options)
-            self._mode:enter()
+            self:enter()
         end
 
         self._mode:bind(_mods, key, nil, newAction, nil, newAction)
