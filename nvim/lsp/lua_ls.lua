@@ -17,6 +17,9 @@ return {
                 library = {
                     vim.env.VIMRUNTIME,
                     vim.fs.normalize("~/.hammerspoon/Spoons/EmmyLua.spoon/annotations"),
+                    vim.fs.normalize("~/.local/share/nvim/lazy/neotest"),
+                    vim.fs.normalize("~/lua_addons"),
+                    "${3rd}/luv",
                 },
                 maxPreload = 3000,
                 preloadFileSize = 50000,

@@ -63,8 +63,20 @@ local default_win_config = {
         buftype = "nofile",
         bufhidden = "wipe",
         buflisted = false,
+        completefunc = "v:lua.input.complete",
     }
 }
+
+function input.complete(findstart, base)
+    if findstart == 1 then
+        return 0
+    end
+
+    -- TODO: Change type to be read from options
+    local ok, results = pcall(vim.fn.getcompletion, base, "file")
+
+    return ok and results or {}
+end
 
 local function get_percentage(value)
     local match = value:match("(%d+)%%")

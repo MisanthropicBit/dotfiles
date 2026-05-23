@@ -31,6 +31,7 @@ return {
                 ["`"] = "'",
             }
 
+            -- TODO: Prevent cursor from moving
             map.n("gns", function()
                 local node = vim.treesitter.get_node()
 

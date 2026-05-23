@@ -289,7 +289,7 @@
       "src": "https://www.github.com/sirzif/tzfn.nvim"
     },
     "unclash.nvim": {
-      "rev": "04f6aba5e2eea8b665cba88f21082e33a7cb6e59",
+      "rev": "6115c7540d7f3c6fcac7658f521d263d338044bf",
       "src": "https://github.com/madmaxieee/unclash.nvim"
     },
     "vague.nvim": {
@@ -299,6 +299,10 @@
     "vim-abolish": {
       "rev": "dcbfe065297d31823561ba787f51056c147aa682",
       "src": "https://www.github.com/tpope/vim-abolish"
+    },
+    "vim-bracketed-paste": {
+      "rev": "77e5220b8ac541f9244e57a252655b748e21c71e",
+      "src": "https://github.com/ConradIrwin/vim-bracketed-paste"
     },
     "vim-caser": {
       "rev": "6bc9f41d170711c58e0157d882a5fe8c30f34bf6",

@@ -9,7 +9,7 @@ local map = {}
 local modes = { "n", "i", "c", "v", "x", "s", "o", "t", "l" }
 
 ---@type config.MapSetOptions
-map.default_options = { noremap = true, silent = true }
+map.default_options = { remap = false, silent = true }
 
 ---@param opts1 config.MapSetOptions
 ---@param opts2 config.MapSetOptions?

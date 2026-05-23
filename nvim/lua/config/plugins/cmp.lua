@@ -174,6 +174,12 @@ return {
                     },
                     { name = "natdat" },
                     { name = "emoji" },
+                    {
+                        name = "omni",
+                        option = {
+                            disable_omnifuns = { "v:lua.vim.lsp.omnifunc"}
+                        }
+                    },
                 }),
                 formatting = {
                     fields = { "kind", "abbr", "menu" },

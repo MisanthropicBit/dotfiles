@@ -3,7 +3,7 @@ return {
     version = "main",
     data = {
         config = function(fzf_lua)
-            require("config.fzf-lua-setup")
+            -- require("config.fzf-lua-setup")
             local actions = require("fzf-lua.actions")
             local colorschemes = require("config.colorschemes")
             local icons = require("config.icons")

@@ -147,6 +147,15 @@ return {
                 end,
             },
             {
+                key = "7",
+                action = function()
+                    -- Type '['
+                    -- NOTE: event:post seems faster then hs.eventtap.keyStroke
+                    hs.eventtap.event.newKeyEvent({ "alt" }, "8", true):post()
+                end,
+                options = { preventRetrigger = true },
+            },
+            {
                 key = "8",
                 action = actions.keyStroke("8", { "alt", "shift" }),
                 options = { preventRetrigger = true },
@@ -154,6 +163,13 @@ return {
             {
                 key = "9",
                 action = actions.keyStroke("9", { "alt", "shift" }),
+            {
+                key = "0",
+                action = function()
+                    -- Type ']'
+                    -- NOTE: event:post seems faster then hs.eventtap.keyStroke
+                    hs.eventtap.event.newKeyEvent({ "alt" }, "9", true):post()
+                end,
                 options = { preventRetrigger = true },
             },
             {

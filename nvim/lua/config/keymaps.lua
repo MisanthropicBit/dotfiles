@@ -85,6 +85,16 @@ map.n.leader("bo", "<cmd>diffoff!<cr>", "Buffer diffthis off")
 map.n.leader("rn", "<cmd>Run<cr>")
 map.n.leader("rl", "<cmd>RunListHistory<cr>")
 map.n.leader("ra", "<cmd>RunAgain<cr>")
+map.n.leader("ut", function()
+    local ok, undotree = pcall(require, "undotree")
+
+    if not ok then
+        vim.notify("nvim.undotree not available", vim.log.levels.ERROR)
+        return
+    end
+
+    undotree.open()
+end)
 
 map.n.leader("k", function()
     local http = require("config.utils.http")
@@ -181,3 +191,5 @@ if not vim.g.vscode then
     map.n("/", [[/\v]], cmap_options)
     map.v("/", [[/\v]], cmap_options)
 end
+
+map.set({ "n", "v" }, "*", "*Nzz")

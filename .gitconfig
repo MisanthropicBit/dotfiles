@@ -115,3 +115,6 @@
     sort = -committerdate
 [column]
     ui = auto
+[user]
+	name = MisanthropicBit
+	email = proximity.dev@proton.me

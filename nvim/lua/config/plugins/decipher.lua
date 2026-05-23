@@ -11,19 +11,19 @@ return {
             })
 
             map.n("gr", function()
-                decipher.decode_motion_prompt({ preview = true })
+                decipher.decode_motion("base64", { preview = false })
             end, "Decode an encoded text object")
 
             map.n("gt", function()
-                decipher.encode_motion_prompt({ preview = true })
+                decipher.encode_motion("base64", { preview = false })
             end, "Encode a decoded text object")
 
             map.v("gr", function()
-                decipher.decode_motion_prompt({ preview = true })
+                decipher.decode_motion("base64", { preview = false })
             end, "Decode an encoded visual selection")
 
             map.v("gt", function()
-                decipher.encode_motion_prompt({ preview = true })
+                decipher.encode_motion("base64", { preview = false })
             end, "Encode a visual selection")
 
             map.n("gR", function()

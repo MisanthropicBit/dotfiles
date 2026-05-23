@@ -8,7 +8,13 @@ return {
             local debugging = icons.debugging
             local fzf_lua_loaded, fzf_lua_core = pcall(require, "fzf-lua.core")
 
-            local select_executable_prompt = "Select executable " .. icons.misc.prompt
+            -- TODO: Fall back to find
+            local executable_exclude_patterns = { "CMakeFiles" }
+            local find_executable_command = "fd --no-ignore --type executable " .. table.concat(vim.tbl_map(function(pattern)
+                return "-E '" .. pattern .. "'"
+            end, executable_exclude_patterns), " ")
+
+            local select_executable_prompt = "Select executable " .. icons.misc.prompt .. " "
 
             local function select_executable()
                 return vim.fn.input({
@@ -21,7 +27,7 @@ return {
             if fzf_lua_loaded then
                 select_executable = function()
                     return coroutine.create(function(dap_run_co)
-                        fzf_lua_core.fzf_exec("fd --no-ignore --type executable", {
+                        fzf_lua_core.fzf_exec(find_executable_command, {
                             prompt = select_executable_prompt,
                             cwd = vim.fn.getcwd(),
                             winopts = { width = 0.6, height = 0.5 },
@@ -198,6 +204,19 @@ return {
                 },
             }
 
+            dap.configurations.cpp = {
+                {
+                    name = "Debug with lldb",
+                    type = "lldb",
+                    request = "launch",
+                    program = select_executable,
+                    cwd = "${workspaceFolder}",
+                    stopOnEntry = false,
+                    args = create_select_args_func(),
+                    console = "integratedTerminal"
+                }
+            }
+
             dap.configurations.lua = {
                 {
                     name = "Current file (local-lua-dbg, lua)",
@@ -208,7 +227,6 @@ return {
                         lua = "lua5.1",
                         file = "${file}",
                     },
-                    args = {},
                 },
             }
 
