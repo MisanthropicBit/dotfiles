@@ -185,6 +185,10 @@ return {
                 action = actions.keyStroke("delete", { "alt" }),
             },
             {
+                key = "w",
+                action = actions.keyStroke("delete", { "alt" }),
+            },
+            {
                 key = "j",
                 action = actions.keyStroke("left", { "alt" }),
             },
