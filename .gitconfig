@@ -47,6 +47,7 @@
     bs = !git br --list -vv $(git br --show-current)
     browse = !gh browse
     ca = commit --amend
+    can = commit --amend --no-edit
     cf = !git show --pretty="format:" --name-status
     cm = commit -m
     cnv = commit --no-verify -m
