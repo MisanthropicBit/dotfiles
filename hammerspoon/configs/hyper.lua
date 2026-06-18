@@ -158,58 +158,65 @@ return {
             },
             {
                 key = "7",
-                action = function()
-                    -- Type '['
-                    -- NOTE: event:post seems faster then hs.eventtap.keyStroke
-                    hs.eventtap.event.newKeyEvent({ "alt" }, "8", true):post()
-                end,
+                action = actions.keyStrokeAction("8", { "alt" }),
                 options = { preventRetrigger = true },
             },
             {
                 key = "8",
-                action = actions.keyStroke("8", { "alt", "shift" }),
+                action = actions.keyStrokeAction("8", { "alt", "shift" }),
                 options = { preventRetrigger = true },
             },
             {
                 key = "9",
                 action = actions.keyStroke("9", { "alt", "shift" }),
+                options = { preventRetrigger = true },
+            },
             {
                 key = "0",
-                action = function()
-                    -- Type ']'
-                    -- NOTE: event:post seems faster then hs.eventtap.keyStroke
-                    hs.eventtap.event.newKeyEvent({ "alt" }, "9", true):post()
-                end,
+                action = actions.keyStrokeAction("9", { "alt" }),
                 options = { preventRetrigger = true },
             },
             {
                 key = "'",
-                action = actions.keyStroke("'", { "alt" }),
+                action = actions.keyStrokeAction("'", { "alt" }),
             },
             {
                 key = "¨",
-                action = actions.keyStroke("¨", { "alt" }),
+                action = actions.keyStrokeAction("¨", { "alt" }),
             },
             {
                 key = "delete",
-                action = actions.keyStroke("delete", { "alt" }),
+                action = actions.keyStrokeAction("delete", { "alt" }),
             },
             {
                 key = "w",
-                action = actions.keyStroke("delete", { "alt" }),
+                action = actions.keyStrokeAction("delete", { "alt" }),
             },
             {
                 key = "j",
-                action = actions.keyStroke("left", { "alt" }),
+                action = actions.keyStrokeAction("left", { "alt" }),
             },
+            -- {
+            --     key = "j",
+            --     action = function()
+            --         local modifiers = hs.eventtap.checkKeyboardModifiers()
+            --         print(hs.inspect(modifiers))
+            --
+            --         if modifiers and modifiers.shift == true then
+            --             actions.doKeyStroke("left", { "cmd" })
+            --         else
+            --             actions.doKeyStroke("left", { "alt" })
+            --         end
+            --     end
+            -- },
             {
                 key = "k",
-                action = actions.keyStroke("right", { "alt" }),
+                action = actions.keyStrokeAction("right", { "alt" }),
             },
             {
                 key = "ø",
                 -- Presses '|'
-                action = actions.keyStroke("i", { "alt" }),
+                action = actions.keyStrokeAction("i", { "alt" }),
             },
         },
     },

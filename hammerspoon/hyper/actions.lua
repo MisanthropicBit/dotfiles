@@ -14,10 +14,19 @@ function actions.launch(target, type)
     end
 end
 
-function actions.keyStroke(key, modifiers)
+---@param key string
+---@param modifiers string[]?
+---@return function
+function actions.keyStrokeAction(key, modifiers)
     return function()
-        hs.eventtap.event.newKeyEvent(modifiers, key, true):post()
+        actions.doKeyStroke(key, modifiers)
     end
+end
+
+---@param key string
+---@param modifiers string[]?
+function actions.doKeyStroke(key, modifiers)
+    hs.eventtap.event.newKeyEvent(modifiers, key, true):post()
 end
 
 return actions
