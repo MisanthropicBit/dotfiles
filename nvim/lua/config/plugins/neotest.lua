@@ -1,3 +1,56 @@
+local function create_neotest_notify_consumer()
+    local icons = require("config.icons")
+
+    local function init(client)
+        local statuses = {
+            passed = { text = icons.test.passed },
+            skipped = { text = icons.test.skipped },
+            failed = { text = icons.test.failed },
+        }
+
+        client.listeners.results = function(_, results)
+            if vim.tbl_isempty(results) then
+                return
+            end
+
+            local test_results = {
+                passed = 0,
+                failed = 0,
+                skipped = 0,
+            }
+
+            for _, result in pairs(results) do
+                test_results[result.status] = test_results[result.status] + 1
+            end
+
+            local log_level = test_results.failed > 0 and vim.log.levels.ERROR or vim.log.levels.INFO
+            local test_count = test_results.passed + test_results.failed
+            local percentage = test_results.passed / test_count * 100
+            local status = test_results.failed == 0 and "✅" or "❌"
+
+            vim.notify(
+                ("Test results: %d/%d (%.f%%) %s"):format(test_results.passed, test_count, percentage, status),
+                log_level,
+                {
+                    title = "Neotest",
+                }
+            )
+        end
+    end
+
+    local neotest = {}
+
+    neotest.notify = {}
+
+    neotest.notify = setmetatable(neotest.notify, {
+        __call = function(_, ...)
+            return init(...)
+        end,
+    })
+
+    return neotest.notify
+end
+
 return {
     src = "https://www.github.com/nvim-neotest/neotest",
     data = {
@@ -16,7 +69,6 @@ return {
 
             ---@diagnostic disable-next-line: missing-fields
             neotest.setup({
-                log_level = vim.log.levels.DEBUG,
                 icons = {
                     running_animated = icons.animation.updating,
                 },
@@ -30,6 +82,9 @@ return {
                     filter_dir = function(name, rel_path, root)
                         return not vim.tbl_contains(filter_dirs, name)
                     end,
+                },
+                consumers = {
+                    notify = create_neotest_notify_consumer(),
                 },
                 adapters = {
                     require("neotest-jest")({
