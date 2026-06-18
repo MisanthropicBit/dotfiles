@@ -18,10 +18,8 @@ if clipboard_tool then
     clipboard_tool:start()
 end
 
----@param eventName string
----@param params table<string, string>
----@diagnostic disable-next-line: unused-local
-hs.urlevent.bind("autolayout", function(eventName, params)
-    require("autolayout").apply_default()
-    require("notify").send("received url event " .. eventName)
-end)
+local zero_offset = hs.loadSpoon("ZeroOffset")
+
+zero_offset:init()
+zero_offset:start()
+zero_offset:toggleShowUtc()
