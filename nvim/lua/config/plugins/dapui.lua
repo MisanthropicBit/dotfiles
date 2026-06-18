@@ -39,6 +39,9 @@ return {
             dap.listeners.after.event_breakpoint["dapui_config"] = dapui.open
             dap.listeners.before.event_terminated["dapui_config"] = dapui.close
             dap.listeners.before.event_exited["dapui_config"] = dapui.close
+
+            vim.api.nvim_create_user_command("DapUiOpen", dapui.open, {})
+            vim.api.nvim_create_user_command("DapUiClose", dapui.close, {})
         end,
     },
 }
