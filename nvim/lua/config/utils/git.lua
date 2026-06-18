@@ -15,4 +15,11 @@ function git.current_repository()
     return nil
 end
 
+---@return string?
+function git.current_branch()
+    if type(vim.b.gitsigns_status_dict) == "table" then
+        return vim.b.gitsigns_status_dict.head
+    end
+end
+
 return git
