@@ -78,11 +78,16 @@ return {
                     local window = hs.window.focusedWindow()
 
                     if window then
-                        window:moveOneScreenWest(
-                            false,
-                            true,
-                            config.window_transition_speed or default_window_transition_speed
-                        )
+                        if window:application():name() == "iTerm2" then
+                            actions.keyStrokeAction("h", { "cmd" })()
+                            return
+                        else
+                            window:moveOneScreenWest(
+                                false,
+                                true,
+                                config.window_transition_speed or default_window_transition_speed
+                            )
+                        end
                     end
                 end,
             },
@@ -92,11 +97,16 @@ return {
                     local window = hs.window.focusedWindow()
 
                     if window then
-                        window:moveOneScreenEast(
-                            false,
-                            true,
-                            config.window_transition_speed or default_window_transition_speed
-                        )
+                        if window:application():name() == "iTerm2" then
+                            actions.keyStrokeAction("l", { "cmd" })()
+                            return
+                        else
+                            window:moveOneScreenEast(
+                                false,
+                                true,
+                                config.window_transition_speed or default_window_transition_speed
+                            )
+                        end
                     end
                 end,
             },
