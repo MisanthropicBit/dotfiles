@@ -96,23 +96,19 @@ local builtin_colorschemes = {
 
 ---@type config.WeightedChoice[]
 local preferred_colorschemes = normalize_weights({
-    "bamboo",
     "duskfox",
+    "jellybeans",
     "kanagawa",
     "kanagawa-dragon",
-    "tokyonight-night",
+    "lume",
+    "neonwave",
+    "nightblossom",
+    "nightblossom-sakura",
     "obscure",
     "oldworld",
-    "yorumi",
-    "jellybeans",
-    "nightblossom",
-    "nightblossom-pastel",
-    "nightblossom-sakura",
-    "monet",
-    "boo-berry",
-    "tzfn",
-    "lume",
+    "tokyonight-night",
     "vague",
+    "yorumi",
 })
 
 ---@param weighted_choices config.WeightedChoice[]
