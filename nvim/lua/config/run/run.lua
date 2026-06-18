@@ -18,7 +18,7 @@ local utils = require("config.run.utils")
 ---@field tab      boolean?
 ---@field edit     boolean?
 
-local history_size = 3
+local history_size = 5
 
 ---@type config.FixedSizedQueue<config.run.Task>
 local history = FixedSizedQueue.new(history_size)
