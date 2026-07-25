@@ -56,7 +56,8 @@ vim.diagnostic.config({
 ---@return function
 local function goto_diagnostic_wrapper(count, severity)
     return function()
-        vim.diagnostic.jump({ count = count, float = true, severity = severity })
+        vim.diagnostic.jump({ count = count, float = true, severity = severity, wrap = true })
+        vim.cmd("normal! zz")
     end
 end
 
