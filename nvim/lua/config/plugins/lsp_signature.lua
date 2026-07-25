@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/ray-x/lsp_signature.nvim",
+    version = "af7e4074d85d785cf6614352ba9ad3b28a1f8a56",
     data = {
         config = function(lsp_signature)
             local lsp_utils = require("config.lsp.utils")

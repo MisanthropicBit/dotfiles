@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/lewis6991/gitsigns.nvim",
+    version = "31d6fb2d618bca1482b9f274751ead5f03461408",
     data = {
         config = function(gitsigns)
             local map = require("config.map")

@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/echasnovski/mini.move",
+    version = "a776027e68fe763987a0132d59877d651a7c0130",
     data = {
         config = {
             mappings = {

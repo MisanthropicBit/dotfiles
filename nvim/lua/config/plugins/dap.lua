@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/mfussenegger/nvim-dap",
+    version = "4f5deb110d9ff8994d96c21df95e2271d11214f9",
     data = {
         config = function(dap)
             local map = require("config.map")

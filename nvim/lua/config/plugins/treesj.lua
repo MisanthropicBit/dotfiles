@@ -1,6 +1,7 @@
 ---@type config.PluginSpec
 return {
     src = "https://www.github.com/Wansmer/treesj",
+    version = "26bc2a8432ba3ea79ed6aa346fba780a3d372570",
     data = {
         config = function(treesj)
             local lang_utils = require("treesj.langs.utils")

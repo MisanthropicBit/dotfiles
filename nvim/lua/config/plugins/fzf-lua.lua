@@ -1,6 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/ibhagwan/fzf-lua",
-    version = "main",
+    version = "9ad7340dcc6d2afc30e64fb4088597c7573ed62c", -- NOTE: Or 'main'
     data = {
         config = function(fzf_lua)
             -- require("config.fzf-lua-setup")

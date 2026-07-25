@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/stevearc/oil.nvim",
+    version = "0fcc83805ad11cf714a949c98c605ed717e0b83e",
     data = {
         config = function(oil)
             local oil_config = require("oil.config")

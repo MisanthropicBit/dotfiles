@@ -1,6 +1,7 @@
 ---@type config.PluginSpec
 return {
     src = "https://www.github.com/hrsh7th/nvim-cmp",
+    version = "a1d504892f2bc56c2e79b65c6faded2fd21f3eca",
     data = {
         config = function(cmp)
             local luasnip = require("luasnip")

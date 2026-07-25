@@ -1,6 +1,7 @@
 ---@type config.PluginSpec
 return {
     src = "https://www.github.com/nat-418/boole.nvim",
+    version = "7b4a3dae28e3b2497747aa840439e9493cabdc49",
     data = {
         config = {
             mappings = {

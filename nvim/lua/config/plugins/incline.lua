@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/b0o/incline.nvim",
+    version = "debd628e9395f7a9da57bdc31ce75ca6b40a880b",
     data = {
         config = function(incline)
             local icons = require("config.icons")

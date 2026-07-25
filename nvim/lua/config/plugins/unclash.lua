@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://github.com/madmaxieee/unclash.nvim",
+    version = "6115c7540d7f3c6fcac7658f521d263d338044bf",
     data = {
         config = function(unclash)
             local map = require("config.map")

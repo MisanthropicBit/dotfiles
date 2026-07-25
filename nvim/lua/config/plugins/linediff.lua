@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/AndrewRadev/linediff.vim",
+    version = "29fa617fc10307a1e0ae82a8761114e465d17b06",
     data = {
         config = function()
             local map = require("config.map")

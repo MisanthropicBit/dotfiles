@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/rmagatti/goto-preview",
+    version = "d2d6923c9b9e0e43f0b9b566f261a8b1ae016540",
     data = {
         config = function(goto_preview)
             local map = require("config.map")

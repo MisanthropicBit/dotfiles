@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/kylechui/nvim-surround",
+    version = "61319d4bd1c5e336e197defa15bd104c51f0fb29",
     data = {
         config = function(surround)
             local defaults = require("nvim-surround.config").default_opts

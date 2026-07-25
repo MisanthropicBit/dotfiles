@@ -1,6 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/nvim-treesitter/nvim-treesitter",
-    version = "main",
+    version = "4916d6592ede8c07973490d9322f187e07dfefac", -- NOTE: Or 'main'
     on = {
         hook = ":TSUpdate"
     },
@@ -93,9 +94,6 @@ return {
                 local end_lnum, _, _ = node:end_()
                 local win_height = vim.api.nvim_win_get_height(0)
                 local func_height = end_lnum - start_lnum
-
-                vim.print(func_height)
-                vim.print(win_height)
 
                 if func_height > win_height then
                     -- Cannot center, default to jumping to start of function

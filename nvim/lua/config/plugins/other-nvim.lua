@@ -1,6 +1,7 @@
 ---@type config.PluginSpec
 return {
     src = "https://www.github.com/rgroli/other.nvim",
+    version = "1d48e090f6d1d53dda9fb5094af3f2006ebbb858",
     data = {
         config = function(other)
             local jsMainTarget = {

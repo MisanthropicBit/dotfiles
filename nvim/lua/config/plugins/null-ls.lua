@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/nvimtools/none-ls.nvim",
+    version = "c9317c2a8629d4e39e7cf47be74cb67f3ab37cda",
     data = {
         config = function(null_ls)
             local sources = {}

@@ -51,8 +51,10 @@ local function create_neotest_notify_consumer()
     return neotest.notify
 end
 
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/nvim-neotest/neotest",
+    version = "fd0b7986dd0ae04e38ec7dc0c78a432e3820839c",
     data = {
         config = function(neotest)
             local icons = require("config.icons")
