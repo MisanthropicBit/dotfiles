@@ -29,7 +29,7 @@ local function create_neotest_notify_consumer()
             local status = test_results.failed == 0 and "✅" or "❌"
 
             vim.notify(
-                ("Test results: %d/%d (%.f%%) %s"):format(test_results.passed, test_count, percentage, status),
+                ("%d/%d (%.f%%) %s"):format(test_results.passed, test_count, percentage, status),
                 log_level,
                 {
                     title = "Neotest",
