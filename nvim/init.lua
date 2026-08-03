@@ -29,20 +29,6 @@ end
 
 vim.loader.enable()
 
-if vim.fn.has("nvim-0.12") == 1 then
-    vim.pack.add({
-        {
-            src = "https://github.com/ConradIrwin/vim-bracketed-paste",
-            -- version = "77e5220b8ac541f9244e57a252655b748e21c71e",
-        },
-        "https://github.com/windwp/nvim-autopairs",
-        "https://github.com/rgroli/other.nvim",
-    })
-
-    vim.opt.rtp:prepend("/Users/hyrule/projects/nvim/parcel.nvim")
-    -- require("parcel").setup()
-end
-
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
