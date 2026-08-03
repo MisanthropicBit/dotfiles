@@ -168,8 +168,7 @@ return {
             },
             {
                 key = "9",
-                action = actions.keyStroke("9", { "alt", "shift" }),
-                options = { preventRetrigger = true },
+                action = actions.keyStrokeAction("9", { "alt", "shift" }),
             },
             {
                 key = "0",
@@ -203,9 +202,9 @@ return {
             --         print(hs.inspect(modifiers))
             --
             --         if modifiers and modifiers.shift == true then
-            --             actions.doKeyStroke("left", { "cmd" })
+            --             actions.keyStroke("left", { "cmd" })
             --         else
-            --             actions.doKeyStroke("left", { "alt" })
+            --             actions.keyStroke("left", { "alt" })
             --         end
             --     end
             -- },

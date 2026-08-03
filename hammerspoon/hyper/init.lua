@@ -1,7 +1,7 @@
 local hyper = {}
 
 local config = require("config")
-local HyperMode = require("hyper_mode")
+local HyperMode = require("hyper.hyper_mode")
 local notify = require("notify")
 local remap = require("utils.remap")
 

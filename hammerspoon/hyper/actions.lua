@@ -19,13 +19,13 @@ end
 ---@return function
 function actions.keyStrokeAction(key, modifiers)
     return function()
-        actions.doKeyStroke(key, modifiers)
+        actions.keyStroke(key, modifiers)
     end
 end
 
 ---@param key string
 ---@param modifiers string[]?
-function actions.doKeyStroke(key, modifiers)
+function actions.keyStroke(key, modifiers)
     hs.eventtap.event.newKeyEvent(modifiers, key, true):post()
 end
 
