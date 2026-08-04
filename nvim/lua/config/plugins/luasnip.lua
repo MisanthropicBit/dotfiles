@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/L3MON4D3/LuaSnip",
+    version = "642b0c595e11608b4c18219e93b88d7637af27bc",
     on = {
         hook = { "make", "install_jsregexp" },
     },

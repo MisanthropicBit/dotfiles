@@ -1,6 +1,7 @@
 ---@type config.PluginSpec
 return {
     src = "https://www.github.com/nvimdev/dashboard-nvim",
+    version = "f787e3462c2ee2b6117b17c1aa4ddf66cb6f57fe",
     data = {
         config = function(dashboard)
             local icons = require("config.icons")

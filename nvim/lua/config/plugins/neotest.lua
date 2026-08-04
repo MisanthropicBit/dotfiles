@@ -29,7 +29,7 @@ local function create_neotest_notify_consumer()
             local status = test_results.failed == 0 and "✅" or "❌"
 
             vim.notify(
-                ("Test results: %d/%d (%.f%%) %s"):format(test_results.passed, test_count, percentage, status),
+                ("%d/%d (%.f%%) %s"):format(test_results.passed, test_count, percentage, status),
                 log_level,
                 {
                     title = "Neotest",
@@ -51,8 +51,10 @@ local function create_neotest_notify_consumer()
     return neotest.notify
 end
 
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/nvim-neotest/neotest",
+    version = "fd0b7986dd0ae04e38ec7dc0c78a432e3820839c",
     data = {
         config = function(neotest)
             local icons = require("config.icons")

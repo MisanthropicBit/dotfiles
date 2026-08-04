@@ -6,6 +6,7 @@ local function_nodes = {
     "function_definition",
     "function_declaration",
     "method_definition",
+    "generator_function_declaration",
 }
 
 ---@param node TSNode

@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/kyazdani42/nvim-web-devicons",
+    version = "d7462543c9e366c0d196c7f67a945eaaf5d99414",
     data = {
         config = function(devicons)
             local git_icon, git_color = devicons.get_icon_color_by_filetype("git")

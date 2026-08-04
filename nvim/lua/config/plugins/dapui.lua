@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/rcarriga/nvim-dap-ui",
+    version = "f5b6673f374626515401c5bc51b005f784a4f252",
     data = {
         config = function(dapui)
             local dap = require("dap")

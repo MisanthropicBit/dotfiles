@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/gbprod/substitute.nvim",
+    version = "0d2077398552f069abccbd964a26dd7cd26882cd",
     data = {
         config = function(substitute)
             local map = require("config.map")

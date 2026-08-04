@@ -1,6 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/nvim-treesitter/nvim-treesitter-textobjects",
-    version = "main",
+    version = "93d60a475f0b08a8eceb99255863977d3a25f310", -- NOTE: Or 'main'
     data = {
         config = function(ts_textobjects)
             local map = require("config.map")

@@ -1,5 +1,7 @@
+---@type config.PluginSpec
 return {
     src = "https://www.github.com/rhysd/git-messenger.vim",
+    version = "fd124457378a295a5d1036af4954b35d6b807385",
     data = {
         config = function()
             vim.g.git_messenger_conceal_word_diff_marker = true
