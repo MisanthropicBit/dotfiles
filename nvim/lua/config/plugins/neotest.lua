@@ -1,15 +1,7 @@
 local function create_neotest_notify_consumer()
-    local icons = require("config.icons")
-
     local function init(client)
-        local statuses = {
-            passed = { text = icons.test.passed },
-            skipped = { text = icons.test.skipped },
-            failed = { text = icons.test.failed },
-        }
-
-        client.listeners.results = function(_, results)
-            if vim.tbl_isempty(results) then
+        client.listeners.results = function(_, results, partial)
+            if partial or vim.tbl_isempty(results) then
                 return
             end
 
@@ -20,16 +12,30 @@ local function create_neotest_notify_consumer()
             }
 
             for _, result in pairs(results) do
-                test_results[result.status] = test_results[result.status] + 1
+                -- Skip file and namespace results
+                if result.location then
+                    test_results[result.status] = test_results[result.status] + 1
+                end
+            end
+
+            local test_count = test_results.passed + test_results.failed
+
+            if test_count == 0 then
+                vim.notify("No tests ran, perhaps a pre-hook failed", vim.log.levels.WARN, { title = "Neotest" })
+                return
             end
 
             local log_level = test_results.failed > 0 and vim.log.levels.ERROR or vim.log.levels.INFO
-            local test_count = test_results.passed + test_results.failed
             local percentage = test_results.passed / test_count * 100
             local status = test_results.failed == 0 and "✅" or "❌"
+            local fmt = "%d/%d (%.f%%) %s"
+
+            if test_results.skipped > 0 then
+                fmt = fmt .. " (%d skipped)"
+            end
 
             vim.notify(
-                ("%d/%d (%.f%%) %s"):format(test_results.passed, test_count, percentage, status),
+                fmt:format(test_results.passed, test_count, percentage, status, test_results.skipped),
                 log_level,
                 {
                     title = "Neotest",
@@ -72,7 +78,7 @@ return {
             ---@diagnostic disable-next-line: missing-fields
             neotest.setup({
                 icons = {
-                    running_animated = icons.animation.updating,
+                    running_animated = icons.animation.spinner2,
                 },
                 ---@diagnostic disable-next-line: missing-fields
                 summary = {
