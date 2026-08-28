@@ -79,8 +79,7 @@ return {
 
                     if window then
                         if window:application():name() == "iTerm2" then
-                            actions.keyStrokeAction("h", { "cmd" })()
-                            return
+                            actions.keyStroke("h", { "cmd" })
                         else
                             window:moveOneScreenWest(
                                 false,
@@ -98,8 +97,7 @@ return {
 
                     if window then
                         if window:application():name() == "iTerm2" then
-                            actions.keyStrokeAction("l", { "cmd" })()
-                            return
+                            actions.keyStroke("l", { "cmd" })
                         else
                             window:moveOneScreenEast(
                                 false,
