@@ -113,7 +113,7 @@ local function render_tab(tabpage, options)
     local selected = context.selected
     local tab = {}
 
-    render(tab, options.left_separator, selected, { hl_group = "TabLineLeftSep", pad_right = 1 })
+    render(tab, options.left_separator, selected, { hl_group = "TabLineLeftSep" })
     render(tab, context.filename, selected, { hl_group = "TabLine", pad_left = 1, pad_right = 1 })
 
     if context.icon then
@@ -182,8 +182,8 @@ tabline.options = {
     render_before = render_before,
     render_tab = render_tab,
     render_after = render_after,
-    left_separator = icons.separators.high_slant_lower_right,
-    right_separator = icons.separators.high_slant_upper_left,
+    left_separator = icons.separators.bubble_left,
+    right_separator = icons.separators.bubble_right,
     spacing = 1,
 }
 
