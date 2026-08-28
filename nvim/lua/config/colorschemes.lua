@@ -96,11 +96,15 @@ local builtin_colorschemes = {
 
 ---@type config.WeightedChoice[]
 local preferred_colorschemes = normalize_weights({
+    "cendre",
     "duskfox",
+    "flume-dusk",
+    "flume-mira",
     "jellybeans",
     "kanagawa",
     "kanagawa-dragon",
     "lume",
+    "luna",
     "neonwave",
     "nightblossom",
     "nightblossom-sakura",
