@@ -25,8 +25,8 @@ map Q gq
 
 imap jk <ESC>
 
-vnoremap < <gv
-vnoremap > >gv
+vnoremap H <gv
+vnoremap L >gv
 
 map mc <A-n>
 map mx <A-x>
@@ -34,3 +34,6 @@ map mp <A-p>
 
 nmap gcc <Action>(CommentByLineComment)
 nmap <leader>w <Action>(SaveAll)
+nmap <c-w>p <Action>(NextSplitter)
+nmap <c-w>s <Action>(SplitHorizontally)
+nmap <c-w>v <Action>(SplitVertically)
