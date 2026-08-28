@@ -14,6 +14,14 @@ local Task = {}
 
 Task.__index = Task
 
+---@enum config.run.TaskState
+Task.State = {
+    Completed = "completed",
+    Failed = "failed",
+    Running = "running",
+    Created = "created",
+}
+
 ---@param task config.run.Task
 ---@param data any
 ---@param name string
@@ -51,10 +59,11 @@ end
 ---@return boolean, unknown?
 function Task:start(options)
     local _options = options or {}
-    local stdin
+    local stdin ---@type string
 
     if _options.stdin then
         if type(_options.stdin) == "string" then
+            ---@diagnostic disable-next-line: cast-local-type
             stdin = _options.stdin
         else
             ---@diagnostic disable-next-line: param-type-mismatch
@@ -71,7 +80,7 @@ function Task:start(options)
             self._exit_code = exit_code
 
             if vim.is_callable(_options.on_exit) then
-                _options.on_exit(self)
+                pcall(_options.on_exit, self)
             end
         end,
         stdin = stdin,
@@ -95,6 +104,18 @@ function Task:start(options)
     self._job_id = job_id
     ---@diagnostic disable-next-line: undefined-field
     self._start_time = vim.uv.hrtime()
+
+    -- TODO: Doesn't work
+    -- if stdin then
+    --     local bytes = vim.fn.chansend(self._job_id, stdin)
+    --
+    --     if bytes == 0 then
+    --         vim.notify("Failed to write stdin to job", vim.log.levels.ERROR)
+    --         return false
+    --     end
+    --
+    --     vim.fn.chanclose(self._job_id, 'stdin')
+    -- end
 
     return true
 end
@@ -132,6 +153,31 @@ end
 ---@return boolean
 function Task:completed()
     return self._start_time ~= nil and self._end_time ~= nil
+end
+
+---@return number?
+function Task:start_time()
+    return self._start_time
+end
+
+---@return number?
+function Task:end_time()
+    return self._end_time
+end
+
+---@return config.run.TaskState
+function Task:state()
+    if self:completed() then
+        if self:exit_code() == 0 then
+            return Task.State.Completed
+        else
+            return Task.State.Failed
+        end
+    elseif self:running() then
+        return Task.State.Running
+    else
+        return Task.State.Created
+    end
 end
 
 ---@return number

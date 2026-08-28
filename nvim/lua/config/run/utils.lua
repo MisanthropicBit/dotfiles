@@ -1,15 +1,17 @@
 local utils = {}
 
 ---@param command string | string[]
+---@param max_length integer?
 ---@return string
-function utils.format_command(command)
+function utils.format_command(command, max_length)
     ---@diagnostic disable-next-line: param-type-mismatch
     local command_string = type(command) == "string" and command or table.concat(command, " ")
+    local length = max_length or 50
 
-    if #command_string < 50 then
+    if #command_string < length then
         return command_string
     else
-        return command_string:sub(1, 50) .. "..."
+        return command_string:sub(1, length) .. "..."
     end
 end
 

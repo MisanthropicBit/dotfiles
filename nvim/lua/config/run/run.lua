@@ -1,5 +1,7 @@
 local run = {}
 
+local icons = require("config.icons")
+
 -- TODO:
 -- 1. Support tailing tasks where you can see the output as it is being printed.
 --    How can we do this with stdout_buffered etc.?
@@ -11,6 +13,7 @@ local utils = require("config.run.utils")
 
 ---@class config.run.RunOptions
 ---@field stdin (string | string[])?
+---@field shell boolean?
 
 ---@class config.run.OpenLastOptions
 ---@field split    string?
@@ -18,7 +21,7 @@ local utils = require("config.run.utils")
 ---@field tab      boolean?
 ---@field edit     boolean?
 
-local history_size = 5
+local history_size = 10
 
 ---@type config.FixedSizedQueue<config.run.Task>
 local history = FixedSizedQueue.new(history_size)
@@ -31,6 +34,31 @@ local last_run_task
 
 ---@type table<string, string[]>
 local completion_items_by_project_root = {}
+
+function run.get_task_icon_specs()
+    return {
+        Failed = {
+            icon = icons.test.failed,
+            hls = { "diffRemoved", "@diff.minus", "DiffDelete" },
+            scope = { "fg", "bg" },
+        },
+        Success = {
+            icon = icons.test.passed,
+            hls = { "diffAdded", "@diff.plus", "DiffAdd" },
+            scope = { "fg", "bg" },
+        },
+        Running = {
+            icon = icons.test.running,
+            hls = { "diffChanged", "@diff.delta", "DiffChange" },
+            scope = { "fg", "bg" },
+        },
+        Unknown = {
+            icon = icons.test.unknown,
+            hls = { "Normal" },
+            scope = { "fg", "bg" },
+        },
+    }
+end
 
 ---@param msg string
 ---@param level vim.log.levels
@@ -132,7 +160,14 @@ end
 ---@param options config.run.RunOptions?
 ---@diagnostic disable-next-line: unused-local
 function run.run(command, options)
-    local task = Task.new(command)
+    ---@type string | string[]
+    local resolved_command = command
+
+    if options and options.shell then
+        resolved_command = table.concat(command, " ")
+    end
+
+    local task = Task.new(resolved_command)
     local started, err = run.run_task(task, options)
 
     if not started then

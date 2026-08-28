@@ -48,23 +48,51 @@ end
 ---@param task config.run.Task
 ---@return string
 local function format_task(task)
+    local fzf_lua_utils = require("fzf-lua.utils")
     local formatted_command = utils.format_command(task:command())
-    local icon = require("fzf-lua.utils").ansi_from_hl("Type", icons.lsp.cmdline)
-    local command = require("fzf-lua.utils").ansi_from_hl("Title", formatted_command)
+    local icon = fzf_lua_utils.ansi_from_hl("Type", icons.lsp.cmdline)
+    local command = fzf_lua_utils.ansi_from_hl("Title", formatted_command)
     local result = {
         task:id(),
         icon,
-        command,
     }
+    local task_icon_specs = run.get_task_icon_specs()
 
     if task:completed() then
-        local formatted_duration, unit = utils.format_duration(task:duration())
-        local exit_code = require("fzf-lua.utils").ansi_from_hl("Key", task:exit_code())
-        local duration = require("fzf-lua.utils").ansi_from_hl("Label", ("%.2f%s"):format(formatted_duration, unit))
+        local status_icon, sequence
 
+        if task:exit_code() == 0 then
+            for _, hl in ipairs(task_icon_specs.Success.hls) do
+                status_icon, sequence = fzf_lua_utils.ansi_from_hl(hl, icons.test.passed)
+                vim.print(vim.inspect({ status_icon, hl, sequence }))
+
+                if sequence ~= nil then
+                    break
+                end
+            end
+        else
+            for _, hl in ipairs(task_icon_specs.Failed.hls) do
+                status_icon, sequence = fzf_lua_utils.ansi_from_hl(hl, icons.test.passed)
+
+                if sequence ~= nil then
+                    break
+                end
+            end
+        end
+
+        vim.print(status_icon)
+
+        local formatted_duration, unit = utils.format_duration(task:duration())
+        local exit_code = fzf_lua_utils.ansi_from_hl("Key", task:exit_code())
+        local duration = fzf_lua_utils.ansi_from_hl("Label", ("%.2f%s"):format(formatted_duration, unit))
+
+        table.insert(result, status_icon)
+        table.insert(result, command)
         table.insert(result, ("(code: %s, duration: %s)"):format(exit_code, duration))
     else
-        table.insert(result, "still running")
+        local status_icon = fzf_lua_utils.ansi_from_hl("diffChanged", icons.test.running)
+        table.insert(result, status_icon)
+        table.insert(result, command)
     end
 
     return table.concat(result, " ")
@@ -163,7 +191,7 @@ vim.api.nvim_create_user_command("Run", function(args)
         run_args = vim.b.run[1]
     end
 
-    local options = {}
+    local options = { shell = args.bang }
 
     if args.range > 0 then
         options.stdin = vim.api.nvim_buf_get_lines(0, args.line1 - 1, args.line2, true)
@@ -180,7 +208,7 @@ vim.api.nvim_create_user_command("Run", function(args)
     end
 end, {
     nargs = "*",
-    bar = false,
+    bang = true,
     range = true,
     complete = function(_, cmdline, _)
         local items = { vim.o.makeprg }
@@ -341,7 +369,10 @@ vim.api.nvim_create_user_command("RunListHistory", function()
         },
     }
 
-    require("fzf-lua").fzf_exec(formatted_tasks, vim.tbl_extend("force", common_fzf_options, { actions = actions }))
+    require("fzf-lua").fzf_exec(
+        formatted_tasks,
+        vim.tbl_extend("force", common_fzf_options, { actions = actions })
+    )
 end, {
     nargs = 0,
 })
