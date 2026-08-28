@@ -56,7 +56,7 @@ end
 
 function sp -d "Fuzzy search projects directory"
     set -l result (
-        fd --type d . ~/projects ~/repos ~/.local/share/nvim/lazy --max-depth 2 |
+        fd --type d . ~/projects ~/repos ~/.local/share/nvim/site/pack/core/opt/ --max-depth 2 |
         fzf --ansi --tiebreak=end --preview='tree -C -L 1 -hp --dirsfirst {1}'
     ); and cd "$result"
 
