@@ -70,7 +70,7 @@ local function install(name, spec)
     else
         if not spec.noload then
             -- FIX:
-            local plugin = require(name ~= "mini-move" and name or "mini.move")
+            local plugin = require(vim.startswith(name, "mini-") and name:gsub("-", ".") or name)
 
             if vim.is_callable(config) then
                 config(plugin)
