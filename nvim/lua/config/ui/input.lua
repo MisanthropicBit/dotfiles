@@ -179,17 +179,17 @@ end
 
 local function set_win_buffer_options(win_id, buffer, win_options, buffer_options)
     for option, value in pairs(win_options) do
-        vim.api.nvim_win_set_option(win_id, option, value)
+        vim.api.nvim_set_option_value(option, value, { win = win_id })
     end
 
     -- Set default buffer options
     for option, value in pairs(buffer_options) do
-        vim.api.nvim_buf_set_option(buffer, option, value)
+        vim.api.nvim_set_option_value(option, value, { buf = buffer })
     end
 
     -- Set user options last so they take priority
     for option, value in pairs(win_options) do
-        vim.api.nvim_win_set_option(win_id, option, value)
+        vim.api.nvim_set_option_value(option, value, { win = win_id })
     end
 
     vim.api.nvim_win_set_var(win_id, "config.ui.input", true)
