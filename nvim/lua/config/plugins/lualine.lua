@@ -39,7 +39,7 @@ return {
                             "lsp_status",
                             icon = icons.lsp.nvim_lsp,
                             symbols = {
-                                spinner = icons.animation.updating,
+                                spinner = icons.animation.spinner2,
                                 done = icons.test.passed,
                             },
                         },
@@ -82,9 +82,13 @@ return {
                 },
                 options = {
                     theme = "auto",
+                    component_separators = {
+                        left = "",
+                        right = "",
+                    },
                     section_separators = {
-                        left = icons.separators.high_slant_lower_left .. " ",
-                        right = icons.separators.high_slant_lower_right .. " ",
+                        left = icons.separators.bubble_right,
+                        right = icons.separators.bubble_left,
                     },
                     extensions = { "fugitive", "nvim-dap-ui", "quickfix", "oil" },
                 },
