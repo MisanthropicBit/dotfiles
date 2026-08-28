@@ -1,13 +1,50 @@
 local ls = require("luasnip")
 local c = ls.choice_node
+local d = ls.dynamic_node
 local f = ls.function_node
 local s = ls.snippet
 local i = ls.insert_node
 local t = ls.text_node
+local sn = ls.snippet_node
 local fmt = require("luasnip.extras.fmt").fmt
 
 -- local fmta = ls.extend_decorator.apply(fmt, { delimiters = "<>" })
 -- local has_todo_comments, todo_comments = pcall(require, "todo-comments")
+
+local default_comment_prefix = "// %s"
+
+local sha_chars = {
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+}
+
+---@param value   string
+---@param aliases string[]
+---@return string[]
+local function reorder_todo_aliases(value, aliases)
+    ---@type string[]
+    aliases = vim.tbl_filter(function(alias)
+        return alias ~= value
+    end, aliases)
+
+    table.insert(aliases, 1, value)
+
+    return aliases
+end
 
 local function get_todo_aliases()
     -- local keywords = require("todo-comments.config").keywords
@@ -30,16 +67,17 @@ local function get_todo_aliases()
         TEST = "TEST",
         TESTING = "TEST",
         TODO = "TODO",
-        WARN = "WARN"
+        WARN = "WARN",
     }
-    local aliases = {}
+
+    local aliases = vim.defaulttable()
 
     for key, value in pairs(keywords) do
-        if aliases[value] == nil then
-            aliases[value] = {}
-        end
-
         table.insert(aliases[value], key)
+    end
+
+    for key, _ in pairs(aliases) do
+        aliases[key] = reorder_todo_aliases(key, aliases[key])
     end
 
     return aliases
@@ -49,26 +87,34 @@ local todo_alias_groups = get_todo_aliases()
 
 local function todo_snippet(trig)
     local aliases = todo_alias_groups[trig:upper()]
-    local prefix = vim.opt_local.commentstring:get() or "// %s"
-    local alias_choices
-    aliases = aliases or { trig:upper() }
 
-    if #aliases == 1 then
-        alias_choices = t(prefix:format(aliases[1]))
-    else
-        alias_choices = c(
-            1,
-            vim.tbl_map(function(alias)
-                return i(nil, prefix:format(alias))
-            end, aliases)
-        )
+    if not aliases then
+        error(("Unknown todo snippet trigger '%s'"):format(trig))
     end
 
-    return s(trig, fmt("{}: {}", { alias_choices, i(2) }))
+    local function generate_todo_alias_node()
+        local buffer = vim.api.nvim_get_current_buf()
+        local prefix = vim.bo[buffer].commentstring or default_comment_prefix
+
+        if prefix == "//%s" then
+            prefix = default_comment_prefix
+        end
+
+        local alias_choices = c(
+            1,
+            vim.tbl_map(function(alias)
+                return t(prefix:format(alias) .. ": ")
+            end, aliases)
+        )
+
+        return sn(nil, { alias_choices })
+    end
+
+    return s(trig, fmt("{}{}", { d(2, generate_todo_alias_node), i(1) }))
 end
 
 local function get_iso_datetime()
-   return os.date("%Y-%m-%dT%H:%M:%SZ")
+    return os.date("%Y-%m-%dT%H:%M:%SZ")
 end
 
 return {
@@ -81,5 +127,20 @@ return {
     s(
         { trig = "iso", dscr = "Insert the current date and time formatted as an ISO datetime string" },
         f(get_iso_datetime)
-    )
+    ),
+    s({
+        trig = [[sha(%d+)]],
+        trigEngine = "pattern",
+    }, {
+        ---@diagnostic disable-next-line: unused-local
+        f(function(args, snip)
+            local result = {}
+
+            for _ = 1, tonumber(snip.captures[1]) do
+                table.insert(result, sha_chars[math.random(1, #sha_chars)])
+            end
+
+            return table.concat(result, "")
+        end, {}),
+    }),
 }
