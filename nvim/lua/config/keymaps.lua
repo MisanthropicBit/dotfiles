@@ -156,7 +156,15 @@ map.n("<c-g>", "6<c-g>", "Get full info about current file by default")
 map.i("jk", [["<esc>"]], { expr = true })
 map.i("<c-a>", "<c-o>^", "Move to start of line in insert mode")
 map.i("<c-e>", "<c-o>$", "Move to end of line in insert mode")
-map.i("<c-k>", "<c-o>1z=", "Correct last spelling mistake without leaving cursor position")
+map.i("<c-t>", function()
+    local cursor = vim.api.nvim_win_get_cursor(0)
+    local icmd = vim.api.nvim_replace_termcodes("<c-o>1z=", true, true, true)
+    vim.cmd.normal("i" .. icmd)
+
+    -- Restore cursor position and enter insert mode again
+    vim.api.nvim_win_set_cursor(0, cursor)
+    vim.cmd("startinsert")
+end, "Correct last spelling mistake without leaving cursor position")
 
 map.v.leader(
     "sc",
