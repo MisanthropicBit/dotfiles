@@ -37,13 +37,25 @@ return {
                     end
 
                     move("gj", "]c", function()
-                        gs.nav_hunk("next", { wrap = true, foldopen = true }, function()
+                        gs.nav_hunk("next", { wrap = true, foldopen = true, target = "unstaged" }, function()
+                            vim.cmd.normal("zz")
+                        end)
+                    end)
+
+                    move("gJ", "]c", function()
+                        gs.nav_hunk("next", { wrap = true, foldopen = true, target = "staged" }, function()
                             vim.cmd.normal("zz")
                         end)
                     end)
 
                     move("gk", "[c", function()
-                        gs.nav_hunk("prev", { wrap = true, foldopen = true }, function()
+                        gs.nav_hunk("prev", { wrap = true, foldopen = true, target = "unstaged" }, function()
+                            vim.cmd.normal("zz")
+                        end)
+                    end)
+
+                    move("gk", "[c", function()
+                        gs.nav_hunk("prev", { wrap = true, foldopen = true, target = "staged" }, function()
                             vim.cmd.normal("zz")
                         end)
                     end)
