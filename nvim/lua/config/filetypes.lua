@@ -5,11 +5,13 @@ vim.filetype.add({
         hbs = "html",
         plist = "xml",
         snap = "javascript",
+        log = "log",
     },
     filename = {
         [".eslintrc"] = "json",
         [".busted*"] = "lua",
         [".env.*"] = "sh",
+        ["log"] = "log", -- Matches neovim's default log file
     },
     pattern = {
         ["Dockerfile.*"] = "dockerfile",
