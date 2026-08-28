@@ -24,6 +24,11 @@
       "rev": "f65fba733268ffcf9c5b8ac381287eca7c223422",
       "src": "https://www.github.com/kevinhwang91/nvim-bqf"
     },
+    "cendre": {
+      "rev": "43b07b26b2d49fbcfe1693a9c4b7a485bfc4e21e",
+      "src": "https://github.com/Aejkatappaja/cendre",
+      "version": "'43b07b26b2d49fbcfe1693a9c4b7a485bfc4e21e'"
+    },
     "cmp-buffer": {
       "rev": "b74fab3656eea9de20a9b8116afa3cfc4ec09657",
       "src": "https://www.github.com/hrsh7th/cmp-buffer",
@@ -68,6 +73,11 @@
       "rev": "e1930558e0046a43ba1df8928e4bb9ec6e092dab",
       "src": "https://www.github.com/MisanthropicBit/decipher.nvim",
       "version": "'ae417f47af391f9274067a8f15702b567469cac1'"
+    },
+    "flume.nvim": {
+      "rev": "2ed1aa0c003063fccf1b3c680870589d78ca12d4",
+      "src": "https://www.github.com/mitander/flume.nvim",
+      "version": "'2ed1aa0c003063fccf1b3c680870589d78ca12d4'"
     },
     "friendly-snippets": {
       "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
@@ -143,10 +153,20 @@
       "src": "https://www.github.com/danfry1/lume",
       "version": "'90e195dc574aa680594983566a396446e6b12b1b'"
     },
+    "luna.nvim": {
+      "rev": "873b8bc9909fc84041e57e9a1dab66ac43479661",
+      "src": "https://github.com/WTFox/luna.nvim",
+      "version": "'873b8bc9909fc84041e57e9a1dab66ac43479661'"
+    },
     "mini.move": {
       "rev": "a776027e68fe763987a0132d59877d651a7c0130",
       "src": "https://www.github.com/echasnovski/mini.move",
       "version": "'a776027e68fe763987a0132d59877d651a7c0130'"
+    },
+    "mini.test": {
+      "rev": "35c67cb7f2dc697ed0c7c06400fcf29a8a521d7d",
+      "src": "https://github.com/nvim-mini/mini.test",
+      "version": "'stable'"
     },
     "monet.nvim": {
       "rev": "8fba02c535a408d5e5255251665325a69fa12a8e",
@@ -197,7 +217,7 @@
     },
     "nvim-autopairs": {
       "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
-      "src": "https://github.com/windwp/nvim-autopairs",
+      "src": "https://www.github.com/windwp/nvim-autopairs",
       "version": "'59bce2eef357189c3305e25bc6dd2d138c1683f5'"
     },
     "nvim-bqf": {
@@ -276,7 +296,7 @@
     },
     "other.nvim": {
       "rev": "1d48e090f6d1d53dda9fb5094af3f2006ebbb858",
-      "src": "https://github.com/rgroli/other.nvim",
+      "src": "https://www.github.com/rgroli/other.nvim",
       "version": "'1d48e090f6d1d53dda9fb5094af3f2006ebbb858'"
     },
     "plenary.nvim": {
@@ -304,7 +324,7 @@
       "version": "'d3a26d3c449a97c44891a31736a101b60b64cf2b'"
     },
     "terminal-diagnostics.nvim": {
-      "rev": "da209d4e7163f9c48fddf488e1862514794c6d6e",
+      "rev": "e0c3cd36b895dffbfb0d7add9c985ba628e5be8f",
       "src": "https://www.github.com/MisanthropicBit/terminal-diagnostics.nvim"
     },
     "tiny-code-action.nvim": {
@@ -331,6 +351,10 @@
       "rev": "26bc2a8432ba3ea79ed6aa346fba780a3d372570",
       "src": "https://www.github.com/Wansmer/treesj",
       "version": "'26bc2a8432ba3ea79ed6aa346fba780a3d372570'"
+    },
+    "ts-expand-hover.nvim": {
+      "rev": "f83350d29e7163ac2dc017900051565b41addd1f",
+      "src": "https://github.com/nemanjamalesija/ts-expand-hover.nvim"
     },
     "unclash.nvim": {
       "rev": "6115c7540d7f3c6fcac7658f521d263d338044bf",
