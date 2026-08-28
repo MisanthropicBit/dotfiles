@@ -96,3 +96,5 @@ function is_gcloud_command -a token
 end
 
 abbr --add saroles --position anywhere --function is_gcloud_command --set-cursor="%"
+
+abbr --add nr --position anywhere npm run
