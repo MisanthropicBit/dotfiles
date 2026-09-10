@@ -3,6 +3,7 @@ return {
     src = "https://www.github.com/MisanthropicBit/decipher.nvim",
     version = "ae417f47af391f9274067a8f15702b567469cac1",
     data = {
+        dir = "~/projects/nvim/decipher.nvim",
         config = function(decipher)
             local map = require("config.map")
 

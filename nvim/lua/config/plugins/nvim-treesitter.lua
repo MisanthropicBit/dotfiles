@@ -1,7 +1,7 @@
 ---@type config.PluginSpec
 return {
     src = "https://www.github.com/nvim-treesitter/nvim-treesitter",
-    version = "4916d6592ede8c07973490d9322f187e07dfefac", -- NOTE: Or 'main'
+    version = "427e9222363d07c32d6db6169e4049c28d58d141", -- NOTE: Or 'main'
     on = {
         hook = ":TSUpdate"
     },
@@ -122,7 +122,10 @@ return {
 
                     vim.treesitter.start(buffer, language)
 
-                    vim.bo[buffer].indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+                    -- NOTE: C++ indentation is currently broken
+                    if event.match ~= "cpp" then
+                        vim.bo[buffer].indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+                    end
                 end,
             })
         end,

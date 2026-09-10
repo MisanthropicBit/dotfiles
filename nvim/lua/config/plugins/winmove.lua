@@ -3,6 +3,7 @@ return {
     src = "https://www.github.com/MisanthropicBit/winmove.nvim",
     version = "3d553d32a6b1a26bb911ca4e82c32766fd3902e3",
     data = {
+        dir = "~/projects/nvim/winmove.nvim",
         config = function(winmove)
             winmove.configure({
                 modes = {

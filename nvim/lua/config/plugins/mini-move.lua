@@ -1,7 +1,7 @@
 ---@type config.PluginSpec
 return {
     src = "https://www.github.com/echasnovski/mini.move",
-    version = "a776027e68fe763987a0132d59877d651a7c0130",
+    version = "48fcaac289a19b8eff2fd5fe203267d478a8abdc",
     data = {
         config = {
             mappings = {
@@ -13,6 +13,9 @@ return {
                 line_down = "J",
                 line_left = "",
                 line_right = "",
+            },
+            options = {
+                reindent_linewise = true,
             },
         },
     },
