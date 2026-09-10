@@ -31,7 +31,7 @@ local icons = {
         latex_symbols = "ex",
         path = "󰙅 ",
         ultisnips = "󰁨 ",
-        cmdline = "󰨊 ",
+        cmdline = " ",
         natdat = "",
     },
     test = {
