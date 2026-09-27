@@ -207,8 +207,18 @@ return {
             --     end
             -- },
             {
+                key = "j",
+                mods = { "shift" },
+                action = actions.keyStrokeAction("left", { "shift", "alt" }),
+            },
+            {
                 key = "k",
                 action = actions.keyStrokeAction("right", { "alt" }),
+            },
+            {
+                key = "k",
+                mods = { "shift" },
+                action = actions.keyStrokeAction("right", { "shift", "alt" }),
             },
             {
                 key = "ø",
