@@ -55,6 +55,18 @@ local function is_vim_plugin(spec)
     return src:match("%/vim-.+$") ~= nil or src:match("%.vim$") ~= nil
 end
 
+local function apply_config(config, plugin)
+    if vim.is_callable(config) then
+        config(plugin)
+    elseif type(config) == "table" then
+        if vim.is_callable(plugin.setup) then
+            plugin.setup(config)
+        end
+    else
+        error("Expected plugin config to be a table or a function")
+    end
+end
+
 ---@param name string
 ---@param spec string | config.PluginSpec
 local function install(name, spec)
@@ -70,17 +82,9 @@ local function install(name, spec)
     else
         if not spec.noload then
             -- FIX:
-            local plugin = require(vim.startswith(name, "mini-") and name:gsub("-", ".") or name)
+            local plugin = require(vim.startswith(name, "mini-") and name:gsub("-", ".", 1) or name)
 
-            if vim.is_callable(config) then
-                config(plugin)
-            elseif type(config) == "table" then
-                if vim.is_callable(plugin.setup) then
-                    plugin.setup(config)
-                end
-            else
-                error("Expected plugin config to be a table or a function")
-            end
+            apply_config(config, plugin)
         end
     end
 
@@ -127,8 +131,27 @@ function installer.install(options)
             local name = name_with_ext:sub(1, -5)
             local spec = require(_plugin_directory .. name)
 
-            table.insert(specs, spec)
-            table.insert(names, name)
+            if type(spec) ~= "string" and spec.data and type(spec.data.dir) == "string" then
+                local local_path = vim.fs.normalize(spec.data.dir)
+
+                vim.opt.rtp:append(local_path)
+
+                local plugin = require(not vim.startswith(name, "mini") and name or name:gsub("-", ".", 1))
+                local config = type(spec) ~= "string" and (spec.data and spec.data.config) or {}
+
+                apply_config(config, plugin)
+                local symlink = vim.fs.normalize("~/.config/nvim/pack/local/start/" .. name .. ".nvim")
+
+                local result = vim.uv.fs_lstat(symlink)
+
+                if not result then
+                    local ok, err, err_name = vim.uv.fs_symlink(local_path, symlink)
+                    vim.print(vim.inspect({ ok, err, err_name }))
+                end
+            else
+                table.insert(specs, spec)
+                table.insert(names, name)
+            end
         end
     end
 
